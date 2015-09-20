@@ -22,7 +22,8 @@ public class MainServlet extends HttpServlet {
         resp.setContentType("text/html");
 
         resp.setStatus(HttpServletResponse.SC_OK);
-        resp.getWriter().println(PageGenerator.getPage("index.html"));
+        String page = PageGenerator.getHtmlPage("index.html");
+        resp.getWriter().println(page);
         System.out.println("in the end");
 
 
