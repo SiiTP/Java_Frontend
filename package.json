@@ -1,0 +1,25 @@
+{
+  "name": "Java_Frontend",
+  "version": "1.0.0",
+  "description": "FIRST",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SiiTP/Java_Frontend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SiiTP/Java_Frontend/issues"
+  },
+  "homepage": "https://github.com/SiiTP/Java_Frontend",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-fest": "^0.1.6",
+    "grunt-shell": "^1.1.2"
+  }
+}
