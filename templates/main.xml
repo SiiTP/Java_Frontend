@@ -1,5 +1,4 @@
-
+<?xml version="1.0"?>
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
-    <h1>Main.xml</h1>
+    <h1>Hello,<fest:space/><fest:value output="text">json.name</fest:value></h1>
 </fest:template>
-

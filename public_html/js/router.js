@@ -1,29 +1,31 @@
-define([
-    'backbone'
-], function(
-    Backbone
-){
+define(['backbone'], function(Backbone){
 
     var Router = Backbone.Router.extend({
         routes: {
             'scoreboard': 'scoreboardAction',
             'game': 'gameAction',
             'login': 'loginAction',
-            '*default': 'defaultActions'
+            'default': 'defaultActions'
         },
         defaultActions: function () {
-            // TODO
+            require(['tmpl/main'],function(main){
+                var data = {name: 'Ivan'};
+                console.log(main(data));
+            });
+            console.log("default");
         },
         scoreboardAction: function () {
-            // TODO
+            require(['views/scoreboard'],function(view){
+                console.log(view);
+            });
+            console.log("score");
         },
         gameAction: function () {
-            // TODO
+            console.log("game");
         },
         loginAction: function () {
-            // TODO
+            console.log("login");
         }
     });
-
     return new Router();
 });

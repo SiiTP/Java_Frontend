@@ -7,16 +7,20 @@ define([
 ){
 
     var View = Backbone.View.extend({
-
+        tagName: "div",
+        className: "score__item",
         template: tmpl,
         initialize: function () {
-            // TODO
+            console.log("initialization of scoreboard");
         },
         render: function () {
-            // TODO
+            console.log("render scoreboard");
+            this.$el.html(this.template());
         },
+
+
         show: function () {
-            // TODO
+
         },
         hide: function () {
             // TODO
