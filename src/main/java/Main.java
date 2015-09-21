@@ -5,17 +5,23 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import service.AccountService;
 import servlets.MainServlet;
+import servlets.authorization.LogOut;
+import servlets.authorization.SignIn;
+import servlets.authorization.SignUp;
 
 public class Main {
-    public static final int PORT = 8001;
+    public static final int PORT = 8000;
 
     public static void main(String[] args) throws Exception {
-        MainServlet mainServlet = new MainServlet();
+        AccountService accountService = new AccountService();
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.setContextPath("/");
-        context.addServlet(new ServletHolder(mainServlet), "/index");
+        context.addServlet(new ServletHolder(new SignIn(accountService)), "/signin");
+        context.addServlet(new ServletHolder(new SignUp(accountService)),"/signup");
+        context.addServlet(new ServletHolder(new LogOut(accountService)),"/logout");
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirectoriesListed(true);
         resourceHandler.setResourceBase("public_html");
