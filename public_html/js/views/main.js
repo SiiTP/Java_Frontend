@@ -19,7 +19,6 @@ define([
             this.$el.html(this.template());
         },
         show: function () {
-            this.$el.show();
             console.log(" show main");
         },
         hide: function () {

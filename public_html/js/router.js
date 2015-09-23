@@ -12,31 +12,35 @@ define(['backbone'], function(Backbone){
         mainAction: function () {
             require(['views/main'],function(view){
                 //view.el = '#page';
-                view.initialize();
+                view.render();
             });
             console.log("main action");
         },
         scoreboardAction: function () {
             require(['views/scoreboard'],function(view){
-                view.el = '#page';
+                //view.el = '#page';
+                view.render();
             });
             console.log("scoreboard action");
         },
         gameAction: function () {
             require(['views/game'],function(view){
-                view.el = '#page';
+                //view.el = '#page';
+                view.render();
             });
             console.log("game action");
         },
         loginAction: function () {
             require(['views/login'],function(view){
-                view.el = '#page';
+                //view.el = '#page';
+                view.render();
             });
             console.log("login action");
         },
         registrationAction: function () {
             require(['views/registration'],function(view){
-                view.el = '#page';
+                //view.el = '#page';
+                view.render();
             });
             console.log("registration action");
         },
