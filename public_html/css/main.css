@@ -43,7 +43,7 @@
     margin: 0px 10px 0px 10px;
 }
 .login__input-line__input {
-    margin-right: 10px;
+    /*margin-right: 10px;*/
     width: 60%;
 }
 .login__button-login {
