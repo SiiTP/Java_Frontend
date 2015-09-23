@@ -1,4 +1,17 @@
-
 <fest:template xmlns:fest="http://fest.mail.ru">
+    <div class="login">
+        <form name="login_form" method="post">
+            <p class="login__input-line">
+                <h4 class="login__input-line__header">Username</h4>
+                <input class="login__input-line__input" type="text" name="username" id="username"/>
+            </p>
+            <p class="login__input-line">
+                <h4 class="login__input-line__header">Password</h4>
+                <input class="login__input-line__input" type="password" name="username" id="username"/>
+            </p>
+            <button type="submit" class="login__button-login">Log In!</button>
+            <a class="login__registration-link" href="#registration">registration</a>
+        </form>
+    </div>
 </fest:template>
 

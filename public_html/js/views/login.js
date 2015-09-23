@@ -7,13 +7,15 @@ define([
 ){
 
     var View = Backbone.View.extend({
-
+        el: 'div',
         template: tmpl,
         initialize: function () {
-            // TODO
+            console.log("login initialize");
+            this.render();
         },
         render: function () {
-            // TODO
+            console.log("login render");
+            this.$el.html(this.template());
         },
         show: function () {
             // TODO

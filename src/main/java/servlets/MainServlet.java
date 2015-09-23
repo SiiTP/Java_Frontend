@@ -18,12 +18,13 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(@NotNull HttpServletRequest req, @NotNull HttpServletResponse resp) throws ServletException, IOException {
-        //String hello = "Hello!!";
+
         resp.setContentType("text/html");
 
         resp.setStatus(HttpServletResponse.SC_OK);
         String page = PageGenerator.getPage("index.html");
         resp.getWriter().println(page);
+
 
     }
 
