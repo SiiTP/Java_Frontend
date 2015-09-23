@@ -1,3 +1,4 @@
+
 .idea
 out/
 target/
@@ -6,3 +7,7 @@ target/
 *.js~
 L1.2-1.0-jar-with-dependencies.jar
 public_html/
+
+node_modules
+target/
+

@@ -1,57 +1,68 @@
-module.exports = function(grunt) {
+
+module.exports = function (grunt) {
+
     grunt.initConfig({
         shell: {
+            options: {
+                stdout: true,
+                stderr: true
+            },
             server: {
                 command: 'java -cp L1.2-1.0-jar-with-dependencies.jar main.Main 8080'
             }
         },
         fest: {
-            templates: { /* Цель */
 
+            templates: {
                 files: [{
                     expand: true,
-                    cwd: 'templates', /* исходная директория */
-                    src: '*.xml', /* имена шаблонов */
-                    dest: 'public_html/js/tmpl' /* результирующая директория */}],
-
+                    cwd: 'templates',
+                    src: '*.xml',
+                    dest: 'public_html/js/tmpl'
+                }],
                 options: {
-
-                    template: function (data) { /* формат функции-шаблона */
-
+                    template: function (data) {
                         return grunt.template.process(
-                        /* присваиваем функцию-шаблон переменной */
-                            'var <%= name %>Tmpl = <%= contents %> ;',
+                            'define(function () { return <%= contents %> ; });',
                             {data: data}
-
                         );
-
                     }
-
                 }
-
             }
         },
-        concat: {
-            options: { separator: '\n\n;\n\n' },
-            foo: {
-                options: {  },
-                src: ['style/js/underscore-min.js',
-                    'style/js/backbone-min.js',
-                    'style/js/require.min.js',
-                    'style/js/jquery-1.11.3.min.js'],
-                dest: 'style/js/main.js'
-
+        watch: {
+            fest: {
+                files: ['templates/*.xml'],
+                tasks: ['fest'],
+                options: {
+                    interrupt: true,
+                    atBegin: true
+                }
             },
-            bar: { /* Цель bar */ }
+            server: {
+                files: [
+                    'public_html/js/**/*.js',
+                    'public_html/css/**/*.css'
+                ],
+                options: {
+                    livereload: true
+                }
+            }
         },
-        any_other_name: 'hello' /* Любое произвольное свойство */
+        concurrent: {
+            target: ['watch', 'shell'],
+            options: {
+                logConcurrentOutput: true
+            }
+        }
     });
 
-// Загрузка плагинов, на примере "concat".
-grunt.loadNpmTasks('grunt-contrib-concat');
-grunt.loadNpmTasks('grunt-shell');
-grunt.loadNpmTasks('grunt-fest');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-concurrent');
+    grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-fest');
 
-// Определение задач, default должен быть всегда.
-grunt.registerTask('default', ['concat']);
+    grunt.registerTask('default', ['concurrent']);
+
 };
+

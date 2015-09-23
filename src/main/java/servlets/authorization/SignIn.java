@@ -1,7 +1,7 @@
 package servlets.authorization;
 
 import org.jetbrains.annotations.NotNull;
-import org.json.JSONObject;
+
 import service.AccountService;
 import service.UserProfile;
 
@@ -42,11 +42,8 @@ public class SignIn extends HttpServlet {
                 if(auth){
                     resp.getWriter().println("you successfully have been logined in!");
                 }else{
-                    JSONObject object = new JSONObject();
-                    object.put("value",1);
-                    object.put("string","sss");
-                    object.put("test",true);
-                    resp.getWriter().println(object.toString());
+                    resp.getWriter().println("wrong login or password");
+
                 }
             }
         }

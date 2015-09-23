@@ -1,0 +1,109 @@
+#page {
+    background: #ff9;
+    height: 800px;
+    color: #004;
+}
+
+/*MAIN PAGE*/
+.menu {
+    border: 1px solid #003;
+    width: 200px;
+    padding: 10px;
+    padding-bottom: 0px;
+    margin: auto;
+
+}
+.menu__button {
+    font-size: 36px;
+    font-style: italic;
+    font-family: cursive;
+    color: #004;
+    text-decoration: none;
+}
+.menu__button-container {
+    border: solid 1px #003;
+    background: #ff4400;
+    margin : auto;
+    margin-bottom: 10px;
+}
+
+/*LOGIN PAGE*/
+.login {
+    color: #003;
+    margin: auto;
+    width: 350px;
+    border: 1px solid #003;
+}
+.login__input-line {
+
+}
+.login__input-line__header {
+    width: 30%;
+    float: left;
+    margin: 0px 10px 0px 10px;
+}
+.login__input-line__input {
+    margin-right: 10px;
+    width: 60%;
+}
+.login__button-login {
+    margin-bottom: 10px;
+    margin-left: 10px;
+    width: 40%;
+}
+.login__registration-link {
+    font-size:20px;
+    color: #003;
+    float: right;
+    margin-right: 10px;
+}
+
+/*REGISTRATION PAGE*/
+.registration {
+    color: #003;
+    margin: auto;
+    width: 350px;
+    border: 1px solid #003;
+}
+.registration__input-line {
+
+}
+.registration__input-line__header {
+    width: 30%;
+    float: left;
+    margin: 0px 10px 0px 10px;
+}
+.registration__input-line__input {
+    margin-right: 10px;
+    width: 60%;
+}
+.registration__button-registration {
+    margin-bottom: 10px;
+    margin-left: 10px;
+    width: 94%;
+}
+
+/*SCOREBOARD PAGE*/
+.scoreboard {
+    width: 300px;
+    margin: auto;
+    border: solid 1px #003;
+    font-style: italic;
+    font-family: cursive;
+}
+.scoreboard__header {
+    font-size: 36px;
+
+}
+.scoreboard__table {
+    width: 300px;
+}
+.scoreboard__table-header {
+    background: #f90;
+}
+.scoreboard__table__item {
+    margin: 10px;
+    font-size: 20px;
+    color: #003;
+    background: #ff6;
+}

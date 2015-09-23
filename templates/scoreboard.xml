@@ -1,1 +1,21 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="scores">
+    <div class="scoreboard">
+        <h1 align="center" class="scoreboard__header">Scoreboard</h1>
+        <table class="scoreboard__table" align="center" cellspacing="0">
+            <th class="scoreboard__table-header" width="70%">Username</th>
+            <th class="scoreboard__table-header" width="30%">Score</th>
+            <fest:each iterate="scores" index="i" value="v">
+                    <tr align="center" class="scoreboard__table__item">
+                        <td class="scoreboard__table__item-name">
+                            <fest:value>v.name</fest:value>
+                        </td>
+                        <td  class="scoreboard__table__item-score">
+                            <fest:value>v.score</fest:value>
+                        </td>
+                    </tr>
+
+            </fest:each>
+        </table>
+    </div>
+</fest:template>
 

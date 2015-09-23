@@ -15,6 +15,7 @@ public class UserProfile {
     public UserProfile(@NotNull String name,@NotNull String pass) {
         this.username = name;
         this.password = pass;
+
     }
     public boolean checkPassword(@Nullable String pass){
         return pass != null && pass.equals(this.password);
@@ -37,5 +38,4 @@ public class UserProfile {
     public void setPassword(@NotNull String pass) {
         this.password = pass;
     }
-
 }

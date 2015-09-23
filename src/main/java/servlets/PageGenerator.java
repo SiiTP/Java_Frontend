@@ -11,7 +11,7 @@ import java.util.Map;
 
 
 public class PageGenerator {
-    private static final String HTML_DIR = "templates";
+    private static final String HTML_DIR = "public_html";
     @NotNull
     private static final Configuration  CFG = new Configuration();
 
@@ -20,7 +20,6 @@ public class PageGenerator {
         try {
             Template template = CFG.getTemplate(HTML_DIR + File.separator + filename);
             template.process(null, stream);
-            System.out.println("In page generator");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {

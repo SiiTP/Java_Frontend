@@ -1,1 +1,10 @@
+<?xml version="1.0"?>
+<fest:template xmlns:fest="http://fest.mail.ru">
+    <div align="center" class="menu">
+        <div class="menu__button-container"><a class="menu__button" href="#game">Game</a></div>
+        <div class="menu__button-container"><a class="menu__button" href="#login">Login</a></div>
+        <div class="menu__button-container" ><a class="menu__button" href="#scoreboard">Scoreboard</a></div>
+    </div>
 
+
+</fest:template>
