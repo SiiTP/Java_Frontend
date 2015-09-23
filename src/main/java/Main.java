@@ -12,7 +12,7 @@ import servlets.authorization.SignIn;
 import servlets.authorization.SignUp;
 
 public class Main {
-    public static final int PORT = 8000;
+    public static final int PORT = 8001;
 
     public static void main(String[] args) throws Exception {
         AccountService accountService = new AccountService();

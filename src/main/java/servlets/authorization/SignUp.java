@@ -25,10 +25,10 @@ public class SignUp extends HttpServlet {
     protected void doPost(@NotNull HttpServletRequest req,@NotNull HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("login");
         String password = req.getParameter("pass");
-        String email = req.getParameter("email");
 
-        if (username != null && password != null && email != null) {
-            UserProfile profile = new UserProfile(username,password,email);
+
+        if (username != null && password != null) {
+            UserProfile profile = new UserProfile(username,password);
             accountService.addUser(profile);
             resp.getWriter().println("you successfully registered!");
         }else{
