@@ -1,22 +1,22 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
     <div class="registration">
-        <form name="registration_form" method="post">
-            <p class="registration__input-line">
-                <h4 class="registration__input-line__header">Username</h4>
-                <input class="registration__input-line__input"
-                       type="text" name="username_reg" id="username_reg" placeholder="Enter your unique username"/>
+        <form id="registration-form" method="post">
+            <p class="input-line">
+                <label for="username" class="input-line__header">Username </label>
+                <input class="input-line__input" type="text" name="username" id="username"
+                       placeholder="Enter your unique username"/>
             </p>
-            <p class="registration__input-line">
-                <h4 class="registration__input-line__header">Password</h4>
-                <input class="registration__input-line__input"
-                       type="password" name="pass_reg" id="pass_reg" placeholder="Enter your password"/>
+            <p class="input-line">
+                <label for="password" class="input-line__header">Password </label>
+                <input class="input-line__input" type="password" name="password" id="password"
+                       placeholder="Enter your password"/>
             </p>
-            <p class="registration__input-line">
-                <h4 class="registration__input-line__header">Confirm</h4>
-                <input class="registration__input-line__input"
-                       type="password" name="pass-confirm_reg" id="pass_confirm_reg" placeholder="Confirm your password"/>
+            <p class="input-line">
+                <label for="confirm" class="input-line__header">Confirm</label>
+                    <input class="input-line__input" type="password" id="confirm"
+                           placeholder="Confirm your password"/>
             </p>
-            <button type="submit" class="registration__button-registration">Registration</button>
+            <button type="button" class="button button_registration">Registration</button>
         </form>
 
     </div>

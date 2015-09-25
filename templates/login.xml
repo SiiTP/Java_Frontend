@@ -1,17 +1,19 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
     <div class="login">
-        <form name="login_form" method="post">
-            <p class="login__input-line">
-                <h4 class="login__input-line__header">Username</h4>
-                <input class="login__input-line__input" type="text" name="username" id="username"/>
+        <form id="login-form" method="post">
+            <p class="input-line">
+                <label for="username" class="input-line__header">Username</label>
+                <input class="input-line__input" type="text" name="username" id="username"/>
             </p>
-            <p class="login__input-line">
-                <h4 class="login__input-line__header">Password</h4>
-                <input class="login__input-line__input" type="password" name="username" id="username"/>
+            <p class="input-line">
+                <label for="password" class="input-line__header">Password</label>
+                <input class="input-line__input" type="password" name="password" id="password"/>
             </p>
-            <button type="submit" class="login__button-login">Log In!</button>
+            <button type="button" class="button button_login">Log In!</button>
             <a class="login__registration-link" href="#registration">registration</a>
         </form>
+        <!-- костыль для бекенда -->
+        <button type="button" class="button button_logout">Log out</button>
     </div>
 </fest:template>
 

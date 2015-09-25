@@ -27,9 +27,9 @@ public class SignIn extends HttpServlet {
     @Override
     protected void doPost(@NotNull HttpServletRequest req, @NotNull HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("login");
-        String password = req.getParameter("pass");
+        String password = req.getParameter("password");
         HttpSession session = req.getSession();
-
+        System.out.println("In servlet");
         if(session != null){
             String sess = session.getId();
             boolean auth = false;

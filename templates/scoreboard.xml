@@ -1,19 +1,18 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="scores">
     <div class="scoreboard">
         <h1 align="center" class="scoreboard__header">Scoreboard</h1>
-        <table class="scoreboard__table" align="center" cellspacing="0">
-            <th class="scoreboard__table-header" width="70%">Username</th>
-            <th class="scoreboard__table-header" width="30%">Score</th>
+        <table class="table" align="center" cellspacing="0">
+            <th class="table-header" width="70%">Username</th>
+            <th class="table-header" width="30%">Score</th>
             <fest:each iterate="scores" index="i" value="v">
-                    <tr align="center" class="scoreboard__table__item">
-                        <td class="scoreboard__table__item-name">
+                    <tr align="center" class="table__item {i % 2 == 0 ? 'table__item_even' : 'table__item_odd'}">
+                        <td class="table__item__name">
                             <fest:value>v.name</fest:value>
                         </td>
-                        <td  class="scoreboard__table__item-score">
+                        <td class="table__item__score">
                             <fest:value>v.score</fest:value>
                         </td>
                     </tr>
-
             </fest:each>
         </table>
     </div>

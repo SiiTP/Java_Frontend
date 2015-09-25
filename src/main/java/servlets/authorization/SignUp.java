@@ -10,9 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by ivan on 21.09.15.
- */
 public class SignUp extends HttpServlet {
     @NotNull
     private AccountService accountService;

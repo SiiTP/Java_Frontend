@@ -1,7 +1,14 @@
 #page {
-    background: #ff9;
+    background: whitesmoke;
     height: 800px;
     color: #004;
+    font-family: "Arial", sans-serif;
+
+    /*font-family: cursive;*/
+}
+.button {
+    margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 /*MAIN PAGE*/
@@ -15,14 +22,12 @@
 }
 .menu__button {
     font-size: 36px;
-    font-style: italic;
-    font-family: cursive;
     color: #004;
     text-decoration: none;
 }
 .menu__button-container {
     border: solid 1px #003;
-    background: #ff4400;
+    background: #ff8;
     margin : auto;
     margin-bottom: 10px;
 }
@@ -34,28 +39,27 @@
     width: 350px;
     border: 1px solid #003;
 }
-.login__input-line {
-
-}
-.login__input-line__header {
-    width: 30%;
-    float: left;
-    margin: 0px 10px 0px 10px;
-}
-.login__input-line__input {
-    /*margin-right: 10px;*/
-    width: 60%;
-}
-.login__button-login {
-    margin-bottom: 10px;
-    margin-left: 10px;
-    width: 40%;
-}
 .login__registration-link {
     font-size:20px;
     color: #003;
     float: right;
     margin-right: 10px;
+}
+.input-line {
+}
+.input-line__header {
+    width: 30%;
+    float: left;
+    margin: 0px 10px 0px 10px;
+}
+.input-line__input {
+    width: 60%;
+}
+.button_login {
+    width: 60%;
+}
+.button_logout {
+    width: 94%;
 }
 
 /*REGISTRATION PAGE*/
@@ -65,21 +69,7 @@
     width: 350px;
     border: 1px solid #003;
 }
-.registration__input-line {
-
-}
-.registration__input-line__header {
-    width: 30%;
-    float: left;
-    margin: 0px 10px 0px 10px;
-}
-.registration__input-line__input {
-    margin-right: 10px;
-    width: 60%;
-}
-.registration__button-registration {
-    margin-bottom: 10px;
-    margin-left: 10px;
+.button_registration {
     width: 94%;
 }
 
@@ -95,15 +85,22 @@
     font-size: 36px;
 
 }
-.scoreboard__table {
+.table {
     width: 300px;
 }
-.scoreboard__table-header {
+.table-header {
     background: #f90;
 }
-.scoreboard__table__item {
+.table__item {
     margin: 10px;
     font-size: 20px;
     color: #003;
     background: #ff6;
 }
+.table__item_even {
+    background: #ff9;
+}
+.table__item_odd {
+    background: #ff5;
+}
+
