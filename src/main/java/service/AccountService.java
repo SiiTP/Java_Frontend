@@ -19,7 +19,12 @@ public class AccountService {
     public boolean isAuthorized(String session){
         return sessions.containsKey(session);
     }
-    public boolean authtorize(String username,String password,String session){
+
+    public boolean isAvailableName(@Nullable String name){
+        return !users.containsKey(name);
+    }
+
+    public boolean authtorize(@Nullable String username,@Nullable String password,@NotNull String session){
         UserProfile profile = getUser(username);
         boolean isOk = false;
         if(profile != null){
@@ -42,7 +47,12 @@ public class AccountService {
     public UserProfile getUser(@Nullable String username){
         return users.get(username);
     }
-
+    public int getRegisterdUsersCount(){
+        return users.size();
+    }
+    public int getLoggedUsersCount(){
+        return sessions.size();
+    }
     public void addSession(String session, UserProfile userProfile){
         if(!sessions.containsKey(session)){
            sessions.put(session,userProfile);

@@ -1,7 +1,7 @@
 #page {
     background: whitesmoke;
     height: 800px;
-    color: #004;
+    color: orangered;
     font-family: "Arial", sans-serif;
 
     /*font-family: cursive;*/
@@ -22,12 +22,12 @@
 }
 .menu__button {
     font-size: 36px;
-    color: #004;
+    color: orangered;
     text-decoration: none;
 }
 .menu__button-container {
     border: solid 1px #003;
-    background: #ff8;
+    background: #ff3;
     margin : auto;
     margin-bottom: 10px;
 }

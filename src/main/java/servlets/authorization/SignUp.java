@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class SignUp extends HttpServlet {
     @NotNull
@@ -20,16 +21,22 @@ public class SignUp extends HttpServlet {
 
     @Override
     protected void doPost(@NotNull HttpServletRequest req,@NotNull HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("login");
-        String password = req.getParameter("pass");
-        String email = req.getParameter("email");
-
-        if (username != null && password != null && email != null) {
-            UserProfile profile = new UserProfile(username,password,email);
-            accountService.addUser(profile);
-            resp.getWriter().println("you successfully registered!");
-        }else{
-            resp.getWriter().println("all fields required!");
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+        PrintWriter writer = resp.getWriter();
+        if(writer != null) {
+            boolean isAvailableName = accountService.isAvailableName(username);
+            if(isAvailableName) {
+                if (!username.equals("") && !password.equals("")) {
+                    UserProfile profile = new UserProfile(username, password);
+                    accountService.addUser(profile);
+                    writer.println("you successfully registered!");
+                } else {
+                    writer.println("all fields required!");
+                }
+            }else{
+                writer.println("you login have been already used");
+            }
         }
     }
 
