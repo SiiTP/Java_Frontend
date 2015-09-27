@@ -6,15 +6,20 @@
 
     /*font-family: cursive;*/
 }
+#for-event {
+    visibility: hidden;
+}
 .button {
     margin-left: 10px;
     margin-bottom: 10px;
+    padding: 3px;
+    color : orangered;
 }
 
 /*MAIN PAGE*/
 .menu {
     border: 1px solid #003;
-    width: 200px;
+    width: 250px;
     padding: 10px;
     padding-bottom: 0px;
     margin: auto;
@@ -23,12 +28,11 @@
 .menu__button {
     font-size: 36px;
     color: orangered;
-    text-decoration: none;
+    width: 90%;
+    margin: 0px;
 }
 .menu__button-container {
-    border: solid 1px #003;
-    background: #ff3;
-    margin : auto;
+    width: 100%;
     margin-bottom: 10px;
 }
 
@@ -58,9 +62,30 @@
 .button_login {
     width: 60%;
 }
-.button_logout {
-    width: 94%;
+
+/*LOGOUT PAGE*/
+.logout {
+    margin: auto;
+    width: 250px;
+    border: 1px solid #003;
 }
+.logout__info {
+
+    margin-left: 10px;
+
+}
+.button_logout {
+    width: 44%;
+}
+.logout__on-main-page {
+    /*background: linear-gradient(to top, #ff1, #ff9);*/
+    /*border: 1px solid orange;*/
+    /*border-radius: 3px;*/
+    width: 44%;
+}
+/*.logout__on-main-page:hover {*/
+    /*border-color: orangered;*/
+/*}*/
 
 /*REGISTRATION PAGE*/
 .registration {

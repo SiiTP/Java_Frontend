@@ -4,6 +4,7 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.jetbrains.annotations.NotNull;
 import service.AccountService;
 import servlets.admins.AdminServlet;
 import servlets.authorization.LogOut;
@@ -14,7 +15,7 @@ public class Main {
 
     private static final int PORT = 8000;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(@NotNull String[] args) throws Exception {
         AccountService accountService = new AccountService();
         int port = PORT;
         if (args.length == 1) {

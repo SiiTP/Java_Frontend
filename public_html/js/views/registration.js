@@ -1,3 +1,4 @@
+//форма регистрации
 define([
     'backbone',
     'tmpl/registration',
@@ -24,8 +25,6 @@ define([
         },
         onSubmit: function() {
             console.log("on submit registration view");
-            console.log($("#confirm").val());
-            console.log($("#password").val());
             if ($("#confirm").val() == $("#password").val()) {
                 this.model.onSubmit();
             } else {
@@ -33,10 +32,9 @@ define([
             }
         },
         show: function () {
-            // TODO
+
         },
         hide: function () {
-            // TODO
         }
 
     });

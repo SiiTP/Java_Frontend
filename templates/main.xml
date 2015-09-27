@@ -1,10 +1,26 @@
 <?xml version="1.0"?>
-<fest:template xmlns:fest="http://fest.mail.ru">
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <fest:var name="test">"2"</fest:var>
+    <!--fest:choose>
+        <fest:when test="1">
+            <fest:text>1</fest:text>
+        </fest:when>
+        <fest:when test="2">
+            <fest:text>2</fest:text>
+        </fest:when>
+        <fest:otherwise>
+            <fest:text>false</fest:text>
+        </fest:otherwise>
+    </fest:choose-->
     <div align="center" class="menu">
-        <div class="menu__button-container"><a class="menu__button" href="#game">Game</a></div>
-        <div class="menu__button-container"><a class="menu__button" href="#login">Login</a></div>
-        <div class="menu__button-container" ><a class="menu__button" href="#scoreboard">Scoreboard</a></div>
+        <div class="menu__button-container">
+            <button class="button menu__button" data-href="#game">Game</button>
+        </div>
+        <div class="menu__button-container">
+            <button class="button menu__button" data-href="#login">Login</button>
+        </div>
+        <div class="menu__button-container">
+            <button class="button menu__button" data-href="#scoreboard">Scoreboard</button>
+        </div>
     </div>
-
-
 </fest:template>

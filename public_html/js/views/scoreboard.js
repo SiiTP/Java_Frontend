@@ -1,3 +1,4 @@
+// топ 10 игроков
 define([
     'backbone',
     'tmpl/scoreboard',
@@ -35,7 +36,6 @@ define([
             };
 
             this.collection.sort('score');
-            this.render();
             //JSON.stringify(this.collection)
             //console.log(this.collection.toJSON());
         },

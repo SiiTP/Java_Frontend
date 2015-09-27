@@ -17,6 +17,9 @@ define([
                 data: data
             }).done(function(obj) {
                 console.log("OBJECT : " + obj);
+                location.href = "#login";
+                //TODO IF SUCCESS, INITIALIZE USER
+                //you successfully registered!
             });
         }
     });

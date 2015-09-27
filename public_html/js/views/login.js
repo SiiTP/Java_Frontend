@@ -1,3 +1,4 @@
+// форма входа в уч. запись
 define([
     'backbone',
     'tmpl/login',
@@ -9,41 +10,39 @@ define([
 ){
 
     var View = Backbone.View.extend({
-        el: 'div',
+        el: 'div#page',
         template: tmpl,
-        model: login,
+        model: new login(),
         events: {
-            "click .button_login" : "onLogin",
-            "click .button_logout" : "onLogout",
-            "change" : "onChange"
+            "click .button_login" : "onSubmit"
         },
         initialize: function () {
-            console.log("login initialize");
+            console.log("login view initialize");
+            //костыль
+            //$("#for-event").on("successLogin", this.onLogin);
         },
         render: function () {
-            console.log("login render");
+            console.log("login view render");
             this.$el.html(this.template());
         },
         show: function () {
-
+            console.log("login view show");
+            this.$el.show();
         },
         hide: function () {
-
+            console.log("login view hide");
+            this.$el.hide();
         },
-        onLogin: function(event) {
+        onSubmit: function() {
             console.log("backbone view login click event");
-            this.model.onSubmit();
+            this.model.trigger("submit");
         },
-        onLogout: function() {
-            console.log("backbone view logout click event");
-            $.ajax({
-                type: "POST",
-                url: "/logout"
-            }).done(function(obj) {
-                console.log("OBJECT : " + obj);
-            });
-        }
+        onLogin: function(event, data) {
+            console.log("backbone view success login.");
+            //this.user = new User();
 
+            //this.user.trigger("successLogin", [data]);
+        }
     });
 
     return new View();

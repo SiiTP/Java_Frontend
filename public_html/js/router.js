@@ -5,6 +5,7 @@ define(['backbone'], function(Backbone){
             'scoreboard': 'scoreboardAction',
             'game': 'gameAction',
             'login': 'loginAction',
+            'logout': 'logoutAction',
             'registration': 'registrationAction',
             '*main': 'mainAction',
             'default': 'defaultActions'
@@ -36,6 +37,13 @@ define(['backbone'], function(Backbone){
                 view.render();
             });
             console.log("login action");
+        },
+        logoutAction: function () {
+            require(['views/logout'],function(view){
+                //view.el = '#page';
+                view.render();
+            });
+            console.log("logout action");
         },
         registrationAction: function () {
             require(['views/registration'],function(view){
