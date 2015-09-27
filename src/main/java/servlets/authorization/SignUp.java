@@ -1,6 +1,7 @@
 package servlets.authorization;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
 import service.AccountService;
 import service.UserProfile;
 
@@ -27,20 +28,28 @@ public class SignUp extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         PrintWriter writer = resp.getWriter();
-        if(writer != null) {
-            boolean isAvailableName = accountService.isAvailableName(username);
-            if(isAvailableName) {
-                if (!username.equals("") && !password.equals("")) {
-                    UserProfile profile = new UserProfile(username, password);
-                    accountService.addUser(profile);
-                    writer.println("you successfully registered!");
-                } else {
-                    writer.println("all fields required!");
-                }
-            }else{
-                writer.println("you login have been already used");
+        JSONObject responseJSON = new JSONObject();
+
+        boolean isAvailableName = accountService.isAvailableName(username);
+        if(isAvailableName) {
+            if (username != null && password != null && !username.isEmpty() && !password.isEmpty()) {
+                UserProfile profile = new UserProfile(username, password);
+                accountService.addUser(profile);
+                responseJSON.put("success", "true");
+                responseJSON.put("message", "you successfully registered!");
+
+            } else {
+                responseJSON.put("success", "false");
+                responseJSON.put("message", "all fields required!");
             }
+        }else{
+            responseJSON.put("success", "false");
+            responseJSON.put("message", "you login have been already used");
         }
+        if(writer != null) {
+            writer.println(responseJSON.toString());
+        }
+
     }
 
 }

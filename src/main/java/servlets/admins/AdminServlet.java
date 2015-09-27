@@ -42,7 +42,6 @@ public class AdminServlet extends HttpServlet {
         resp.setContentType("text/html; charset=UTF-8");
         PrintWriter writer = resp.getWriter();
         if(writer!=null) {
-
             if (shutdown!= null && !shutdown.isEmpty()) {
                 try {
                     int shut = Integer.parseInt(shutdown);
