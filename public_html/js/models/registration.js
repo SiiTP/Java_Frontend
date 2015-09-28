@@ -16,8 +16,13 @@ define([
                 url: "/signup",
                 data: data
             }).done(function(obj) {
-                console.log("OBJECT : " + obj);
-                location.href = "#login";
+                console.log("SERVER ANSWER : " + obj);
+                var answer = JSON.parse(obj);
+                if (answer.success) {
+                    location.href = "#login";
+                } else {
+                    console.log(answer.message);
+                }
                 //TODO IF SUCCESS, INITIALIZE USER
                 //you successfully registered!
             });

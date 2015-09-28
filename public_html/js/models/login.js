@@ -18,17 +18,18 @@ define([
                 url: "/signin",
                 data: loginForm.serialize()
             }).done(function(obj) {
-                console.log("SERVER : " + obj);
-                var loginData = {"username" : $("#username").val(), "password":$("#password").val()};
-                auth_user.name = loginData.username;
-                auth_user.password = loginData.password;
-                auth_user.logged = true;
-                location.href = "#logout";
+                console.log("SERVER ANSWER : " + obj);
+                var answer = JSON.parse(obj);
+                if (answer.success) {
+                    var loginData = {"username" : $("#username").val(), "password":$("#password").val()};
+                    auth_user.name = loginData.username;
+                    auth_user.password = loginData.password;
+                    auth_user.logged = true;
+                    location.href = "#logout";
+                } else {
+                    console.log(answer.message);
+                }
                 //TODO get user score from database in the future
-                //Костыль
-                //$("#for-event").trigger("successLogin", [loginData]);
-                //TODO  IF SUCCESS, INITIALIZE USER MODEL
-                //you successfully have been logined in!
             });
         }
     });

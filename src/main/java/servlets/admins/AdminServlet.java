@@ -42,19 +42,20 @@ public class AdminServlet extends HttpServlet {
         resp.setContentType("text/html; charset=UTF-8");
         PrintWriter writer = resp.getWriter();
         if(writer!=null) {
-
             if (shutdown!= null && !shutdown.isEmpty()) {
                 try {
                     int shut = Integer.parseInt(shutdown);
                     writer.println("выключение сервера через " + shut + " ms");
-                    scheduler.schedule(() -> {
-                        try {
-                            server.stop();
-                            System.exit(0);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    },shut, TimeUnit.MILLISECONDS);
+                    if (scheduler != null) {
+                        scheduler.schedule(() -> {
+                           try {
+                               server.stop();
+                               System.exit(0);
+                           } catch (Exception e) {
+                               e.printStackTrace();
+                           }
+                       },shut, TimeUnit.MILLISECONDS);
+                    }
 
                 } catch (NumberFormatException e) {
                     e.printStackTrace();

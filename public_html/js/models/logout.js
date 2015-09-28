@@ -16,8 +16,15 @@ define([
                 type: "POST",
                 url: "/logout"
             }).done(function(obj) {
-                console.log("SERVER : " + obj);
-                auth_user.initialize(); // сброс данных в моделе
+                console.log("SERVER ANSWER : " + obj);
+                var answer = JSON.parse(obj);
+                if (answer.success) {
+                    auth_user.uninitialize();
+                    console.log("auth_user uninitializing. " + auth_user.name);
+                    location.href = "#main";
+                } else {
+                    console.log(answer.message);
+                }
 
                 //TODO UNINITIALIZE USER WITH SUCCESS
             });

@@ -18,7 +18,7 @@ define([
             //this.listenTo(this.model, "change", this.render);
         },
         render: function () {
-            console.log("main render");
+            console.log("main render.");
             var data = {"isLogged": auth_user.isLogged()};
             this.$el.html(this.template(data));
             //location.href = $("menu__button").attr('href-data');
@@ -34,7 +34,6 @@ define([
         },
         onClick: function(event) {
             //console.log(event.toElement.attributes.getNamedItem('data-href').nodeValue);
-            console.log("click");
             location.href = event.toElement.attributes.getNamedItem('data-href').nodeValue
         }
 

@@ -1,6 +1,7 @@
 package servlets.authorization;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
 import service.AccountService;
 
 import javax.servlet.ServletException;
@@ -26,17 +27,24 @@ public class LogOut extends HttpServlet {
     protected void doPost(@NotNull HttpServletRequest req,@NotNull HttpServletResponse resp) throws ServletException, IOException {
         HttpSession httpSession = req.getSession();
         PrintWriter writer = resp.getWriter();
-        if(writer != null) {
-            if (httpSession != null) {
-                String session = httpSession.getId();
-                boolean auth = accountService.isAuthorized(session);
-                if (auth) {
-                    accountService.deleteSession(session);
-                    writer.println("you have been logged out!");
-                } else {
-                    writer.println("you are not being logged in!");
-                }
+
+        JSONObject responseJSON = new JSONObject();
+        if (httpSession != null) {
+            String session = httpSession.getId();
+            boolean auth = accountService.isAuthorized(session);
+            if (auth) {
+                accountService.deleteSession(session);
+                responseJSON.put("success", true);
+                responseJSON.put("message", "you have been logged out!");
+
+            } else {
+                responseJSON.put("success", false);
+                responseJSON.put("message", "you are not being logged in!");
+
             }
+        }
+        if(writer != null) {
+            writer.println(responseJSON.toString());
         }
     }
 }

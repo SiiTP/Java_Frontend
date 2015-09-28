@@ -2,6 +2,7 @@ package servlets.authorization;
 
 import org.jetbrains.annotations.NotNull;
 
+import org.json.JSONObject;
 import service.AccountService;
 import service.UserProfile;
 
@@ -33,26 +34,31 @@ public class SignIn extends HttpServlet {
 
         HttpSession httpSession = req.getSession();
         PrintWriter writer = resp.getWriter();
-        if(writer != null) {
-            if (httpSession != null) {
-                String session = httpSession.getId();
-                boolean auth = accountService.isAuthorized(session);
+        JSONObject responseJSON = new JSONObject();
+        if (httpSession != null) {
+            String session = httpSession.getId();
+            boolean auth = accountService.isAuthorized(session);
+            if (auth) {
+                UserProfile profile = accountService.getUserBySession(session);
+                if(profile != null) {
+                    responseJSON.put("success", false);
+                    responseJSON.put("message", "you have already auth as" + profile.getUsername());
+                }
+            } else {
+                auth = accountService.authtorize(username, password, session);
                 if (auth) {
-                    UserProfile profile = accountService.getUserBySession(session);
-                    if(profile != null) {
-                        writer.println("you have already auth as" + profile.getUsername());
-                    }
+                    responseJSON.put("success", true);
+                    responseJSON.put("message","you successfully have been logined in!");
                 } else {
-                    auth = accountService.authtorize(username, password, session);
-                    if (auth) {
-                        writer.println("you successfully have been logined in!");
-                    } else {
-                        writer.println("wrong login or password");
-
-                    }
+                    responseJSON.put("success", false);
+                    responseJSON.put("message", "wrong login or password");
                 }
             }
         }
+        if(writer != null) {
+            writer.println(responseJSON.toString());
+        }
+
     }
 
 }
