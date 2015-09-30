@@ -1,0 +1,9 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="logout">
+        <p class="logout__info">Вы вошли, как:<fest:space/><span><fest:value>data.name</fest:value></span></p>
+        <p class="logout__info">Ваш счет :<fest:space/><span><fest:value>data.score</fest:value></span></p>
+        <button type="button" class="button button_logout">Log out</button>
+        <button class="button logout__on-main-page" data-href="#main">main page</button>
+    </div>
+</fest:template>
+

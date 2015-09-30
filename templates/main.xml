@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <!--fest:value>data.isLogged</fest:value-->
+
+    <div align="center" class="menu">
+        <div class="menu__button-container">
+            <button class="button menu__button" data-href="#game">Game</button>
+        </div>
+        <fest:choose>
+            <fest:when test="data.isLogged">
+                <div class="menu__button-container">
+                    <button class="button menu__button" data-href="#logout">Logout</button>
+                </div>
+            </fest:when>
+            <fest:when test="!data.isLogged">
+                <div class="menu__button-container">
+                    <button class="button menu__button" data-href="#login">Login</button>
+                </div>
+            </fest:when>
+        </fest:choose>
+        <div class="menu__button-container">
+            <button class="button menu__button" data-href="#scoreboard">Scoreboard</button>
+        </div>
+    </div>
+</fest:template>

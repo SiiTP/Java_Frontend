@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html><head>
+    <meta charset="utf-8" />
+    <title>V2 variant</title>
+    <link href="css/main.css" rel="stylesheet"/>
+</head><body>
+    <div id="page"></div>
+    <span id="for-event"></span>
+    <script data-main="js/main" src="js/lib/require.js"></script>
+
+    <!--script data-main="js/main" src="js/lib/require.js"></script>
+    <script>
+        define('input', function() {
+            var View = Backbone.View.extend({
+                tagName: 'input',
+                events: {
+                    'keypress' : 'onChange'
+                },
+                initialize: function() {
+                    _.bindAll(this, 'onChange');
+                },
+                onChange: function() {
+                    var str = "peremennaya";
+                    this.trigger('change', this.el.value);
+                    console.log("in input onChange. this.el.value is (" + this.el.value + ")");
+                }
+            });
+            return View;
+        });
+        define('form', ['input'], function(Input) {
+            var View = Backbone.View.extend({
+                el: 'div',
+                initialize: function() {
+                    _.bindAll(this, 'render');
+                    this.el.innerHTML = '<span class="js-text"></span>';
+                    this.input = new Input();
+                    this.input.on('change', this.render);
+                    this.el.appendChild(this.input.el);
+                },
+
+                render: function(value) {
+                    this.$el.find('.js-text').html(value);
+                    console.log("in form render. Value is (" + value + ");");
+                }
+            });
+            return View;
+        });
+
+        require(['form'], function(form) {
+            new form({
+                el : "#page"
+            });
+        });
+        console.log("in the end");
+    </script-->
+</body></html>

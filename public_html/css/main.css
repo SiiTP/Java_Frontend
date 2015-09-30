@@ -1,0 +1,131 @@
+#page {
+    background: whitesmoke;
+    height: 800px;
+    color: orangered;
+    font-family: "Arial", sans-serif;
+
+    /*font-family: cursive;*/
+}
+#for-event {
+    visibility: hidden;
+}
+.button {
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 3px;
+    color : orangered;
+}
+
+/*MAIN PAGE*/
+.menu {
+    border: 1px solid #003;
+    width: 250px;
+    padding: 10px;
+    padding-bottom: 0px;
+    margin: auto;
+
+}
+.menu__button {
+    font-size: 36px;
+    color: orangered;
+    width: 90%;
+    margin: 0px;
+}
+.menu__button-container {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/*LOGIN PAGE*/
+.login {
+    color: #003;
+    margin: auto;
+    width: 350px;
+    border: 1px solid #003;
+}
+.login__registration-link {
+    font-size:20px;
+    color: #003;
+    float: right;
+    margin-right: 10px;
+}
+.input-line {
+}
+.input-line__header {
+    width: 30%;
+    float: left;
+    margin: 0px 10px 0px 10px;
+}
+.input-line__input {
+    width: 60%;
+}
+.button_login {
+    width: 60%;
+}
+
+/*LOGOUT PAGE*/
+.logout {
+    margin: auto;
+    width: 250px;
+    border: 1px solid #003;
+}
+.logout__info {
+
+    margin-left: 10px;
+
+}
+.button_logout {
+    width: 44%;
+}
+.logout__on-main-page {
+    /*background: linear-gradient(to top, #ff1, #ff9);*/
+    /*border: 1px solid orange;*/
+    /*border-radius: 3px;*/
+    width: 44%;
+}
+/*.logout__on-main-page:hover {*/
+    /*border-color: orangered;*/
+/*}*/
+
+/*REGISTRATION PAGE*/
+.registration {
+    color: #003;
+    margin: auto;
+    width: 350px;
+    border: 1px solid #003;
+}
+.button_registration {
+    width: 94%;
+}
+
+/*SCOREBOARD PAGE*/
+.scoreboard {
+    width: 300px;
+    margin: auto;
+    border: solid 1px #003;
+    font-style: italic;
+    font-family: cursive;
+}
+.scoreboard__header {
+    font-size: 36px;
+
+}
+.table {
+    width: 300px;
+}
+.table-header {
+    background: #f90;
+}
+.table__item {
+    margin: 10px;
+    font-size: 20px;
+    color: #003;
+    background: #ff6;
+}
+.table__item_even {
+    background: #ff9;
+}
+.table__item_odd {
+    background: #ff5;
+}
+
