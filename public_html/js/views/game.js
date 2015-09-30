@@ -11,7 +11,6 @@ define([
         template: tmpl,
         initialize: function () {
             console.log("game initialize");
-            this.render();
         },
         render: function () {
             console.log("game render");

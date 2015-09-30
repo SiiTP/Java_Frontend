@@ -2,12 +2,10 @@
     background: whitesmoke;
     height: 800px;
     color: orangered;
-    font-family: "Arial", sans-serif;
+    font-family: Courier;
+    font-weight: lighter;
 
     /*font-family: cursive;*/
-}
-#for-event {
-    visibility: hidden;
 }
 .button {
     margin-left: 10px;
@@ -30,6 +28,9 @@
     color: orangered;
     width: 90%;
     margin: 0px;
+}
+.menu__button_disabled {
+    color: darkgray;
 }
 .menu__button-container {
     width: 100%;
@@ -60,7 +61,7 @@
     width: 60%;
 }
 .button_login {
-    width: 60%;
+    width: 50%;
 }
 
 /*LOGOUT PAGE*/

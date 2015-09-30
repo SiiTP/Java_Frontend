@@ -20,7 +20,6 @@ define([
                     //TODO ссылка на конкретный объект в классе, пока user-singleton нормально
                     auth_user.logged = true;
                     auth_user.name = answer.username;
-                    console.log(this.logged);
                     //TODO присваивать счет
                 }
             });

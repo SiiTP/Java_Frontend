@@ -21,6 +21,8 @@ define([
             console.log("main render.");
             var data = {"isLogged": auth_user.isLogged()};
             this.$el.html(this.template(data));
+            var but = $(".menu__button_disabled").prop("disabled", true);
+            console.log("Button : " + but);
             //location.href = $("menu__button").attr('href-data');
             //console.log("set locations");
         },
@@ -34,7 +36,7 @@ define([
         },
         onClick: function(event) {
             //console.log(event.toElement.attributes.getNamedItem('data-href').nodeValue);
-            location.href = event.toElement.attributes.getNamedItem('data-href').nodeValue
+            location.href = event.currentTarget.attributes.getNamedItem('data-href').value;
         }
 
     });

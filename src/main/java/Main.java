@@ -32,7 +32,6 @@ public class Main {
         context.addServlet(new ServletHolder(new LoginInfo(accountService)), "/logininfo");
         context.addServlet(new ServletHolder(new AdminServlet(server, accountService)), "/admin");
         ResourceHandler resourceHandler = new ResourceHandler();
-        //resourceHandler.setDirectoriesListed(true);
         resourceHandler.setResourceBase("public_html");
         HandlerList list = new HandlerList();
         list.setHandlers(new Handler[]{resourceHandler, context});

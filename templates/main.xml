@@ -4,7 +4,7 @@
 
     <div align="center" class="menu">
         <div class="menu__button-container">
-            <button class="button menu__button" data-href="#game">Game</button>
+            <button class="button menu__button {data.isLogged == true ? '' : 'menu__button_disabled'}" data-href="#game">Game</button>
         </div>
         <fest:choose>
             <fest:when test="data.isLogged">
