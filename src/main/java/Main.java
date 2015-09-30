@@ -15,7 +15,7 @@ public class Main {
 
     private static final int PORT = 8000;
 
-    public static void main(String[] args) throws NumberFormatException {
+    public static void main(String[] args) throws Exception, NumberFormatException, InterruptedException {
         AccountService accountService = new AccountService();
         int port = PORT;
         if (args.length == 1) {
@@ -36,14 +36,8 @@ public class Main {
 
 
         server.setHandler(list);
-        try {
-            server.start();
-            server.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        server.start();
+        server.join();
 
     }
 }
