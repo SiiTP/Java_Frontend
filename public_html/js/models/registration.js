@@ -24,7 +24,6 @@ define([
                     console.log(answer.message);
                 }
                 //TODO IF SUCCESS, INITIALIZE USER
-                //you successfully registered!
             });
         }
     });
