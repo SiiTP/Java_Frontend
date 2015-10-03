@@ -1,5 +1,6 @@
 package game.serverLevels;
 
+import exceptions.RoomFullException;
 import game.rooms.Room;
 import org.jetbrains.annotations.Nullable;
 import service.AccountService;
@@ -18,32 +19,57 @@ public class TopLevelGameServer {
     public TopLevelGameServer(AccountService accountService) {
         this.accountService = accountService;
     }
-    public Room joinUser(Room room, UserProfile profile){
-        return null;
+    public Room joinRoom(String roomname,String password, String userSession) throws RoomFullException {
+        UserProfile profile = accountService.getUserBySession(userSession);
+        Room room = null;
+        if(profile != null) {
+            if (rooms.containsKey(roomname)) {
+                if (profile.getCurrentroom() == null) {
+                    room = rooms.get(roomname);
+                    if (room.isRoomHasPass()) {
+                        if (password.equals(room.getPassword())) {
+                            room.addUser(profile);
+                            profile.setCurrentroom(roomname);
+                        }
+                    } else {
+                        room.addUser(profile);
+                        profile.setCurrentroom(roomname);
+                    }
+                }
+
+            }
+        }
+        return room;
     }
-    public Room deleteUser(Room room, UserProfile profile){
+    public Room deleteUser(Room room, String userSession){
         return null;
     }
     public Map<String,Room> getRoomsList(){
         return rooms;
     }
     @Nullable
-    public Room createRoom(String session,String roomname,String password) {
+    public Room createRoom(String session,String roomname,String password) throws RoomFullException {
         UserProfile profile = accountService.getUserBySession(session);
         Room room = null;
-        if(!rooms.containsKey(roomname)){
-            if(password == null){
-                room = new Room(roomname,profile.getUsername());
-            }else{
-                room = new Room(roomname,password,profile.getUsername());
-            }
-            room.addUser(profile);
+        if(profile!= null && profile.getCurrentroom() == null) {
+            if (!rooms.containsKey(roomname)) {
+                if (password == null || password.isEmpty()) {
+                    room = new Room(roomname, profile);
+                } else {
+                    room = new Room(roomname, password, profile);
+                }
+                room.addUser(profile);
 
-            rooms.put(roomname,room);
+                rooms.put(roomname, room);
+                profile.setCurrentroom(roomname);
+            }
         }
         return room;
     }
-    public boolean isCorrectPlayer(String session,String roomName){
+    public boolean isAuthorizedPlayer(String session){
+        return accountService.isAuthorized(session);
+    }
+    public boolean isCorrectPlayerInGame(String session,String roomName){
         boolean auth = accountService.isAuthorized(session);
         if(auth) {
             UserProfile profile = accountService.getUserBySession(session);

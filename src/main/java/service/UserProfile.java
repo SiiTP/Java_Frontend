@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
+import java.util.Map;
+
 /**
  * Created by ivan on 21.09.15.
  */
@@ -13,6 +15,7 @@ public class UserProfile {
     @NotNull
     private String password;
 
+    private String currentroom;
     public UserProfile(@NotNull String name,@NotNull String pass) {
         this.username = name;
         this.password = pass;
@@ -25,6 +28,14 @@ public class UserProfile {
     @NotNull
     public String getUsername() {
         return username;
+    }
+
+    public String getCurrentroom() {
+        return currentroom;
+    }
+
+    public void setCurrentroom(String currentroom) {
+        this.currentroom = currentroom;
     }
 
     public void setUsername(@NotNull String name) {

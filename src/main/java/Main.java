@@ -12,6 +12,7 @@ import servlets.authorization.LogOut;
 import servlets.authorization.SignIn;
 import servlets.authorization.SignUp;
 import servlets.joinGame.CreateGame;
+import servlets.joinGame.JoinGame;
 
 public class Main {
 
@@ -33,6 +34,7 @@ public class Main {
         context.addServlet(new ServletHolder(new LogOut(accountService)), "/logout");
         context.addServlet(new ServletHolder(new AdminServlet(server, accountService)), "/admin");
         context.addServlet(new ServletHolder(new CreateGame(topLevelGameServer)), "/create");
+        context.addServlet(new ServletHolder(new JoinGame(topLevelGameServer)), "/join");
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setResourceBase("public_html");
         HandlerList list = new HandlerList();

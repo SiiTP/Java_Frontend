@@ -1,5 +1,6 @@
 package game.rooms;
 
+import exceptions.RoomFullException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import service.UserProfile;
@@ -13,32 +14,57 @@ import java.util.List;
  */
 public class Room {
     private String roomName;
-    private String creatorUser;//1 -1 userprofile
+    private UserProfile creatorUser;//1 -1 userprofile
     private String roomPassword;
     private Date created;
     private Date finished;
+    private String password;
     private Integer playersLimit;
     private List<UserProfile> users = new ArrayList<>();//??? лучше сделать связь от профиля к new профилю игровому
     private String type;
 
 
-    public Room(String roomName, String creatorUser) {
+    public boolean isFull(){
+        return users.size() == playersLimit;
+    }
+    public Room(String roomName, UserProfile creatorUser) {
         this.roomName = roomName;
         this.creatorUser = creatorUser;
         this.roomPassword = roomPassword;
         created = new Date();
+        playersLimit = 10;
     }
 
-    public Room(String roomName, String roomPassword,String creator) {
+    public Room(String roomName, String roomPassword,UserProfile creator) {
         this.roomName = roomName;
         this.roomPassword = roomPassword;
         this.creatorUser = creator;
         created = new Date();
+        playersLimit = 10;
     }
+    public boolean isRoomHasPass(){
+        return password != null;
+    }
+
+    public Integer getPlayersLimit() {
+        return playersLimit;
+    }
+
+    public void setPlayersLimit(Integer playersLimit) {
+        this.playersLimit = playersLimit;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     public boolean checkUser(UserProfile user){
         return users.contains(user);
     }
-    public void addUser(UserProfile profile){
+    public void addUser(UserProfile profile) throws RoomFullException {
+        if(isFull()){
+            throw new RoomFullException(getPlayersLimit());
+        }
         users.add(profile);
     }
     public JSONObject getJsonRoom(){
@@ -52,4 +78,7 @@ public class Room {
         return object;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
