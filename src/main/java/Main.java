@@ -1,3 +1,4 @@
+import game.serverLevels.TopLevelGameServer;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -10,6 +11,7 @@ import servlets.admins.AdminServlet;
 import servlets.authorization.LogOut;
 import servlets.authorization.SignIn;
 import servlets.authorization.SignUp;
+import servlets.joinGame.CreateGame;
 
 public class Main {
 
@@ -17,6 +19,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception, NumberFormatException, InterruptedException {
         AccountService accountService = new AccountService();
+        TopLevelGameServer topLevelGameServer = new TopLevelGameServer(accountService);
         int port = PORT;
         if (args.length == 1) {
             String portString = args[0];
@@ -29,6 +32,7 @@ public class Main {
         context.addServlet(new ServletHolder(new SignUp(accountService)),"/signup");
         context.addServlet(new ServletHolder(new LogOut(accountService)), "/logout");
         context.addServlet(new ServletHolder(new AdminServlet(server, accountService)), "/admin");
+        context.addServlet(new ServletHolder(new CreateGame(topLevelGameServer)), "/create");
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setResourceBase("public_html");
         HandlerList list = new HandlerList();

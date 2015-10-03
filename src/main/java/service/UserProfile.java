@@ -2,6 +2,7 @@ package service;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.json.JSONObject;
 
 /**
  * Created by ivan on 21.09.15.
@@ -37,5 +38,10 @@ public class UserProfile {
 
     public void setPassword(@NotNull String pass) {
         this.password = pass;
+    }
+    public JSONObject getJson(){
+        JSONObject object = new JSONObject();
+        object.put("name",username);
+        return object;
     }
 }
