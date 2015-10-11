@@ -27,13 +27,13 @@ public class TopLevelGameServer {
                 if (profile.getCurrentroom() == null) {
                     room = rooms.get(roomname);
                     if (room.isRoomHasPass()) {
-                        if (password.equals(room.getPassword())) {
+                        if (password != null && password.equals(room.getPassword())) {
                             room.addUser(profile);
-                            profile.setCurrentroom(roomname);
+                            profile.setCurrentroom(room);
                         }
                     } else {
                         room.addUser(profile);
-                        profile.setCurrentroom(roomname);
+                        profile.setCurrentroom(room);
                     }
                 }
 
@@ -41,6 +41,11 @@ public class TopLevelGameServer {
         }
         return room;
     }
+
+    public void setRooms(Map<String, Room> rooms) {
+        this.rooms = rooms;
+    }
+
     public Room deleteUser(Room room, String userSession){
         return null;
     }
@@ -61,7 +66,7 @@ public class TopLevelGameServer {
                 room.addUser(profile);
 
                 rooms.put(roomname, room);
-                profile.setCurrentroom(roomname);
+                profile.setCurrentroom(room);
             }
         }
         return room;

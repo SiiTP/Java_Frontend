@@ -37,7 +37,7 @@ public class CreateGame extends HttpServlet {
                     resp.getWriter().println("something went wrong!");
                 }
             }else{
-                resp.getWriter().println("wrooooong!");
+                resp.getWriter().println("no auth user!");
             }
         } catch (RoomFullException e) {
             e.printStackTrace();

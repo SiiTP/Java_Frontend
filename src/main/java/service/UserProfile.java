@@ -1,5 +1,6 @@
 package service;
 
+import game.rooms.Room;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
@@ -15,7 +16,7 @@ public class UserProfile {
     @NotNull
     private String password;
 
-    private String currentroom;
+    private Room currentroom;
     public UserProfile(@NotNull String name,@NotNull String pass) {
         this.username = name;
         this.password = pass;
@@ -30,11 +31,11 @@ public class UserProfile {
         return username;
     }
 
-    public String getCurrentroom() {
+    public Room getCurrentroom() {
         return currentroom;
     }
 
-    public void setCurrentroom(String currentroom) {
+    public void setCurrentroom(Room currentroom) {
         this.currentroom = currentroom;
     }
 

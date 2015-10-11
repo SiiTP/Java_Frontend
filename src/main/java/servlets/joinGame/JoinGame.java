@@ -29,9 +29,7 @@ public class JoinGame extends HttpServlet {
         Room room = null;
         try {
             if (auth) {
-                if (password == null || password.isEmpty()) {
-                    room = gameServer.joinRoom(roomName, password, session);
-                }
+                room = gameServer.joinRoom(roomName, password, session);
             }
             if (room != null) {
                 resp.getWriter().println(room.getJsonRoom());

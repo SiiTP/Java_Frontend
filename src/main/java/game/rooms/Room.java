@@ -15,7 +15,6 @@ import java.util.List;
 public class Room {
     private String roomName;
     private UserProfile creatorUser;//1 -1 userprofile
-    private String roomPassword;
     private Date created;
     private Date finished;
     private String password;
@@ -30,14 +29,13 @@ public class Room {
     public Room(String roomName, UserProfile creatorUser) {
         this.roomName = roomName;
         this.creatorUser = creatorUser;
-        this.roomPassword = roomPassword;
         created = new Date();
         playersLimit = 10;
     }
 
     public Room(String roomName, String roomPassword,UserProfile creator) {
         this.roomName = roomName;
-        this.roomPassword = roomPassword;
+        this.password = roomPassword;
         this.creatorUser = creator;
         created = new Date();
         playersLimit = 10;
@@ -77,7 +75,7 @@ public class Room {
         object.put("users",(Object)array);
         return object;
     }
-
+    public int getUsersCount() {return users.size();}
     public void setPassword(String password) {
         this.password = password;
     }
