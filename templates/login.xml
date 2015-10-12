@@ -4,18 +4,18 @@
             <div class="input-field">
                 <p class="input-line">
                     <label for="username" class="input-line__header">Username</label>
-                    <input class="input-line__input" type="text" name="username" id="username"/>
+                    <input class="input-line__input login__input-line__input__username" type="text" name="username" id="username"/>
                 </p>
-                <div class="validation-info">заполните данное поле чем нибудь пожалуйста</div>
-                <div class="line"> </div>
+                <div class="validation-info login__username__validation-info">Введите ваше имя</div>
+                <div class="line login__username__line"> </div>
             </div>
             <div class="input-field">
                 <p class="input-line">
                     <label for="password" class="input-line__header">Password</label>
-                    <input class="input-line__input" type="password" name="password" id="password"/>
+                    <input class="input-line__input login__input-line__input__password" type="password" name="password" id="password"/>
                 </p>
-                <div class="validation-info">заполните данное поле чем нибудь пожалуйста</div>
-                <div class="line"> </div>
+                <div class="validation-info login__password__validation-info">заполните данное поле чем нибудь пожалуйста</div>
+                <div class="line login__password__line"> </div>
             </div>
             <div class="login__buttons-container">
                 <button type="button" class="button login__buttons-container__button">Log In!</button>

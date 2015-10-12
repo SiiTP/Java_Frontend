@@ -15,7 +15,7 @@
                            type="text" name="username" id="username"/>
                 </p>
                 <div class="validation-info registration__username__validation-info">
-                    Введите ваш логин. От 4 до 9 прописных латинских букв</div>
+                    Введите ваш логин. От 4 до 9 латинских букв</div>
                 <div class="line registration__username__line"> </div>
             </div>
             <div class="input-field">

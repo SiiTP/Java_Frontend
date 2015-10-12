@@ -49,7 +49,7 @@ define([
             //console.log(attrs);
             if (attrs.username == "") {
                 this.usernameStatus.status = "empty";
-                this.usernameStatus.message = "Введите ваш логин. От 4 до 9 прописных латинских букв";
+                this.usernameStatus.message = "Введите ваш логин. От 4 до 9 латинских букв";
             }
             if (attrs.password == "") {
                 this.passwordStatus.status = "empty";
