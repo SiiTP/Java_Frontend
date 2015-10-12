@@ -14,7 +14,7 @@ define([
         template: tmpl,
         model: new login(),
         events: {
-            "click .button_login" : "onSubmit"
+            "click .login__buttons-container__button" : "onSubmit"
         },
         initialize: function () {
             console.log("login view initialize");
@@ -36,12 +36,6 @@ define([
         onSubmit: function() {
             console.log("backbone view login click event");
             this.model.trigger("submit");
-        },
-        onLogin: function(event, data) {
-            console.log("backbone view success login.");
-            //this.user = new User();
-
-            //this.user.trigger("successLogin", [data]);
         }
     });
 

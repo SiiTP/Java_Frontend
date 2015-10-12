@@ -34,6 +34,12 @@ define([
         },
         isLogged: function() {
             return this.logged;
+        },
+        getScore: function() {
+            return this.score;
+        },
+        getName: function() {
+            return this.name;
         }
     });
     return Model;
