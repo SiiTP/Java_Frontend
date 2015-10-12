@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import service.AccountService;
 import servlets.admins.AdminServlet;
 import servlets.authorization.LogOut;
+import servlets.authorization.LoginInfo;
 import servlets.authorization.SignIn;
 import servlets.authorization.SignUp;
 
@@ -31,6 +32,7 @@ public class Main {
         context.addServlet(new ServletHolder(new SignIn(accountService)), "/signin");
         context.addServlet(new ServletHolder(new SignUp(accountService)),"/signup");
         context.addServlet(new ServletHolder(new LogOut(accountService)), "/logout");
+        context.addServlet(new ServletHolder(new LoginInfo(accountService)), "/logininfo");
         context.addServlet(new ServletHolder(new AdminServlet(server, accountService)), "/admin");
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setResourceBase("public_html");

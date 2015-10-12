@@ -9,7 +9,20 @@ define([
         score: 0,
         logged: false,
         initialize: function() {
-
+            console.log("user model initialize");
+            $.ajax({
+                type: "POST",
+                url: "/logininfo"
+            }).done(function(obj) {
+                console.log("SERVER ANSWER : " + obj);
+                var answer = JSON.parse(obj);
+                if (answer.success) {
+                    //TODO ссылка на конкретный объект в классе, пока user-singleton нормально
+                    auth_user.logged = true;
+                    auth_user.name = answer.username;
+                    //TODO присваивать счет
+                }
+            });
         },
         uninitialize: function() {
             console.log("user model uninitialize");
@@ -17,11 +30,16 @@ define([
             this.password = "password_def";
             this.score = 0;
             this.logged = false;
-            //console.log("user name : " + this.name);
 
         },
         isLogged: function() {
             return this.logged;
+        },
+        getScore: function() {
+            return this.score;
+        },
+        getName: function() {
+            return this.name;
         }
     });
     return Model;

@@ -24,6 +24,5 @@ define(['backbone', 'router','user'], function(
     User
 ){
     auth_user = new User();
-    console.log("user is logged " + auth_user.isLogged());
     Backbone.history.start();
 });
