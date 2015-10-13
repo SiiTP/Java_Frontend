@@ -24,11 +24,14 @@ define([
         },
         render: function() {
             console.log("registration render");
-            this.model.initialize(); //очистка старых значений моделей при прорисовке страницы
+            console.log(this.model.confirmStatus.status);
+            //очистка старых значений моделей при прорисовке страницы
+            this.model.set({'username':undefined, 'password':undefined, 'confirm':undefined}, {validate:true});
             this.$el.html(this.template());
         },
         validateUsername: function(event) {
-            console.log("username validation. registration view");
+            $(".validation-info-common").text("");
+            //console.log("username validation. registration view");
             this.model.set({'username': $(event.currentTarget).val()}, {validate: true});
             var usernameInfoField = $(".registration__username__validation-info");
             var usernameInfoLine = $(".registration__username__line");
@@ -55,7 +58,7 @@ define([
             }
         },
         validatePassword: function(event) {
-            console.log(this.model.confirm);
+            $(".validation-info-common").text("");
             this.model.set({'password':$(event.currentTarget).val()}, {validate: true});
             var passwordInfoField = $(".registration__password__validation-info");
             var passwordInfoLine = $(".registration__password__line");
@@ -84,6 +87,7 @@ define([
             this.updateConfirmView();
         },
         validateConfirm: function(event) {
+            $(".validation-info-common").text("");
             //console.log("confirm validation. registration view. VALUE : " + $(event.currentTarget).val());
             this.model.set({'confirm':$(event.currentTarget).val()}, {validate: true});
             this.updateConfirmView();
@@ -114,18 +118,25 @@ define([
                 confirmInfoLine.addClass("line_green");
             }
         },
+        focusOnErrorField: function() {
+            if (this.model.usernameStatus.status != 'correct') {
+                $(".registration__input-line__input__username").focus();
+            } else
+            if (this.model.passwordStatus.status != 'correct') {
+                $(".registration__input-line__input__password").focus();
+            } else
+            if (this.model.confirmStatus.status != 'correct') {
+                $(".registration__input-line__input__confirm").focus();
+            }
+        },
         onSubmit: function() {
             console.log("on submit registration view");
             if (this.model.isValid()) {
                 this.model.onSubmit();
-            }
-            //var data =  $("#registration-form").serialize();
-            //console.log("backbone view submit event " + data);
-            /*if ($("#confirm").val() == $("#password").val()) {
-                this.model.onSubmit();
             } else {
-                console.log("пароли не совпадают");
-            }*/
+                $(".validation-info-common").text("Не все поля заданы корректно.");
+                this.focusOnErrorField();
+            }
         },
         show: function () {
 

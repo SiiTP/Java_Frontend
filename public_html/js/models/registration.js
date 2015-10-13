@@ -35,18 +35,22 @@ define([
                 return expr.test(str);
             }
         },
-        initialize: function() {
+        /*initialize: function() {
             console.log("registration model initialize function ");
-            this.attributes.username = undefined;
-            this.attributes.password = undefined;
-            this.attributes.confirm = undefined;
-            this.attributes.usernameStatus = {"status":null, "message":null};
-            this.attributes.passwordStatus = {"status":null, "message":null};
-            this.attributes.confirmStatus = {"status":null, "message":null};
-        },
+            this.username = undefined;
+            this.password = undefined;
+            this.confirm = undefined;
+            this.usernameStatus = {"status":'empty', "message":"Введите ваш логин. От 4 до 9 латинских букв"};
+            this.passwordStatus = {"status":'empty', "message":"Введите ваш пароль. От 4 до 16 латинских букв, " +
+            "цифр и символов нижнего подчеркивания"};
+            this.confirmStatus = {"status":'empty', "message":'Подтвердите введенный пароль'};
+            console.log("args : username : " + this.username + "; password : "+ this.password +
+                "; confirm : "+ this.confirm + "; status user : " + this.usernameStatus.status +
+                "; status password : " + this.passwordStatus.status);
+        },*/
         validate: function(attrs) {
-            //console.log("model validate function. Attrs : ");
-            //console.log(attrs);
+            console.log("model validate function. Attrs : ");
+            console.log(attrs);
             if (attrs.username == "") {
                 this.usernameStatus.status = "empty";
                 this.usernameStatus.message = "Введите ваш логин. От 4 до 9 латинских букв";
@@ -124,18 +128,23 @@ define([
         },
         onSubmit: function() {
             var data = this.toJSON();
-            console.log(data);
+            //console.log(data);
             $.ajax({
                 type: "POST",
                 url: "/signup",
                 data: data
             }).done(function(obj) {
                 var answer = JSON.parse(obj);
+                console.log("SERVER ANSWER : ");
+                console.log(answer);
                 if (answer.success) {
+                    //console.log("args : username : " + this.username + "; password : "+ this.password +
+                    //    "; confirm : "+ this.confirm + "; status user : " + this.usernameStatus.status +
+                    //    "; status password : " + this.passwordStatus.status);
                     location.href = "#login";
                 } else {
-                    console.log(answer.message);
-                    //TODO вывод на экран сообщения об ошибке на сервере
+                    //TODO надо выводить через вьюху, наверное надо хранить объект вьюхи в моделе
+                    $(".validation-info-common").text(answer.message);
                 }
             });
         }

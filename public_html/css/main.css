@@ -36,6 +36,20 @@
     box-shadow: #f11 0px  0px 5px 2px;
     background: #f44;
 }
+.line_blue {
+    border: solid 1px #03f;
+    box-shadow: #05f 0px  0px 5px 2px;
+    background: #03f;
+}
+.header-noBorder {
+    margin-bottom: 40px;
+}
+.header-text {
+    margin: 0;
+    text-shadow: #f5f5f5 0 0 8px;
+    color: #f5f5f5;
+    text-align: center;
+}
 
 /*MAIN PAGE*/
 .menu-container {
@@ -210,6 +224,12 @@
 }
 .validation-info_error {
     color: #f00;
+}
+.validation-info-common {
+    margin-top: 20px;
+    font-size: 24px;
+    text-shadow: #f00 0 0 10px;
+    text-align: center;
 }
 .login__buttons-container {
     margin-top: 10px;

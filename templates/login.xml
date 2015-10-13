@@ -1,5 +1,9 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
     <div class="login">
+        <div class="header-noBorder">
+            <h1 class="header-text">Loginning</h1>
+            <div class="line line_blue"> </div>
+        </div>
         <form id="login-form" method="post">
             <div class="input-field">
                 <p class="input-line">
@@ -22,6 +26,7 @@
                 <a class="login__buttons-container__registration-link" href="#registration">registration</a>
             </div>
         </form>
+        <div class="validation-info validation-info_error validation-info-common"> </div>
     </div>
 </fest:template>
 
