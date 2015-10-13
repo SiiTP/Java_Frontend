@@ -16,7 +16,7 @@ public class Main {
 
     private static final int PORT = 8000;
 
-    public static void main(String[] args) throws Exception, NumberFormatException, InterruptedException, IllegalArgumentException {
+    public static void main(String[] args) throws Exception{
         AccountService accountService = new AccountService();
         int port = PORT;
         if (args.length == 1) {

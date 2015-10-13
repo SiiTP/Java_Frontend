@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class AccountService {
     @NotNull
-    private Map<String,UserProfile> users = new HashMap<String, UserProfile>();
+    private Map<String,UserProfile> users = new HashMap<>();
     @NotNull
     private Map<String,UserProfile> sessions = new HashMap<String, UserProfile>();
     public boolean isAuthorized(String session){
