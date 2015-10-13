@@ -1,12 +1,29 @@
+/*@font-face {*/
+    /*font-family: UbuntuMedium;*/
+    /*src: url(Ubuntu/Ubuntu-Medium.ttf);*/
+/*}*/
+@font-face {
+    font-family: UbuntuItalic;
+    src: url(Ubuntu/Ubuntu-Italic.ttf);
+}
+@font-face {
+    font-family: NunitoNormal;
+    src: url(Nunito/Nunito-Regular.ttf);
+}
+/*@font-face {*/
+    /*font-family: NunitoLight;*/
+    /*src: url(Nunito/Nunito-Light.ttf);*/
+/*}*/
+
 #page {
     background: #001;
     height: 800px;
     color: whitesmoke;
-    font-family: Courier;
-    font-weight: bold;
+    font-family: UbuntuItalic;
     padding-top: 20px;
 }
 .button {
+    font-family: NunitoNormal;
     font-size: 16px;
     color: whitesmoke;
     border: solid 1px #00f;
@@ -17,6 +34,9 @@
 .button:hover {
     box-shadow: #ff0 0 0 6px 4px,
     inset #004 0 0 6px 4px;
+}
+.button:active {
+    color: #005;
 }
 .line {
     display: inline-block;
@@ -67,29 +87,33 @@
 }
 .logo {
     width: 36%;
+    margin-bottom: 10px;
     /*border: solid 1px #111;*/
 }
 .logo__top {
     width: 100%;
 }
 .logo__top__line {
-    width: 44.5%;
+    position: relative;
+    top: 4px;
+    width: 46%;
     height: 1px;
     border: solid 1px #0f0;
-    box-shadow: #0f1 0px  0px 5px 2px;
+    box-shadow: #0f1 0  0 4px 3px;
+    -webkit-box-shadow: #0f1 0 0 5px 2px;
     background: #0f0;
 }
 .logo__bottom {
     width: 100%;
 }
 .logo__bottom__line {
-    position: relative;
-    top: -3px;
-    width: 55%;
-    margin-left: 44%;
+    width: 54%;
+    -webkit-margin-start: 45.5%;
+    -moz-margin-start: 46%;
     height: 1px;
     border: solid 1px #f00;
-    box-shadow: #f01 0px  0px 5px 2px;
+    box-shadow: #f01 0  0 4px 3px;
+    -webkit-box-shadow: #f01 0 0 5px 2px;
     background: #f00;
 }
 .logo__center {
@@ -110,7 +134,8 @@
     height: 28px;
     margin: 0px 20px 0px;
     border: solid 1px #ff0;
-    box-shadow: #ff1 0px  0px 5px 2px;
+    box-shadow: #ff1 0  0 4px 3px;
+    -webkit-box-shadow: #ff1 0 0 5px 2px;
     background: #ff4;
 }
 .menu {
@@ -215,8 +240,8 @@
 }
 .validation-info {
     width: 95%;
-    font-size: 10px;
-    font-weight: normal;
+    font-size: 12px;
+    font-family: NunitoNormal;
     color: #ff0;
 }
 .validation-info_correct {
@@ -238,8 +263,19 @@
     width: 60%;
 }
 .login__buttons-container__registration-link {
-    font-size:20px;
-    margin-left: 15px;
+    margin-left: 30px;
+    font-size:24px;
+    font-family: NunitoNormal;
+    color: #f5f5f5;
+    text-shadow: whitesmoke 0 0 20px;
+}
+.login__buttons-container__registration-link:hover {
+    color: #00f;
+    text-shadow: #00f 0 0 20px;
+}
+.login__buttons-container__registration-link:active {
+    text-shadow: whitesmoke 0 0 20px;
+    color: #004;
 }
 
 /*LOGOUT PAGE*/

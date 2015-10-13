@@ -10,7 +10,7 @@
                     <label for="username" class="input-line__header">Username</label>
                     <input class="input-line__input login__input-line__input__username" type="text" name="username" id="username"/>
                 </p>
-                <div class="validation-info login__username__validation-info">Введите ваше имя</div>
+                <div class="validation-info login__username__validation-info">Введите ваш логин.</div>
                 <div class="line login__username__line"> </div>
             </div>
             <div class="input-field">
@@ -18,7 +18,7 @@
                     <label for="password" class="input-line__header">Password</label>
                     <input class="input-line__input login__input-line__input__password" type="password" name="password" id="password"/>
                 </p>
-                <div class="validation-info login__password__validation-info">заполните данное поле чем нибудь пожалуйста</div>
+                <div class="validation-info login__password__validation-info">Введите ваш пароль.</div>
                 <div class="line login__password__line"> </div>
             </div>
             <div class="login__buttons-container">

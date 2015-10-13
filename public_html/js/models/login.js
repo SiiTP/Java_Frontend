@@ -37,12 +37,11 @@ define([
             //console.log("login model validate function");
             if (attrs.username == "") {
                 this.usernameStatus.status = "empty";
-                this.usernameStatus.message = "Введите ваш логин. От 4 до 9 латинских букв";
+                this.usernameStatus.message = "Введите ваш логин.";
             }
             if (attrs.password == "") {
                 this.passwordStatus.status = "empty";
-                this.passwordStatus.message = "Введите ваш пароль. От 4 до 16 латинских букв, " +
-                    "цифр и символов нижнего подчеркивания";
+                this.passwordStatus.message = "Введите ваш пароль.";
             }
             if (attrs.username) {
                 var username = attrs.username;
