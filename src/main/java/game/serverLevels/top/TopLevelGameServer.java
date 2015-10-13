@@ -1,9 +1,9 @@
-package game.serverLevels;
+package game.serverLevels.top;
 
 import exceptions.RoomFullException;
 import game.rooms.Room;
 import org.jetbrains.annotations.Nullable;
-import service.AccountService;
+import service.account.AccountService;
 import service.UserProfile;
 
 import java.util.HashMap;

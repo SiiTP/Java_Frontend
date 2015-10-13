@@ -1,10 +1,10 @@
 package servlets.authorization;
 import static junit.framework.Assert.assertTrue;
-import static junit.framework.TestCase.*;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import service.AccountService;
+import service.account.AccountService;
 import service.UserProfile;
 
 import javax.servlet.ServletException;

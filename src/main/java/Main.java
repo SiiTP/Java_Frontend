@@ -1,12 +1,13 @@
-import game.serverLevels.TopLevelGameServer;
+import game.serverLevels.top.TopLevelGameServer;
+import game.serverLevels.top.TopLevelGameServerSingleton;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import org.jetbrains.annotations.NotNull;
-import service.AccountService;
+import service.account.AccountService;
+import service.account.AccountServiceSingleton;
 import servlets.admins.AdminServlet;
 import servlets.authorization.LogOut;
 import servlets.authorization.LoginInfo;
@@ -20,8 +21,8 @@ public class Main {
     private static final int PORT = 8000;
 
     public static void main(String[] args) throws Exception{
-        AccountService accountService = new AccountService();
-        TopLevelGameServer topLevelGameServer = new TopLevelGameServer(accountService);
+        AccountService accountService = AccountServiceSingleton.getInstance();
+        TopLevelGameServer topLevelGameServer = TopLevelGameServerSingleton.getInstance();
         int port = PORT;
         if (args.length == 1) {
             String portString = args[0];

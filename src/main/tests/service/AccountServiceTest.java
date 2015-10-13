@@ -2,8 +2,8 @@ package service;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import service.account.AccountService;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

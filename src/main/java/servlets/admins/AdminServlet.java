@@ -2,7 +2,7 @@ package servlets.admins;
 
 import org.eclipse.jetty.server.Server;
 import org.jetbrains.annotations.NotNull;
-import service.AccountService;
+import service.account.AccountService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

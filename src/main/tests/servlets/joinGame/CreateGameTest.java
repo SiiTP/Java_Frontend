@@ -1,9 +1,8 @@
 package servlets.joinGame;
 
-import game.serverLevels.TopLevelGameServer;
+import game.serverLevels.top.TopLevelGameServer;
 import org.junit.Before;
 import org.junit.Test;
-import service.AccountService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

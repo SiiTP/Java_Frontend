@@ -1,11 +1,9 @@
 package servlets.authorization;
 
-import junit.framework.TestCase;
-import org.eclipse.jetty.server.session.HashedSession;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import service.AccountService;
+import service.account.AccountService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

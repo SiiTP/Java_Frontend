@@ -2,7 +2,7 @@ package servlets.joinGame;
 
 import exceptions.RoomFullException;
 import game.rooms.Room;
-import game.serverLevels.TopLevelGameServer;
+import game.serverLevels.top.TopLevelGameServer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

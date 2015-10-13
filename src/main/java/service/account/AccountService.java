@@ -1,8 +1,9 @@
-package service;
+package service.account;
 
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import service.UserProfile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,11 +12,14 @@ import java.util.Map;
  * Created by ivan on 21.09.15.
  */
 
-public class AccountService {
+public class AccountService{
     @NotNull
-    private Map<String,UserProfile> users = new HashMap<>();
+    private Map<String, UserProfile> users = new HashMap<>();
     @NotNull
-    private Map<String,UserProfile> sessions = new HashMap<String, UserProfile>();
+    private Map<String,UserProfile> sessions = new HashMap<>();
+
+
+
     public boolean isAuthorized(String session){
         return sessions.containsKey(session);
     }
@@ -23,7 +27,9 @@ public class AccountService {
     public boolean isAvailableName(@Nullable String name){
         return !users.containsKey(name);
     }
-
+    public boolean checkData(String username,String password){
+        return username.matches("^[a-zA-Z]+$") && password.matches("^[a-zA-Z]+$");
+    }
     public boolean authtorize(@Nullable String username,@Nullable String password,@NotNull String session){
         UserProfile profile = getUser(username);
         boolean isOk = false;
@@ -32,7 +38,7 @@ public class AccountService {
 
         }
         if(isOk){
-            addSession(session,profile);
+            addSession(session, profile);
         }
         return isOk;
     }
@@ -66,4 +72,6 @@ public class AccountService {
     public void deleteSession(String sess) {
         sessions.remove(sess);
     }
+
 }
+
