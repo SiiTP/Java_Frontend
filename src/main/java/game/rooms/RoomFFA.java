@@ -1,5 +1,6 @@
 package game.rooms;
 
+import exceptions.NoSuchPlayerException;
 import exceptions.RoomFullException;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,7 +29,10 @@ public class RoomFFA extends RoomAbstractImpl {
     }
 
     @Override
-    public void kickPlayer(UserProfile profile) {
+    public void kickPlayer(UserProfile profile) throws NoSuchPlayerException{
+        if(!users.contains(profile)){
+            throw new NoSuchPlayerException(getRoomName());
+        }
         users.remove(profile);
     }
 
