@@ -1,5 +1,6 @@
 package servlets.authorization;
 
+import org.jetbrains.annotations.Nullable;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -63,7 +64,7 @@ public class SignUpTest {
         setCheckSetting("");
         assert stringWriter.toString().contains("false");
     }
-    private void setCheckSetting(String passValue) throws ServletException, IOException {
+    private void setCheckSetting(@Nullable String passValue) throws ServletException, IOException {
         when(service.isAvailableName(anyString())).thenReturn(true);
         when(request.getParameter("username")).thenReturn(anyString());
         when(request.getParameter("password")).thenReturn(passValue);

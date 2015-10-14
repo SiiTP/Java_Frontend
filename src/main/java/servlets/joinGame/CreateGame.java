@@ -1,7 +1,7 @@
 package servlets.joinGame;
 
 import exceptions.RoomFullException;
-import game.rooms.Room;
+import game.rooms.RoomFFA;
 import game.serverLevels.top.TopLevelGameServer;
 
 import javax.servlet.ServletException;
@@ -26,12 +26,12 @@ public class CreateGame extends HttpServlet {
         String password = req.getParameter("password");
         String session = req.getSession().getId();
         boolean auth = topLevelGameServer.isAuthorizedPlayer(session);
-        Room room = null;
+        RoomFFA room = null;
         try {
             if (auth){
                 room = topLevelGameServer.createRoom(session,roomName,password);
                 if(room != null) {
-                    resp.getWriter().println(room.getJsonRoom());
+                    resp.getWriter().println(room.getJson());
                 }else{
                     resp.getWriter().println("something went wrong!");
                 }

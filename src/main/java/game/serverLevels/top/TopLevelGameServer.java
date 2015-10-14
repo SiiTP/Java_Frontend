@@ -2,6 +2,7 @@ package game.serverLevels.top;
 
 import exceptions.RoomFullException;
 import game.rooms.Room;
+import game.rooms.RoomFFA;
 import org.jetbrains.annotations.Nullable;
 import service.account.AccountService;
 import service.UserProfile;
@@ -19,7 +20,7 @@ public class TopLevelGameServer {
     public TopLevelGameServer(AccountService accountService) {
         this.accountService = accountService;
     }
-    public Room joinRoom(String roomname,String password, String userSession) throws RoomFullException {
+    public Room joinRoom(String roomname, @Nullable String password, String userSession) throws RoomFullException {
         UserProfile profile = accountService.getUserBySession(userSession);
         Room room = null;
         if(profile != null) {
@@ -53,15 +54,15 @@ public class TopLevelGameServer {
         return rooms;
     }
     @Nullable
-    public Room createRoom(String session,String roomname,String password) throws RoomFullException {
+    public Room createRoom(String session,String roomname, @Nullable String password) throws RoomFullException {
         UserProfile profile = accountService.getUserBySession(session);
         Room room = null;
         if(profile!= null && profile.getCurrentroom() == null) {
             if (!rooms.containsKey(roomname)) {
                 if (password == null || password.isEmpty()) {
-                    room = new Room(roomname, profile);
+                    room = new RoomFFA(roomname, profile);
                 } else {
-                    room = new Room(roomname, password, profile);
+                    room = new RoomFFA(roomname, password, profile);
                 }
                 room.addUser(profile);
 

@@ -1,11 +1,10 @@
 package service;
 
 import game.rooms.Room;
+import game.rooms.RoomFFA;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
-
-import java.util.Map;
 
 /**
  * Created by ivan on 21.09.15.

@@ -2,7 +2,9 @@ package game.serverLevels;
 
 import exceptions.RoomFullException;
 import game.rooms.Room;
+import game.rooms.RoomFFA;
 import game.serverLevels.top.TopLevelGameServer;
+import game.serverLevels.top.TopLevelGameServerSingleton;
 import org.junit.Before;
 import org.junit.Test;
 import service.account.AccountService;
@@ -24,7 +26,7 @@ public class TopLevelGameServerTest {
     @Before
     public void setUp() throws Exception {
         service = mock(AccountService.class);
-        gameServer = new TopLevelGameServer(service);
+        gameServer = TopLevelGameServerSingleton.getInstance();
         gameServer.setRooms(rooms);
     }
 
@@ -47,17 +49,17 @@ public class TopLevelGameServerTest {
         when(service.getUserBySession(anyString())).thenReturn(profile);
         when(rooms.containsKey(anyString())).thenReturn(true);
         when(profile.getCurrentroom()).thenReturn(null);
-        Room room = new Room("aaa","cc",new UserProfile("ss","ff"));
+        Room room = new RoomFFA("aaa","cc",new UserProfile("ss","ff"));
         when(rooms.get(anyString())).thenReturn(room);
 
         Room endRoom = gameServer.joinRoom("aa", "aa", "aa");
-        assertTrue(endRoom.getUsersCount() == 0);
+        assertTrue(endRoom.getPlayersCount() == 0);
 
-        room = new Room("aaa",new UserProfile("ss","ff"));
+        room = new RoomFFA("aaa",new UserProfile("ss","ff"));
         when(rooms.get(anyString())).thenReturn(room);
         endRoom = gameServer.joinRoom("aa","aa","aa");
 
-        assertTrue(endRoom.getUsersCount() == 1);
+        assertTrue(endRoom.getPlayersCount() == 1);
     }
     @Test
     public void testJoinRoomUserPassToRoom() throws Exception {
@@ -65,18 +67,18 @@ public class TopLevelGameServerTest {
         when(service.getUserBySession(anyString())).thenReturn(profile);
         when(rooms.containsKey(anyString())).thenReturn(true);
         when(profile.getCurrentroom()).thenReturn(null);
-        Room room = new Room("aaa","cc",new UserProfile("ss","ff"));
+        Room room = new RoomFFA("aaa","cc",new UserProfile("ss","ff"));
         when(rooms.get(anyString())).thenReturn(room);
 
         Room endRoom = gameServer.joinRoom("aa", "", "aa");
-        assertTrue(endRoom.getUsersCount() == 0);
+        assertTrue(endRoom.getPlayersCount() == 0);
         endRoom = gameServer.joinRoom("aa", null, "aa");
-        assertTrue(endRoom.getUsersCount() == 0);
+        assertTrue(endRoom.getPlayersCount() == 0);
 
     }
     @Test
     public void joinRoomUserInRoom() throws RoomFullException {
-        Room room = new Room("aaa",new UserProfile("ss","ff"));
+        Room room = new RoomFFA("aaa",new UserProfile("ss","ff"));
 
         UserProfile profile = spy(new UserProfile("aa", "bb"));
         when(service.getUserBySession(anyString())).thenReturn(profile);
@@ -100,7 +102,7 @@ public class TopLevelGameServerTest {
         Room endRoom = gameServer.createRoom("aaa","aaa",null);
         assertTrue(endRoom == null);
 
-        Room room = new Room("aaa",new UserProfile("ss","ff"));
+        Room room = new RoomFFA("aaa",new UserProfile("ss","ff"));
         UserProfile profile = spy(new UserProfile("aa","bb"));
         when(service.getUserBySession(anyString())).thenReturn(profile);
         when(profile.getCurrentroom()).thenReturn(room);
@@ -136,12 +138,13 @@ public class TopLevelGameServerTest {
         assertTrue(!gameServer.isCorrectPlayerInGame("aa", "ss"));
     }
     @Test
-    public void testIsCorrectPlayerInGameNoPlayerInRoom() throws Exception {
+    public void testIsCorrectPlayerNoPlayer() throws Exception {
         when(service.isAuthorized(anyString())).thenReturn(true);
         when(rooms.containsKey(anyString())).thenReturn(true);
-        Room room = spy(new Room("ds",new UserProfile("aa","bb")));
+        Room room = spy(new RoomFFA("ds",new UserProfile("aa","bb")));
         when(room.checkUser(anyObject())).thenReturn(false);
         when(rooms.get(anyString())).thenReturn(room);
+
         assertTrue(!gameServer.isCorrectPlayerInGame("aa", "ss"));
     }
 }
