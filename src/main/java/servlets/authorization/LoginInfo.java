@@ -3,6 +3,7 @@ package servlets.authorization;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 import service.account.AccountService;
+import service.UserProfile;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,13 +14,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- * Created by ivan on 22.09.15.
+ * Created by root on 30.09.15.
  */
-public class LogOut extends HttpServlet {
+public class LoginInfo extends HttpServlet {
     @NotNull
-    AccountService accountService;
+    private AccountService accountService;
 
-    public LogOut(@NotNull AccountService service) {
+    public LoginInfo(@NotNull AccountService service) {
         this.accountService = service;
     }
 
@@ -27,23 +28,25 @@ public class LogOut extends HttpServlet {
     protected void doPost(@NotNull HttpServletRequest req,@NotNull HttpServletResponse resp) throws ServletException, IOException {
         HttpSession httpSession = req.getSession();
         PrintWriter writer = resp.getWriter();
-
         JSONObject responseJSON = new JSONObject();
+
         if (httpSession != null) {
             String session = httpSession.getId();
             boolean auth = accountService.isAuthorized(session);
             if (auth) {
-                accountService.deleteSession(session);
-                responseJSON.put("success", true);
-                responseJSON.put("message", "you have been logged out!");
-
+                UserProfile profile = accountService.getUserBySession(session);
+                if (profile != null) {
+                    responseJSON.put("success", true);
+                    responseJSON.put("username", profile.getUsername());
+                    responseJSON.put("message", "You logged!");
+                    // TODO передавть счет
+                }
             } else {
                 responseJSON.put("success", false);
-                responseJSON.put("message", "you are not being logged in!");
-
+                responseJSON.put("message", "You do not logged!");
             }
         }
-        if(writer != null) {
+        if (writer != null) {
             writer.println(responseJSON.toString());
         }
     }

@@ -2,7 +2,7 @@ package servlets.admins;
 
 import org.eclipse.jetty.server.Server;
 import org.jetbrains.annotations.NotNull;
-import service.AccountService;
+import service.account.AccountService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -44,13 +44,14 @@ public class AdminServlet extends HttpServlet {
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
-            if (registeredUsers!= null && !registeredUsers.isEmpty() && registeredUsers.equals("true")) {
-                writer.println("Зарегестрировано пользователей: " + accountService.getRegisterdUsersCount());
-            }
-            if (loggedUsers != null && !loggedUsers.isEmpty() && loggedUsers.equals("true")) {
-                writer.println("Залогинено пользователей: " + accountService.getLoggedUsersCount());
-            }
         }
+        if (registeredUsers!= null && !registeredUsers.isEmpty() && registeredUsers.equals("true")) {
+            writer.println("Зарегестрировано пользователей: " + accountService.getRegisterdUsersCount());
+        }
+        if (loggedUsers != null && !loggedUsers.isEmpty() && loggedUsers.equals("true")) {
+            writer.println("Залогинено пользователей: " + accountService.getLoggedUsersCount());
+        }
+
 
     }
 

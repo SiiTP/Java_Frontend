@@ -25,8 +25,6 @@ define([
                 } else {
                     console.log(answer.message);
                 }
-
-                //TODO UNINITIALIZE USER WITH SUCCESS
             });
         }
     });

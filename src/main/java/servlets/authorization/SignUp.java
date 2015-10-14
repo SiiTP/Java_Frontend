@@ -2,7 +2,7 @@ package servlets.authorization;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
-import service.AccountService;
+import service.account.AccountService;
 import service.UserProfile;
 
 import javax.servlet.ServletException;
@@ -26,27 +26,31 @@ public class SignUp extends HttpServlet {
         String password = req.getParameter("password");
         PrintWriter writer = resp.getWriter();
         JSONObject responseJSON = new JSONObject();
+        if(!accountService.checkData(username,password)){
+            responseJSON.put("success", false);
+            responseJSON.put("message", "wrong data");
+        }else {
+            boolean isAvailableName = accountService.isAvailableName(username);
+            if (isAvailableName) {
+                if (username != null && password != null && !username.isEmpty() && !password.isEmpty()) {
+                    UserProfile profile = new UserProfile(username, password);
+                    accountService.addUser(profile);
+                    responseJSON.put("success", true);
+                    responseJSON.put("message", "you successfully registered!");
 
-        boolean isAvailableName = accountService.isAvailableName(username);
-        if(isAvailableName) {
-            if (username != null && password != null && !username.isEmpty() && !password.isEmpty()) {
-                UserProfile profile = new UserProfile(username, password);
-                accountService.addUser(profile);
-                responseJSON.put("success", true);
-                responseJSON.put("message", "you successfully registered!");
-
+                } else {
+                    responseJSON.put("success", false);
+                    responseJSON.put("message", "all fields required!");
+                }
             } else {
                 responseJSON.put("success", false);
-                responseJSON.put("message", "all fields required!");
+                responseJSON.put("message", "you login have been already used");
             }
-        }else{
-            responseJSON.put("success", false);
-            responseJSON.put("message", "you login have been already used");
+
         }
-        if(writer != null) {
+        if (writer != null) {
             writer.println(responseJSON.toString());
         }
-
     }
 
 }
