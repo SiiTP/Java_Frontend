@@ -7,6 +7,10 @@
  -->
 <fest:template xmlns:fest="http://fest.mail.ru">
     <div class="registration">
+        <div class="header-noBorder">
+            <h1 class="header-text">Registration</h1>
+            <div class="line line_blue"> </div>
+        </div>
         <form id="registration-form" method="post">
             <div class="input-field">
                 <p class="input-line">
@@ -39,6 +43,7 @@
             </div>
             <button type="button" class="button registration__button">Registration</button>
         </form>
+        <div class="validation-info validation-info_error validation-info-common"> </div>
 
     </div>
 </fest:template>

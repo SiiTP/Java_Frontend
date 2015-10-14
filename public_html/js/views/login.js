@@ -23,6 +23,8 @@ define([
         },
         render: function () {
             console.log("login view render");
+            //стираем старые данные, передаваемые на валидацию
+            this.model.set({'username': undefined, 'password': undefined}, {validate: true});
             this.$el.html(this.template());
         },
         show: function () {
@@ -87,9 +89,25 @@ define([
                 passwordInfoLine.addClass("line_green");
             }
         },
+        focusOnErrorField: function() {
+            if (this.model.usernameStatus.status != 'correct') {
+                $(".login__input-line__input__username").focus();
+            } else
+            if (this.model.passwordStatus.status != 'correct') {
+                $(".login__input-line__input__password").focus();
+            }
+
+        },
         onSubmit: function() {
             console.log("backbone view login click event");
-            this.model.trigger("submit");
+            if (this.model.isValid()) {
+                console.log("data is valid");
+                this.model.onSubmit();
+            } else {
+                console.log("data is not valid");
+                $(".validation-info-common").text("Не все поля заданы корректно.");
+                this.focusOnErrorField();
+            }
         }
     });
 

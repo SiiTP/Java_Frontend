@@ -6,9 +6,7 @@ define([
 
     var Model = Backbone.Model.extend({
         initialize: function() {
-            this.on('submit', function(){
-                this.onSubmit();
-            });
+            console.log("logout model initialize");
         },
         onSubmit: function() {
             console.log("backbone view logout click event");

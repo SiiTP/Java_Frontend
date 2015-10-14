@@ -31,20 +31,17 @@ define([
             }
         },
         initialize: function() {
-            this.on('submit', function(){
-                this.onSubmit();
-            });
+            console.log("login model initialize function");
         },
         validate: function(attrs) {
             //console.log("login model validate function");
             if (attrs.username == "") {
                 this.usernameStatus.status = "empty";
-                this.usernameStatus.message = "Введите ваш логин. От 4 до 9 латинских букв";
+                this.usernameStatus.message = "Введите ваш логин.";
             }
             if (attrs.password == "") {
                 this.passwordStatus.status = "empty";
-                this.passwordStatus.message = "Введите ваш пароль. От 4 до 16 латинских букв, " +
-                    "цифр и символов нижнего подчеркивания";
+                this.passwordStatus.message = "Введите ваш пароль.";
             }
             if (attrs.username) {
                 var username = attrs.username;
@@ -92,13 +89,18 @@ define([
                 }
             }
         },
+        isValid: function() {
+            return this.usernameStatus.status == "correct" && this.passwordStatus.status == "correct";
+        },
         onSubmit: function() {
             console.log("backbone model submit event");
-            var loginForm = $("#login-form");
+            //var loginForm = $("#login-form");
+            var data = this.toJSON();
+            console.log(data);
             $.ajax({
                 type: "POST",
                 url: "/signin",
-                data: loginForm.serialize()
+                data: data
             }).done(function(obj) {
                 console.log("SERVER ANSWER : " + obj);
                 var answer = JSON.parse(obj);
@@ -107,10 +109,10 @@ define([
                     auth_user.name = loginData.username;
                     auth_user.password = loginData.password;
                     auth_user.logged = true;
-                    location.href = "#logout";
+                    location.href = "#main";
                 } else {
-                    console.log(answer.message);
-                    //TODO выдача сообщения на экран о неуспешном залогинивании
+                    $(".validation-info-common").text(answer.message);
+                    //console.log(answer.message);
                 }
                 //TODO get user score from database in the future
             });

@@ -12,6 +12,7 @@ define([
         template: tmpl,
         events: {
             "click .menu__button":  "onClick",
+            "click .button_logout":  "onClick",
             "mousedown .menu__button": "onMouseDown",
             "mouseout .menu__button": "onMouseUp",
             "mouseover .button.menu__button.menu__button_disabled": "printMessage", //выдача сообщения о том что игрок не залогинен.

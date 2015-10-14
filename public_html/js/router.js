@@ -41,7 +41,7 @@ define(['backbone'], function(Backbone){
         logoutAction: function () {
             require(['views/logout'],function(view){
                 //view.el = '#page';
-                view.render();
+                view.onSubmit();
             });
             console.log("logout action");
         },
