@@ -10,7 +10,8 @@ define([
 ){
 
     var View = Backbone.View.extend({
-        el: 'div',
+        name: "registration",
+        tagName: 'div',
         template: tmpl,
         model: new registration(),
         events: {
@@ -21,13 +22,12 @@ define([
         },
         initialize: function() {
             console.log("registration initialize");
+            this.render();
         },
         render: function() {
             console.log("registration render");
-            console.log(this.model.confirmStatus.status);
-            //очистка старых значений моделей при прорисовке страницы
-            this.model.set({'username':undefined, 'password':undefined, 'confirm':undefined}, {validate:true});
             this.$el.html(this.template());
+            document.getElementById('page').appendChild(this.el);
         },
         validateUsername: function(event) {
             $(".validation-info-common").text("");
@@ -139,9 +139,16 @@ define([
             }
         },
         show: function () {
-
+            console.log("registration view show");
+            //очистка старых значений моделей при прорисовке страницы
+            this.model.set({'username':undefined, 'password':undefined, 'confirm':undefined}, {validate:true});
+            this.$el.html(this.template());
+            this.trigger('show', {'name' : this.name});
+            this.$el.show();
         },
         hide: function () {
+            console.log("registration view hide");
+            this.$el.hide();
         }
 
     });

@@ -12,10 +12,14 @@ define([
 ){
 
     var View = Backbone.View.extend({
-        el: 'div',
+        name: "scoreboard",
+        tagName: 'div',
         template: tmpl,
         collection: scores,
         model: score,
+        events: {
+            "click button.scoreboard__button" : 'onClick'
+        },
         initialize: function () {
             console.log("initialization of scoreboard");
 
@@ -36,22 +40,28 @@ define([
             };
 
             this.collection.sort('score');
-            //JSON.stringify(this.collection)
-            //console.log(this.collection.toJSON());
+            this.render();
         },
         render: function () {
             console.log("render scoreboard");
-            this.el = '#page';
-            this.$el.html(this.template(this.collection.toJSON()));
+            var data = this.collection.toJSON();
+            this.$el.html(this.template(data));
+            document.getElementById('page').appendChild(this.el);
         },
-
+        onClick: function(event) {
+            console.log("scoreboard view on click");
+            location.href = event.currentTarget.attributes.getNamedItem('data-href').value;
+        },
 
         show: function () {
-            console.log("show scoreboard");
+            var data = this.collection.toJSON();
+            this.$el.html(this.template(data));
             this.$el.show();
+            this.trigger('show', {'name':this.name});
+            console.log("show scoreboard");
         },
         hide: function () {
-            console.log("hide scoreboard");
+            console.log("scoreboard view hide");
             this.$el.hide();
         }
 

@@ -8,8 +8,10 @@ define([
 ){
 
     var View = Backbone.View.extend({
-        el: 'div#page',
+        name: "main",
+        tagName: 'div',
         template: tmpl,
+
         events: {
             "click .menu__button":  "onClick",
             "click .button_logout":  "onClick",
@@ -20,28 +22,34 @@ define([
         },
         initialize: function () {
             console.log("main initialized.");
+            this.render();
         },
         render: function () {
             console.log("main render.");
-            var data = {"isLogged": auth_user.isLogged(), "name": auth_user.getName(), "score" : auth_user.getScore()};
+            var data = {"isLogged": false, "name": 'undefined', "score" : 0};
             this.$el.html(this.template(data));
-            $(".menu__button_disabled").attr('data-href', "#disabled"); //при нажатии этой кнопки перехода по ссылке не будет
-            //console.log($(".menu__button_disabled").attr('data-href'));
-
+            var elem = document.getElementById('page');
+            elem.appendChild(this.el);
         },
         show: function () {
-            this.$el.show();
             console.log("show main");
+            var data = {"isLogged": auth_user.isLogged(), "name": auth_user.getName(), "score" :auth_user.getScore()};
+            this.$el.html(this.template(data));
+            $(".menu__button_disabled").attr('data-href', "#disabled"); //при нажатии этой кнопки перехода по ссылке не будет
+            this.trigger('show', {'name' : this.name});
+            //console.log("after trigger");
+            this.$el.show();
         },
         hide: function () {
+            console.log("main view hide");
             this.$el.hide();
-            console.log("hide main");
         },
         onClick: function(event) {
             //console.log(event.toElement.attributes.getNamedItem('data-href').nodeValue);
             event.preventDefault();
             var targetElement = event.currentTarget;
             var href = targetElement.attributes.getNamedItem('data-href').value;
+            console.log("data-href : " + href);
             //#disabled у кнопки game когда игрок не залогинен. если указать disabled в prop jquery,
             // кнопка перестает реагировать на события.
             if (href != "#disabled") {

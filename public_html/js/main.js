@@ -18,11 +18,10 @@ require.config({
     }
 });
 
-define(['backbone', 'router','user'], function(
+define(['backbone', 'user', 'router'], function(
     Backbone,
-    router,
-    User
+    User,
+    router
 ){
-    auth_user = new User();
     Backbone.history.start();
 });

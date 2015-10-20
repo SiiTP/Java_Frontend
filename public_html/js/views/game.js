@@ -7,16 +7,20 @@ define([
 ){
 
     var View = Backbone.View.extend({
-        el: 'div#page',
+        name: "game",
+        tagName: 'div',
         template: tmpl,
         initialize: function () {
             console.log("game initialize");
+            this.render();
         },
         render: function () {
             console.log("game render");
             this.$el.html(this.template());
+            document.getElementById('page').appendChild(this.el);
         },
         show: function () {
+            this.trigger('show',{'name' : this.name});
             this.$el.show();
         },
         hide: function () {
