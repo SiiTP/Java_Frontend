@@ -31,8 +31,8 @@ define([
         show: function () {
             console.log("login view show");
             //стираем старые данные, передаваемые на валидацию
-            this.model.set({'username': undefined, 'password': undefined}, {validate: true});
-            this.$el.html(this.template());
+            //this.model.set({'username': undefined, 'password': undefined}, {validate: true});
+            //this.$el.html(this.template());
             this.trigger('show', {'name' : this.name});
             this.$el.show();
         },

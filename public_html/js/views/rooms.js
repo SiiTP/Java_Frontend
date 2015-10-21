@@ -15,25 +15,32 @@ define([
         template: tmpl,
         model: new Rooms(),
         events: {
+            'click .rooms__lines__line__button': 'onConnect'
         },
         initialize: function () {
             console.log("rooms initialize");
             this.render();
         },
-        render: function () {
+        render: function() {
             console.log("rooms render");
             this.$el.html(this.template(this.model.getRooms()));
             document.getElementById('page').appendChild(this.el);
             //var data = {"name": auth_user.name, "score": auth_user.score};
         },
-        show: function () {
+        onConnect: function(event) {
+            var connectingID = event.currentTarget.attributes.getNamedItem('data-roomid').value;
+            console.log("you connect in room with id : " + connectingID);
+            //TODO запрос на сервер о входе в комнату
+            location.href = '#room';
+        },
+        show: function() {
             console.log("show rooms");
             console.log(this.model.getRooms());
             this.$el.html(this.template(this.model.getRooms()));
             this.trigger('show',{'name': this.name});
             this.$el.show();
         },
-        hide: function () {
+        hide: function() {
             console.log("rooms view hide");
             this.$el.hide();
         }

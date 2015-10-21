@@ -4,6 +4,7 @@ define(['backbone',
         'views/game',
         'views/login',
         'views/logout',
+        'views/room',
         'views/rooms',
         'views/registration',
         'views/scoreboard'],
@@ -13,6 +14,7 @@ define(['backbone',
              gameView,
              loginView,
              logoutView,
+             roomView,
              roomsView,
              registrationView,
              scoreboardView) {
@@ -32,6 +34,7 @@ define(['backbone',
         manager.add(loginView);
         manager.add(registrationView);
         manager.add(gameView);
+        manager.add(roomView);
         manager.add(roomsView);
         //manager.setListeners();
         var views = manager.getViews();
@@ -41,6 +44,7 @@ define(['backbone',
             routes: {
                 'scoreboard': 'scoreboardAction',
                 'game': 'gameAction',
+                'room': 'roomAction',
                 'rooms': 'roomsAction',
                 'login': 'loginAction',
                 'logout': 'logoutAction',
@@ -61,7 +65,11 @@ define(['backbone',
             },
             roomsAction: function () {
                 roomsView.show();
-                console.log("game action");
+                console.log("rooms action");
+            },
+            roomAction: function () {
+                roomView.show();
+                console.log("room action");
             },
             loginAction: function () {
                 loginView.show();

@@ -141,8 +141,8 @@ define([
         show: function () {
             console.log("registration view show");
             //очистка старых значений моделей при прорисовке страницы
-            this.model.set({'username':undefined, 'password':undefined, 'confirm':undefined}, {validate:true});
-            this.$el.html(this.template());
+            //this.model.set({'username':undefined, 'password':undefined, 'confirm':undefined}, {validate:true});
+            //this.$el.html(this.template());
             this.trigger('show', {'name' : this.name});
             this.$el.show();
         },

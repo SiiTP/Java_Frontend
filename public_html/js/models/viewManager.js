@@ -23,6 +23,7 @@ define (['backbone'], function(Backbone) {
             console.log("view with name : " + view.name + " added in manager");
             this.views.push(view);
             view.on('show', this.hideAllOther);
+            view.hide();
         },
         info: function() {
             console.log("INFO : ");
