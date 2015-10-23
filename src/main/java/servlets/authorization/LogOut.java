@@ -2,7 +2,7 @@ package servlets.authorization;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
-import service.AccountService;
+import service.account.AccountService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
