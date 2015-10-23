@@ -17,13 +17,11 @@ define (['backbone'], function(Backbone) {
                     item.hide();
                 }
             });
-            //console.log("show event in manager with name : " + data.name);
         },
         add: function(view) {
-            console.log("view with name : " + view.name + " added in manager");
+            //console.log("view with name : " + view.name + " added in manager");
             this.views.push(view);
             view.on('show', this.hideAllOther);
-            view.hide();
         },
         info: function() {
             console.log("INFO : ");

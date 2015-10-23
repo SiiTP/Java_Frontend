@@ -7,10 +7,18 @@ define([
     var Model = Backbone.Model.extend({
         posX: undefined,
         posY: undefined,
+        radius: 20,
         name: undefined,
-        gameScore: 0,
-        speed: 1,
+        gameScore: 500,
+        speed: 3,
         angle: 0, //направление движения
+        initialize: function() {
+            this.setX(100);
+            this.setY(100);
+            this.setRadius(20);
+            this.setName(auth_user.getName());
+            this.setScore(5000)
+        },
         getX: function() {
             return this.posX;
         },
@@ -22,6 +30,18 @@ define([
         },
         setY: function(y) {
             this.posY = y;
+        },
+        getRadius: function() {
+            return this.radius;
+        },
+        setRadius: function(r) {
+            this.radius = r;
+        },
+        getSpeed: function() {
+            return this.speed;
+        },
+        setSpeed: function(s) {
+            this.speed = s;
         },
         getName: function() {
             return this.name;
@@ -40,10 +60,17 @@ define([
         },
         move: function() {
             //console.log("MOVE : X : " + this.posX + "; Y : " + this.posX + "; Angle : " + this.angle);
-            console.log("X : " + Math.cos(this.angle*(Math.PI/180)));
-            console.log("Y : " + -Math.sin(this.angle*(Math.PI/180)));
+            //console.log("X : " + Math.cos(this.angle*(Math.PI/180)));
+            //console.log("Y : " + -Math.sin(this.angle*(Math.PI/180)));
             this.posX = this.posX + this.speed * Math.cos(this.angle*(Math.PI/180));
             this.posY = this.posY - this.speed * Math.sin(this.angle*(Math.PI/180));
+        },
+        info: function() {
+            console.log("CHARACTER " + this.name + " INFO : ");
+            console.log("position : (" + this.posX + ";" + this.posY + ")");
+            console.log("radius : " + this.radius);
+            console.log("direction angle : " + this.angle);
+            console.log("=====================");
         }
     });
 

@@ -27,6 +27,7 @@ define([
             console.log("login view render");
             this.$el.html(this.template());
             document.getElementById('page').appendChild(this.el);
+            this.$el.hide();
         },
         show: function () {
             console.log("login view show");
@@ -112,7 +113,7 @@ define([
                 this.model.onSubmit();
             } else {
                 console.log("data is not valid");
-                $(".validation-info-common").text("Не все поля заданы корректно.");
+                $(".login__validation-info-common").text("Не все поля заданы корректно.");
                 this.focusOnErrorField();
             }
         }

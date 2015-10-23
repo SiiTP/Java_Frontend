@@ -47,6 +47,7 @@ define([
             var data = this.collection.toJSON();
             this.$el.html(this.template(data));
             document.getElementById('page').appendChild(this.el);
+            this.$el.hide();
         },
         onClick: function(event) {
             console.log("scoreboard view on click");

@@ -25,6 +25,7 @@ define([
             console.log("rooms render");
             this.$el.html(this.template(this.model.getRooms()));
             document.getElementById('page').appendChild(this.el);
+            this.$el.hide();
             //var data = {"name": auth_user.name, "score": auth_user.score};
         },
         onConnect: function(event) {

@@ -27,6 +27,7 @@ define([
             console.log("room render");
             this.$el.html(this.template());
             document.getElementById('page').appendChild(this.el);
+            this.$el.hide();
             //var data = {"name": auth_user.name, "score": auth_user.score};
         },
         show: function() {

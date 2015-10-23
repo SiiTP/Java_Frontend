@@ -28,6 +28,7 @@ define([
             console.log("registration render");
             this.$el.html(this.template());
             document.getElementById('page').appendChild(this.el);
+            this.$el.hide();
         },
         validateUsername: function(event) {
             $(".validation-info-common").text("");

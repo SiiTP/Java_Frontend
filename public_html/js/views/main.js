@@ -30,6 +30,7 @@ define([
             this.$el.html(this.template(data));
             var elem = document.getElementById('page');
             elem.appendChild(this.el);
+            this.$el.hide();
         },
         show: function () {
             console.log("show main");

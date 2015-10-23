@@ -1,4 +1,4 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
-    <canvas class="field" width="1200px" height="700px"> </canvas>
+    <canvas class="field"> </canvas>
 </fest:template>
 

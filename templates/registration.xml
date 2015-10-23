@@ -43,7 +43,7 @@
             </div>
             <button type="button" class="button registration__button">Registration</button>
         </form>
-        <div class="validation-info validation-info_error validation-info-common"> </div>
+        <div class="validation-info registration__validation-info-common validation-info_error validation-info-common"> </div>
 
     </div>
 </fest:template>

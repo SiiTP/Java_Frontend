@@ -111,7 +111,7 @@ define([
                     auth_user.logged = true;
                     location.href = "#main";
                 } else {
-                    $(".validation-info-common").text(answer.message);
+                    $(".login__validation-info-common").text(answer.message);
                     //console.log(answer.message);
                 }
                 //TODO get user score from database in the future
