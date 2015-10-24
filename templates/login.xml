@@ -26,7 +26,7 @@
                 <a class="login__buttons-container__registration-link" href="#registration">registration</a>
             </div>
         </form>
-        <div class="validation-info validation-info_error validation-info-common"> </div>
+        <div class="validation-info login__validation-info-common  validation-info_error validation-info-common"> </div>
     </div>
 </fest:template>
 

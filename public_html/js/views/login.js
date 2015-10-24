@@ -10,7 +10,8 @@ define([
 ){
 
     var View = Backbone.View.extend({
-        el: 'div#page',
+        name: "login",
+        tagName: 'div',
         template: tmpl,
         model: new login(),
         events: {
@@ -20,15 +21,20 @@ define([
         },
         initialize: function () {
             console.log("login view initialize");
+            this.render();
         },
         render: function () {
             console.log("login view render");
-            //стираем старые данные, передаваемые на валидацию
-            this.model.set({'username': undefined, 'password': undefined}, {validate: true});
             this.$el.html(this.template());
+            document.getElementById('page').appendChild(this.el);
+            this.$el.hide();
         },
         show: function () {
             console.log("login view show");
+            //стираем старые данные, передаваемые на валидацию
+            //this.model.set({'username': undefined, 'password': undefined}, {validate: true});
+            //this.$el.html(this.template());
+            this.trigger('show', {'name' : this.name});
             this.$el.show();
         },
         hide: function () {
@@ -36,6 +42,7 @@ define([
             this.$el.hide();
         },
         validateUsername: function(event) {
+            $(".validation-info-common").text("");
             //console.log("login view validate username");
             this.model.set({'username': $(event.currentTarget).val()}, {validate: true});
             var usernameInfoField = $(".login__username__validation-info");
@@ -63,6 +70,7 @@ define([
             }
         },
         validatePassword: function(event) {
+            $(".validation-info-common").text("");
             //console.log("login view validate password");
             this.model.set({'password': $(event.currentTarget).val()}, {validate: true});
             var passwordInfoField = $(".login__password__validation-info");
@@ -105,7 +113,7 @@ define([
                 this.model.onSubmit();
             } else {
                 console.log("data is not valid");
-                $(".validation-info-common").text("Не все поля заданы корректно.");
+                $(".login__validation-info-common").text("Не все поля заданы корректно.");
                 this.focusOnErrorField();
             }
         }

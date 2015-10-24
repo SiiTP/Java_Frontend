@@ -18,6 +18,7 @@ define([
                 var answer = JSON.parse(obj);
                 if (answer.success) {
                     //TODO ссылка на конкретный объект в классе, пока user-singleton нормально
+                    //TODO если ответ от аякса приходит позже отрисовки, отрисовываются данные без учета ответа
                     auth_user.logged = true;
                     auth_user.name = answer.username;
                     //TODO присваивать счет
@@ -42,5 +43,6 @@ define([
             return this.name;
         }
     });
+    auth_user = new Model();
     return Model;
 });

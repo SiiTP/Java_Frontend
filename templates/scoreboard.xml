@@ -1,20 +1,28 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="scores">
     <div class="scoreboard">
-        <h1 align="center" class="scoreboard__header">Scoreboard</h1>
-        <table class="table" align="center" cellspacing="0">
-            <th class="table-header" width="70%">Username</th>
-            <th class="table-header" width="30%">Score</th>
-            <fest:each iterate="scores" index="i" value="v">
-                    <tr align="center" class="table__item {i % 2 == 0 ? 'table__item_even' : 'table__item_odd'}">
-                        <td class="table__item__name">
+        <h1 align="center" class="header-text">Scoreboard</h1>
+        <div class="table">
+            <header class="table-header">
+                <div class="table__table-header__item">Username</div>
+                <div class="table__table-header__item table__table-header__item_alignRight">Score</div>
+            </header>
+            <div class="line line_blue table__line"> </div>
+            <main class="table__content">
+                <fest:each iterate="scores" index="i" value="v">
+                    <div align="center" class="table__content-line {i % 2 == 0 ? 'table__item_even' : 'table__item_odd'}">
+                        <div class="table__item table__item-name">
                             <fest:value>v.name</fest:value>
-                        </td>
-                        <td class="table__item__score">
+                        </div>
+                        <div class="vertical-line vertical-line_tableRelPos {i % 2 == 0 ? 'vertical-line_green' : ''}" style="height: 1em"> </div>
+                        <div class="table__item table__item-score">
                             <fest:value>v.score</fest:value>
-                        </td>
-                    </tr>
-            </fest:each>
-        </table>
+                        </div>
+                    </div>
+                </fest:each>
+            </main>
+            <button class="button scoreboard__button" data-href="#main">On main</button>
+            <div class="line line_blue table__line"> </div>
+        </div>
     </div>
 </fest:template>
 

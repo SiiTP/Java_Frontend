@@ -1,0 +1,7 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+    <div class="room">
+        Room block
+        <a href="#game">GAME</a>
+    </div>
+</fest:template>
+

@@ -35,19 +35,6 @@ define([
                 return expr.test(str);
             }
         },
-        /*initialize: function() {
-            console.log("registration model initialize function ");
-            this.username = undefined;
-            this.password = undefined;
-            this.confirm = undefined;
-            this.usernameStatus = {"status":'empty', "message":"Введите ваш логин. От 4 до 9 латинских букв"};
-            this.passwordStatus = {"status":'empty', "message":"Введите ваш пароль. От 4 до 16 латинских букв, " +
-            "цифр и символов нижнего подчеркивания"};
-            this.confirmStatus = {"status":'empty', "message":'Подтвердите введенный пароль'};
-            console.log("args : username : " + this.username + "; password : "+ this.password +
-                "; confirm : "+ this.confirm + "; status user : " + this.usernameStatus.status +
-                "; status password : " + this.passwordStatus.status);
-        },*/
         validate: function(attrs) {
             console.log("model validate function. Attrs : ");
             console.log(attrs);
@@ -138,13 +125,10 @@ define([
                 console.log("SERVER ANSWER : ");
                 console.log(answer);
                 if (answer.success) {
-                    //console.log("args : username : " + this.username + "; password : "+ this.password +
-                    //    "; confirm : "+ this.confirm + "; status user : " + this.usernameStatus.status +
-                    //    "; status password : " + this.passwordStatus.status);
                     location.href = "#login";
                 } else {
                     //TODO надо выводить через вьюху, наверное надо хранить объект вьюхи в моделе
-                    $(".validation-info-common").text(answer.message);
+                    $(".registration__validation-info-common").text(answer.message);
                 }
             });
         }

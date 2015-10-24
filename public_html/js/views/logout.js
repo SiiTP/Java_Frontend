@@ -10,7 +10,6 @@ define([
 ){
 
     var View = Backbone.View.extend({
-        el: 'div#page',
         template: tmpl,
         model: new logout(),
         events: {

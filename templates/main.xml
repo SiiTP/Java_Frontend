@@ -16,7 +16,7 @@
                 <div class="logo__top">
                     <div class="logo__top__line"> </div>
                 </div>
-                <div class="logo__center">
+                <div align="center" class="logo__center">
                     <span class="logo__beam">Beam</span>
                     <span class="logo__divider"> </span>
                     <span class="logo__balls">Balls</span>
@@ -38,7 +38,7 @@
         <div class="menu" align="center">
             <div class="menu__container-game-btn">
                 <button class="button menu__button menu__button_game
-                {data.isLogged == true ? '' : 'menu__button_disabled'}" data-href="#game">Game</button>
+                {data.isLogged == true ? '' : 'menu__button_disabled'}" data-href="#rooms">Game</button>
                 <label class="menu__container-game-btn__msg"> </label>
             </div>
             <div class="menu__container-game-btn">

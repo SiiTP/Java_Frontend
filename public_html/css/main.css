@@ -23,6 +23,7 @@
     background: #002;
     box-shadow: #000 0 0 6px 4px,
             inset #004 0 0 6px 4px;
+    box-sizing: border-box;
 }
 .button:hover {
     box-shadow: #ff0 0 0 6px 4px,
@@ -64,6 +65,12 @@
     -webkit-box-shadow: #ff1 0 0 5px 2px;
     background: #ff4;
 }
+.vertical-line_green {
+    border: solid 1px #0f0;
+    box-shadow: #0f1 0  0 4px 3px;
+    -webkit-box-shadow: #0f1 0 0 5px 2px;
+    background: #0f4;
+}
 .header-noBorder {
     margin-bottom: 40px;
 }
@@ -100,9 +107,9 @@
     width: 100%;
 }
 .logo__top__line {
-    position: relative;
-    top: 4px;
-    width: 46%;
+    /*position: relative;*/
+    /*top: 4px;*/
+    width: 100%;
     height: 1px;
     border: solid 1px #0f0;
     box-shadow: #0f1 0  0 4px 3px;
@@ -113,9 +120,9 @@
     width: 100%;
 }
 .logo__bottom__line {
-    width: 54%;
-    -webkit-margin-start: 45.5%;
-    -moz-margin-start: 46%;
+    width: 100%;
+    /*-webkit-margin-start: 45.5%;*/
+    /*-moz-margin-start: 46%;*/
     height: 1px;
     border: solid 1px #f00;
     box-shadow: #f01 0  0 4px 3px;
@@ -124,7 +131,7 @@
 }
 .logo__center {
     color: #ff0;
-    text-shadow: #ff2 0px 0px 8px;
+    text-shadow: #ff2 0 0 8px;
 }
 .logo__beam {
     display: inline-block;
@@ -137,8 +144,8 @@
 .logo__divider {
     display: inline-block;
     width: 1px;
-    height: 28px;
-    margin: 0px 20px 0px;
+    height: 2em;
+    margin: 0 20px 0;
     border: solid 1px #ff0;
     box-shadow: #ff1 0  0 4px 3px;
     -webkit-box-shadow: #ff1 0 0 5px 2px;
@@ -213,7 +220,7 @@
     background: whitesmoke;
 }
 /*нельзя сделать псевдоклассом потому что на кнопки disabled не должен срабатывать*/
-.menu__button_active {
+.menu__button_active:not(.menu__button_disabled) {
     background: #007 !important;
     box-shadow: inset #005 0 0 14px 9px,
     #009 0 0 20px 20px !important;
@@ -276,6 +283,7 @@
     font-size: 22px;
     color: #f5f5f5;
     text-shadow: #f5f5f5 0 0 12px;
+    box-sizing: border-box;
 }
 .input-line__input {
     width: 64%;
@@ -284,6 +292,7 @@
     background: #88f;
     box-shadow: #33f 0 0 4px 3px;
     color: #002;
+    box-sizing: border-box;
 }
 .validation-info {
     width: 95%;
@@ -340,30 +349,150 @@
 .scoreboard {
     width: 300px;
     margin: auto;
-    border: solid 1px #003;
-    font-style: italic;
-    font-family: cursive;
 }
 .scoreboard__header {
-    font-size: 36px;
+    font-size: 40px;
+    font-family: UbuntuItalic;
+    text-shadow: whitesmoke 0 0 1em;
 
 }
 .table {
     width: 300px;
 }
 .table-header {
-    background: #f90;
+    margin-top: 10px;
+    font-size: 22px;
+    color: whitesmoke;
+    text-shadow: whitesmoke 0 0 1em;
+}
+.table__table-header__item {
+    display: inline-block;
+    width: 50%;
+    box-sizing: border-box;
+}
+.table__table-header__item_alignRight {
+    text-align: right;
+}
+.table__line {
+
+}
+.table__content {
+    margin-top: 10px;
+    font-family: NunitoNormal;
+}
+.table__content-line {
+    padding: 3px 0 3px;
 }
 .table__item {
-    margin: 10px;
-    font-size: 20px;
-    color: #003;
-    background: #ff6;
+    display: inline-block;
+    width: 43%;
+    box-sizing: border-box;
+    text-align: left;
 }
+.table__item-name {
+    text-align: left;
+}
+.table__item-score {
+     text-align: right;
+ }
 .table__item_even {
-    background: #ff9;
+    color: #0f0;
+    background: #003;
 }
 .table__item_odd {
-    background: #ff5;
+    color: #ff0;
+    /*background: #001;*/
+}
+.vertical-line_tableRelPos {
+    position: relative;
+    top: 3px;
+    box-sizing: border-box;
+}
+.scoreboard__button {
+    width: 100%;
+    margin: 5px 0;
+    box-sizing: border-box;
+}
+
+/*ROOMS PAGE*/
+.rooms {
+    width: 70%;
+    margin: auto;
+}
+.rooms__lines {
+    margin-top: 10px;
+}
+.rooms__lines__header {
+    font-size: 20px;
+    color: #ff0;
+    text-shadow: #ff0 0 0 10px;
+}
+.rooms__lines__header__index {
+    width: 5%;
+    display: inline-block;
+    box-sizing: border-box;
+}
+.rooms__lines__header__name {
+    width: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+}
+.rooms__lines__header__players {
+    width: 10%;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: right;
+}
+.rooms__lines__header__maxPlayers {
+    width: 10%;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: right;
+}
+.rooms__lines__line {
+    font-family: NunitoNormal;
+    font-size: 16px;
+    margin-top: 10px;
+}
+.rooms__lines__line__index {
+    width: 5%;
+    display: inline-block;
+    box-sizing: border-box;
+}
+.rooms__lines__line__name {
+    width: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+}
+.rooms__lines__line__players {
+    width: 10%;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: right;
+}
+.rooms__lines__line__maxPlayers {
+    width: 10%;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: right;
+}
+.rooms__lines__line__button {
+    width: 22%;
+    margin-left: 20px;
+}
+
+/*GAME PAGE*/
+.field {
+    /*width: 1200px;*/
+    /*height: 700px;*/
+    margin: 0 10px 10px 10px;
+    border: solid 2px #000;
+    box-shadow: #f5f5f5 0 0 5px 3px;
+}
+.character {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    margin: 0;
 }
 
