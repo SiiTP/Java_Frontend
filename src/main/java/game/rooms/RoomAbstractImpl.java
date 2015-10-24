@@ -68,8 +68,12 @@ public abstract class RoomAbstractImpl implements Room  {
     public Date getFinishedDate() {
         return finishedDate;
     }
-
+    @Override
     public String getRoomName() {
         return roomName;
+    }
+    @Override
+    public void setRoomName(String roomName){
+        this.roomName = roomName;
     }
 }

@@ -36,6 +36,11 @@ public class RoomFFA extends RoomAbstractImpl {
         users.remove(profile);
     }
 
+    @Override
+    public boolean isRoomReady() {
+        return users.size()>1;
+    }
+
 
     @Override
     public boolean checkUser(UserProfile user){
@@ -49,16 +54,25 @@ public class RoomFFA extends RoomAbstractImpl {
         users.add(profile);
     }
     @Override
-    public JSONObject getJson(){
+    public JSONObject getJsonRoom(){
         JSONObject object = new JSONObject();
+        object.put("roomID",1);//TODO еще нет БД для ID
+        object.put("roomname",getRoomName());
+        object.put("players",getPlayersCount());
+        object.put("maxPlayers",getPlayersLimit());
+        return object;
+    }
+
+    @Override
+    public JSONArray getJsonRoomPlayers() {
+
         JSONArray array = new JSONArray();
         for(UserProfile profile : users){
             array.put(profile.getJson());
         }
-        object.put("roomname",getRoomName());
-        object.put("users",(Object)array);
-        return object;
+        return array;
     }
+
     @Override
     public int getPlayersCount() {return users.size();}
 

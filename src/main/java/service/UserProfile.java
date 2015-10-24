@@ -14,11 +14,12 @@ public class UserProfile {
     private String username;
     @NotNull
     private String password;
-
+    private GameProfile gameProfile;
     private Room currentroom;
     public UserProfile(@NotNull String name,@NotNull String pass) {
         this.username = name;
         this.password = pass;
+        gameProfile = new GameProfile();
 
     }
     public boolean checkPassword(@Nullable String pass){
@@ -51,7 +52,7 @@ public class UserProfile {
         this.password = pass;
     }
     public JSONObject getJson(){
-        JSONObject object = new JSONObject();
+        JSONObject object = gameProfile.getJSON();
         object.put("name",username);
         return object;
     }

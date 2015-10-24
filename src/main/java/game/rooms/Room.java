@@ -2,6 +2,7 @@ package game.rooms;
 
 import exceptions.NoSuchPlayerException;
 import exceptions.RoomFullException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import service.UserProfile;
 
@@ -11,7 +12,8 @@ import java.util.Date;
  * Created by ivan on 14.10.15.
  */
 public interface Room {
-    JSONObject getJson();
+    JSONObject getJsonRoom();
+    JSONArray getJsonRoomPlayers();
     int getPlayersCount();
     int getPlayersLimit();
     void setPlayersLimit(Integer playersLimit);
@@ -23,6 +25,9 @@ public interface Room {
     Date getCreateDate();
     UserProfile getCreator();
     Date getFinishedDate();
+    String getRoomName();
+    void setRoomName(String roomName);
+    boolean isRoomReady();
     boolean isRoomHasPass();
     boolean isFull();
 }

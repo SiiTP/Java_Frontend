@@ -42,7 +42,33 @@ public class TopLevelGameServer {
         }
         return room;
     }
-
+    @Nullable
+    public UserProfile getPlayerBySession(String session){
+        return accountService.getUserBySession(session);
+    }
+    @Nullable
+    public Room getPlayerRoomBySession(String session){
+        UserProfile userProfile = getPlayerBySession(session);
+        Room room = null;
+        if(userProfile != null){
+            room = userProfile.getCurrentroom();
+        }
+        return room;
+    }
+    public boolean isGameReady(String session){
+        UserProfile profile = accountService.getUserBySession(session);
+        Room room = null;
+        boolean isReady = false;
+        if (profile != null) {
+            room = profile.getCurrentroom();
+        }
+        if(room != null){
+            if(room.isRoomReady()){
+                isReady = true;
+            }
+        }
+        return isReady;
+    }
     public void setRooms(Map<String, Room> rooms) {
         this.rooms = rooms;
     }
@@ -81,8 +107,10 @@ public class TopLevelGameServer {
             UserProfile profile = accountService.getUserBySession(session);
             if (rooms.containsKey(roomName)) {
                 Room room = rooms.get(roomName);
-                if(!room.checkUser(profile)){
-                    auth = false;
+                if (profile != null) {
+                    if(!room.checkUser(profile)){
+                        auth = false;
+                    }
                 }
             }else{
                 auth = false;
