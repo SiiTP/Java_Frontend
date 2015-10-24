@@ -93,6 +93,7 @@
     display: inline-block;
     width: 36%;
     margin-bottom: 10px;
+    box-sizing: border-box;
     /*border: solid 1px #111;*/
 }
 .logo__top {
