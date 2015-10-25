@@ -88,8 +88,7 @@ public class RoomFFA extends RoomAbstractImpl {
                     }
                 }
             }
-        String winnerName = winner.getUsername();
-        return winnerName;
+        return winner.getUsername();
     }
     @Override
     public boolean checkUser(UserProfile user){
