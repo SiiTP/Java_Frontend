@@ -38,8 +38,6 @@ define([
             //this.myCharacter.model.info();
             this.myCharacter.draw();
             var character = this.myCharacter;
-            //this.context.fillRect(0, 0, 300, 300);
-            //this.context.fill();
             function loop() {
                 character.model.myMove();
                 character.draw();
@@ -47,8 +45,6 @@ define([
             }
             requestAnimationFrame(loop);
             this.$el.show();
-            //console.log("X : " + myCharacter.model.posX + "; Y : " + myCharacter.model.posY);
-                //setTimeout(alert('!'), 10000)
         },
         hide: function () {
             this.$el.hide();
