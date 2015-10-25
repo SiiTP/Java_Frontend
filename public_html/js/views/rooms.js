@@ -32,8 +32,8 @@ define([
         onConnect: function(event) {
             var roomID = event.currentTarget.attributes.getNamedItem('data-roomid').value;
             console.log("you connect in room with id : " + roomID);
-            //TODO запрос на сервер о входе в комнату
-            location.href = '#room';
+            this.model.onJoin(roomID);
+            //location.href = '#room';
         },
         onCreateRoom: function(event) {
             event.preventDefault();
@@ -41,8 +41,10 @@ define([
         },
         show: function() {
             console.log("show rooms");
-            console.log(this.model.getRooms());
-            this.$el.html(this.template(this.model.getRooms()));
+            //console.log(this.model.getRooms());
+            var rooms = this.model.getRooms();
+            console.log("rooms : " + rooms);
+            this.$el.html(this.template(rooms));
             this.trigger('show',{'name': this.name});
             this.$el.show();
         },
