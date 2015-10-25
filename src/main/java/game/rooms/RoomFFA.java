@@ -2,12 +2,16 @@ package game.rooms;
 
 import exceptions.NoSuchPlayerException;
 import exceptions.RoomFullException;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import service.GameProfile;
 import service.UserProfile;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -25,7 +29,7 @@ public class RoomFFA extends RoomAbstractImpl {
     }
 
     public RoomFFA(String roomName, String roomPassword, UserProfile creator) {
-        super(roomName,roomPassword,creator);
+        super(roomName, roomPassword, creator);
     }
 
     @Override
@@ -40,8 +44,39 @@ public class RoomFFA extends RoomAbstractImpl {
     public boolean isRoomReady() {
         return users.size()>1;
     }
+    public int maxScore(){
+        int max = -1;
+        for(UserProfile user:users){
+            GameProfile gameProfile = user.getGameProfile();
+            if(gameProfile.getScore()>max){
+                max = gameProfile.getScore();
+            }
+        }
+        return max;
+    }
+    @Override
+    public boolean isFinished() {
+        return Instant.now().isAfter(getFinishTime()) || maxScore()==getScoreLimit();
+    }
 
 
+    @Nullable
+    public String getWinner(){
+        int max = maxScore();
+        String winnerName = null;
+            UserProfile winner = null;
+            Iterator<UserProfile> iterator = users.iterator();
+            while (winner == null) {
+                if (iterator.hasNext()) {
+                    UserProfile user = iterator.next();
+                    if (user.getGameProfile().getScore() == max) {
+                        winner = user;
+                    }
+                }
+            }
+            winnerName = winner.getUsername();
+        return winnerName;
+    }
     @Override
     public boolean checkUser(UserProfile user){
         return users.contains(user);
@@ -75,5 +110,14 @@ public class RoomFFA extends RoomAbstractImpl {
 
     @Override
     public int getPlayersCount() {return users.size();}
+
+    @Nullable
+    public List<UserProfile> getPlayers() {
+        if(!isFinished()) {
+            return users;
+        }else {
+            return null;
+        }
+    }
 
 }

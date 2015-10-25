@@ -7,3 +7,150 @@
     <div id="page"></div>
     <script data-main="js/main" src="js/lib/require.js"></script>
 </body></html>
+
+<!--html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="js/lib/jquery.js"></script>
+    <title></title>
+</head>
+<body>
+<script>
+    $(document).ready(function () {
+        var log = $("#login-form");
+        var reg = $("#registration-form");
+        var createroom = $("#create-room");
+        var joinroom = $("#join-room");
+        log.on('submit', function (e) {
+            e.preventDefault();
+            console.log("here log");
+            $.ajax({
+                url: '/signin',
+                method: 'post',
+                data: log.serialize()
+            }).done(function (resp) {
+            console.log(resp);
+        });
+        });
+
+
+        reg.on('submit',function(e){
+            e.preventDefault();
+            $.ajax({
+                url:'/signup',
+                method:'post',
+                data:reg.serialize()
+            }).done(function (resp) {
+            console.log(resp);
+        });
+        });
+        createroom.on('submit',function(e){
+            e.preventDefault();
+            $.ajax({
+                url:'/create',
+                method:'post',
+                data:createroom.serialize()
+            }).done(function (resp) {
+            console.log(resp);
+        });
+        });
+        joinroom.on('submit',function(e){
+            e.preventDefault();
+            $.ajax({
+                url:'/join',
+                method:'post',
+                data:joinroom.serialize()
+            }).done(function (resp) {
+                console.log(resp);
+            });
+        });
+
+    });
+    var ws;
+    init = function () {
+        ws = new WebSocket("ws://localhost:8000/gameplay");
+        ws.onopen = function (event) {
+
+        };
+        ws.onmessage = function (event) {
+            console.log(event['data']);
+            var json = JSON.parse(event['data']);
+            var mesg = json['message'];
+            if(mesg ==null){
+                mesg = json['players'];
+            }
+            $("textarea").html(mesg);
+        };
+        ws.onclose = function (event) {
+
+        }
+    };
+    var sendMessage = function () {
+        var message = {name:'room'};
+        ws.send(JSON.stringify(message));
+    };
+</script>
+<div class="login">
+    <form action="/signin" id="login-form" method="post">
+        <p class="input-line">
+            <label for="username" class="input-line__header">Username</label>
+            <input class="input-line__input" type="text" name="username" id="username"/>
+        </p>
+        <p class="input-line">
+            <label for="password" class="input-line__header">Password</label>
+            <input class="input-line__input" type="password" name="password" id="password"/>
+        </p>
+        <button type="submit" class="button button_login">Log In!</button>
+        <a class="login__registration-link" href="#registration">registration</a>
+    </form>
+</div>
+
+<div class="registration">
+    <form action="/signup" id="registration-form" method="post">
+        <p class="input-line">
+            <label for="username" class="input-line__header">Username </label>
+            <input class="input-line__input" type="text" name="username" id="username"
+                   placeholder="Enter your unique username"/>
+        </p>
+        <p class="input-line">
+            <label for="password" class="input-line__header">Password </label>
+            <input class="input-line__input" type="password" name="password" id="password"
+                   placeholder="Enter your password"/>
+        </p>
+        <p class="input-line">
+            <label for="confirm" class="input-line__header">Confirm</label>
+            <input class="input-line__input" type="password" id="confirm"
+                   placeholder="Confirm your password"/>
+        </p>
+        <button type="submit" class="button button_registration">Registration</button>
+    </form>
+
+</div>
+room
+<form id="create-room" action="/create" method="post">
+    <input name="roomName" type="text" placeholder="name">
+    <br>
+    <input name="password" type="password">
+    <br>
+    <button type="submit">subm</button>
+
+</form>
+<br>
+join
+<form id="join-room" action="/join" method="post">
+    <input name="roomName" type="text" placeholder="name">
+    <br>
+    <input name="password" type="password">
+    <br>
+    <button type="submit">subm</button>
+
+</form>
+<br>
+<button onclick="init()">Init</button>
+<br>
+<button onclick="sendMessage()">send</button>
+<br>
+<textarea>area</textarea>
+<br>
+</body>
+</html-->
