@@ -29,13 +29,13 @@ define(['backbone',
         manager.addInViews(GameView, {'typeView' : 1});
         manager.addInViews(LoginView, {'typeView' : 1});
         manager.info();*/
-        manager.add(mainView);
         manager.add(scoreboardView);
         manager.add(loginView);
         manager.add(registrationView);
         manager.add(gameView);
         manager.add(roomView);
         manager.add(roomsView);
+        manager.add(mainView);
         //manager.setListeners();
         var views = manager.getViews();
 

@@ -10,7 +10,8 @@ define([
 
     var View = Backbone.View.extend({
         name: "game",
-        tagName: 'div',
+        tagName: 'canvas',
+        className: 'field',
         context: undefined,
         myCharacter: undefined,
         enemyCharacters: [],
@@ -26,18 +27,18 @@ define([
             console.log("game render");
             this.$el.html(this.template());
             document.getElementById('page').appendChild(this.el);
+            this.context = this.el.getContext('2d');
             this.myCharacter = new MyCharacter();
             this.$el.hide();
         },
         show: function () {
+            console.log("game show");
             this.trigger('show',{'name' : this.name});
-            var canva = $('canvas.field')[0];
-            this.context = canva.getContext('2d');
-            canva.width = constants.FIELD_WIDTH;
-            canva.height = constants.FIELD_HEIGHT;
-            //this.myCharacter.model.info();
+            this.el.width = constants.FIELD_WIDTH;
+            this.el.height = constants.FIELD_HEIGHT;
             this.myCharacter.draw();
             var character = this.myCharacter;
+            character.show();
             function loop() {
                 character.model.myMove();
                 character.draw();
@@ -47,6 +48,10 @@ define([
             this.$el.show();
         },
         hide: function () {
+            console.log("game hide");
+            this.el.width = 0;
+            this.el.height = 0;
+            this.myCharacter.hide();
             this.$el.hide();
         },
         onMouseMove: function(event) {

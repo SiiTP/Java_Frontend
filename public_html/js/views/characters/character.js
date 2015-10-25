@@ -14,8 +14,6 @@ define([
             console.log("character view initialize");
             document.getElementById('page').appendChild(this.el);
             var canvas = this.el;
-            canvas.width = constants.FIELD_WIDTH;
-            canvas.height = constants.FIELD_HEIGHT;
             this.context = canvas.getContext('2d');
         },
         draw: function() {
@@ -66,9 +64,13 @@ define([
             this.context.clearRect(x - r * 2, y - r * 2, 6 * r + 80, 6 * r);
         },
         show: function() {
+            this.el.width = constants.FIELD_WIDTH;
+            this.el.height = constants.FIELD_HEIGHT;
             this.$el.show();
         },
         hide: function() {
+            this.el.width = 0;
+            this.el.height = 0;
             this.$el.hide();
         }
     });
