@@ -29,8 +29,8 @@ define([
             //var data = {"name": auth_user.name, "score": auth_user.score};
         },
         onConnect: function(event) {
-            var connectingID = event.currentTarget.attributes.getNamedItem('data-roomid').value;
-            console.log("you connect in room with id : " + connectingID);
+            var roomID = event.currentTarget.attributes.getNamedItem('data-roomid').value;
+            console.log("you connect in room with id : " + roomID);
             //TODO запрос на сервер о входе в комнату
             location.href = '#room';
         },
