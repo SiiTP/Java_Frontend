@@ -103,12 +103,6 @@ public class TopLevelGameServer {
         }
         return room;
     }
-   /* public void addSocketToPlayer(String httpSession,){
-        if(isAuthorizedPlayer(httpSession)){
-            UserProfile profile = getPlayerBySession(httpSession);
-            profile.setWebSocket();
-        }
-    }*/
     public boolean isAuthorizedPlayer(String session){
         return accountService.isAuthorized(session);
     }

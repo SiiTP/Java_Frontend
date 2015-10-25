@@ -42,7 +42,17 @@ public class RoomFFA extends RoomAbstractImpl {
 
     @Override
     public boolean isRoomReady() {
-        return users.size()>1;
+        boolean isReady =  users.size()>1;
+        if(isReady && getStartTime() == null) {
+            Instant startTime = Instant.now();
+            final int minutes = 1;
+            final int seconds = 60;
+            final int maxRoomTime = minutes * seconds; //TODO add to prop
+            Instant finishTime = startTime.plusSeconds(maxRoomTime);
+            setStartTime(startTime);
+            setFinishTime(finishTime);
+        }
+        return isReady;
     }
     public int maxScore(){
         int max = -1;
@@ -56,7 +66,11 @@ public class RoomFFA extends RoomAbstractImpl {
     }
     @Override
     public boolean isFinished() {
-        return Instant.now().isAfter(getFinishTime()) || maxScore()==getScoreLimit();
+        boolean fin =  Instant.now().isAfter(getFinishTime()) || maxScore()==getScoreLimit();
+        if(fin){
+            System.out.println("here we go");
+        }
+        return fin;
     }
 
 

@@ -32,17 +32,18 @@ public abstract class RoomAbstractImpl implements Room  {
         return playersLimit;
     }
 
-    @Override
+
     public void setPlayersLimit(Integer playersLimit) {
         this.playersLimit = playersLimit;
     }
 
-    @Override
+    public Instant getStartTime() {
+        return startTime;
+    }
     public String getPassword() {
         return password;
     }
 
-    @Override
     public void setPassword(String password) {
         this.password = password;
     }
@@ -51,26 +52,22 @@ public abstract class RoomAbstractImpl implements Room  {
     public boolean isRoomHasPass() {
         return password != null;
     }
-
-    @Override
     public Instant getCreateDate() {
         return startTime;
     }
 
-    @Override
+
     public UserProfile getCreator() {
         return creatorUser;
     }
-
-    @Override
     public Instant getFinishTime() {
         return finishTime;
     }
-    @Override
+
     public String getRoomName() {
         return roomName;
     }
-    @Override
+
     public void setRoomName(String roomName){
         this.roomName = roomName;
     }

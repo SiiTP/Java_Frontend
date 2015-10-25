@@ -25,21 +25,26 @@ public class MoveActionStrategy implements GameActionStrategy {
     @Override
     public void processGameAction(@NotNull JSONObject message,@NotNull String httpSession) {
         Random random = new Random();
-        final int maxBorder = 400;
-        final int minBorder = 100;
-        final int maxScore = 10;
         Room room = topLevelGameServer.getRoomByName(message.getString("name"));
-        if(room instanceof RoomFFA){
-            RoomFFA roomFFA = (RoomFFA)room;
-            List<UserProfile> players = roomFFA.getPlayers();
-            int randomX = minBorder + random.nextInt(maxBorder);
-            int randomY = minBorder + random.nextInt(maxBorder);
-            int randomScore = random.nextInt(maxScore);
-            UserProfile profile = topLevelGameServer.getPlayerBySession(httpSession);
-            GameProfile gameProfile = profile.getGameProfile();
-            gameProfile.setX(randomX);
-            gameProfile.setY(randomY);
-            gameProfile.setScore(randomScore);
+        if(!room.isFinished()) {
+            if (room instanceof RoomFFA) {
+                RoomFFA roomFFA = (RoomFFA) room;
+                List<UserProfile> players = roomFFA.getPlayers();
+                final int minBorder = 100;
+                final int maxBorder = 400;
+                int randomX = minBorder + random.nextInt(maxBorder);
+                int randomY = minBorder + random.nextInt(maxBorder);
+                final int maxScore = 10;
+                int randomScore = random.nextInt(maxScore);
+                UserProfile profile = topLevelGameServer.getPlayerBySession(httpSession);
+                if (profile != null) {
+                    GameProfile gameProfile = profile.getGameProfile();
+                    gameProfile.setX(randomX);
+                    gameProfile.setY(randomY);
+                    gameProfile.setScore(randomScore);
+                }
+
+            }
         }
     }
 }

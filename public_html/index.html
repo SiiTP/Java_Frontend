@@ -8,6 +8,7 @@
 </head>
 <body>
 <script>
+    var user;
     $(document).ready(function () {
         var log = $("#login-form");
         var reg = $("#registration-form");
@@ -22,6 +23,7 @@
                 data: log.serialize()
             }).done(function (resp) {
             console.log(resp);
+                user = $("#login-form #username")[0].value();
         });
         });
 
@@ -58,6 +60,7 @@
         });
 
     });
+
     var ws;
     init = function () {
         ws = new WebSocket("ws://localhost:8000/gameplay");
@@ -70,6 +73,15 @@
             var mesg = json['message'];
             if(mesg ==null){
                 mesg = json['players'];
+                if(mesg == null){
+                    var arr = json['players'];
+                    arr.forEach(function(i){
+                        if(i['name']===user){
+                            mesg = i['score'];
+                        }
+                    });
+
+                }
             }
             $("textarea").html(mesg);
         };

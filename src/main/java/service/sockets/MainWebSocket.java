@@ -73,16 +73,7 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
         JSONObject object = new JSONObject();
         if(isOkGame) {
             Room room = topLevelGameServer.getPlayerRoomBySession(httpSession);
-
-            Instant startTime = Instant.now();
-            final int minutes = 1;
-            final int seconds = 60;
-            final int maxRoomTime = minutes * seconds; //TODO add to prop
-            Instant finishTime = startTime.plusSeconds(maxRoomTime);
-            room.setStartTime(startTime);
-            room.setFinishTime(finishTime);
             strategy.processGameAction(message, httpSession);
-
             if (room != null) {
                 if(room.isFinished()){
                     String winner = room.getWinner();
