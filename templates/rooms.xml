@@ -20,6 +20,20 @@
                     <button class="button rooms__lines__line__button" data-roomid="{item.roomID}">Connect!</button>
                 </div>
             </fest:each>
+            <div class="line line_blue"> </div>
+            <div class="rooms__create">
+                <form method="post">
+                    <p class="input-line rooms__create__input-line">
+                        <label for="roomName" class="input-line__header">Name</label>
+                        <input class="input-line__input" type="text" name="roomName" id="roomName"/>
+                    </p>
+                    <p class="input-line rooms__create__input-line rooms__create__input-line__password">
+                        <label for="roomPassword" class="input-line__header">Password</label>
+                        <input class="input-line__input" type="password" name="roomPassword" id="roomPassword"/>
+                    </p>
+                    <button class="button rooms__create__button">Create!</button>
+                </form>
+            </div>
         </div>
     </div>
 </fest:template>

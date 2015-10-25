@@ -58,6 +58,7 @@ public class UserProfile {
         object.put("name",username);
         return object;
     }
+    @NotNull
     public GameProfile getGameProfile(){
         return gameProfile;
     }

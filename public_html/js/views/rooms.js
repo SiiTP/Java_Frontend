@@ -15,7 +15,8 @@ define([
         template: tmpl,
         model: new Rooms(),
         events: {
-            'click .rooms__lines__line__button': 'onConnect'
+            'click .rooms__lines__line__button': 'onConnect',
+            'click .rooms__create__button': 'onCreateRoom'
         },
         initialize: function () {
             console.log("rooms initialize");
@@ -33,6 +34,10 @@ define([
             console.log("you connect in room with id : " + roomID);
             //TODO запрос на сервер о входе в комнату
             location.href = '#room';
+        },
+        onCreateRoom: function(event) {
+            event.preventDefault();
+            this.model.onCreate();
         },
         show: function() {
             console.log("show rooms");
