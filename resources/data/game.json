@@ -1,8 +1,9 @@
 {
-  "class":"resource.GameResource",
+
   "maxPlayers":10,
   "gameFieldWidth":800,
   "gameFieldHeight":600,
   "maxRoomPlayingTimeInSec":1200,
-  "defaultWinScore":25
+  "defaultWinScore":25,
+  "class":"resource.GameResources"
 }
