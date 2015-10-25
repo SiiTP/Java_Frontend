@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.IOException;
+import java.time.Instant;
 
 /**
  * Created by ivan on 24.10.15.
@@ -56,7 +57,7 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
             }
         }
         if(isOkPlayer){
-            processMessage(data);
+            processPlayerMessage(data);
         }
     }
 
@@ -67,15 +68,30 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
     }
 
     @Override
-    public void processMessage(JSONObject message) {
+    public void processPlayerMessage(JSONObject message) {
         boolean isOkGame = topLevelGameServer.isGameReady(httpSession);
         JSONObject object = new JSONObject();
         if(isOkGame) {
-            strategy.processGameAction(message, httpSession);
             Room room = topLevelGameServer.getPlayerRoomBySession(httpSession);
+
+            Instant startTime = Instant.now();
+            final int minutes = 1;
+            final int seconds = 60;
+            final int maxRoomTime = minutes * seconds; //TODO add to prop
+            Instant finishTime = startTime.plusSeconds(maxRoomTime);
+            room.setStartTime(startTime);
+            room.setFinishTime(finishTime);
+            strategy.processGameAction(message, httpSession);
+
             if (room != null) {
-                object.put("players",room.getJsonRoomPlayers());
-                object.put("status",200);
+                if(room.isFinished()){
+                    String winner = room.getWinner();
+                    object.put("winner", winner);
+                    object.put("status", 200);
+                }else {
+                    object.put("players", room.getJsonRoomPlayers());
+                    object.put("status", 200);
+                }
             }
         }else{
             object.put("status", roomIsNotReady);

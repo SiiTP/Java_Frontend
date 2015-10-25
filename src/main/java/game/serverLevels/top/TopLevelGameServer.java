@@ -3,9 +3,11 @@ package game.serverLevels.top;
 import exceptions.RoomFullException;
 import game.rooms.Room;
 import game.rooms.RoomFFA;
+import org.eclipse.jetty.server.Authentication;
 import org.jetbrains.annotations.Nullable;
 import service.account.AccountService;
 import service.UserProfile;
+import service.sockets.MainWebSocket;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +47,9 @@ public class TopLevelGameServer {
     @Nullable
     public UserProfile getPlayerBySession(String session){
         return accountService.getUserBySession(session);
+    }
+    public Room getRoomByName(String roomname){
+        return rooms.get(roomname);
     }
     @Nullable
     public Room getPlayerRoomBySession(String session){
@@ -98,6 +103,12 @@ public class TopLevelGameServer {
         }
         return room;
     }
+   /* public void addSocketToPlayer(String httpSession,){
+        if(isAuthorizedPlayer(httpSession)){
+            UserProfile profile = getPlayerBySession(httpSession);
+            profile.setWebSocket();
+        }
+    }*/
     public boolean isAuthorizedPlayer(String session){
         return accountService.isAuthorized(session);
     }
