@@ -1,50 +1,86 @@
 package resource;
 
 
-import jdk.nashorn.internal.ir.WhileNode;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.util.*;
 
+import static reflection.ObjectConstruct.*;
 /**
  * Created by ivan on 25.10.15.
  */
 public class ResourceLoader {
-    Map<String,Resource> cachedResources;
+
 
     public ResourceLoader() {
-        cachedResources = new HashMap<>();
-    }
-    public void loadResources(){
 
     }
-    public static void main(String[] args) throws IOException, FileNotFoundException {
-        File file = new File("resources/data/");
-        List<File> files = Arrays.asList(file.listFiles());
-        for(File f:files) {
-            if(f.isDirectory()){
-                File[] newFiles = f.listFiles();
-                if(newFiles != null) {
-                    Collections.addAll(files,newFiles);
+    public void loadResources(Map<String,Resource> map) throws IOException, FileNotFoundException {
+        ArrayList<JSONObject> configObjects = loadJsonConfig("data");
+        for(JSONObject configFile : configObjects){
+            Object object = constructFromName(configFile.getString("class"));
+            if(object != null) {
+                Iterator<String> s = configFile.keys();
+                while (s.hasNext()) {
+                    String key = s.next();
+                    if (!key.equals("class") && !key.equals("filename")) {
+                        try {
+                            setFields(object, key, configFile.get(key));
+                        } catch (NoSuchFieldException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
-            }else {
-                BufferedReader reader = new BufferedReader(new FileReader(f));
-                StringBuilder builder = new StringBuilder();
+            }
+           map.put(configFile.getString("filename"),(Resource)object);
+        }
+
+    }
+    private Queue<File> getConfigFiles(String source){
+        File file = new File("resources/"+source);
+        Queue<File> files = new LinkedList<>();
+        File[] filesArray = file.listFiles();
+        if(filesArray != null) {
+            for (File f : filesArray) {
+                if (f.isDirectory()) {
+                    File[] additionalFiles = f.listFiles();
+                    if(additionalFiles != null) {
+                        for (File dirFiles : additionalFiles) {
+                            files.offer(dirFiles);
+                        }
+                    }
+                } else {
+                    files.offer(f);
+                }
+            }
+        }
+        return files;
+    }
+    private ArrayList<JSONObject> loadJsonConfig(String source) throws IOException {
+        ArrayList<JSONObject> configList = new ArrayList<>();
+        for(File f:getConfigFiles(source)) {
+            StringBuilder builder = new StringBuilder();
+            try(BufferedReader reader = new BufferedReader(new FileReader(f))) {
                 String app;
                 while ((app = reader.readLine()) != null) {
                     builder.append(app);
                 }
-                JSONObject jsonObject = new JSONObject(builder.toString());
-
-
-                Iterator<String> s = jsonObject.keys();
-                while (s.hasNext()) {
-                    String key = s.next();
-                    JSONObject o = jsonObject.optJSONObject(key);
-                    System.out.println(key + ' ' + jsonObject.opt(key));
-                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            JSONObject jsonObject = new JSONObject(builder.toString());
+            jsonObject.put("filename",f.getPath());
+            configList.add(jsonObject);
         }
+        return configList;
+    }
+    public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException, IllegalAccessException, InstantiationException {
+        ResourceLoader loader = new ResourceLoader();
+        Map<String,Resource> resourceMap  = new HashMap<>();
+        loader.loadResources(resourceMap);
+        int i = 453;
+
     }
 }

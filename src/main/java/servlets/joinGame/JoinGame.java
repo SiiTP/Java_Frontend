@@ -32,7 +32,7 @@ public class JoinGame extends HttpServlet {
                 room = gameServer.joinRoom(roomName, password, session);
             }
             if (room != null) {
-                resp.getWriter().println(room.getJsonRoom());
+                resp.getWriter().println(room.getJsonRoomPlayers());
             } else {
                 resp.getWriter().println("something went wrong!");
             }
