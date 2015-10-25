@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class RoomFFA extends RoomAbstractImpl {
 
-    private List<UserProfile> users = new ArrayList<>();//TODO лучше сделать связь от профиля к new профилю игровому
+    private List<UserProfile> users = new ArrayList<>();
     @Override
     public boolean isFull(){
         return users.size() == getPlayersLimit();
@@ -74,11 +74,11 @@ public class RoomFFA extends RoomAbstractImpl {
     }
 
 
+    @Override
     @Nullable
     public String getWinner(){
         int max = maxScore();
-        String winnerName = null;
-            UserProfile winner = null;
+        UserProfile winner = null;
             Iterator<UserProfile> iterator = users.iterator();
             while (winner == null) {
                 if (iterator.hasNext()) {
@@ -88,7 +88,7 @@ public class RoomFFA extends RoomAbstractImpl {
                     }
                 }
             }
-            winnerName = winner.getUsername();
+        String winnerName = winner.getUsername();
         return winnerName;
     }
     @Override
@@ -105,8 +105,8 @@ public class RoomFFA extends RoomAbstractImpl {
     @Override
     public JSONObject getJsonRoom(){
         JSONObject object = new JSONObject();
-        object.put("roomID",1);//TODO еще нет БД для ID
-        object.put("roomname",getRoomName());
+        //object.put("roomID",1);//TODO еще нет БД для ID
+        object.put("name",getRoomName());
         object.put("players",getPlayersCount());
         object.put("maxPlayers",getPlayersLimit());
         return object;
