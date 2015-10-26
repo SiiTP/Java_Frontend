@@ -1,8 +1,8 @@
-package servlets.joinGame;
+package servlets.joingame;
 
 import exceptions.RoomFullException;
 import game.rooms.Room;
-import game.serverLevels.top.TopLevelGameServer;
+import game.serverlevels.top.TopLevelGameServer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,8 +26,8 @@ public class JoinGame extends HttpServlet {
         String password = req.getParameter("password");
         String session = req.getSession().getId();
         boolean auth = gameServer.isAuthorizedPlayer(session);
-        Room room = null;
         try {
+            Room room = null;
             if (auth) {
                 room = gameServer.joinRoom(roomName, password, session);
             }

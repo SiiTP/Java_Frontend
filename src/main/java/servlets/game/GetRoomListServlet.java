@@ -1,8 +1,7 @@
 package servlets.game;
 
 import game.rooms.Room;
-import game.serverLevels.top.TopLevelGameServer;
-import game.serverLevels.top.TopLevelGameServerSingleton;
+import game.serverlevels.top.TopLevelGameServer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -20,22 +19,23 @@ import java.util.Map;
 public class GetRoomListServlet extends HttpServlet {
     TopLevelGameServer topLevelGameServer;
 
-    public GetRoomListServlet() {
-        topLevelGameServer = TopLevelGameServerSingleton.getInstance();
+
+    public GetRoomListServlet(TopLevelGameServer topLevelGameServer) {
+        this.topLevelGameServer = topLevelGameServer;
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String,Room> rooms = topLevelGameServer.getRoomsList();
+        Map<String, Room> rooms = topLevelGameServer.getRoomsList();
 
         JSONArray roomsJsonArray = new JSONArray();
         Collection<Room> roomArray = rooms.values();
-        for(Room room : roomArray){
+        for (Room room : roomArray) {
             roomsJsonArray.put(room.getJsonRoom());
         }
         JSONObject object = new JSONObject();
-        object.put("status",200);
-        object.put("rooms",roomsJsonArray);
+        object.put("status", HttpServletResponse.SC_OK);
+        object.put("rooms", roomsJsonArray);
         resp.getWriter().println(object.toString());
     }
 }

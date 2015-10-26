@@ -1,0 +1,55 @@
+package servlets.game;
+
+import game.serverlevels.top.TopLevelGameServer;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.junit.Before;
+import org.junit.Test;
+import service.account.AccountService;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.HashMap;
+
+import static junit.framework.Assert.assertTrue;
+import static org.mockito.Mockito.*;
+
+/**
+ * Created by ivan on 26.10.15.
+ */
+public class GetRoomListServletTest {
+    private HttpServletRequest request;
+    private HttpServletResponse response;
+    private StringWriter stringWriter;
+    private GetRoomListServlet roomServlet;
+    private TopLevelGameServer topLevelGameServer;
+    @Before
+    public void setUp() throws IOException {
+
+        AccountService service = spy(new AccountService());
+        topLevelGameServer = spy(new TopLevelGameServer(service));
+        request = mock(HttpServletRequest.class);
+        response = mock(HttpServletResponse.class);
+        HttpSession session = mock(HttpSession.class);
+        when(request.getSession()).thenReturn(session);
+
+        stringWriter = new StringWriter();
+        PrintWriter writer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(writer);
+
+        roomServlet = new GetRoomListServlet(topLevelGameServer);
+    }
+    @Test
+    public void testDoPost() throws ServletException, JSONException, IOException {
+        when(topLevelGameServer.getRoomsList()).thenReturn(new HashMap<>());
+        roomServlet.doPost(request, response);
+        JSONObject object = new JSONObject(stringWriter.toString());
+        int i = object.optInt("status");
+        assertTrue(i==HttpServletResponse.SC_OK);
+    }
+}

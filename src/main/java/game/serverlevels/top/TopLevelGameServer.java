@@ -1,13 +1,11 @@
-package game.serverLevels.top;
+package game.serverlevels.top;
 
 import exceptions.RoomFullException;
 import game.rooms.Room;
 import game.rooms.RoomFFA;
-import org.eclipse.jetty.server.Authentication;
 import org.jetbrains.annotations.Nullable;
-import service.account.AccountService;
 import service.UserProfile;
-import service.sockets.MainWebSocket;
+import service.account.AccountService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +20,7 @@ public class TopLevelGameServer {
     public TopLevelGameServer(AccountService accountService) {
         this.accountService = accountService;
     }
+    @Nullable
     public Room joinRoom(String roomname, @Nullable String password, String userSession) throws RoomFullException {
         UserProfile profile = accountService.getUserBySession(userSession);
         Room room = null;
@@ -63,10 +62,10 @@ public class TopLevelGameServer {
     public boolean isGameReady(String session){
         UserProfile profile = accountService.getUserBySession(session);
         Room room = null;
-        boolean isReady = false;
         if (profile != null) {
             room = profile.getCurrentroom();
         }
+        boolean isReady = false;
         if(room != null){
             if(room.isRoomReady()){
                 isReady = true;
@@ -78,9 +77,6 @@ public class TopLevelGameServer {
         this.rooms = rooms;
     }
 
-    public Room deleteUser(Room room, String userSession){
-        return null;
-    }
     public Map<String,Room> getRoomsList(){
         return rooms;
     }
@@ -116,6 +112,8 @@ public class TopLevelGameServer {
                     if(!room.checkUser(profile)){
                         auth = false;
                     }
+                }else{
+                    auth = false;
                 }
             }else{
                 auth = false;

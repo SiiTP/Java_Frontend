@@ -6,9 +6,9 @@ import org.json.JSONObject;
  * Created by ivan on 25.10.15.
  */
 public class GameProfile {
-    private int score = 1;
-    private int x = 100;
-    private int y = 200;//TODO delete defaults
+    private int score;
+    private int x;
+    private int y;
 
     public JSONObject getJSON(){
         JSONObject object = new JSONObject();

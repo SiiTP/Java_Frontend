@@ -1,9 +1,7 @@
-package game.gameAction;
+package game.gameaction;
 
-import game.rooms.Room;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
-import service.UserProfile;
 
 /**
  * Created by ivan on 25.10.15.
