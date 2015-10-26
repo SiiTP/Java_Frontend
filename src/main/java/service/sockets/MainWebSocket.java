@@ -1,43 +1,37 @@
 package service.sockets;
 
-import game.gameAction.GameActionStrategy;
-import game.gameAction.MoveActionStrategy;
+import game.gameaction.GameActionStrategy;
+import game.gameaction.MoveActionStrategy;
 import game.rooms.Room;
-import game.serverLevels.top.TopLevelGameServer;
-import game.serverLevels.top.TopLevelGameServerSingleton;
+import game.serverlevels.top.TopLevelGameServer;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import resource.ResourceFactory;
+import resource.ResponseResources;
 
 import java.io.IOException;
-import java.time.Instant;
 
 /**
  * Created by ivan on 24.10.15.
  */
 public class MainWebSocket extends WebSocketAdapter implements GameSocket {
-    private static final int roomIsNotReady = 301;
     TopLevelGameServer topLevelGameServer;
     String httpSession;
     GameActionStrategy strategy;
-    public MainWebSocket(String httpSession) {
-        this.topLevelGameServer = TopLevelGameServerSingleton.getInstance();
+    private final int roomIsNotReady;
+    private final int ok;
+    public MainWebSocket(String httpSession,TopLevelGameServer topLevelGameServer) {
+        ResponseResources responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
+        roomIsNotReady = responseResources.getRoomIsNotReadyCode();
+        ok = responseResources.getOk();
+        this.topLevelGameServer = topLevelGameServer;
         this.httpSession = httpSession;
-        strategy = new MoveActionStrategy();
+        strategy = new MoveActionStrategy(topLevelGameServer);
     }
 
-    @Override
-    public void onWebSocketClose(int statusCode, String reason) {
-        super.onWebSocketClose(statusCode, reason);
-    }
-
-    @Override
-    public void onWebSocketConnect(Session sess) {
-        //TODO посмотреть возможность передачи имени комнаты при коннекте, чтобы делать проверку правильности пользователя здесь 1 раз
-        super.onWebSocketConnect(sess);
-    }
 
     @Override
     public void onWebSocketText(String message) {
@@ -78,13 +72,14 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
                 if(room.isFinished()){
                     String winner = room.getWinner();
                     object.put("winner", winner);
-                    object.put("status", 200);
+                    object.put("status", ok);
                 }else {
                     object.put("players", room.getJsonRoomPlayers());
-                    object.put("status", 200);
+                    object.put("status", ok);
                 }
             }
         }else{
+
             object.put("status", roomIsNotReady);
             object.put("message","Wait for your enemy!");
         }

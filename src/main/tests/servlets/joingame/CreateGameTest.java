@@ -1,12 +1,14 @@
-package servlets.joinGame;
+package servlets.joingame;
 
-import game.serverLevels.top.TopLevelGameServer;
+import game.serverlevels.top.TopLevelGameServer;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -22,14 +24,13 @@ public class CreateGameTest {
     private TopLevelGameServer gameServer;
     private HttpServletRequest request;
     private HttpServletResponse response;
-    private HttpSession session;
     private StringWriter stringWriter;
     private CreateGame gameServlet;
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws IOException {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
-        session = mock(HttpSession.class);
+        HttpSession session = mock(HttpSession.class);
         gameServer = mock(TopLevelGameServer.class);
         when(request.getSession()).thenReturn(session);
 
@@ -41,7 +42,7 @@ public class CreateGameTest {
     }
 
     @Test
-    public void testDoPostNoAuthUser() throws Exception {
+    public void testDoPostNoAuthUser() throws ServletException, IOException {
         when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(false);
         gameServlet.doPost(request, response);
         assertTrue(stringWriter.toString().contains("no auth"));

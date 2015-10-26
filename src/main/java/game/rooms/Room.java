@@ -6,10 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import service.UserProfile;
 
-import javax.jws.soap.SOAPBinding;
-import java.time.Instant;
-import java.util.ArrayList;
-
 /**
  * Created by ivan on 14.10.15.
  */

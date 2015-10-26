@@ -1,11 +1,9 @@
 package service;
 
 import game.rooms.Room;
-import game.rooms.RoomFFA;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
-import service.sockets.MainWebSocket;
 
 /**
  * Created by ivan on 21.09.15.
@@ -15,7 +13,6 @@ public class UserProfile {
     private String username;
     @NotNull
     private String password;
-    private MainWebSocket webSocket;
     private GameProfile gameProfile;
     private Room currentroom;
     public UserProfile(@NotNull String name,@NotNull String pass) {
@@ -62,11 +59,5 @@ public class UserProfile {
     public GameProfile getGameProfile(){
         return gameProfile;
     }
-    public MainWebSocket getWebSocket() {
-        return webSocket;
-    }
 
-    public void setWebSocket(MainWebSocket webSocket) {
-        this.webSocket = webSocket;
-    }
 }

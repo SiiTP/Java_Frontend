@@ -1,7 +1,6 @@
 package servlets.authorization;
 
 import org.jetbrains.annotations.Nullable;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import service.account.AccountService;
@@ -15,8 +14,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Ivan on 10.10.15.
@@ -25,15 +23,14 @@ public class SignUpTest {
     private AccountService service;
     private HttpServletRequest request;
     private HttpServletResponse response;
-    private HttpSession session;
     private StringWriter stringWriter;
     private SignUp signUp;
     @Before
-    public void setUp() throws Exception {
-        service = mock(AccountService.class);
+    public void setUp() throws IOException {
+        service = spy(new AccountService());
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
-        session = mock(HttpSession.class);
+        HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
 
         stringWriter = new StringWriter();
@@ -45,14 +42,9 @@ public class SignUpTest {
 
     }
 
-    @After
-    public void tearDown() throws Exception {
-
-
-    }
 
     @Test
-    public void testDoPostIsAvailable() throws Exception {
+    public void testDoPostIsAvailable() throws ServletException, IOException {
         when(service.isAvailableName(anyString())).thenReturn(false);
 
         signUp.doPost(request,response);
@@ -60,25 +52,25 @@ public class SignUpTest {
         assert stringWriter.toString().contains("false");
     }
     @Test
-    public void testDoPostEmptyPass() throws Exception {
+    public void testDoPostEmptyPass() throws ServletException, IOException {
         setCheckSetting("");
         assert stringWriter.toString().contains("false");
     }
     private void setCheckSetting(@Nullable String passValue) throws ServletException, IOException {
         when(service.isAvailableName(anyString())).thenReturn(true);
-        when(request.getParameter("username")).thenReturn(anyString());
+        when(request.getParameter("username")).thenReturn("aaaa");
         when(request.getParameter("password")).thenReturn(passValue);
         signUp.doPost(request,response);
     }
     @Test
-    public void testDoPostNullPass() throws Exception {
+    public void testDoPostNullPass() throws ServletException, IOException {
         setCheckSetting(null);
 
         assert stringWriter.toString().contains("false");
     }
     @Test
-    public void testDoPostSuccess() throws Exception {
-        setCheckSetting("aaa");
+    public void testDoPostSuccess() throws ServletException, IOException {
+        setCheckSetting("aaaa");
 
         assert stringWriter.toString().contains("true");
     }

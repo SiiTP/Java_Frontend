@@ -40,6 +40,9 @@ public class LoginInfo extends HttpServlet {
                     responseJSON.put("username", profile.getUsername());
                     responseJSON.put("message", "You logged!");
                     // TODO передавть счет
+                }else{
+                    responseJSON.put("success", false);
+                    responseJSON.put("message", "something wrong!");
                 }
             } else {
                 responseJSON.put("success", false);

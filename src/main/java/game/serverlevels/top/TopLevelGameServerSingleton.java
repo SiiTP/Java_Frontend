@@ -1,4 +1,4 @@
-package game.serverLevels.top;
+package game.serverlevels.top;
 
 import service.account.AccountServiceSingleton;
 

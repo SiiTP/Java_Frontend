@@ -3,38 +3,40 @@ package resource;
 
 import org.json.JSONObject;
 
-import java.io.*;
-import java.lang.reflect.Field;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
-import static reflection.ObjectConstruct.*;
+import static reflection.ObjectConstruct.constructFromName;
+import static reflection.ObjectConstruct.setFields;
 /**
  * Created by ivan on 25.10.15.
  */
 public class ResourceLoader {
 
+    public void loadResources(Map<String,Resource> map) {
 
-    public ResourceLoader() {
-
-    }
-    public void loadResources(Map<String,Resource> map) throws IOException, FileNotFoundException {
         ArrayList<JSONObject> configObjects = loadJsonConfig("data");
-        for(JSONObject configFile : configObjects){
-            Object object = constructFromName(configFile.getString("class"));
-            if(object != null) {
-                Iterator<String> s = configFile.keys();
-                while (s.hasNext()) {
-                    String key = s.next();
-                    if (!key.equals("class") && !key.equals("filename")) {
-                        try {
-                            setFields(object, key, configFile.get(key));
-                        } catch (NoSuchFieldException e) {
-                            e.printStackTrace();
+        if(configObjects != null) {
+            for (JSONObject configFile : configObjects) {
+                Object object = constructFromName(configFile.getString("class"));
+                if (object != null) {
+                    Iterator<String> s = configFile.keys();
+                    while (s.hasNext()) {
+                        String key = s.next();
+                        if (!key.equals("class") && !key.equals("filename")) {
+                            try {
+                                setFields(object, key, configFile.get(key));
+                            } catch (NoSuchFieldException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
+                map.put(configFile.getString("filename"), (Resource) object);
             }
-           map.put(configFile.getString("filename"),(Resource)object);
         }
 
     }
@@ -58,7 +60,7 @@ public class ResourceLoader {
         }
         return files;
     }
-    private ArrayList<JSONObject> loadJsonConfig(String source) throws IOException {
+    private ArrayList<JSONObject> loadJsonConfig(String source) {
         ArrayList<JSONObject> configList = new ArrayList<>();
         for(File f:getConfigFiles(source)) {
             StringBuilder builder = new StringBuilder();
@@ -75,12 +77,5 @@ public class ResourceLoader {
             configList.add(jsonObject);
         }
         return configList;
-    }
-    public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException, IllegalAccessException, InstantiationException {
-        ResourceLoader loader = new ResourceLoader();
-        Map<String,Resource> resourceMap  = new HashMap<>();
-        loader.loadResources(resourceMap);
-        int i = 453;
-
     }
 }
