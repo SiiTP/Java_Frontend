@@ -130,10 +130,11 @@ define([
                 $(".registration__input-line__input__confirm").focus();
             }
         },
-        onSubmit: function() {
+        onSubmit: function(event) {
+            event.preventDefault();
             console.log("on submit registration view");
             if (this.model.isValid()) {
-                this.model.onSubmit();
+                this.model.onSubmit(event);
             } else {
                 $(".validation-info-common").text("Не все поля заданы корректно.");
                 this.focusOnErrorField();

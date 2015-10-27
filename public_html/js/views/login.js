@@ -106,7 +106,8 @@ define([
             }
 
         },
-        onSubmit: function() {
+        onSubmit: function(event) {
+            event.preventDefault();
             console.log("backbone view login click event");
             if (this.model.isValid()) {
                 console.log("data is valid");

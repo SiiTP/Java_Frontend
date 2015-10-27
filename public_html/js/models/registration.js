@@ -113,7 +113,7 @@ define([
         isValid: function() {
             return this.username && this.password && this.confirm;
         },
-        onSubmit: function() {
+        onSubmit: function(event) {
             var data = this.toJSON();
             //console.log(data);
             $.ajax({

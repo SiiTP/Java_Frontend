@@ -41,7 +41,7 @@
                 <div class="validation-info registration__confirm__validation-info">Повторите введенный пароль</div>
                 <div class="line registration__confirm__line"> </div>
             </div>
-            <button type="button" class="button registration__button">Registration</button>
+            <button type="submit" class="button registration__button">Registration</button>
         </form>
         <div class="validation-info registration__validation-info-common validation-info_error validation-info-common"> </div>
 
