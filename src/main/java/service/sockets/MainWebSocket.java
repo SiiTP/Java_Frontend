@@ -57,6 +57,8 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
             }
         }
         if(isOkPlayer){
+            System.out.println("BEFORE processPlayerMessage CALL  :");
+            System.out.println(data);
             processPlayerMessage(data);
         }
     }

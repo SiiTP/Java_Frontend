@@ -1,11 +1,11 @@
 define([
     'backbone',
     'tmpl/game',
-    'views/characters/myCharacter'
+    'models/game'
 ], function(
     Backbone,
     tmpl,
-    MyCharacter
+    Game
 ){
 
     var View = Backbone.View.extend({
@@ -13,8 +13,7 @@ define([
         tagName: 'canvas',
         className: 'field',
         context: undefined,
-        myCharacter: undefined,
-        enemyCharacters: [],
+        model: new Game(),
         template: tmpl,
         events: {
             'mousemove canvas.field': 'onMouseMove'
@@ -28,7 +27,6 @@ define([
             this.$el.html(this.template());
             document.getElementById('page').appendChild(this.el);
             this.context = this.el.getContext('2d');
-            this.myCharacter = new MyCharacter();
             this.$el.hide();
         },
         show: function () {
@@ -36,22 +34,41 @@ define([
             this.trigger('show',{'name' : this.name});
             this.el.width = constants.FIELD_WIDTH;
             this.el.height = constants.FIELD_HEIGHT;
-            this.myCharacter.draw();
-            var character = this.myCharacter;
+            this.model.myCharacter.draw();
+            this.startGame();
+            this.$el.show();
+        },
+        startGame: function() {
+            var character = this.model.myCharacter;
+            //console.log("enemies : ");
+            //console.log(enemies);
+            character.model.setName(auth_user.getName());
+            var time1 = Date.now();
+            var time2 = Date.now() + 10000;
+            var previous = Date.now();
+            var dt;
+            var model = this.model;
             character.show();
             function loop() {
-                character.model.myMove();
+                var now = Date.now();
+                if (now > time1 && now < time2) {
+                    model.sendMessage();
+                    time1 += 5000;
+                    time2 += 5000;
+                }
+                dt = (now - previous)/1000;
+                character.model.myMove(dt);
                 character.draw();
+                previous = now;
                 requestAnimationFrame(loop);
             }
             requestAnimationFrame(loop);
-            this.$el.show();
         },
         hide: function () {
             console.log("game hide");
             this.el.width = 0;
             this.el.height = 0;
-            this.myCharacter.hide();
+            this.model.myCharacter.hide();
             this.$el.hide();
         },
         onMouseMove: function(event) {

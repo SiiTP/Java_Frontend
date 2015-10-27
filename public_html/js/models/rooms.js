@@ -25,6 +25,7 @@ define([
             }).done(function(obj) {
                 var answer = JSON.parse(obj);
                 console.log(answer.name);
+                location.href = "#game";
             });
         },
         getRooms: function() {
@@ -44,14 +45,16 @@ define([
             return this.rooms;
         },
         onJoin: function(roomName) {
+            console.log("name joining room : " + roomName);
             console.log("rooms model onJoin()");
             $.ajax({
                 type:'POST',
                 url: '/join',
-                data: {'roomName':roomName, 'password':null}
+                data: {'roomName':roomName, 'password':null} //TODO пароль отправляется как null
             }).done(function(obj) {
                 var answer = JSON.parse(obj);
                 console.log(answer);
+                location.href = '#game';
             });
         }
     });
