@@ -35,6 +35,7 @@ define([
             this.el.width = constants.FIELD_WIDTH;
             this.el.height = constants.FIELD_HEIGHT;
             this.model.myCharacter.draw();
+            this.model.myCharacter.model.setName(auth_user.getName());
             this.startGame();
             this.$el.show();
         },
@@ -42,20 +43,19 @@ define([
             var character = this.model.myCharacter;
             //console.log("enemies : ");
             //console.log(enemies);
-            character.model.setName(auth_user.getName());
-            var time1 = Date.now();
-            var time2 = Date.now() + 10000;
+            //character.model.setName(auth_user.getName());
+            /*var time1 = Date.now();
+            var time2 = Date.now() + 10000;*/
             var previous = Date.now();
             var dt;
-            var model = this.model;
             character.show();
             function loop() {
                 var now = Date.now();
-                if (now > time1 && now < time2) {
-                    model.sendMessage();
-                    time1 += 5000;
-                    time2 += 5000;
-                }
+                //if (now > time1 && now < time2) {
+                //    model.sendMessage();
+                //    time1 += 5000;
+                //    time2 += 5000;
+                //}
                 dt = (now - previous)/1000;
                 character.model.myMove(dt);
                 character.draw();
@@ -64,6 +64,17 @@ define([
             }
             requestAnimationFrame(loop);
         },
+        /*loop: function() {
+            console.log(this);
+            //var previous = Date.now();
+            //var dt;
+            //var now = Date.now();
+            //dt = (now - previous)/1000;
+            this.model.myCharacter.model.myMove(0.02);
+            this.model.myCharacter.draw();
+            //previous = now;
+            requestAnimationFrame(this.loop);
+        },*/
         hide: function () {
             console.log("game hide");
             this.el.width = 0;

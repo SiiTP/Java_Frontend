@@ -36,8 +36,8 @@ define([
             }
         },
         validate: function(attrs) {
-            console.log("model validate function. Attrs : ");
-            console.log(attrs);
+            //console.log("model validate function. Attrs : ");
+            //console.log(attrs);
             if (attrs.username == "") {
                 this.usernameStatus.status = "empty";
                 this.usernameStatus.message = "Введите ваш логин. От 4 до 9 латинских букв";
