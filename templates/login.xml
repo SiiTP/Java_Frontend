@@ -1,32 +1,32 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
     <div class="login">
         <div class="header-noBorder">
-            <h1 class="header-text">Loginning</h1>
+            <div class="header-text">Loginning</div>
             <div class="line line_blue"> </div>
         </div>
         <form id="login-form" method="post">
-            <div class="input-field">
-                <p class="input-line">
+            <div class="input-field input-field-username">
+                <div class="input-line">
                     <label for="username" class="input-line__header">Username</label>
-                    <input class="input-line__input login__input-line__input__username" type="text" name="username" id="username"/>
-                </p>
-                <div class="validation-info login__username__validation-info">Введите ваш логин.</div>
-                <div class="line login__username__line"> </div>
+                    <input class="input-line__input login__input-field-username__input-line__input" type="text" name="username" id="username"/>
+                </div>
+                <div class="validation-info login__input-field-username__validation-info">Введите ваш логин.</div>
+                <div class="line login__input-field-username__line"> </div>
             </div>
-            <div class="input-field">
-                <p class="input-line">
+            <div class="input-field input-field-password">
+                <div class="input-line input-line-password">
                     <label for="password" class="input-line__header">Password</label>
-                    <input class="input-line__input login__input-line__input__password" type="password" name="password" id="password"/>
-                </p>
-                <div class="validation-info login__password__validation-info">Введите ваш пароль.</div>
-                <div class="line login__password__line"> </div>
+                    <input class="input-line__input login__input-field-password__input-line__input" type="password" name="password" id="password"/>
+                </div>
+                <div class="validation-info login__input-field-password__validation-info">Введите ваш пароль.</div>
+                <div class="line login__input-field-password__line"> </div>
             </div>
             <div class="login__buttons-container">
-                <button type="submit" class="button login__buttons-container__button">Log In!</button>
+                <button type="submit" class="button login__buttons-container__button">Login!</button>
                 <a class="login__buttons-container__registration-link" href="#registration">registration</a>
             </div>
         </form>
-        <div class="validation-info login__validation-info-common  validation-info_error validation-info-common"> </div>
+        <div class="validation-info validation-info_error validation-info-common login__validation-info-common"> </div>
     </div>
 </fest:template>
 

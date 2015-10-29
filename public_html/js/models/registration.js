@@ -36,8 +36,8 @@ define([
             }
         },
         validate: function(attrs) {
-            //console.log("model validate function. Attrs : ");
-            //console.log(attrs);
+            console.log("model validate function. Attrs : ");
+            console.log(attrs);
             if (attrs.username == "") {
                 this.usernameStatus.status = "empty";
                 this.usernameStatus.message = "Введите ваш логин. От 4 до 9 латинских букв";
@@ -111,7 +111,9 @@ define([
             }
         },
         isValid: function() {
-            return this.username && this.password && this.confirm;
+            return this.usernameStatus.status == 'correct' &&
+                   this.passwordStatus.status == 'correct' &&
+                   this.confirmStatus.status == 'correct';
         },
         onSubmit: function(event) {
             var data = this.toJSON();

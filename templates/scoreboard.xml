@@ -1,6 +1,6 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="scores">
     <div class="scoreboard">
-        <h1 align="center" class="header-text">Scoreboard</h1>
+        <div class="header-text">Scoreboard</div>
         <div class="table">
             <header class="table-header">
                 <div class="table__table-header__item">Username</div>
@@ -13,7 +13,7 @@
                         <div class="table__item table__item-name">
                             <fest:value>v.name</fest:value>
                         </div>
-                        <div class="vertical-line vertical-line_tableRelPos {i % 2 == 0 ? 'vertical-line_green' : ''}" style="height: 1em"> </div>
+                        <div class="vertical-line vertical-line_tableRelPos {i % 2 == 0 ? 'vertical-line_green' : ''}" style=""> </div>
                         <div class="table__item table__item-score">
                             <fest:value>v.score</fest:value>
                         </div>

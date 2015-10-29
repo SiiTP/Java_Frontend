@@ -49,7 +49,7 @@ define([
             var previous = Date.now();
             var dt;
             character.show();
-            function loop() {
+            /*function loop() {
                 var now = Date.now();
                 //if (now > time1 && now < time2) {
                 //    model.sendMessage();
@@ -57,15 +57,16 @@ define([
                 //    time2 += 5000;
                 //}
                 dt = (now - previous)/1000;
+                console.log("dt : " + dt);
                 character.model.myMove(dt);
                 character.draw();
                 previous = now;
                 requestAnimationFrame(loop);
-            }
-            requestAnimationFrame(loop);
+            }*/
+            requestAnimationFrame(this.loop.bind(this));
         },
-        /*loop: function() {
-            console.log(this);
+        loop: function() {
+            //console.log(this);
             //var previous = Date.now();
             //var dt;
             //var now = Date.now();
@@ -73,8 +74,8 @@ define([
             this.model.myCharacter.model.myMove(0.02);
             this.model.myCharacter.draw();
             //previous = now;
-            requestAnimationFrame(this.loop);
-        },*/
+            requestAnimationFrame(this.loop.bind(this));
+        },
         hide: function () {
             console.log("game hide");
             this.el.width = 0;

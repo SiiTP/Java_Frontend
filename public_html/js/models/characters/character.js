@@ -66,6 +66,7 @@ define([
             //console.log("X : " + Math.cos(this.angle*(Math.PI/180)));
             //console.log("Y : " + -Math.sin(this.angle*(Math.PI/180)));
             var dl = this.speed*dt;
+            console.log("dl : " + dl);
             this.posX = this.posX + Math.cos(this.angle*(Math.PI/180)) * dl;
             this.posY = this.posY - Math.sin(this.angle*(Math.PI/180)) * dl;
         },

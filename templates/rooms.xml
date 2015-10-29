@@ -1,7 +1,7 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="rooms">
     <div class="rooms">
         <div class="rooms__header">
-            <h1 class="header-text">Rooms:</h1>
+            <div class="header-text">Rooms:</div>
         </div>
         <div class="line line_blue"> </div>
         <div class="rooms__lines">
@@ -24,14 +24,14 @@
             <div class="line line_blue"> </div>
             <div class="rooms__create">
                 <form method="post">
-                    <p class="input-line rooms__create__input-line">
+                    <div class="input-line rooms__create__input-line">
                         <label for="roomName" class="input-line__header">Name</label>
                         <input class="input-line__input" type="text" name="roomName" id="roomName"/>
-                    </p>
-                    <p class="input-line rooms__create__input-line rooms__create__input-line__password">
+                    </div>
+                    <div class="input-line rooms__create__input-line rooms__create__input-line__password">
                         <label for="roomPassword" class="input-line__header">Password</label>
                         <input class="input-line__input" type="password" name="roomPassword" id="roomPassword"/>
-                    </p>
+                    </div>
                     <button class="button rooms__create__button">Create!</button>
                 </form>
             </div>
