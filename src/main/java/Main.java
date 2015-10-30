@@ -1,5 +1,4 @@
 import game.serverlevels.top.TopLevelGameServer;
-import game.serverlevels.top.TopLevelGameServerSingleton;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -7,7 +6,6 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import service.account.AccountService;
-import service.account.AccountServiceSingleton;
 import servlets.admins.AdminServlet;
 import servlets.authorization.LogOut;
 import servlets.authorization.LoginInfo;
@@ -23,8 +21,8 @@ import java.util.Properties;
 public class Main {
         @SuppressWarnings("OverlyBroadThrowsClause")
         public static void main(String[] args) throws Exception {
-        AccountService accountService = AccountServiceSingleton.getInstance();
-        TopLevelGameServer topLevelGameServer = TopLevelGameServerSingleton.getInstance();
+        AccountService accountService = new AccountService();
+        TopLevelGameServer topLevelGameServer = new TopLevelGameServer(accountService);
         Properties properties = new Properties();
         try(FileInputStream inputStream = new FileInputStream("resources/cfg/server.properties")){
             properties.load(inputStream);

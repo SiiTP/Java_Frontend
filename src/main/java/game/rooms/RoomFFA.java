@@ -1,14 +1,12 @@
 package game.rooms;
 
-import exceptions.NoSuchPlayerException;
-import exceptions.RoomFullException;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import resource.GameResources;
 import resource.ResourceFactory;
-import service.GameProfile;
-import service.UserProfile;
+import game.user.GameProfile;
+import game.user.UserProfile;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -34,11 +32,10 @@ public class RoomFFA extends RoomAbstractImpl {
     }
 
     @Override
-    public void kickPlayer(UserProfile profile) throws NoSuchPlayerException{
-        if(!users.contains(profile)){
-            throw new NoSuchPlayerException(getRoomName());
+    public void kickPlayer(UserProfile profile){
+        if(users.contains(profile)){
+            users.remove(profile);
         }
-        users.remove(profile);
     }
 
     @Override
@@ -91,11 +88,10 @@ public class RoomFFA extends RoomAbstractImpl {
         return users.contains(user);
     }
     @Override
-    public void addUser(UserProfile profile) throws RoomFullException {
-        if(isFull()){
-            throw new RoomFullException(getPlayersLimit());
+    public void addUser(UserProfile profile) {
+        if(!isFull()){
+            users.add(profile);
         }
-        users.add(profile);
     }
     @Override
     public JSONObject getJsonRoom(){

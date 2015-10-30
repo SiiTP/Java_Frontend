@@ -1,10 +1,10 @@
-package service.sockets.creators;
+package game.sockets.creators;
 
 import game.serverlevels.top.TopLevelGameServer;
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeRequest;
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeResponse;
 import org.eclipse.jetty.websocket.servlet.WebSocketCreator;
-import service.sockets.MainWebSocket;
+import game.sockets.MainWebSocket;
 
 /**
  * Created by ivan on 24.10.15.

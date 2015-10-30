@@ -5,7 +5,7 @@ import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import resource.ResourceFactory;
 import resource.ServletResources;
-import service.sockets.creators.MainWebSocketCreator;
+import game.sockets.creators.MainWebSocketCreator;
 
 import javax.servlet.annotation.WebServlet;
 

@@ -1,10 +1,15 @@
 package servlets.game;
 
+import game.rooms.Room;
+import game.rooms.RoomFFA;
 import game.serverlevels.top.TopLevelGameServer;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import resource.ResourceFactory;
+import resource.ResponseResources;
+import game.user.UserProfile;
 import service.account.AccountService;
 
 import javax.servlet.ServletException;
@@ -15,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.Map;
 
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -28,9 +34,10 @@ public class GetRoomListServletTest {
     private StringWriter stringWriter;
     private GetRoomListServlet roomServlet;
     private TopLevelGameServer topLevelGameServer;
+    private ResponseResources responseResources;
     @Before
     public void setUp() throws IOException {
-
+        responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
         AccountService service = spy(new AccountService());
         topLevelGameServer = spy(new TopLevelGameServer(service));
         request = mock(HttpServletRequest.class);
@@ -46,10 +53,22 @@ public class GetRoomListServletTest {
     }
     @Test
     public void testDoPost() throws ServletException, JSONException, IOException {
+        Map<String,Room> rooms = new HashMap<>();
+        Room room = new RoomFFA("test",new UserProfile("test","test"));
+        rooms.put("testRoom",room);
+        when(topLevelGameServer.getRoomsList()).thenReturn(rooms);
+        roomServlet.doPost(request, response);
+        JSONObject object = new JSONObject(stringWriter.toString());
+        int i = object.optInt("status");
+        assertTrue(i==responseResources.getOk());
+    }
+    @Test
+    public void testDoPostNoRooms() throws ServletException, JSONException, IOException {
         when(topLevelGameServer.getRoomsList()).thenReturn(new HashMap<>());
         roomServlet.doPost(request, response);
         JSONObject object = new JSONObject(stringWriter.toString());
         int i = object.optInt("status");
-        assertTrue(i==HttpServletResponse.SC_OK);
+        assertTrue(i==responseResources.getZeroPlayingRoomsNow());
     }
+
 }

@@ -1,10 +1,9 @@
 package game.serverlevels.top;
 
-import exceptions.RoomFullException;
 import game.rooms.Room;
 import game.rooms.RoomFFA;
 import org.jetbrains.annotations.Nullable;
-import service.UserProfile;
+import game.user.UserProfile;
 import service.account.AccountService;
 
 import java.util.HashMap;
@@ -14,14 +13,15 @@ import java.util.Map;
  * Created by ivan on 02.10.15.
  */
 public class TopLevelGameServer {
-    private Map<String,Room> rooms = new HashMap<>();
+    private Map<String,Room> rooms;
     private AccountService accountService;
 
     public TopLevelGameServer(AccountService accountService) {
+        rooms = new HashMap<>();
         this.accountService = accountService;
     }
     @Nullable
-    public Room joinRoom(String roomname, @Nullable String password, String userSession) throws RoomFullException {
+    public Room joinRoom(String roomname, @Nullable String password, String userSession) {
         UserProfile profile = accountService.getUserBySession(userSession);
         Room room = null;
         if(profile != null) {
@@ -32,13 +32,14 @@ public class TopLevelGameServer {
                         if (password != null && password.equals(room.getPassword())) {
                             room.addUser(profile);
                             profile.setCurrentroom(room);
+                        }else{
+                            room = null;
                         }
                     } else {
                         room.addUser(profile);
                         profile.setCurrentroom(room);
                     }
                 }
-
             }
         }
         return room;
@@ -80,12 +81,15 @@ public class TopLevelGameServer {
     public Map<String,Room> getRoomsList(){
         return rooms;
     }
+    public boolean checkIfRoomExist(String roomname){
+        return rooms.containsKey(roomname);
+    }
     @Nullable
-    public Room createRoom(String session,String roomname, @Nullable String password) throws RoomFullException {
-        UserProfile profile = accountService.getUserBySession(session);
+    public Room createRoom(String session,String roomname, @Nullable String password) {
         Room room = null;
-        if(profile!= null && profile.getCurrentroom() == null) {
-            if (!rooms.containsKey(roomname)) {
+        if (!checkIfRoomExist(roomname)) {
+            UserProfile profile = accountService.getUserBySession(session);
+            if(profile!= null && profile.getCurrentroom() == null) {
                 if (password == null || password.isEmpty()) {
                     room = new RoomFFA(roomname, profile);
                 } else {
@@ -97,22 +101,18 @@ public class TopLevelGameServer {
                 profile.setCurrentroom(room);
             }
         }
+
         return room;
     }
     public boolean isAuthorizedPlayer(String session){
         return accountService.isAuthorized(session);
     }
-    public boolean isCorrectPlayerInGame(String session,String roomName){
+    public boolean isCorrectPlayerInGame(String session){
         boolean auth = accountService.isAuthorized(session);
         if(auth) {
             UserProfile profile = accountService.getUserBySession(session);
-            if (rooms.containsKey(roomName)) {
-                Room room = rooms.get(roomName);
-                if (profile != null) {
-                    if(!room.checkUser(profile)){
-                        auth = false;
-                    }
-                }else{
+            if (profile != null) {
+                if(profile.getCurrentroom()!=null){
                     auth = false;
                 }
             }else{

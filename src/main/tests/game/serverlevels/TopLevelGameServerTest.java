@@ -1,18 +1,18 @@
 package game.serverlevels;
 
-import exceptions.RoomFullException;
 import game.rooms.Room;
 import game.rooms.RoomFFA;
 import game.serverlevels.top.TopLevelGameServer;
 import org.junit.Before;
 import org.junit.Test;
-import service.UserProfile;
+import game.user.UserProfile;
 import service.account.AccountService;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
@@ -33,20 +33,20 @@ public class TopLevelGameServerTest {
     }
 
     @Test
-    public void testJoinRoomNoPlayer() throws RoomFullException {
+    public void testJoinRoomNoPlayer(){
         when(service.getUserBySession(anyString())).thenReturn(null);
         Room room = gameServer.joinRoom("aa","aa","aa");
         assertTrue(room == null);
     }
     @Test
-    public void testJoinRoomNoRoom() throws RoomFullException {
+    public void testJoinRoomNoRoom(){
         when(service.getUserBySession(anyString())).thenReturn(new UserProfile("aa", "bb"));
         when(rooms.containsKey(anyString())).thenReturn(false);
         Room room = gameServer.joinRoom("aa","aa","aa");
         assertTrue(room == null);
     }
     @Test
-    public void testJoinRoomHasPass() throws RoomFullException {
+    public void testJoinRoomHasPass(){
         UserProfile profile = spy(new UserProfile("aa","bb"));
         when(service.getUserBySession(anyString())).thenReturn(profile);
         when(rooms.containsKey(anyString())).thenReturn(true);
@@ -55,8 +55,7 @@ public class TopLevelGameServerTest {
         when(rooms.get(anyString())).thenReturn(room);
 
         Room endRoom = gameServer.joinRoom("aaa", "aaa", "aa");
-        assertNotNull(endRoom);
-        assertTrue(endRoom.getPlayersCount() == 0);
+        assertNull(endRoom);
 
 
         room = new RoomFFA("aaa",new UserProfile("ss","ff"));
@@ -67,7 +66,7 @@ public class TopLevelGameServerTest {
 
     }
     @Test
-    public void testJoinRoomUserPassToRoom() throws RoomFullException {
+    public void testJoinRoomUserPassToRoom(){
         UserProfile profile = spy(new UserProfile("aa", "bb"));
         when(service.getUserBySession(anyString())).thenReturn(profile);
         when(rooms.containsKey(anyString())).thenReturn(true);
@@ -75,16 +74,17 @@ public class TopLevelGameServerTest {
         Room room = new RoomFFA("aaa","cc",new UserProfile("ss","ff"));
         when(rooms.get(anyString())).thenReturn(room);
 
-        Room endRoom = gameServer.joinRoom("aa", "", "aa");
-        assertNotNull(endRoom);
-        assertTrue(endRoom.getPlayersCount() == 0);
+        Room endRoom = gameServer.joinRoom("aaa", "", "aa");
+
+        assertNull(endRoom);
+
         endRoom = gameServer.joinRoom("aa", null, "aa");
-        assertNotNull(endRoom);
-        assertTrue(endRoom.getPlayersCount() == 0);
+
+        assertNull(endRoom);
 
     }
     @Test
-    public void joinRoomUserInRoom() throws RoomFullException {
+    public void joinRoomUserInRoom(){
         Room room = new RoomFFA("aaa",new UserProfile("ss","ff"));
 
         UserProfile profile = spy(new UserProfile("aa", "bb"));
@@ -99,7 +99,7 @@ public class TopLevelGameServerTest {
     }
 
     @Test
-    public void testCreateRoomByUser() throws RoomFullException {
+    public void testCreateRoomByUser() {
         when(service.getUserBySession(anyString())).thenReturn(null);
         Room endRoom = gameServer.createRoom("aaa","aaa",null);
         assertTrue(endRoom == null);
@@ -113,12 +113,14 @@ public class TopLevelGameServerTest {
         assertTrue(endRoom == null);
     }
     @Test
-    public void testCreateRoomAlreadyExist() throws RoomFullException {
+    public void testCreateRoomAlreadyExist() {
         UserProfile profile = spy(new UserProfile("aa","bb"));
         when(service.getUserBySession(anyString())).thenReturn(profile);
         when(profile.getCurrentroom()).thenReturn(null);
         when(rooms.containsKey(anyString())).thenReturn(true);
+
         Room endRoom = gameServer.createRoom("aaa","aaa",null);
+
         assertTrue(endRoom == null);
     }
 
@@ -126,23 +128,61 @@ public class TopLevelGameServerTest {
     public void testIsCorrectPlayerInGameNoAuth() throws Exception {
         when(service.isAuthorized(anyString())).thenReturn(false);
 
-        assertTrue(!gameServer.isCorrectPlayerInGame("aa", "ss"));
+        assertTrue(!gameServer.isCorrectPlayerInGame("aa"));
     }
     @Test
-    public void testIsCorrectPlayerInGameNoRoom() throws Exception {
+    public void testIsCorrectPlayerInGameAlready() throws Exception {
         when(service.isAuthorized(anyString())).thenReturn(true);
-        when(rooms.containsKey(anyString())).thenReturn(false);
+        UserProfile profile = new UserProfile("test","test");
+        Room room = new RoomFFA("testRoom",profile);
+        profile.setCurrentroom(room);
+        when(service.getUserBySession(anyString())).thenReturn(profile);
 
-        assertTrue(!gameServer.isCorrectPlayerInGame("aa", "ss"));
+        assertTrue(!gameServer.isCorrectPlayerInGame("aa"));
     }
     @Test
-    public void testIsCorrectPlayerNoPlayer() throws Exception {
+    public void isCorrectPlayerInGameNoPlayer() throws Exception {
         when(service.isAuthorized(anyString())).thenReturn(true);
-        when(rooms.containsKey(anyString())).thenReturn(true);
-        Room room = spy(new RoomFFA("ds",new UserProfile("aa","bb")));
-        when(room.checkUser(anyObject())).thenReturn(false);
-        when(rooms.get(anyString())).thenReturn(room);
+        when(service.getUserBySession(anyString())).thenReturn(null);
 
-        assertTrue(!gameServer.isCorrectPlayerInGame("aa", "ss"));
+        assertTrue(!gameServer.isCorrectPlayerInGame("aa"));
     }
+
+    @Test
+    public void testGetPlayerRoomBySession() throws Exception {
+        UserProfile profile = new UserProfile("test","test");
+        Room room = new RoomFFA("testRoom",profile);
+        room.addUser(profile);
+        profile.setCurrentroom(room);
+
+        when(service.getUserBySession(anyString())).thenReturn(profile);
+
+        Room testingRoom = gameServer.getPlayerRoomBySession(anyString());
+
+        assertNotNull(testingRoom);
+        assertTrue(testingRoom.checkUser(profile));
+
+        when(service.getUserBySession(anyString())).thenReturn(null);
+
+        assertNull(gameServer.getPlayerRoomBySession(anyString()));
+    }
+
+    @Test
+    public void testIsGameReady() throws Exception {
+        UserProfile profile = new UserProfile("test","test");
+
+        Room room = new RoomFFA("testRoom",profile);
+        room.addUser(profile);
+        profile.setCurrentroom(room);
+
+        doReturn(profile).when(service).getUserBySession(anyString());
+
+        assertTrue(!gameServer.isGameReady(anyString()));
+
+        UserProfile profile1 = new UserProfile("test1","test1");
+        room.addUser(profile1);
+
+        assertTrue(gameServer.isGameReady(anyString()));
+    }
+
 }

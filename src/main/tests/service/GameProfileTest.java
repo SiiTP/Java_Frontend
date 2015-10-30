@@ -1,5 +1,6 @@
 package service;
 
+import game.user.GameProfile;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;

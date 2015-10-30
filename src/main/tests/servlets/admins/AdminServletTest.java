@@ -4,7 +4,6 @@ import org.eclipse.jetty.server.Server;
 import org.junit.Before;
 import org.junit.Test;
 import service.account.AccountService;
-import service.account.AccountServiceSingleton;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +23,7 @@ public class AdminServletTest {
     private HttpServletResponse resp;
     @Before
     public void setup() throws IOException {
-        accountService = AccountServiceSingleton.getInstance();
+        accountService = new AccountService();
         server = spy(new Server());
         req = mock(HttpServletRequest.class);
         resp = mock(HttpServletResponse.class);

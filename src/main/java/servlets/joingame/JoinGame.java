@@ -1,8 +1,10 @@
 package servlets.joingame;
 
-import exceptions.RoomFullException;
 import game.rooms.Room;
 import game.serverlevels.top.TopLevelGameServer;
+import org.json.JSONObject;
+import resource.ResourceFactory;
+import resource.ResponseResources;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,8 +17,9 @@ import java.io.IOException;
  */
 public class JoinGame extends HttpServlet {
     private TopLevelGameServer gameServer;
-
+    private ResponseResources responseResources;
     public JoinGame(TopLevelGameServer gameServer) {
+        responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
         this.gameServer = gameServer;
     }
 
@@ -25,20 +28,26 @@ public class JoinGame extends HttpServlet {
         String roomName = req.getParameter("roomName");
         String password = req.getParameter("password");
         String session = req.getSession().getId();
-        boolean auth = gameServer.isAuthorizedPlayer(session);
-        try {
-            Room room = null;
+        JSONObject responseJSON = new JSONObject();
+        if(!gameServer.checkIfRoomExist(roomName)){
+            responseJSON.put("status", responseResources.getNoSuchRoom());
+            responseJSON.put("message", "Room with name "+roomName + " not exist");
+        }else {
+            boolean auth = gameServer.isAuthorizedPlayer(session);
             if (auth) {
-                room = gameServer.joinRoom(roomName, password, session);
-            }
-            if (room != null) {
-                resp.getWriter().println(room.getJsonRoomPlayers());
+                Room room = gameServer.joinRoom(roomName, password, session);
+                if (room != null) {
+                    responseJSON.put("status", responseResources.getOk());
+                    responseJSON.put("message", "successful join room");
+                } else {
+                    responseJSON.put("status", responseResources.getWrongUsernameOrPassword());
+                    responseJSON.put("message", "wrong username or password");
+                }
             } else {
-                resp.getWriter().println("something went wrong!");
+                responseJSON.put("status", responseResources.getNotAuthorized());
+                responseJSON.put("message", "you are not authorized");
             }
-        }catch (RoomFullException e) {
-            e.printStackTrace();
-            resp.getWriter().println(e.getMessage());
         }
+        resp.getWriter().println(responseJSON.toString());
     }
 }

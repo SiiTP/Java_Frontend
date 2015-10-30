@@ -6,8 +6,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import service.GameProfile;
-import service.UserProfile;
+import game.user.GameProfile;
+import game.user.UserProfile;
 import service.account.AccountService;
 
 import static org.junit.Assert.*;

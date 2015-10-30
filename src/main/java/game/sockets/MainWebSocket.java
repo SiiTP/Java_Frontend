@@ -1,10 +1,9 @@
-package service.sockets;
+package game.sockets;
 
 import game.gameaction.GameActionStrategy;
 import game.gameaction.MoveActionStrategy;
 import game.rooms.Room;
 import game.serverlevels.top.TopLevelGameServer;
-import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,18 +17,15 @@ import java.io.IOException;
  * Created by ivan on 24.10.15.
  */
 public class MainWebSocket extends WebSocketAdapter implements GameSocket {
-    TopLevelGameServer topLevelGameServer;
-    String httpSession;
-    GameActionStrategy strategy;
-    private final int roomIsNotReady;
-    private final int ok;
+    private TopLevelGameServer topLevelGameServer;
+    private String httpSession;
+    private GameActionStrategy gameStrategy;
+    private ResponseResources responseResources;
     public MainWebSocket(String httpSession,TopLevelGameServer topLevelGameServer) {
-        ResponseResources responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
-        roomIsNotReady = responseResources.getRoomIsNotReadyCode();
-        ok = responseResources.getOk();
+        responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
         this.topLevelGameServer = topLevelGameServer;
         this.httpSession = httpSession;
-        strategy = new MoveActionStrategy(topLevelGameServer);
+        gameStrategy = new MoveActionStrategy(topLevelGameServer);
     }
 
 
@@ -43,26 +39,16 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
         }
         boolean isOkPlayer = false;
         if(data != null) {
-            if (data.has("name")) {
-                if (!data.isNull("name")) {
-                    String roomname = data.getString("name");
-                    isOkPlayer = topLevelGameServer.isCorrectPlayerInGame(httpSession, roomname);
-                }
-            }
+            isOkPlayer = topLevelGameServer.isCorrectPlayerInGame(httpSession);
         }
         if(isOkPlayer){
-            processPlayerMessage(data);
+            processPlayerMessage(data,gameStrategy);
         }
     }
 
-    @Override
-    public void onWebSocketError(Throwable cause) {
-        super.onWebSocketError(cause);
-        cause.printStackTrace();
-    }
 
     @Override
-    public void processPlayerMessage(JSONObject message) {
+    public void processPlayerMessage(JSONObject message,GameActionStrategy strategy) {
         boolean isOkGame = topLevelGameServer.isGameReady(httpSession);
         JSONObject object = new JSONObject();
         if(isOkGame) {
@@ -72,15 +58,14 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
                 if(room.isFinished()){
                     String winner = room.getWinner();
                     object.put("winner", winner);
-                    object.put("status", ok);
+                    object.put("status", responseResources.getOk());
                 }else {
                     object.put("players", room.getJsonRoomPlayers());
-                    object.put("status", ok);
+                    object.put("status", responseResources.getOk());
                 }
             }
         }else{
-
-            object.put("status", roomIsNotReady);
+            object.put("status", responseResources.getRoomIsNotReadyCode());
             object.put("message","Wait for your enemy!");
         }
         try {
