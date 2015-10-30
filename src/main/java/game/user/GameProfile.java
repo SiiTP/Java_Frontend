@@ -1,4 +1,4 @@
-package service;
+package game.user;
 
 import org.json.JSONObject;
 

@@ -6,8 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 import resource.GameResources;
 import resource.ResourceFactory;
-import service.GameProfile;
-import service.UserProfile;
+import game.user.GameProfile;
+import game.user.UserProfile;
 
 import java.util.Random;
 
@@ -19,7 +19,7 @@ public class MoveActionStrategy implements GameActionStrategy {
     private int width;
     private int height;
     public MoveActionStrategy(TopLevelGameServer topLevelGameServer) {
-        this.topLevelGameServer = topLevelGameServer;//TopLevelGameServerSingleton.getInstance();
+        this.topLevelGameServer = topLevelGameServer;
         GameResources gameResources =(GameResources) ResourceFactory.getResource("resources/data/game.json");
         width = gameResources.getGameFieldWidth();
         height = gameResources.getGameFieldHeight();

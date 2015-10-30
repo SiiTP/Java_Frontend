@@ -1,8 +1,10 @@
 package servlets.joingame;
 
-import exceptions.RoomFullException;
 import game.rooms.Room;
 import game.serverlevels.top.TopLevelGameServer;
+import org.json.JSONObject;
+import resource.ResourceFactory;
+import resource.ResponseResources;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,8 +17,9 @@ import java.io.IOException;
  */
 public class CreateGame extends HttpServlet {
     private TopLevelGameServer topLevelGameServer;
-
+    private ResponseResources responseResources;
     public CreateGame(TopLevelGameServer topLevelGameServer) {
+        responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
         this.topLevelGameServer = topLevelGameServer;
     }
 
@@ -25,22 +28,27 @@ public class CreateGame extends HttpServlet {
         String roomName = req.getParameter("roomName");
         String password = req.getParameter("password");
         String session = req.getSession().getId();
-        boolean auth = topLevelGameServer.isAuthorizedPlayer(session);
-        try {
-            if (auth){
-                Room room = topLevelGameServer.createRoom(session, roomName, password);
-                if(room != null) {
-                    resp.getWriter().println(room.getJsonRoom());
-                }else{
-                    resp.getWriter().println("something went wrong!");
-                }
-            }else{
-                resp.getWriter().println("no auth user!");
-            }
-        } catch (RoomFullException e) {
-            e.printStackTrace();
-            resp.getWriter().println(e.getMessage());
-        }
 
+        JSONObject responseJSON = new JSONObject();
+        if(topLevelGameServer.checkIfRoomExist(roomName)){
+            responseJSON.put("status", responseResources.getRoomAlreadyExist());
+            responseJSON.put("message", "Room with name "+roomName + " already exist");
+        }else {
+            boolean auth = topLevelGameServer.isAuthorizedPlayer(session);
+                if (auth) {
+                    Room room = topLevelGameServer.createRoom(session, roomName, password);
+                    if (room != null) {
+                        responseJSON.put("status", responseResources.getOk());
+                        responseJSON.put("message", "successful creating room");
+                    } else {
+                        responseJSON.put("status", responseResources.getUserAlreadyInRoom());
+                        responseJSON.put("message", "you are already in room");
+                    }
+                } else {
+                    responseJSON.put("status", responseResources.getNotAuthorized());
+                    responseJSON.put("message", "you are not authorized");
+                }
+        }
+        resp.getWriter().println(responseJSON.toString());
     }
 }

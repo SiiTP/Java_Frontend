@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 import org.json.JSONObject;
 import service.account.AccountService;
-import service.UserProfile;
+import game.user.UserProfile;
 
 
 import javax.servlet.ServletException;

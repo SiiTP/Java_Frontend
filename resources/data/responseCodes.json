@@ -1,5 +1,12 @@
 {
   "class":"resource.ResponseResources",
+  "ok":200,
+  "zeroPlayingRoomsNow":300,
   "roomIsNotReady": 301,
-  "ok":200
+  "roomAlreadyExist":302,
+  "userAlreadyInRoom":303,
+  "notAuthorized":304,
+  "roomIsFull":305,
+  "noSuchRoom":306,
+  "wrongUsernameOrPassword":307
 }

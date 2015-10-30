@@ -1,5 +1,6 @@
 package service;
 
+import game.user.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
 import service.account.AccountService;

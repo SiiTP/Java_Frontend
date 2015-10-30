@@ -1,11 +1,10 @@
 package game.rooms;
 
-import exceptions.RoomFullException;
 import org.junit.Before;
 import org.junit.Test;
 import resource.GameResources;
 import resource.ResourceFactory;
-import service.UserProfile;
+import game.user.UserProfile;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -25,7 +24,7 @@ public class RoomFFATest {
         scoreLimit = gameResources.getDefaultWinScore();
     }
     @Test
-    public void testIsRoomReady() throws RoomFullException {
+    public void testIsRoomReady()  {
         UserProfile profile = new UserProfile("aaac","bbbc");
         UserProfile profile1 = new UserProfile("aaac","bbbc");
         roomFFA.addUser(profile);
@@ -38,7 +37,7 @@ public class RoomFFATest {
     }
 
     @Test
-    public void testIsFinishedScore() throws RoomFullException {
+    public void testIsFinishedScore()  {
         UserProfile profile = new UserProfile("aaac","bbbc");
         UserProfile profile1 = new UserProfile("aaac","bbbc");
         roomFFA.addUser(profile);
@@ -55,7 +54,7 @@ public class RoomFFATest {
         assertTrue(!roomFFA.isFinished());
     }
     @Test
-    public void testIsFinishedTime() throws RoomFullException {
+    public void testIsFinishedTime()  {
 
         UserProfile profile = new UserProfile("aaac","bbbc");
         UserProfile profile1 = new UserProfile("aaac","bbbc");
@@ -70,7 +69,7 @@ public class RoomFFATest {
         assertTrue(roomFFA.isFinished());
     }
     @Test
-    public void testGetWinner() throws RoomFullException {
+    public void testGetWinner()  {
         UserProfile profile = new UserProfile("aaac","bbbc");
         UserProfile profile1 = new UserProfile("aaad","bbbd");
         roomFFA.addUser(profile);
@@ -84,7 +83,7 @@ public class RoomFFATest {
     }
 
     @Test
-    public void testCheckUser() throws RoomFullException {
+    public void testCheckUser()  {
         UserProfile profile = new UserProfile("aaac","bbbc");
         UserProfile profile1 = new UserProfile("aaad","bbbd");
         roomFFA.addUser(profile);
@@ -92,8 +91,7 @@ public class RoomFFATest {
         assertTrue(!roomFFA.checkUser(profile1));
     }
 
-    @Test(expected = RoomFullException.class)
-    public void testAddUser() throws RoomFullException {
+    public void testAddUser()  {
         roomFFA.setPlayersLimit(1);
         UserProfile profile = new UserProfile("aaad","bbbd");
         roomFFA.addUser(profile);

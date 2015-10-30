@@ -1,8 +1,11 @@
 package servlets.joingame;
 
+import game.rooms.Room;
 import game.serverlevels.top.TopLevelGameServer;
 import org.junit.Before;
 import org.junit.Test;
+import resource.ResourceFactory;
+import resource.ResponseResources;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +16,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -26,8 +30,11 @@ public class CreateGameTest {
     private HttpServletResponse response;
     private StringWriter stringWriter;
     private CreateGame gameServlet;
+    private ResponseResources responseResources;
+
     @Before
     public void setUp() throws IOException {
+        responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
@@ -40,12 +47,42 @@ public class CreateGameTest {
 
         gameServlet = new CreateGame(gameServer);
     }
+    @Test
+    public void testDoPostRoomExist() throws ServletException, IOException {
+        when(gameServer.checkIfRoomExist(anyString())).thenReturn(true);
+        gameServlet.doPost(request, response);
+        assertTrue(stringWriter.toString().contains(Integer.toString(responseResources.getRoomAlreadyExist())));
+    }
+    @Test
+    public void testDoPostuccess() throws ServletException, IOException {
+        when(gameServer.checkIfRoomExist(anyString())).thenReturn(false);
+        when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(true);
+        Room room = mock(Room.class);
+        when(gameServer.createRoom(anyString(), anyString(),anyString())).thenReturn(room);
 
+        gameServlet.doPost(request, response);
+
+        assertTrue(stringWriter.toString().contains(Integer.toString(responseResources.getOk())));
+    }
+    @Test
+    public void testDoPostAlreadyInRoom() throws ServletException, IOException {
+        when(gameServer.checkIfRoomExist(anyString())).thenReturn(false);
+        when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(true);
+
+        when(gameServer.createRoom(anyString(), anyString(), anyString())).thenReturn(null);
+
+        gameServlet.doPost(request, response);
+
+        assertTrue(stringWriter.toString().contains(Integer.toString(responseResources.getUserAlreadyInRoom())));
+    }
     @Test
     public void testDoPostNoAuthUser() throws ServletException, IOException {
+        when(gameServer.checkIfRoomExist(anyString())).thenReturn(false);
         when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(false);
+
         gameServlet.doPost(request, response);
-        assertTrue(stringWriter.toString().contains("no auth"));
+
+        assertTrue(stringWriter.toString().contains(Integer.toString(responseResources.getNotAuthorized())));
     }
 
 }

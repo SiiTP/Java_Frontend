@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import resource.ResourceFactory;
 import resource.ServletResources;
-import service.UserProfile;
+import game.user.UserProfile;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package service;
+package game.user;
 
 import game.rooms.Room;
 import org.jetbrains.annotations.NotNull;

@@ -2,7 +2,7 @@ package game.rooms;
 
 import resource.GameResources;
 import resource.ResourceFactory;
-import service.UserProfile;
+import game.user.UserProfile;
 
 import java.time.Instant;
 
