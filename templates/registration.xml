@@ -12,39 +12,38 @@
             <div class="line line_blue"> </div>
         </div>
         <form id="registration-form" method="post">
-            <div class="input-field">
-                <p class="input-line">
+            <div class="input-field input-field-username">
+                <div class="input-line">
                     <label for="username" class="input-line__header">Username </label>
-                    <input class="input-line__input registration__input-line__input__username"
+                    <input class="input-line__input registration__input-field-username__input-line__input"
                            type="text" name="username" id="username"/>
-                </p>
-                <div class="validation-info registration__username__validation-info">
+                </div>
+                <div class="validation-info registration__input-field-username__validation-info">
                     Введите ваш логин. От 4 до 9 латинских букв</div>
-                <div class="line registration__username__line"> </div>
+                <div class="line registration__input-field-username__line"> </div>
             </div>
-            <div class="input-field">
-                <p class="input-line">
+            <div class="input-field input-field-password">
+                <div class="input-line input-line-password">
                     <label for="password" class="input-line__header">Password </label>
-                    <input class="input-line__input  registration__input-line__input__password"
+                    <input class="input-line__input  registration__input-field-password__input-line__input"
                            type="password" name="password" id="password"/>
-                </p>
-                <div class="validation-info registration__password__validation-info">
+                </div>
+                <div class="validation-info registration__input-field-password__validation-info">
                     Введите ваш пароль. От 4 до 16 латинских букв, цифр и символов нижнего подчеркивания</div>
-                <div class="line registration__password__line"> </div>
+                <div class="line registration__input-field-password__line"> </div>
             </div>
-            <div class="input-field">
-                <p class="input-line">
+            <div class="input-field input-field-confirm">
+                <p class="input-line input-line-confirm">
                         <label for="confirm" class="input-line__header">Confirm</label>
-                        <input class="input-line__input registration__input-line__input__confirm"
+                        <input class="input-line__input registration__input-field-confirm__input-line__input"
                                type="password" name="confirm" id="confirm"/>
                 </p>
-                <div class="validation-info registration__confirm__validation-info">Повторите введенный пароль</div>
-                <div class="line registration__confirm__line"> </div>
+                <div class="validation-info registration__input-field-confirm__validation-info">Повторите введенный пароль</div>
+                <div class="line registration__input-field-confirm__line"> </div>
             </div>
-            <button type="button" class="button registration__button">Registration</button>
+            <button type="submit" class="button registration__button">Registration</button>
         </form>
-        <div class="validation-info registration__validation-info-common validation-info_error validation-info-common"> </div>
-
+        <div class="validation-info validation-info-common registration__validation-info-common validation-info_error "> </div>
     </div>
 </fest:template>
 

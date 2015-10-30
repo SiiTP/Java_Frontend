@@ -16,9 +16,9 @@ define([
         model: new registration(),
         events: {
             "click .registration__button": "onSubmit",
-            "input .registration__input-line__input__username": "validateUsername",
-            "input .registration__input-line__input__password": "validatePassword",
-            "input .registration__input-line__input__confirm": "validateConfirm"
+            "input .registration__input-field-username__input-line__input": "validateUsername",
+            "input .registration__input-field-password__input-line__input": "validatePassword",
+            "input .registration__input-field-confirm__input-line__input":  "validateConfirm"
         },
         initialize: function() {
             console.log("registration initialize");
@@ -34,8 +34,8 @@ define([
             $(".validation-info-common").text("");
             //console.log("username validation. registration view");
             this.model.set({'username': $(event.currentTarget).val()}, {validate: true});
-            var usernameInfoField = $(".registration__username__validation-info");
-            var usernameInfoLine = $(".registration__username__line");
+            var usernameInfoField = $(".registration__input-field-username__validation-info");
+            var usernameInfoLine = $(".registration__input-field-username__line");
             if (this.model.usernameStatus.status == 'empty') {
                 usernameInfoField.removeClass("validation-info_error");
                 usernameInfoField.removeClass("validation-info_correct");
@@ -61,8 +61,8 @@ define([
         validatePassword: function(event) {
             $(".validation-info-common").text("");
             this.model.set({'password':$(event.currentTarget).val()}, {validate: true});
-            var passwordInfoField = $(".registration__password__validation-info");
-            var passwordInfoLine = $(".registration__password__line");
+            var passwordInfoField = $(".registration__input-field-password__validation-info");
+            var passwordInfoLine = $(".registration__input-field-password__line");
             //console.log("pass status : " + this.model.passwordStatus.status + "; message : " + this.model.passwordStatus.message);
             if (this.model.passwordStatus.status == 'empty') {
                 passwordInfoField.removeClass("validation-info_error");
@@ -95,8 +95,8 @@ define([
         },
         //нужна чтобы корректно отображать валидацию поля повторения при изменении поля пароля
         updateConfirmView: function() {
-            var confirmInfoField = $(".registration__confirm__validation-info");
-            var confirmInfoLine = $(".registration__confirm__line");
+            var confirmInfoField = $(".registration__input-field-confirm__validation-info");
+            var confirmInfoLine = $(".registration__input-field-confirm__line");
             if (this.model.confirmStatus.status == 'empty') {
                 confirmInfoField.removeClass("validation-info_error");
                 confirmInfoField.removeClass("validation-info_correct");
@@ -121,19 +121,23 @@ define([
         },
         focusOnErrorField: function() {
             if (this.model.usernameStatus.status != 'correct') {
-                $(".registration__input-line__input__username").focus();
+                $(".registration__input-field-username__input-line__input").focus();
             } else
             if (this.model.passwordStatus.status != 'correct') {
-                $(".registration__input-line__input__password").focus();
+                $(".registration__input-field-password__input-line__input").focus();
             } else
             if (this.model.confirmStatus.status != 'correct') {
-                $(".registration__input-line__input__confirm").focus();
+                $(".registration__input-field-confirm__input-line__input").focus();
             }
         },
-        onSubmit: function() {
+        onSubmit: function(event) {
+            event.preventDefault();
             console.log("on submit registration view");
+            //console.log(this.model.usernameStatus);
+            //console.log(this.model.passwordStatus);
+            //console.log(this.model.confirmStatus);
             if (this.model.isValid()) {
-                this.model.onSubmit();
+                this.model.onSubmit(event);
             } else {
                 $(".validation-info-common").text("Не все поля заданы корректно.");
                 this.focusOnErrorField();

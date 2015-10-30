@@ -16,8 +16,8 @@ define([
         model: new login(),
         events: {
             "click .login__buttons-container__button" : "onSubmit",
-            "input .login__input-line__input__username": "validateUsername",
-            "input .login__input-line__input__password": "validatePassword"
+            "input .login__input-field-username__input-line__input": "validateUsername",
+            "input .login__input-field-password__input-line__input": "validatePassword"
         },
         initialize: function () {
             console.log("login view initialize");
@@ -45,8 +45,8 @@ define([
             $(".validation-info-common").text("");
             //console.log("login view validate username");
             this.model.set({'username': $(event.currentTarget).val()}, {validate: true});
-            var usernameInfoField = $(".login__username__validation-info");
-            var usernameInfoLine = $(".login__username__line");
+            var usernameInfoField = $(".login__input-field-username__validation-info");
+            var usernameInfoLine  = $(".login__input-field-username__line");
             if (this.model.usernameStatus.status == 'empty') {
                 usernameInfoField.removeClass("validation-info_error");
                 usernameInfoField.removeClass("validation-info_correct");
@@ -73,8 +73,8 @@ define([
             $(".validation-info-common").text("");
             //console.log("login view validate password");
             this.model.set({'password': $(event.currentTarget).val()}, {validate: true});
-            var passwordInfoField = $(".login__password__validation-info");
-            var passwordInfoLine = $(".login__password__line");
+            var passwordInfoField = $(".login__input-field-password__validation-info");
+            var passwordInfoLine = $(".login__input-field-password__line");
             if (this.model.passwordStatus.status == 'empty') {
                 passwordInfoField.removeClass("validation-info_error");
                 passwordInfoField.removeClass("validation-info_correct");
@@ -99,14 +99,15 @@ define([
         },
         focusOnErrorField: function() {
             if (this.model.usernameStatus.status != 'correct') {
-                $(".login__input-line__input__username").focus();
+                $(".login__input-field-username__input-line__input").focus();
             } else
             if (this.model.passwordStatus.status != 'correct') {
-                $(".login__input-line__input__password").focus();
+                $(".login__input-field-password__input-line__input").focus();
             }
 
         },
-        onSubmit: function() {
+        onSubmit: function(event) {
+            event.preventDefault();
             console.log("backbone view login click event");
             if (this.model.isValid()) {
                 console.log("data is valid");

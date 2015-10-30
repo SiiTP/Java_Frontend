@@ -1,19 +1,19 @@
 define([
     'backbone',
     'tmpl/game',
-    'views/characters/myCharacter'
+    'models/game'
 ], function(
     Backbone,
     tmpl,
-    MyCharacter
+    Game
 ){
 
     var View = Backbone.View.extend({
         name: "game",
-        tagName: 'div',
+        tagName: 'canvas',
+        className: 'field',
         context: undefined,
-        myCharacter: undefined,
-        enemyCharacters: [],
+        model: new Game(),
         template: tmpl,
         events: {
             'mousemove canvas.field': 'onMouseMove'
@@ -26,31 +26,61 @@ define([
             console.log("game render");
             this.$el.html(this.template());
             document.getElementById('page').appendChild(this.el);
-            this.myCharacter = new MyCharacter();
+            this.context = this.el.getContext('2d');
             this.$el.hide();
         },
         show: function () {
+            console.log("game show");
             this.trigger('show',{'name' : this.name});
-            var canva = $('canvas.field')[0];
-            this.context = canva.getContext('2d');
-            canva.width = constants.FIELD_WIDTH;
-            canva.height = constants.FIELD_HEIGHT;
-            //this.myCharacter.model.info();
-            this.myCharacter.draw();
-            var character = this.myCharacter;
-            //this.context.fillRect(0, 0, 300, 300);
-            //this.context.fill();
-            function loop() {
-                character.model.myMove();
-                character.draw();
-                requestAnimationFrame(loop);
-            }
-            requestAnimationFrame(loop);
+            this.el.width = constants.FIELD_WIDTH;
+            this.el.height = constants.FIELD_HEIGHT;
+            this.model.myCharacter.draw();
+            this.model.myCharacter.model.setName(auth_user.getName());
+            this.startGame();
             this.$el.show();
-            //console.log("X : " + myCharacter.model.posX + "; Y : " + myCharacter.model.posY);
-                //setTimeout(alert('!'), 10000)
+        },
+        startGame: function() {
+            var character = this.model.myCharacter;
+            //console.log("enemies : ");
+            //console.log(enemies);
+            //character.model.setName(auth_user.getName());
+            /*var time1 = Date.now();
+            var time2 = Date.now() + 10000;*/
+            var previous = Date.now();
+            var dt;
+            character.show();
+            /*function loop() {
+                var now = Date.now();
+                //if (now > time1 && now < time2) {
+                //    model.sendMessage();
+                //    time1 += 5000;
+                //    time2 += 5000;
+                //}
+                dt = (now - previous)/1000;
+                console.log("dt : " + dt);
+                character.model.myMove(dt);
+                character.draw();
+                previous = now;
+                requestAnimationFrame(loop);
+            }*/
+            requestAnimationFrame(this.loop.bind(this));
+        },
+        loop: function() {
+            //console.log(this);
+            //var previous = Date.now();
+            //var dt;
+            //var now = Date.now();
+            //dt = (now - previous)/1000;
+            this.model.myCharacter.model.myMove(0.02);
+            this.model.myCharacter.draw();
+            //previous = now;
+            requestAnimationFrame(this.loop.bind(this));
         },
         hide: function () {
+            console.log("game hide");
+            this.el.width = 0;
+            this.el.height = 0;
+            this.model.myCharacter.hide();
             this.$el.hide();
         },
         onMouseMove: function(event) {

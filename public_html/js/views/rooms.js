@@ -15,7 +15,8 @@ define([
         template: tmpl,
         model: new Rooms(),
         events: {
-            'click .rooms__lines__line__button': 'onConnect'
+            'click .rooms__lines__line__button': 'onConnect',
+            'click .rooms__create__button': 'onCreateRoom'
         },
         initialize: function () {
             console.log("rooms initialize");
@@ -29,15 +30,21 @@ define([
             //var data = {"name": auth_user.name, "score": auth_user.score};
         },
         onConnect: function(event) {
-            var connectingID = event.currentTarget.attributes.getNamedItem('data-roomid').value;
-            console.log("you connect in room with id : " + connectingID);
-            //TODO запрос на сервер о входе в комнату
-            location.href = '#room';
+            var roomID = event.currentTarget.attributes.getNamedItem('data-roomid').value;
+            console.log("you connect in room with id : " + roomID);
+            this.model.onJoin(roomID);
+            //location.href = '#room';
+        },
+        onCreateRoom: function(event) {
+            event.preventDefault();
+            this.model.onCreate();
         },
         show: function() {
             console.log("show rooms");
-            console.log(this.model.getRooms());
-            this.$el.html(this.template(this.model.getRooms()));
+            //console.log(this.model.getRooms());
+            var rooms = this.model.getRooms();
+            console.log("rooms : " + rooms);
+            this.$el.html(this.template(rooms));
             this.trigger('show',{'name': this.name});
             this.$el.show();
         },

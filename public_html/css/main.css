@@ -15,6 +15,7 @@
     padding-top: 20px;
 
 }
+/*BUTTON BLOCK*/
 .button {
     font-family: NunitoNormal;
     font-size: 16px;
@@ -32,6 +33,11 @@
 .button:active {
     color: #005;
 }
+.button_logout {
+    width: 100%;
+    margin-top: 10px;
+}
+/*LINE BLOCK*/
 .line {
     display: inline-block;
     width: 100%;
@@ -71,6 +77,20 @@
     -webkit-box-shadow: #0f1 0 0 5px 2px;
     background: #0f4;
 }
+.vertical-line_headerSmall {
+    height: 50px;
+    margin: 0 13% 0;
+    position: relative;
+    top: 10px
+}
+.vertical-line_tableRelPos {
+    height: 1em;
+    position: relative;
+    top: 3px;
+    box-sizing: border-box;
+}
+
+/*HEADERS BLOCK*/
 .header-noBorder {
     margin-bottom: 40px;
 }
@@ -84,11 +104,16 @@
 
 }
 .header-text {
+    display: block;
+    font-size: 36px;
+    font-weight: bold;
+    text-align: center;
     margin: 0;
-    text-shadow: #f5f5f5 0 0 8px;
+    text-shadow: #f5f5f5 0 0 1em;
     color: #f5f5f5;
     text-align: center;
 }
+
 /*MAIN PAGE*/
 .menu-container {
     width: 70%;
@@ -151,12 +176,7 @@
     -webkit-box-shadow: #ff1 0 0 5px 2px;
     background: #ff4;
 }
-.vertical-line_header50px {
-    height: 50px;
-    margin: 0 13% 0;
-    position: relative;
-    top: 10px
-}
+
 /*LOGOUT MODULE*/
 .logout {
     display: inline-block;
@@ -166,17 +186,9 @@
     display: inline-block;
 
 }
-.button_logout {
-    width: 100%;
-    margin-top: 10px;
-}
 .logout__on-main-page {
-    /*background: linear-gradient(to top, #ff1, #ff9);*/
-    /*border: 1px solid orange;*/
-    /*border-radius: 3px;*/
     width: 100px;
 }
-/*-------------*/
 .dontLogged {
     position: relative;
     top: -8px;
@@ -184,83 +196,82 @@
     width: 36%;
     font-family: UbuntuItalic;
     font-size: 30px;
-    text-shadow: whitesmoke 0 0 20px;
-
+    text-shadow: whitesmoke 0 0 1em;
 }
+/*-------------*/
 
 .menu {
-    margin-top: 20px;
-    margin-bottom: 10px;
-    padding: 80px 20px 0 20px;
     min-height: 150px;
+    margin: 20px 0 10px;
+    padding: 80px 20px 0 20px;
     border-radius: 10px;
     box-shadow: inset #004 0 0 20px 15px;
-
 }
-.menu__container-game-btn {
+
+.container-game-btn {
     display: inline-block;
+    box-sizing: border-box;
     vertical-align: top;
     width: 33%;
     color: whitesmoke;
     /*background: #444;*/
 }
-.menu__container-game-btn__msg {
+.container-game-btn__msg {
     display: block;
     margin-top: 30px;
     min-height: 50px;
     font-size: 18px;
 }
-.menu__button {
+.container-game-btn__button {
     width: 100px;
     height: 100px;
-    /*margin-left: 100px;*/
     border: #002 solid 2px;
     border-radius: 50%;
     color: #002;
     background: whitesmoke;
 }
 /*нельзя сделать псевдоклассом потому что на кнопки disabled не должен срабатывать*/
-.menu__button_active:not(.menu__button_disabled) {
+.container-game-btn__button_active:not(.menu__button_disabled) {
     background: #007 !important;
     box-shadow: inset #005 0 0 14px 9px,
     #009 0 0 20px 20px !important;
 }
-.menu__button:hover {
+.container-game-btn__button:hover {
     border-color: #007;
 }
-.menu__button_game {
+.container-game-btn__button_game {
     box-shadow: inset #0f0 0 0 7px 4px,
     #0f5 0 0 15px 15px;
     background: #0f3;
 }
-.menu__button_game:hover {
+.container-game-btn__button_game:hover {
     box-shadow: inset #0f0 0 0 14px 9px,
     #ff0 0 0 20px 20px;
 }
-.menu__button_scoreboard {
+.container-game-btn__button_scoreboard {
     box-shadow: inset #0ff 0 0 7px 4px,
     #5ff 0 0 15px 15px;
     background: #3ff;
 }
-.menu__button_scoreboard:hover {
+.container-game-btn__button_scoreboard:hover {
     box-shadow: inset #0ff 0 0 14px 9px,
     #ff0 0 0 20px 20px;
 }
-.menu__button_log {
+.container-game-btn__button_log {
     box-shadow: inset #f80 0 0 7px 4px,
     #f60 0 0 15px 15px;
     background: #fa0;
 }
-.menu__button_log:hover {
+.container-game-btn__button_log:hover {
     box-shadow: inset #f80 0 0 14px 9px,
     #ff0 0 0 20px 20px;
 }
-.menu__button_disabled {
+.container-game-btn__button_disabled {
     background: #666;
     box-shadow: inset #555 0 0 14px 9px,
     #888 0 0 15px 15px !important;
 }
-.menu__button_disabled:hover {
+.container-game-btn__button_disabled:hover {
     background: #666;
     border-color: #222;
 }
@@ -275,6 +286,9 @@
     margin-bottom: 30px;
 }
 .input-line {
+    display: block;
+    box-sizing: border-box;
+    margin-bottom: 1em;
     color: #ff0;
 }
 .input-line__header {
@@ -282,7 +296,7 @@
     width: 35%;
     font-size: 22px;
     color: #f5f5f5;
-    text-shadow: #f5f5f5 0 0 12px;
+    text-shadow: #f5f5f5 0 0 1em;
     box-sizing: border-box;
 }
 .input-line__input {
@@ -323,7 +337,7 @@
     font-size:24px;
     font-family: NunitoNormal;
     color: #f5f5f5;
-    text-shadow: whitesmoke 0 0 20px;
+    text-shadow: whitesmoke 0 0 1em;
 }
 .login__buttons-container__registration-link:hover {
     color: #00f;
@@ -403,11 +417,7 @@
     color: #ff0;
     /*background: #001;*/
 }
-.vertical-line_tableRelPos {
-    position: relative;
-    top: 3px;
-    box-sizing: border-box;
-}
+
 .scoreboard__button {
     width: 100%;
     margin: 5px 0;
@@ -480,11 +490,26 @@
     width: 22%;
     margin-left: 20px;
 }
-
+.rooms__create {
+    margin-top: 20px;
+}
+.rooms__create__input-line {
+    width: 40%;
+    display: inline-block;
+    box-sizing: border-box;
+    font-family: UbuntuItalic;
+}
+.rooms__create__input-line__password {
+    margin-left: 5%;
+}
+.rooms__create__button {
+    width: 9%;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-left: 5%;
+}
 /*GAME PAGE*/
 .field {
-    /*width: 1200px;*/
-    /*height: 700px;*/
     margin: 0 10px 10px 10px;
     border: solid 2px #000;
     box-shadow: #f5f5f5 0 0 5px 3px;
@@ -494,5 +519,6 @@
     top: 30px;
     left: 20px;
     margin: 0;
+    /*TODO отступы задавать с помощью jquery на основе констант отступов*/
 }
 

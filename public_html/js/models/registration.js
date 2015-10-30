@@ -111,9 +111,11 @@ define([
             }
         },
         isValid: function() {
-            return this.username && this.password && this.confirm;
+            return this.usernameStatus.status == 'correct' &&
+                   this.passwordStatus.status == 'correct' &&
+                   this.confirmStatus.status == 'correct';
         },
-        onSubmit: function() {
+        onSubmit: function(event) {
             var data = this.toJSON();
             //console.log(data);
             $.ajax({

@@ -35,9 +35,7 @@ define([
             this.collection.push(new this.model({'name': 'Alena', 'score': 15}));
 
             //эта функция возвращает тот элемент объекта по которому объекты будут сортироваться
-            this.collection.comparator = function(m) {
-                return -m.get('score');
-            };
+
 
             this.collection.sort('score');
             this.render();

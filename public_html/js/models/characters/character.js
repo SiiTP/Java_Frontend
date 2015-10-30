@@ -10,14 +10,14 @@ define([
         radius: 20,
         name: undefined,
         gameScore: 500,
-        speed: 3,
+        speed: 200,
         angle: 0, //направление движения
         initialize: function() {
             this.setX(100);
             this.setY(100);
             this.setRadius(20);
             this.setName(auth_user.getName());
-            this.setScore(5000)
+            this.setScore(0);
         },
         getX: function() {
             return this.posX;
@@ -55,15 +55,20 @@ define([
         setScore: function(s) {
             this.gameScore = s;
         },
+        getAngle: function() {
+            return this.angle;
+        },
         setAngle: function(a) {
             this.angle = a;
         },
-        move: function() {
-            //console.log("MOVE : X : " + this.posX + "; Y : " + this.posX + "; Angle : " + this.angle);
+        move: function(dt) {
+            //console.log("MOVE : X : " + this.posX + "; Y :  " + this.posY + "; Angle : " + this.angle);
             //console.log("X : " + Math.cos(this.angle*(Math.PI/180)));
             //console.log("Y : " + -Math.sin(this.angle*(Math.PI/180)));
-            this.posX = this.posX + this.speed * Math.cos(this.angle*(Math.PI/180));
-            this.posY = this.posY - this.speed * Math.sin(this.angle*(Math.PI/180));
+            var dl = this.speed*dt;
+            console.log("dl : " + dl);
+            this.posX = this.posX + Math.cos(this.angle*(Math.PI/180)) * dl;
+            this.posY = this.posY - Math.sin(this.angle*(Math.PI/180)) * dl;
         },
         info: function() {
             console.log("CHARACTER " + this.name + " INFO : ");

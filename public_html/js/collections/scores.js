@@ -7,7 +7,10 @@ define([
 ){
 
     var Collection = Backbone.Collection.extend({
-        model: scoreModel
+        model: scoreModel,
+        comparator: function(m) {
+            return -m.get('score');
+        }
     });
 
     return new Collection();
