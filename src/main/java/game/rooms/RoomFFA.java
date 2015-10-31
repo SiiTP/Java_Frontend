@@ -1,16 +1,15 @@
 package game.rooms;
 
-import exceptions.NoSuchPlayerException;
-import exceptions.RoomFullException;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import service.GameProfile;
-import service.UserProfile;
+import resource.GameResources;
+import resource.ResourceFactory;
+import game.user.GameProfile;
+import game.user.UserProfile;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,11 +32,10 @@ public class RoomFFA extends RoomAbstractImpl {
     }
 
     @Override
-    public void kickPlayer(UserProfile profile) throws NoSuchPlayerException{
-        if(!users.contains(profile)){
-            throw new NoSuchPlayerException(getRoomName());
+    public void kickPlayer(UserProfile profile){
+        if(users.contains(profile)){
+            users.remove(profile);
         }
-        users.remove(profile);
     }
 
     @Override
@@ -45,9 +43,8 @@ public class RoomFFA extends RoomAbstractImpl {
         boolean isReady =  users.size()>1;
         if(isReady && getStartTime() == null) {
             Instant startTime = Instant.now();
-            final int minutes = 1;
-            final int seconds = 60;
-            final int maxRoomTime = minutes * seconds; //TODO add to prop
+            GameResources gameResources =(GameResources) ResourceFactory.getResource("resources/data/game.json");
+            final int maxRoomTime = gameResources.getMaxRoomPlayingTimeInSec();
             Instant finishTime = startTime.plusSeconds(maxRoomTime);
             setStartTime(startTime);
             setFinishTime(finishTime);
@@ -66,11 +63,7 @@ public class RoomFFA extends RoomAbstractImpl {
     }
     @Override
     public boolean isFinished() {
-        boolean fin =  Instant.now().isAfter(getFinishTime()) || maxScore()==getScoreLimit();
-        if(fin){
-            System.out.println("here we go");
-        }
-        return fin;
+        return Instant.now().isAfter(getFinishTime()) || maxScore()==getScoreLimit();
     }
 
 
@@ -95,11 +88,10 @@ public class RoomFFA extends RoomAbstractImpl {
         return users.contains(user);
     }
     @Override
-    public void addUser(UserProfile profile) throws RoomFullException {
-        if(isFull()){
-            throw new RoomFullException(getPlayersLimit());
+    public void addUser(UserProfile profile) {
+        if(!isFull()){
+            users.add(profile);
         }
-        users.add(profile);
     }
     @Override
     public JSONObject getJsonRoom(){
@@ -123,14 +115,5 @@ public class RoomFFA extends RoomAbstractImpl {
 
     @Override
     public int getPlayersCount() {return users.size();}
-
-    @Nullable
-    public List<UserProfile> getPlayers() {
-        if(!isFinished()) {
-            return users;
-        }else {
-            return null;
-        }
-    }
 
 }

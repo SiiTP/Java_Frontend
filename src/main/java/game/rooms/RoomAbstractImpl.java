@@ -1,6 +1,8 @@
 package game.rooms;
 
-import service.UserProfile;
+import resource.GameResources;
+import resource.ResourceFactory;
+import game.user.UserProfile;
 
 import java.time.Instant;
 
@@ -16,10 +18,11 @@ public abstract class RoomAbstractImpl implements Room  {
     private Integer playersLimit;
     private Integer scoreLimit;
     public RoomAbstractImpl(String roomName, UserProfile creatorUser) {
+        GameResources gameResources =(GameResources) ResourceFactory.getResource("resources/data/game.json");
         this.roomName = roomName;
         this.creatorUser = creatorUser;
-        playersLimit = 10;
-        scoreLimit = 25;//todo add to prop
+        playersLimit = gameResources.getMaxPlayers();
+        scoreLimit = gameResources.getDefaultWinScore();
     }
     public RoomAbstractImpl(String roomName, String roomPassword, UserProfile creator) {
         this(roomName,creator);
@@ -33,13 +36,10 @@ public abstract class RoomAbstractImpl implements Room  {
     }
 
 
-    public void setPlayersLimit(Integer playersLimit) {
-        this.playersLimit = playersLimit;
-    }
-
     public Instant getStartTime() {
         return startTime;
     }
+    @Override
     public String getPassword() {
         return password;
     }
@@ -52,24 +52,16 @@ public abstract class RoomAbstractImpl implements Room  {
     public boolean isRoomHasPass() {
         return password != null;
     }
-    public Instant getCreateDate() {
-        return startTime;
+    public void setPlayersLimit(int playersLimit){
+        this.playersLimit = playersLimit;
     }
 
-
-    public UserProfile getCreator() {
-        return creatorUser;
-    }
     public Instant getFinishTime() {
         return finishTime;
     }
 
     public String getRoomName() {
         return roomName;
-    }
-
-    public void setRoomName(String roomName){
-        this.roomName = roomName;
     }
 
     public void setStartTime(Instant startTime) {
@@ -80,11 +72,11 @@ public abstract class RoomAbstractImpl implements Room  {
         return scoreLimit;
     }
 
-    public void setScoreLimit(Integer scoreLimit) {
-        this.scoreLimit = scoreLimit;
-    }
-
     public void setFinishTime(Instant finishTime) {
         this.finishTime = finishTime;
+    }
+
+    public UserProfile getCreatorUser() {
+        return creatorUser;
     }
 }

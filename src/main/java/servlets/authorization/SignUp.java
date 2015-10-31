@@ -3,7 +3,7 @@ package servlets.authorization;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 import service.account.AccountService;
-import service.UserProfile;
+import game.user.UserProfile;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,16 +32,13 @@ public class SignUp extends HttpServlet {
         }else {
             boolean isAvailableName = accountService.isAvailableName(username);
             if (isAvailableName) {
-                if (username != null && password != null && !username.isEmpty() && !password.isEmpty()) {
+                if(!username.isEmpty() && !password.isEmpty()) {
                     UserProfile profile = new UserProfile(username, password);
                     accountService.addUser(profile);
                     responseJSON.put("success", true);
                     responseJSON.put("message", "you successfully registered!");
-
-                } else {
-                    responseJSON.put("success", false);
-                    responseJSON.put("message", "all fields required!");
                 }
+
             } else {
                 responseJSON.put("success", false);
                 responseJSON.put("message", "you login have been already used");

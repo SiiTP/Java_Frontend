@@ -3,6 +3,7 @@ package resource;
 /**
  * Created by ivan on 26.10.15.
  */
+@SuppressWarnings("unused")
 public class GameResources implements Resource {
     private int maxRoomPlayingTimeInSec;
     private int gameFieldWidth;

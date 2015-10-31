@@ -1,11 +1,10 @@
 package servlets.authorization;
 import static junit.framework.Assert.assertTrue;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import service.account.AccountService;
-import service.UserProfile;
+import game.user.UserProfile;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +16,7 @@ import java.io.StringWriter;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 /**
@@ -26,15 +26,14 @@ public class SignInTest {
     private AccountService service;
     private HttpServletRequest request;
     private HttpServletResponse response;
-    private HttpSession session;
     private StringWriter stringWriter;
     private SignIn signIn;
     @Before
-    public void setUp() throws Exception {
-        service = mock(AccountService.class);
+    public void setUp() throws IOException {
+        service = spy(new AccountService());
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
-        session = mock(HttpSession.class);
+        HttpSession session = mock(HttpSession.class);
         when(request.getSession()).thenReturn(session);
 
         stringWriter = new StringWriter();
@@ -46,28 +45,26 @@ public class SignInTest {
 
     }
 
-    @After
-    public void tearDown() throws Exception {
-    }
-
     @Test
-    public void testDoPostSignInAlreadyAuth() throws Exception {
+    public void testDoPostSignInAlreadyAuth() throws ServletException, IOException {
         when(service.isAuthorized(anyString())).thenReturn(true);
         when(service.getUserBySession(anyString())).thenReturn(new UserProfile("abc","abc"));
         signIn.doPost(request,response);
         assertTrue(stringWriter.toString().contains("false"));
     }
     @Test
-    public void testDoPostSignInLoginSuccess() throws Exception {
+    public void testDoPostSignInLoginSuccess() throws ServletException, IOException {
         checkSignIn(false,true);
     }
     @Test
-    public void testDoPostSignInLoginFail() throws Exception {
+    public void testDoPostSignInLoginFail() throws ServletException, IOException {
         checkSignIn(false,false);
     }
     private void checkSignIn(boolean isAuth, boolean auth) throws ServletException, IOException {
         when(service.isAuthorized(anyString())).thenReturn(isAuth);
         when(service.authtorize(anyString(), anyString(), anyString())).thenReturn(auth);
+        when(request.getParameter("username")).thenReturn("aaaa");
+        when(request.getParameter("password")).thenReturn("aaaa");
         signIn.doPost(request,response);
         assertTrue(stringWriter.toString().contains(Boolean.toString(auth)));
     }

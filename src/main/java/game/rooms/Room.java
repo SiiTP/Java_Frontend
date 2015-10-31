@@ -1,14 +1,8 @@
 package game.rooms;
 
-import exceptions.NoSuchPlayerException;
-import exceptions.RoomFullException;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import service.UserProfile;
-
-import javax.jws.soap.SOAPBinding;
-import java.time.Instant;
-import java.util.ArrayList;
+import game.user.UserProfile;
 
 /**
  * Created by ivan on 14.10.15.
@@ -19,9 +13,10 @@ public interface Room {
     int getPlayersCount();
     int getPlayersLimit();
     boolean checkUser(UserProfile user);
-    void addUser(UserProfile profile) throws RoomFullException;
-    void kickPlayer(UserProfile profile) throws NoSuchPlayerException;
+    void addUser(UserProfile profile);
+    void kickPlayer(UserProfile profile);
     String getWinner();
+    String getRoomName();
     String getPassword();
     boolean isRoomReady();
     boolean isRoomHasPass();

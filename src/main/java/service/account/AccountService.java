@@ -3,7 +3,9 @@ package service.account;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import service.UserProfile;
+import resource.ResourceFactory;
+import resource.ServletResources;
+import game.user.UserProfile;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,8 +29,15 @@ public class AccountService{
     public boolean isAvailableName(@Nullable String name){
         return !users.containsKey(name);
     }
+    @SuppressWarnings("SimplifiableIfStatement")
     public boolean checkData(String username,String password){
-        return username.matches("^[a-zA-Z]+$") && password.matches("^[a-zA-Z]+$");
+        ServletResources servletResources =(ServletResources) ResourceFactory.getResource("resources/data/servlet.json");
+        String regex = servletResources.getPasswordRegexPattern();
+        int passwordLength = servletResources.getMinPasswordLength();
+        if(username == null || password == null){
+            return false;
+        }
+        return username.matches(regex) && password.matches(regex) && password.length()>=passwordLength;
     }
     public boolean authtorize(@Nullable String username,@Nullable String password,@NotNull String session){
         UserProfile profile = getUser(username);

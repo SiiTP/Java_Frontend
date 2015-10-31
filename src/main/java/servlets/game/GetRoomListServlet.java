@@ -1,10 +1,11 @@
 package servlets.game;
 
 import game.rooms.Room;
-import game.serverLevels.top.TopLevelGameServer;
-import game.serverLevels.top.TopLevelGameServerSingleton;
+import game.serverlevels.top.TopLevelGameServer;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import resource.ResourceFactory;
+import resource.ResponseResources;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,24 +19,30 @@ import java.util.Map;
  * Created by ivan on 26.10.15.
  */
 public class GetRoomListServlet extends HttpServlet {
-    TopLevelGameServer topLevelGameServer;
+    private TopLevelGameServer topLevelGameServer;
+    private ResponseResources responseResources;
 
-    public GetRoomListServlet() {
-        topLevelGameServer = TopLevelGameServerSingleton.getInstance();
+    public GetRoomListServlet(TopLevelGameServer topLevelGameServer) {
+        responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
+        this.topLevelGameServer = topLevelGameServer;
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String,Room> rooms = topLevelGameServer.getRoomsList();
-
-        JSONArray roomsJsonArray = new JSONArray();
-        Collection<Room> roomArray = rooms.values();
-        for(Room room : roomArray){
-            roomsJsonArray.put(room.getJsonRoom());
-        }
+        Map<String, Room> rooms = topLevelGameServer.getRoomsList();
         JSONObject object = new JSONObject();
-        object.put("status",200);
-        object.put("rooms",roomsJsonArray);
+        JSONArray roomsJsonArray = new JSONArray();
+        if(!rooms.isEmpty()) {
+            Collection<Room> roomArray = rooms.values();
+            for (Room room : roomArray) {
+                roomsJsonArray.put(room.getJsonRoom());
+            }
+            object.put("status", responseResources.getOk());
+            object.put("rooms", roomsJsonArray);
+        }else{
+            object.put("status", responseResources.getZeroPlayingRoomsNow());
+            object.put("message", "No rooms");
+        }
         resp.getWriter().println(object.toString());
     }
 }
