@@ -12,6 +12,8 @@ import resource.ResourceFactory;
 import resource.ResponseResources;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ivan on 24.10.15.
@@ -28,6 +30,11 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
         gameStrategy = new MoveActionStrategy(topLevelGameServer);
     }
 
+    @Override
+    public void onWebSocketClose(int statusCode, String reason) {
+        System.out.println("socket closed " + statusCode + ' ' + reason);
+        super.onWebSocketClose(statusCode, reason);
+    }
 
     @Override
     public void onWebSocketText(String message) {
@@ -53,7 +60,7 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
         JSONObject object = new JSONObject();
         if(isOkGame) {
             Room room = topLevelGameServer.getPlayerRoomBySession(httpSession);
-            strategy.processGameAction(message, httpSession);
+            analyseActionType(message);
             if (room != null) {
                 if(room.isFinished()){
                     String winner = room.getWinner();
@@ -66,7 +73,7 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
             }
         }else{
             object.put("status", responseResources.getRoomIsNotReadyCode());
-            object.put("message","Wait for your enemy!");
+            object.put("message", "Wait for your enemy!");
         }
         try {
             getRemote().sendString(object.toString());
@@ -74,5 +81,10 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
             e.printStackTrace();
         }
 
+    }
+    public void analyseActionType(JSONObject message){
+        if(!message.has("type") && gameStrategy instanceof MoveActionStrategy){
+            gameStrategy.processGameAction(message,httpSession);
+        }
     }
 }

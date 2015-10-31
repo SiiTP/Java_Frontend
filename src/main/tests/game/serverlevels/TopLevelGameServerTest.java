@@ -138,7 +138,7 @@ public class TopLevelGameServerTest {
         profile.setCurrentroom(room);
         when(service.getUserBySession(anyString())).thenReturn(profile);
 
-        assertTrue(!gameServer.isCorrectPlayerInGame("aa"));
+        assertTrue(gameServer.isCorrectPlayerInGame("aa"));
     }
     @Test
     public void isCorrectPlayerInGameNoPlayer() throws Exception {
