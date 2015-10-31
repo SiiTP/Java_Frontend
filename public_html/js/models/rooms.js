@@ -5,37 +5,30 @@ define([
 ){
     var Model = Backbone.Model.extend({
         rooms: [],
-        createName: undefined,
-        createPassword: undefined,
-        initialize: function() {
-            console.log("rooms model initialize function");
-        },
-        createJSON: function() {
-            var data = {'roomName' : this.createName, 'password' : this.createPassword};
-            return data;
-        },
         onCreate: function() {
+            console.log("---> create room");
             console.log("on create rooms model");
-            this.createName = $('#roomName').val();
-            this.createPassword = $('#roomPassword').val();
+            this.set({'createName' : $('#roomName').val()});
+            this.set({'password' : $('#roomPassword').val()});
             $.ajax({
                 type: "POST",
                 url: "/create",
-                data: this.createJSON()
+                data: this.toJSON()
             }).done(function(obj) {
                 var answer = JSON.parse(obj);
-                console.log(answer.name);
+                console.log(answer);
                 location.href = "#game";
             });
         },
-        getRooms: function() {
-            console.log("rooms model getRooms()");
+        fetch: function() {
+            console.log("---> get room list");
             $.ajax({
                 type: "POST",
                 url: "/getRoomList",
                 context: this
             }).done(function(obj) {
                 var answer = JSON.parse(obj);
+                debugger;
                 if (answer.status == 200) {
                      this.rooms = answer.rooms;
                 } else {
@@ -45,8 +38,7 @@ define([
             return this.rooms;
         },
         onJoin: function(roomName) {
-            console.log("name joining room : " + roomName);
-            console.log("rooms model onJoin()");
+            console.log("---> Join");
             $.ajax({
                 type:'POST',
                 url: '/join',
@@ -58,5 +50,5 @@ define([
             });
         }
     });
-    return Model;
+    return new Model();
 });

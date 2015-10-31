@@ -1,4 +1,4 @@
-<fest:template xmlns:fest="http://fest.mail.ru" context_name="rooms">
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <div class="rooms">
         <div class="rooms__header">
             <div class="header-text">Rooms:</div>
@@ -11,7 +11,7 @@
                 <div class="rooms__lines__header__players">Players</div>
                 <div class="rooms__lines__header__maxPlayers">Limit</div>
             </div>
-            <fest:each iterate="rooms" index="i" value="item">
+            <fest:each iterate="data.rooms" index="i" value="item">
                 <div class="rooms__lines__line">
                     <div class="rooms__lines__line__index"><fest:value>i</fest:value></div>
                     <div class="rooms__lines__line__name"><fest:value>item.name</fest:value></div>

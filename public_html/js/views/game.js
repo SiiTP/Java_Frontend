@@ -88,5 +88,5 @@ define([
             this.myCharacter.onMouseMove(event);
         }
     });
-    return new View();
+    return View;
 });

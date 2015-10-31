@@ -116,6 +116,7 @@
 
 /*MAIN PAGE*/
 .menu-container {
+    white-space: nowrap;
     width: 70%;
     margin: auto;
     border-radius: 20px;

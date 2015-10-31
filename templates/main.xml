@@ -2,7 +2,7 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
     <fest:set name="LoggedBar">
         <div class="logout">
-            <div class="logout__info">Вы вошли, как:<fest:space/><span><fest:value>data.name</fest:value></span></div>
+            <div class="logout__info">Вы вошли, как:<fest:space/><span><fest:value>data.username</fest:value></span></div>
             ;
             <fest:space/>
             <div class="logout__info">Ваш счет :<fest:space/><span><fest:value>data.score</fest:value></span></div><br/>
@@ -27,18 +27,18 @@
             </div>
             <div class="vertical-line vertical-line_headerSmall"> </div>
             <fest:choose>
-                <fest:when test="data.isLogged">
+                <fest:when test="data.logged">
                     <fest:get name="LoggedBar"/>
                 </fest:when>
-                <fest:when test="!data.isLogged">
+                <fest:otherwise>
                     <div class="dontLogged">Вы не авторизованы</div>
-                </fest:when>
+                </fest:otherwise>
             </fest:choose>
         </div>
         <div align="center" class="menu">
             <div class="container-game-btn">
                 <button class="button container-game-btn__button container-game-btn__button_game
-                {data.isLogged == true ? '' : 'container-game-btn__button_disabled'}" data-href="#rooms">Game</button>
+                {data.logged == true ? '' : 'container-game-btn__button_disabled'}" data-href="#rooms">Game</button>
                 <label class="container-game-btn__msg"> </label>
             </div>
             <div class="container-game-btn">
@@ -46,12 +46,12 @@
             </div>
             <div class="container-game-btn">
                 <fest:choose>
-                    <fest:when test="data.isLogged">
+                    <fest:when test="data.logged">
                         <button class="button container-game-btn__button container-game-btn__button_log" data-href="#logout">Logout</button>
                     </fest:when>
-                    <fest:when test="!data.isLogged">
+                    <fest:otherwise>
                         <button class="button container-game-btn__button container-game-btn__button_log" data-href="#login">Login</button>
-                    </fest:when>
+                    </fest:otherwise>
                 </fest:choose>
             </div>
         </div>

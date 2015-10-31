@@ -1,91 +1,81 @@
-define(['backbone',
+define([
+        'backbone',
         'models/viewManager',
         'views/main',
         'views/game',
         'views/login',
         'views/logout',
-        'views/room',
         'views/rooms',
         'views/registration',
-        'views/scoreboard'],
-    function(Backbone,
-             ViewManager,
-             mainView,
-             gameView,
-             loginView,
-             logoutView,
-             roomView,
-             roomsView,
-             registrationView,
-             scoreboardView) {
-
-    //manager.add(mainView, slkjfldsView);
-        manager = new ViewManager();
-        /*manager.addInViews(MainView, {'typeView' : 1});
-        manager.addInViews(GameView, {'typeView' : 1});
-        manager.addInViews(MainView, {'typeView' : 1});
-        manager.addInViews(MainView, {'typeView' : 1});
-        manager.addInViews(LoginView, {'typeView' : 1});
-        manager.addInViews(GameView, {'typeView' : 1});
-        manager.addInViews(LoginView, {'typeView' : 1});
-        manager.info();*/
-        manager.add(scoreboardView);
-        manager.add(loginView);
-        manager.add(registrationView);
-        manager.add(gameView);
-        manager.add(roomView);
-        manager.add(roomsView);
-        manager.add(mainView);
-        //manager.setListeners();
-        var views = manager.getViews();
-
-        manager.trigger('showing');
-        var Router = Backbone.Router.extend({
-            routes: {
-                'scoreboard': 'scoreboardAction',
-                'game': 'gameAction',
-                'room': 'roomAction',
-                'rooms': 'roomsAction',
-                'login': 'loginAction',
-                'logout': 'logoutAction',
-                'registration': 'registrationAction',
-                '*main': 'mainAction',
-                'default': 'defaultActions'
-            },
-            mainAction: function () {
-                mainView.show();
-            },
-            scoreboardAction: function () {
-                scoreboardView.show();
-                console.log("scoreboard action");
-            },
-            gameAction: function () {
-                gameView.show();
-                console.log("game action");
-            },
-            roomsAction: function () {
-                roomsView.show();
-                console.log("rooms action");
-            },
-            roomAction: function () {
-                roomView.show();
-                console.log("room action");
-            },
-            loginAction: function () {
-                loginView.show();
-                console.log("login action");
-            },
-            logoutAction: function () {
-                logoutView.onSubmit();
-                console.log("logout action");
-            },
-            registrationAction: function () {
-                registrationView.show();
-                console.log("registration action");
-            },
-            defaultAction: function () {
-                console.log("default");
-            }
-        });
-        return new Router();
+        'views/scoreboard',
+        'models/user',
+        'collections/scores',
+        'models/rooms'
+], function (
+    Backbone,
+    ViewManager,
+    MainView,
+    GameView,
+    LoginView,
+    LogoutView,
+    RoomsView,
+    RegistrationView,
+    ScoreboardView,
+    user,
+    scores,
+    rooms
+) {
+    var manager =          new ViewManager();
+    var mainView =         new MainView         ({model: user});
+    var registrationView = new RegistrationView ({model: user});
+    var loginView =        new LoginView        ({model: user});
+    var logoutView =       new LogoutView       ({model: user});
+    var scoreboardView =   new ScoreboardView   ({model: scores});
+    var roomsView =        new RoomsView        ({model: rooms});
+    manager.add(scoreboardView);
+    manager.add(loginView);
+    manager.add(logoutView);
+    manager.add(registrationView);
+    manager.add(mainView);
+    manager.add(roomsView);
+    //manager.add(gameView);
+    var Router = Backbone.Router.extend({
+        routes: {
+            'scoreboard': 'scoreboardAction',
+            'game': 'gameAction',
+            'room': 'roomAction',
+            'rooms': 'roomsAction',
+            'login': 'loginAction',
+            'logout': 'logoutAction',
+            'registration': 'registrationAction',
+            '': 'mainAction',
+            'default': 'defaultActions'
+        },
+        mainAction: function () {
+            mainView.show();
+        },
+        scoreboardAction: function () {
+            scoreboardView.show();
+            console.log("scoreboard action");
+        },
+        gameAction: function () {
+            //gameView.show();
+        },
+        roomsAction: function () {
+            roomsView.show();
+        },
+        roomAction: function () {
+            //roomView.show();
+            console.log("room action");
+        },
+        loginAction: function () {
+            loginView.show();
+            console.log("login action");
+        },
+        registrationAction: function () {
+            registrationView.show();
+            console.log("registration action");
+        }
     });
+    return new Router();
+});
