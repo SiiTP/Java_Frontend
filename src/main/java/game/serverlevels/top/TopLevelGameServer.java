@@ -112,7 +112,7 @@ public class TopLevelGameServer {
         if(auth) {
             UserProfile profile = accountService.getUserBySession(session);
             if (profile != null) {
-                if(profile.getCurrentroom()!=null){
+                if(profile.getCurrentroom()==null){
                     auth = false;
                 }
             }else{
