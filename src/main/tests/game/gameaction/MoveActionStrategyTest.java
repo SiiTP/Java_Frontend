@@ -38,21 +38,19 @@ public class MoveActionStrategyTest {
         Room room = mock(Room.class);
 
         doReturn(profile).when(topLevelGameServer).getPlayerBySession(anyString());
-        doReturn(room).when(topLevelGameServer).getRoomByName(anyString());
+        doReturn(room).when(topLevelGameServer).getPlayerRoomBySession(anyString());
         when(room.isFinished()).thenReturn(true);
 
         JSONObject object = new JSONObject();
-        object.put("x",2);
-        object.put("y",2);
-        object.put("score",2);
-        object.put("name","room");
+
+        object.put("direction",2);
         moveActionStrategy.processGameAction(object,httpSession);
 
         assertTrue(gameProfile.getX() == 1);
 
     }
     @Test
-    public void testProcessGameActionRoomReady() throws JSONException {
+    public void roomReadyAndPlayerDontMove() throws JSONException, InterruptedException {
         MoveActionStrategy moveActionStrategy = new MoveActionStrategy(topLevelGameServer);
         UserProfile profile = new UserProfile("aaaa","bbbb");
         GameProfile gameProfile = profile.getGameProfile();
@@ -62,16 +60,22 @@ public class MoveActionStrategyTest {
         Room room = mock(Room.class);
 
         doReturn(profile).when(topLevelGameServer).getPlayerBySession(anyString());
-        doReturn(room).when(topLevelGameServer).getRoomByName(anyString());
+        doReturn(room).when(topLevelGameServer).getPlayerRoomBySession(anyString());
         when(room.isFinished()).thenReturn(false);
 
         JSONObject object = new JSONObject();
-        object.put("x",2);
-        object.put("y",2);
-        object.put("score",2);
-        object.put("name","room");
+
+        object.put("direction", -1);
         moveActionStrategy.processGameAction(object, httpSession);
 
-        assertTrue(gameProfile.getX() != 1);
+        assertTrue(gameProfile.getX() == 1);
+
+        object.put("direction", 100);
+        moveActionStrategy.processGameAction(object, httpSession);
+        Thread.sleep(20);
+        moveActionStrategy.processGameAction(object, httpSession);
+
+        assertTrue(gameProfile.getX() != 1 || gameProfile.getY() != 1);
     }
+
 }

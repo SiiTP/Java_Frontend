@@ -14,6 +14,11 @@ public class ResponseResources implements Resource {
     private int noSuchRoom;
     private int wrongUsernameOrPassword;
     private int zeroPlayingRoomsNow;
+    private int winnerMessage;
+
+    public int getWinnerMessageCode() {
+        return winnerMessage;
+    }
 
     public int getZeroPlayingRoomsNow() {
         return zeroPlayingRoomsNow;

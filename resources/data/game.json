@@ -5,5 +5,8 @@
   "gameFieldHeight":600,
   "maxRoomPlayingTimeInSec":10,
   "defaultWinScore":25,
+  "defaultSpeed":200,
+  "defaultPlayerRadius":20,
+  "millsToSeconds":1000,
   "class":"resource.GameResources"
 }

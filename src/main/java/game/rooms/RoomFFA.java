@@ -66,6 +66,13 @@ public class RoomFFA extends RoomAbstractImpl {
         return Instant.now().isAfter(getFinishTime()) || maxScore()==getScoreLimit();
     }
 
+    public List<GameProfile> getGameProfiles(){
+        List<GameProfile> gameProfiles = new ArrayList<>();
+        for(UserProfile profile :users){
+            gameProfiles.add(profile.getGameProfile());
+        }
+        return gameProfiles;
+    }
 
     @Override
     @Nullable
@@ -108,7 +115,9 @@ public class RoomFFA extends RoomAbstractImpl {
 
         JSONArray array = new JSONArray();
         for(UserProfile profile : users){
-            array.put(profile.getJson());
+            if(!profile.getGameProfile().isKilled()) {
+                array.put(profile.getJson());
+            }
         }
         return array;
     }

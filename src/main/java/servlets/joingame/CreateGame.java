@@ -28,13 +28,13 @@ public class CreateGame extends HttpServlet {
         String roomName = req.getParameter("roomName");
         String password = req.getParameter("password");
         String session = req.getSession().getId();
-
-        JSONObject responseJSON = new JSONObject();
-        if(topLevelGameServer.checkIfRoomExist(roomName)){
-            responseJSON.put("status", responseResources.getRoomAlreadyExist());
-            responseJSON.put("message", "Room with name "+roomName + " already exist");
-        }else {
-            boolean auth = topLevelGameServer.isAuthorizedPlayer(session);
+        if(roomName != null) {
+            JSONObject responseJSON = new JSONObject();
+            if (topLevelGameServer.checkIfRoomExist(roomName)) {
+                responseJSON.put("status", responseResources.getRoomAlreadyExist());
+                responseJSON.put("message", "Room with name " + roomName + " already exist");
+            } else {
+                boolean auth = topLevelGameServer.isAuthorizedPlayer(session);
                 if (auth) {
                     Room room = topLevelGameServer.createRoom(session, roomName, password);
                     if (room != null) {
@@ -48,7 +48,9 @@ public class CreateGame extends HttpServlet {
                     responseJSON.put("status", responseResources.getNotAuthorized());
                     responseJSON.put("message", "you are not authorized");
                 }
+            }
+            resp.getWriter().println(responseJSON.toString());
         }
-        resp.getWriter().println(responseJSON.toString());
+
     }
 }

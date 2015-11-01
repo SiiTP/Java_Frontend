@@ -1,6 +1,11 @@
 package game.user;
 
 import org.json.JSONObject;
+import resource.GameResources;
+import resource.ResourceFactory;
+
+import java.time.Instant;
+import java.util.Random;
 
 /**
  * Created by ivan on 25.10.15.
@@ -9,12 +14,20 @@ public class GameProfile {
     private int score;
     private int x;
     private int y;
+    private double direction;
+    private Instant dt;
+    private boolean isKilled;
+    private Instant killTime;
+    public GameProfile() {
+        isKilled = false;
+    }
 
     public JSONObject getJSON(){
         JSONObject object = new JSONObject();
-        object.put("x",x);
-        object.put("y",x);
+        object.put("posX",x);
+        object.put("posY",x);
         object.put("score",x);
+        object.put("direction",direction);
         return object;
     }
 
@@ -42,4 +55,37 @@ public class GameProfile {
         this.y = y;
     }
 
+    public double getDirection() {
+        return direction;
+    }
+
+    public void setDirection(double direction) {
+        this.direction = direction;
+    }
+
+    public double getDeltaTime() {
+        final int toSeconds = ((GameResources)ResourceFactory.getResource("resources/data/game.json")).getToSeconds();
+        if(dt==null){
+            dt = Instant.now();
+        }
+        Instant temp = Instant.now();
+        Instant diff = temp.minusMillis(dt.toEpochMilli());
+        dt = Instant.now();
+
+        return (diff.toEpochMilli()+0.0)/toSeconds;
+    }
+
+    public boolean isKilled() {
+        return isKilled;
+    }
+
+    public void setIsKilled(boolean isKilled) {
+        this.isKilled = isKilled;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        GameProfile profile = (GameProfile)obj;
+        return x == profile.x && y == profile.y && score == profile.score;
+    }
 }

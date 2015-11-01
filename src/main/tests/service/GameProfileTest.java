@@ -24,14 +24,14 @@ public class GameProfileTest {
     public void testGetJSON() throws JSONException {
         JSONObject object = profile.getJSON();
 
-        assertTrue(object.has("x"));
-        assertTrue(object.has("y"));
+        assertTrue(object.has("posX"));
+        assertTrue(object.has("posY"));
         assertTrue(object.has("score"));
-        assertTrue(object.getInt("x")==10);
+        assertTrue(object.getInt("posX")==10);
 
         profile.setX(2);
         object = profile.getJSON();
-        assertTrue(object.getInt("x")==2);
+        assertTrue(object.getInt("posX")==2);
 
 
 
