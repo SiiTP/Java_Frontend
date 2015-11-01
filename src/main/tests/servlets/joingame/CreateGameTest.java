@@ -44,7 +44,7 @@ public class CreateGameTest {
         stringWriter = new StringWriter();
         PrintWriter writer = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(writer);
-
+        when(request.getParameter("roomName")).thenReturn("test");
         gameServlet = new CreateGame(gameServer);
     }
     @Test

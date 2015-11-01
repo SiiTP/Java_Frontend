@@ -1,6 +1,7 @@
 {
   "class":"resource.ResponseResources",
   "ok":200,
+  "winnerMessage":228,
   "zeroPlayingRoomsNow":300,
   "roomIsNotReady": 301,
   "roomAlreadyExist":302,

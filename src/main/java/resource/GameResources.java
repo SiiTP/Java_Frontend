@@ -10,6 +10,21 @@ public class GameResources implements Resource {
     private int gameFieldHeight;
     private int defaultWinScore;
     private int maxPlayers;
+    private int defaultSpeed;
+    private int defaultPlayerRadius;
+    private int millsToSeconds;
+
+    public int getToSeconds() {
+        return millsToSeconds;
+    }
+
+    public int getDefaultPlayerRadius() {
+        return defaultPlayerRadius;
+    }
+
+    public int getDefaultSpeed() {
+        return defaultSpeed;
+    }
 
     public int getGameFieldWidth() {
         return gameFieldWidth;

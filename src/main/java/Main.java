@@ -1,4 +1,5 @@
 import game.serverlevels.top.TopLevelGameServer;
+import game.user.UserProfile;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -22,6 +23,7 @@ public class Main {
         @SuppressWarnings("OverlyBroadThrowsClause")
         public static void main(String[] args) throws Exception {
         AccountService accountService = new AccountService();
+        accountService.addUser(new UserProfile("admin","admin"));
         TopLevelGameServer topLevelGameServer = new TopLevelGameServer(accountService);
         Properties properties = new Properties();
         try(FileInputStream inputStream = new FileInputStream("resources/cfg/server.properties")){

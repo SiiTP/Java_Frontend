@@ -65,7 +65,7 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
                 if(room.isFinished()){
                     String winner = room.getWinner();
                     object.put("winner", winner);
-                    object.put("status", responseResources.getOk());
+                    object.put("status", responseResources.getWinnerMessageCode());
                 }else {
                     object.put("players", room.getJsonRoomPlayers());
                     object.put("status", responseResources.getOk());
