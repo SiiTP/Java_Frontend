@@ -9,6 +9,5 @@ define(['backbone'], function(Backbone) {
             Y_OFFSET_TO_CANVAS: 30
             //__________________________
         });
-    constants = new Constants();
-    return Constants;
+    return new Constants();
     });

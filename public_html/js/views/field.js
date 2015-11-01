@@ -1,7 +1,7 @@
 define([
     'backbone',
     'tmpl/game',
-    'models/game'
+    '../models/field'
 ], function(
     Backbone,
     tmpl,
@@ -9,11 +9,8 @@ define([
 ){
 
     var View = Backbone.View.extend({
-        name: "game",
         tagName: 'canvas',
         className: 'field',
-        context: undefined,
-        model: new Game(),
         template: tmpl,
         events: {
             'mousemove canvas.field': 'onMouseMove'
@@ -30,25 +27,18 @@ define([
             this.$el.hide();
         },
         show: function () {
-            console.log("game show");
-            this.trigger('show',{'name' : this.name});
-            this.el.width = constants.FIELD_WIDTH;
-            this.el.height = constants.FIELD_HEIGHT;
-            this.model.myCharacter.draw();
-            this.model.myCharacter.model.setName(auth_user.getName());
-            this.startGame();
-            this.$el.show();
+            this.trigger('show');
         },
         startGame: function() {
-            var character = this.model.myCharacter;
-            //console.log("enemies : ");
-            //console.log(enemies);
-            //character.model.setName(auth_user.getName());
-            /*var time1 = Date.now();
-            var time2 = Date.now() + 10000;*/
+
+            /*console.log("enemies : ");
+            console.log(enemies);
+            character.model.setName(auth_user.getName());
+            var time1 = Date.now();
+            var time2 = Date.now() + 10000;
             var previous = Date.now();
             var dt;
-            character.show();
+            character.show();*/
             /*function loop() {
                 var now = Date.now();
                 //if (now > time1 && now < time2) {

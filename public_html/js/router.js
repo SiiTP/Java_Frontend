@@ -1,19 +1,23 @@
 define([
-        'backbone',
-        'models/viewManager',
-        'views/main',
-        'views/game',
-        'views/login',
-        'views/logout',
-        'views/rooms',
-        'views/registration',
-        'views/scoreboard',
-        'models/user',
-        'collections/scores',
-        'models/rooms'
+    'backbone',
+    'views/viewManager',
+    'views/main',
+    'views/field',
+    'views/login',
+    'views/logout',
+    'views/rooms',
+    'views/registration',
+    'views/scoreboard',
+    'models/user',
+    'collections/scores',
+    'models/rooms',
+    'models/gameMediator',
+    'models/characters/myCharacter',
+    'models/characters/enemyCharacter',
+    'constants'
 ], function (
     Backbone,
-    ViewManager,
+    manager,
     MainView,
     GameView,
     LoginView,
@@ -23,9 +27,12 @@ define([
     ScoreboardView,
     user,
     scores,
-    rooms
+    rooms,
+    GameMediator,
+    MyCharacter,
+    EnemyCharacter,
+    constants
 ) {
-    var manager =          new ViewManager();
     var mainView =         new MainView         ({model: user});
     var registrationView = new RegistrationView ({model: user});
     var loginView =        new LoginView        ({model: user});
@@ -38,6 +45,13 @@ define([
     manager.add(registrationView);
     manager.add(mainView);
     manager.add(roomsView);
+
+    var gameMediator = new GameMediator({
+        MyCharacter    : MyCharacter,
+        EnemyCharacter :EnemyCharacter,
+        roomsView      : roomsView,
+        constants      : constants
+    });
     //manager.add(gameView);
     var Router = Backbone.Router.extend({
         routes: {
@@ -56,7 +70,6 @@ define([
         },
         scoreboardAction: function () {
             scoreboardView.show();
-            console.log("scoreboard action");
         },
         gameAction: function () {
             //gameView.show();
@@ -64,17 +77,11 @@ define([
         roomsAction: function () {
             roomsView.show();
         },
-        roomAction: function () {
-            //roomView.show();
-            console.log("room action");
-        },
         loginAction: function () {
             loginView.show();
-            console.log("login action");
         },
         registrationAction: function () {
             registrationView.show();
-            console.log("registration action");
         }
     });
     return new Router();

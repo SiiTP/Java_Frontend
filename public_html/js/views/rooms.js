@@ -10,15 +10,25 @@ define([
     var View = Backbone.View.extend({
         tagName: 'div',
         template: tmpl,
+        JQ_msg: null,
         events: {
             'click .rooms__lines__line__button': 'onConnect',
             'click .rooms__create__button': 'onCreateRoom'
         },
+        initialize: function () {
+            this.model.on('change', this.render.bind(this));
+            this.model.on('serverError', this.printMessage.bind(this));
+            this.model.on('joiningToRoom', this.triggerJoiningToRoom.bind(this));
+        },
         render: function() {
-            console.log("rooms render");
-            console.log(this.model.toJSON().rooms);
             this.$el.html(this.template(this.model.toJSON()));
-            this.$el.hide();
+            this.JQ_msg = $('.rooms__create__message').first();
+        },
+        triggerJoiningToRoom: function(answer) {
+            this.trigger('joiningToRoom', answer); // для медиатора
+        },
+        printMessage: function(args) {
+            this.JQ_msg.text(args.message);
         },
         onConnect: function(event) {
             var roomID = event.currentTarget.attributes.getNamedItem('data-roomid').value;
@@ -30,10 +40,7 @@ define([
             this.model.onCreate();
         },
         show: function() {
-            console.log("show rooms");
-            //console.log(this.model.getRooms());
             this.model.fetch();
-            this.$el.html(this.template(this.model.toJSON()));
             this.trigger('show',{'name': this.name});
             this.$el.show();
         },
