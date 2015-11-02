@@ -1,5 +1,6 @@
 package servlets.admins;
 
+import game.serverlevels.top.TopLevelGameServer;
 import org.eclipse.jetty.server.Server;
 import org.jetbrains.annotations.NotNull;
 import service.account.AccountService;
@@ -22,10 +23,12 @@ public class AdminServlet extends HttpServlet {
     private Server server;
     @NotNull
     private AccountService accountService;
-
-    public AdminServlet(@NotNull Server serv,@NotNull AccountService acc) {
+    @NotNull
+    private TopLevelGameServer topLevelGameServer;
+    public AdminServlet(@NotNull Server serv,@NotNull TopLevelGameServer topLevelGameServer) {
         this.server = serv;
-        this.accountService = acc;
+        this.accountService = topLevelGameServer.getAccountService();
+        this.topLevelGameServer = topLevelGameServer;
     }
 
     @Override
@@ -33,6 +36,7 @@ public class AdminServlet extends HttpServlet {
         String shutdown = req.getParameter("shutdown");
         String registeredUsers = req.getParameter("reg");
         String loggedUsers = req.getParameter("log");
+        String clean = req.getParameter("clear");
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType("text/html; charset=UTF-8");
         PrintWriter writer = resp.getWriter();
@@ -50,6 +54,10 @@ public class AdminServlet extends HttpServlet {
         }
         if (loggedUsers != null && !loggedUsers.isEmpty() && loggedUsers.equals("true")) {
             writer.println("Залогинено пользователей: " + accountService.getLoggedUsersCount());
+        }
+        if(clean != null){
+            topLevelGameServer.clearRooms();
+            writer.println("Комнаты очищены");
         }
 
 

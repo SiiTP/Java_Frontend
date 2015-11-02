@@ -43,7 +43,7 @@ public class Main {
         context.addServlet(new ServletHolder(new SignUp(accountService)),"/signup");
         context.addServlet(new ServletHolder(new LogOut(accountService)), "/logout");
         context.addServlet(new ServletHolder(new LoginInfo(accountService)), "/logininfo");
-        context.addServlet(new ServletHolder(new AdminServlet(server, accountService)), "/admin");
+        context.addServlet(new ServletHolder(new AdminServlet(server, topLevelGameServer)), "/admin");
         context.addServlet(new ServletHolder(new CreateGame(topLevelGameServer)), "/create");
         context.addServlet(new ServletHolder(new JoinGame(topLevelGameServer)), "/join");
         context.addServlet(new ServletHolder(new MainSocketWebServlet(topLevelGameServer)), "/gameplay");

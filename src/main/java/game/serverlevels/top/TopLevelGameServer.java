@@ -122,5 +122,12 @@ public class TopLevelGameServer {
         return auth;
     }
 
+    public AccountService getAccountService() {
+        return accountService;
+    }
+
+    public void clearRooms(){
+        rooms = new HashMap<>();
+    }
 
 }

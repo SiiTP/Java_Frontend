@@ -1,5 +1,6 @@
 package servlets.admins;
 
+import game.serverlevels.top.TopLevelGameServer;
 import org.eclipse.jetty.server.Server;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,9 +22,11 @@ public class AdminServletTest {
     private AccountService accountService;
     private HttpServletRequest req;
     private HttpServletResponse resp;
+    private TopLevelGameServer topLevelGameServer;
     @Before
     public void setup() throws IOException {
         accountService = new AccountService();
+        topLevelGameServer = new TopLevelGameServer(accountService);
         server = spy(new Server());
         req = mock(HttpServletRequest.class);
         resp = mock(HttpServletResponse.class);
@@ -33,13 +36,13 @@ public class AdminServletTest {
     }
     @Test
     public void testDoGet() throws ServletException, IOException {
-        AdminServlet adminServlet = new AdminServlet(server, accountService);
+        AdminServlet adminServlet = new AdminServlet(server, topLevelGameServer);
         when(req.getParameter("shutdown")).thenReturn("vdbdfb");
         adminServlet.doGet(req, resp);
     }
     @Test
     public void testDoGetStop() throws ServletException, IOException {
-        AdminServlet adminServlet = new AdminServlet(server, accountService);
+        AdminServlet adminServlet = new AdminServlet(server, topLevelGameServer);
         when(req.getParameter("shutdown")).thenReturn("1000");
         adminServlet.doGet(req, resp);
 

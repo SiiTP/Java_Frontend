@@ -46,7 +46,10 @@ public class MoveActionStrategy implements GameActionStrategy {
                 UserProfile profile = topLevelGameServer.getPlayerBySession(httpSession);
                 if (profile != null) {
                     GameProfile gameProfile = profile.getGameProfile();
-                    double direction = message.optDouble("direction");
+                    double direction = -1;
+                    if(message.has("direction")) {
+                        direction = message.getDouble("direction");
+                    }
                     if (direction != -1) {
                         double radian = Math.toRadians(direction);
                         int x = gameProfile.getX();

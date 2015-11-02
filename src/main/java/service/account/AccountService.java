@@ -77,7 +77,6 @@ public class AccountService{
     public UserProfile getUserBySession(String sessionId){
         return sessions.get(sessionId);
     }
-
     public void deleteSession(String sess) {
         sessions.remove(sess);
     }
