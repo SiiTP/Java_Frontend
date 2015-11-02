@@ -2,6 +2,7 @@ package game.serverlevels.top;
 
 import game.rooms.Room;
 import game.rooms.RoomFFA;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import game.user.UserProfile;
 import service.account.AccountService;
@@ -125,7 +126,18 @@ public class TopLevelGameServer {
     public AccountService getAccountService() {
         return accountService;
     }
-
+    public void kickPlayer(@NotNull String httpSession){
+        UserProfile profile = accountService.getUserBySession(httpSession);
+        if(profile != null) {
+            Room room = profile.getCurrentroom();
+            if(room != null) {
+                room.kickPlayer(profile);
+                if(room.getPlayersCount()==0){
+                    rooms.remove(room.getRoomName());
+                }
+            }
+        }
+    }
     public void clearRooms(){
         rooms = new HashMap<>();
     }
