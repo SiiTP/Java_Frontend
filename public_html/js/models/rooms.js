@@ -19,7 +19,8 @@ define([
             }).done(function(obj) {
                 var answer = JSON.parse(obj);
                 if (answer.status == 200) {
-                    //location.href = "#game";
+                    this.trigger('joiningToRoom', answer);
+                    location.href = "#game";
                 } else {
                     this.trigger('serverError', {'message': answer.message});
                 }
@@ -56,6 +57,8 @@ define([
                 if (answer.status == 200) {
                     this.trigger('joiningToRoom', answer);
                     location.href = '#game';
+                } else {
+                    this.trigger('serverError', {'message': answer.message});
                 }
             });
         }

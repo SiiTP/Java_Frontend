@@ -1,33 +1,22 @@
 define([
     'backbone',
-    'tmpl/game',
-    '../models/field'
+    'tmpl/game'
 ], function(
     Backbone,
-    tmpl,
-    Game
+    tmpl
 ){
 
     var View = Backbone.View.extend({
         tagName: 'canvas',
         className: 'field',
         template: tmpl,
-        events: {
-            'mousemove canvas.field': 'onMouseMove'
-        },
-        initialize: function () {
-            console.log("game initialize");
-            this.render();
-        },
-        render: function () {
-            console.log("game render");
-            this.$el.html(this.template());
-            document.getElementById('page').appendChild(this.el);
-            this.context = this.el.getContext('2d');
-            this.$el.hide();
-        },
         show: function () {
+            console.log("field show");
+            this.$el.show();
+            this.$el.on('click', this.onClick.bind(this));
+            this.$el.on('mousemove', this.onMouseMove.bind(this));
             this.trigger('show');
+            //this.startGame();
         },
         startGame: function() {
 
@@ -61,21 +50,17 @@ define([
             //var dt;
             //var now = Date.now();
             //dt = (now - previous)/1000;
-            this.model.myCharacter.model.myMove(0.02);
-            this.model.myCharacter.draw();
             //previous = now;
             requestAnimationFrame(this.loop.bind(this));
         },
         hide: function () {
             console.log("game hide");
-            this.el.width = 0;
-            this.el.height = 0;
-            this.model.myCharacter.hide();
             this.$el.hide();
         },
         onMouseMove: function(event) {
-            //console.log("mouse move game");
-            this.myCharacter.onMouseMove(event);
+        },
+        onClick: function() {
+            this.trigger('clicked');
         }
     });
     return View;

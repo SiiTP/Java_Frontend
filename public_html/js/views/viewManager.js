@@ -7,7 +7,11 @@ define (['backbone'], function(Backbone) {
                     item.hide();
                 } else {
                     if (item.$el.is(':empty')) {
-                        item.$el.html(item.template(item.model.toJSON()));
+                        if (item.model) {
+                            item.$el.html(item.template(item.model.toJSON()));
+                        } else {
+                            item.$el.html(item.template());
+                        }
                         document.getElementById('page').appendChild(item.el);
                     }
                 }

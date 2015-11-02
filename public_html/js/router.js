@@ -19,7 +19,7 @@ define([
     Backbone,
     manager,
     MainView,
-    GameView,
+    FieldView,
     LoginView,
     LogoutView,
     RoomsView,
@@ -39,18 +39,20 @@ define([
     var logoutView =       new LogoutView       ({model: user});
     var scoreboardView =   new ScoreboardView   ({model: scores});
     var roomsView =        new RoomsView        ({model: rooms});
+    var fieldView =        new FieldView        ();
     manager.add(scoreboardView);
     manager.add(loginView);
     manager.add(logoutView);
     manager.add(registrationView);
     manager.add(mainView);
     manager.add(roomsView);
-
+    manager.add(fieldView);
     var gameMediator = new GameMediator({
         MyCharacter    : MyCharacter,
-        EnemyCharacter :EnemyCharacter,
+        EnemyCharacter : EnemyCharacter,
         roomsView      : roomsView,
-        constants      : constants
+        constants      : constants,
+        field          : fieldView
     });
     //manager.add(gameView);
     var Router = Backbone.Router.extend({
@@ -72,7 +74,7 @@ define([
             scoreboardView.show();
         },
         gameAction: function () {
-            //gameView.show();
+            fieldView.show();
         },
         roomsAction: function () {
             roomsView.show();
