@@ -24,6 +24,7 @@ public class Main {
         public static void main(String[] args) throws Exception {
         AccountService accountService = new AccountService();
         accountService.addUser(new UserProfile("admin","admin"));
+        accountService.addUser(new UserProfile("adminn","adminn"));
         TopLevelGameServer topLevelGameServer = new TopLevelGameServer(accountService);
         Properties properties = new Properties();
         try(FileInputStream inputStream = new FileInputStream("resources/cfg/server.properties")){
