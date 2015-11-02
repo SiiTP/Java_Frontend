@@ -8,7 +8,7 @@ module.exports = function (grunt) {
                 stderr: true
             },
             server: {
-                command: 'java -jar server.jar 8000'
+                command: 'java -jar server.jar'
             }
         },
         fest: {

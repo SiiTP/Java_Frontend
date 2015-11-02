@@ -20,8 +20,8 @@
                     </div>
                 </fest:each>
             </main>
-            <button class="button scoreboard__button" data-href="#main">On main</button>
             <div class="line line_blue table__line"> </div>
+            <button class="button scoreboard__button" data-href="#">On main</button>
         </div>
     </div>
 </fest:template>

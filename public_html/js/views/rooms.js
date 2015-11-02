@@ -1,58 +1,53 @@
 //форма выхода из учентной записи
 define([
     'backbone',
-    'tmpl/rooms',
-    'models/rooms'
+    'tmpl/rooms'
 ], function(
     Backbone,
-    tmpl,
-    Rooms
+    tmpl
 ){
 
     var View = Backbone.View.extend({
-        name: 'rooms',
         tagName: 'div',
         template: tmpl,
-        model: new Rooms(),
+        JQ_msg: null,
         events: {
             'click .rooms__lines__line__button': 'onConnect',
             'click .rooms__create__button': 'onCreateRoom'
         },
         initialize: function () {
-            console.log("rooms initialize");
-            this.render();
+            this.model.on('change', this.render.bind(this));
+            this.model.on('serverError', this.printMessage.bind(this));
+            this.model.on('joiningToRoom', this.triggerJoiningToRoom.bind(this));
         },
         render: function() {
-            console.log("rooms render");
-            this.$el.html(this.template(this.model.getRooms()));
-            document.getElementById('page').appendChild(this.el);
-            this.$el.hide();
-            //var data = {"name": auth_user.name, "score": auth_user.score};
+            this.$el.html(this.template(this.model.toJSON()));
+            this.JQ_msg = $('.rooms__create__message').first();
+        },
+        triggerJoiningToRoom: function(answer) {
+            this.trigger('joiningToRoom', answer); // для медиатора
+        },
+        printMessage: function(args) {
+            this.JQ_msg.text(args.message);
         },
         onConnect: function(event) {
             var roomID = event.currentTarget.attributes.getNamedItem('data-roomid').value;
             console.log("you connect in room with id : " + roomID);
             this.model.onJoin(roomID);
-            //location.href = '#room';
         },
         onCreateRoom: function(event) {
             event.preventDefault();
             this.model.onCreate();
         },
         show: function() {
-            console.log("show rooms");
-            //console.log(this.model.getRooms());
-            var rooms = this.model.getRooms();
-            console.log("rooms : " + rooms);
-            this.$el.html(this.template(rooms));
+            this.model.fetch();
             this.trigger('show',{'name': this.name});
             this.$el.show();
         },
         hide: function() {
-            console.log("rooms view hide");
             this.$el.hide();
         }
     });
 
-    return new View();
+    return View;
 });

@@ -4,8 +4,7 @@ require.config({
     paths: {
         jquery: "lib/jquery",
         underscore: "lib/underscore",
-        backbone: "lib/backbone",
-        user: "models/user"
+        backbone: "lib/backbone"
     },
     shim: {
         'backbone': {
@@ -18,9 +17,8 @@ require.config({
     }
 });
 
-define(['backbone', 'user', 'router','constants'], function(
+define(['backbone', 'router','constants'], function(
     Backbone,
-    User,
     router,
     constants
 ){

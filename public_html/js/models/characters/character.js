@@ -16,7 +16,7 @@ define([
             this.setX(100);
             this.setY(100);
             this.setRadius(20);
-            this.setName(auth_user.getName());
+            this.setName('azazaza');
             this.setScore(0);
         },
         getX: function() {

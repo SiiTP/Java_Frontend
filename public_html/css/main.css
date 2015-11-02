@@ -111,11 +111,11 @@
     margin: 0;
     text-shadow: #f5f5f5 0 0 1em;
     color: #f5f5f5;
-    text-align: center;
 }
 
 /*MAIN PAGE*/
 .menu-container {
+    white-space: nowrap;
     width: 70%;
     margin: auto;
     border-radius: 20px;
@@ -309,7 +309,7 @@
     box-sizing: border-box;
 }
 .validation-info {
-    width: 95%;
+    box-sizing: border-box;
     font-size: 12px;
     font-family: NunitoNormal;
     color: #ff0;
@@ -430,9 +430,10 @@
     margin: auto;
 }
 .rooms__lines {
-    margin-top: 10px;
+    margin: 10px 0 10px;
 }
 .rooms__lines__header {
+    white-space: nowrap;
     font-size: 20px;
     color: #ff0;
     text-shadow: #ff0 0 0 10px;
@@ -460,9 +461,10 @@
     text-align: right;
 }
 .rooms__lines__line {
+    white-space: nowrap;
+    margin-top: 10px;
     font-family: NunitoNormal;
     font-size: 16px;
-    margin-top: 10px;
 }
 .rooms__lines__line__index {
     width: 5%;
@@ -490,8 +492,16 @@
     width: 22%;
     margin-left: 20px;
 }
+.rooms__noRooms {
+    margin: 30px 0 20px;
+
+}
 .rooms__create {
-    margin-top: 20px;
+    white-space: nowrap;
+    margin: 10px 0 0;
+}
+.rooms__create__header {
+    margin-bottom: 20px;
 }
 .rooms__create__input-line {
     width: 40%;
@@ -507,6 +517,9 @@
     display: inline-block;
     box-sizing: border-box;
     margin-left: 5%;
+}
+.rooms__create__message {
+    margin: 0;
 }
 /*GAME PAGE*/
 .field {

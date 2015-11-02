@@ -4,59 +4,64 @@ define([
     Backbone
 ){
     var Model = Backbone.Model.extend({
-        rooms: [],
-        createName: undefined,
-        createPassword: undefined,
         initialize: function() {
-            console.log("rooms model initialize function");
-        },
-        createJSON: function() {
-            var data = {'roomName' : this.createName, 'password' : this.createPassword};
-            return data;
+            this.set({'rooms': []}) ;
         },
         onCreate: function() {
-            console.log("on create rooms model");
-            this.createName = $('#roomName').val();
-            this.createPassword = $('#roomPassword').val();
+            console.log("---> create room");
+            this.set({'roomName' : $('#roomName').val()});
+            this.set({'password' : $('#roomPassword').val()});
             $.ajax({
                 type: "POST",
                 url: "/create",
-                data: this.createJSON()
+                data: this.toJSON(),
+                context: this
             }).done(function(obj) {
                 var answer = JSON.parse(obj);
-                console.log(answer.name);
-                location.href = "#game";
+                if (answer.status == 200) {
+                    this.trigger('joiningToRoom', answer);
+                    location.href = "#game";
+                } else {
+                    this.trigger('serverError', {'message': answer.message});
+                }
             });
         },
-        getRooms: function() {
-            console.log("rooms model getRooms()");
+        fetch: function() {
+            console.log("---> get room list");
             $.ajax({
                 type: "POST",
                 url: "/getRoomList",
                 context: this
             }).done(function(obj) {
+                console.log("<--- get room list");
                 var answer = JSON.parse(obj);
+                console.log(answer);
                 if (answer.status == 200) {
-                     this.rooms = answer.rooms;
+                     this.set({'rooms' : answer.rooms});
                 } else {
-                    this.rooms = null;
+                    this.set({'rooms' : []});
                 }
             });
-            return this.rooms;
         },
         onJoin: function(roomName) {
-            console.log("name joining room : " + roomName);
-            console.log("rooms model onJoin()");
+            console.log("---> Join");
             $.ajax({
                 type:'POST',
                 url: '/join',
-                data: {'roomName':roomName, 'password':null} //TODO пароль отправляется как null
+                data: {'roomName':roomName, 'password':null}, //TODO пароль отправляется как null
+                context: this
             }).done(function(obj) {
                 var answer = JSON.parse(obj);
+                console.log("<--- Join");
                 console.log(answer);
-                location.href = '#game';
+                if (answer.status == 200) {
+                    this.trigger('joiningToRoom', answer);
+                    location.href = '#game';
+                } else {
+                    this.trigger('serverError', {'message': answer.message});
+                }
             });
         }
     });
-    return Model;
+    return new Model();
 });
