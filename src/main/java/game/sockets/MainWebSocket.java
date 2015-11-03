@@ -32,6 +32,7 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
 
     @Override
     public void onWebSocketClose(int statusCode, String reason) {
+        topLevelGameServer.kickPlayer(httpSession);
         System.out.println("socket closed " + statusCode + ' ' + reason);
         super.onWebSocketClose(statusCode, reason);
     }

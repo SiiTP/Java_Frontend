@@ -19,7 +19,7 @@ public class UserProfile {
         this.username = name;
         this.password = pass;
         gameProfile = new GameProfile();
-
+        currentroom = null;
     }
     public boolean checkPassword(@Nullable String pass){
         return pass != null && pass.equals(this.password);
@@ -29,12 +29,12 @@ public class UserProfile {
     public String getUsername() {
         return username;
     }
-
+    @Nullable
     public Room getCurrentroom() {
         return currentroom;
     }
 
-    public void setCurrentroom(Room currentroom) {
+    public void setCurrentroom(@Nullable Room currentroom) {
         this.currentroom = currentroom;
     }
 

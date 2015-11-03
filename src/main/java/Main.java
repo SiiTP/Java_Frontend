@@ -24,6 +24,7 @@ public class Main {
         public static void main(String[] args) throws Exception {
         AccountService accountService = new AccountService();
         accountService.addUser(new UserProfile("admin","admin"));
+        accountService.addUser(new UserProfile("adminn","adminn"));
         TopLevelGameServer topLevelGameServer = new TopLevelGameServer(accountService);
         Properties properties = new Properties();
         try(FileInputStream inputStream = new FileInputStream("resources/cfg/server.properties")){
@@ -43,7 +44,7 @@ public class Main {
         context.addServlet(new ServletHolder(new SignUp(accountService)),"/signup");
         context.addServlet(new ServletHolder(new LogOut(accountService)), "/logout");
         context.addServlet(new ServletHolder(new LoginInfo(accountService)), "/logininfo");
-        context.addServlet(new ServletHolder(new AdminServlet(server, accountService)), "/admin");
+        context.addServlet(new ServletHolder(new AdminServlet(server, topLevelGameServer)), "/admin");
         context.addServlet(new ServletHolder(new CreateGame(topLevelGameServer)), "/create");
         context.addServlet(new ServletHolder(new JoinGame(topLevelGameServer)), "/join");
         context.addServlet(new ServletHolder(new MainSocketWebServlet(topLevelGameServer)), "/gameplay");

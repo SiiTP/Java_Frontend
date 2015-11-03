@@ -28,7 +28,7 @@ public class CreateGame extends HttpServlet {
         String roomName = req.getParameter("roomName");
         String password = req.getParameter("password");
         String session = req.getSession().getId();
-        if(roomName != null) {
+        if(roomName != null && !roomName.isEmpty()) {
             JSONObject responseJSON = new JSONObject();
             if (topLevelGameServer.checkIfRoomExist(roomName)) {
                 responseJSON.put("status", responseResources.getRoomAlreadyExist());

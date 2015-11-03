@@ -34,7 +34,9 @@ public class RoomFFA extends RoomAbstractImpl {
     @Override
     public void kickPlayer(UserProfile profile){
         if(users.contains(profile)){
+            profile.setCurrentroom(null);
             users.remove(profile);
+
         }
     }
 
