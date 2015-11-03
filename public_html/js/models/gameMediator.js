@@ -13,7 +13,7 @@ define (['backbone'], function(Backbone) {
             console.log("mediator initialized");
             this.get('roomsView').on('joiningToRoom', this.joinToRoom.bind(this));
             this.get('field').on('clicked', this.sendMessageWaiting.bind(this));
-            this.joinToRoom();
+            //this.joinToRoom();
         },
         initializeSocket: function() {
             console.log("initializing socket");
@@ -38,7 +38,7 @@ define (['backbone'], function(Backbone) {
             this.initializeSocket();
         },
         beginningGameWaiting: function() {
-            this.sendMessageWaiting()
+            this.sendMessageWaiting();
         },
         sendMessageWaiting: function() {
             console.log("<___ send message waiting");
