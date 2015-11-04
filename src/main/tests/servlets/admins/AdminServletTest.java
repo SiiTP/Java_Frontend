@@ -3,8 +3,6 @@ package servlets.admins;
 import game.serverlevels.top.TopLevelGameServer;
 import game.user.UserProfile;
 import org.eclipse.jetty.server.Server;
-import org.hamcrest.core.StringEndsWith;
-import org.json.JSONArray;
 import org.junit.Before;
 import org.junit.Test;
 import service.account.AccountService;

@@ -1,8 +1,8 @@
 package servlets.authorization;
 
+import game.user.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
-import game.user.UserProfile;
 import service.account.AccountService;
 
 import javax.servlet.ServletException;

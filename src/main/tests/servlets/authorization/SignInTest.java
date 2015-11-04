@@ -1,10 +1,9 @@
 package servlets.authorization;
-import static junit.framework.Assert.assertTrue;
 
+import game.user.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
 import service.account.AccountService;
-import game.user.UserProfile;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +13,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import static junit.framework.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by Ivan on 10.10.15.

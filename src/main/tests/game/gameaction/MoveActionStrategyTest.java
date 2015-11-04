@@ -2,15 +2,15 @@ package game.gameaction;
 
 import game.rooms.Room;
 import game.serverlevels.top.TopLevelGameServer;
+import game.user.GameProfile;
+import game.user.UserProfile;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import game.user.GameProfile;
-import game.user.UserProfile;
 import service.account.AccountService;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 

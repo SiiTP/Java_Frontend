@@ -3,14 +3,13 @@ package servlets.game;
 import game.rooms.Room;
 import game.rooms.RoomFFA;
 import game.serverlevels.top.TopLevelGameServer;
-import org.json.JSONArray;
+import game.user.UserProfile;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import resource.ResourceFactory;
 import resource.ResponseResources;
-import game.user.UserProfile;
 import service.account.AccountService;
 
 import javax.servlet.ServletException;

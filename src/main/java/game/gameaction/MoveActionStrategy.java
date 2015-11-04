@@ -10,10 +10,8 @@ import org.json.JSONObject;
 import resource.GameResources;
 import resource.ResourceFactory;
 
-import java.io.DataInputStream;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Created by ivan on 25.10.15.
@@ -47,8 +45,8 @@ public class MoveActionStrategy implements GameActionStrategy {
                     }
                     if (direction != -1) {
                         double radian = Math.toRadians(direction);
-                        int x = gameProfile.getX();
-                        int y = gameProfile.getY();
+                        double x = gameProfile.getX();
+                        double y = gameProfile.getY();
                         double newX = x + Math.cos(radian) * speed * gameProfile.getDeltaTime();
                         double newY = y + Math.sin(radian) * speed * gameProfile.getDeltaTime();
                         if(newX < width && newY < height){
@@ -72,28 +70,79 @@ public class MoveActionStrategy implements GameActionStrategy {
             list = roomFFA.getGameProfiles();
         }
         if (list != null) {
-            for (GameProfile player : list) {
-                if (!player.equals(gameProfile)) {
-                    int x = player.getX() - gameProfile.getX();
-                    int y = player.getY() - gameProfile.getY();
-                    //  double myDirection = gameProfile.getDirection();
-                    if (x * x + y * y <= radius * radius) {
-                        Random random = new Random(System.currentTimeMillis());
-                        double val = random.nextGaussian();
-                        if (!player.isKilled() && !gameProfile.isKilled()) {
-                            if (val >= 0) {
-                                player.setIsKilled(true);
-                                gameProfile.setScore(gameProfile.getScore() + 1);
-                            } else {
-                                gameProfile.setIsKilled(true);
-                                player.setScore(player.getScore() + 1);
-                            }
+            list.stream().filter(enemy -> !enemy.equals(gameProfile)).forEach(enemy -> {
+                double xBetweenPlayers = enemy.getX() - gameProfile.getX();
+                double yBetweenPlayers = enemy.getY() - gameProfile.getY();
+                double myDirection = gameProfile.getDirection();
+                if (xBetweenPlayers * xBetweenPlayers + yBetweenPlayers * yBetweenPlayers <= radius * radius) {
+                    double myProection = Math.toDegrees(getDegree(gameProfile, myDirection, xBetweenPlayers, yBetweenPlayers));
+                    double enemyProection = Math.toDegrees(getDegree(gameProfile, myDirection, -xBetweenPlayers, -yBetweenPlayers));
+                    if (!enemy.isKilled() && !gameProfile.isKilled()) {
+                        boolean iWin = isIwin(myProection, enemyProection);
+                        if (iWin) {
+                            enemy.setIsKilled(true);
+                            gameProfile.setScore(gameProfile.getScore() + 1);
+                        } else {
+                            gameProfile.setIsKilled(true);
+                            enemy.setScore(enemy.getScore() + 1);
                         }
                     }
                 }
-            }
+            });
         }
     }
+    private boolean isIwin(double myProection, double enemyProection){
+        boolean enemyKilled;
+        if (myProection < 10 && enemyProection < 10) {
+            Random random = new Random(System.currentTimeMillis());
+            double val = random.nextGaussian();
+            enemyKilled = val >= 0;
+        }else enemyKilled = myProection < enemyProection;
+        return enemyKilled;
+    }
+    public double getDegree(GameProfile gameProfile,double direction,double vectorX,double vectorY){
+        double x = gameProfile.getX();
+        double y = gameProfile.getY();
+        double vector2X = (x+radius*Math.cos(Math.toRadians(direction)) - x);
+        double vector2Y = (y+radius*Math.sin(Math.toRadians(direction)) - y);
+        System.out.println("2y " + vector2Y + " 2x " + vector2X);
+        double t1 = Math.sqrt(vectorX*vectorX+vectorY*vectorY);
+        double t2 = Math.sqrt(vector2X * vector2X + vector2Y * vector2Y);
+        return Math.acos((vectorX * vector2X + vectorY * vector2Y) / (t1 * t2));
+    }
+    /*public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while(true){
+            double direction = scanner.nextDouble();
+            double enemyX = scanner.nextDouble();
+            double enemyY = scanner.nextDouble();
+            GameProfile enemt = new GameProfile();
+            enemt.setX(enemyX);
+            enemt.setY(enemyY);
+            GameProfile profile = new GameProfile();
+            profile.setX(100);
+            profile.setY(100);
+            double ttt = enemt.getX() - profile.getX();
+            double ttt2 = enemt.getY() - profile.getY();
 
+            System.out.println(Math.toDegrees(getDegree(profile, direction, ttt, ttt2)));
+            direction = scanner.nextDouble();
+            System.out.println(Math.toDegrees(getDegree(enemt,direction,-ttt,-ttt2)));
+            double x1=100,x2=150;
+            double y1=100,y2=100;
+            int radius = 20;
 
+            double vector1X = x2-x1;
+            double vector1Y = y2-y1;
+            double testangle = Math.atan(vector1Y/vector1X);
+            System.out.println(Math.toDegrees(testangle));
+            double vector2X = (x1+radius*Math.cos(Math.toRadians(direction)) - x1);
+            double vector2Y = (y1+radius*Math.sin(Math.toRadians(direction)) - y1);
+            System.out.println("2y " + vector2Y + " 2x " + vector2X);
+            double t1 = Math.sqrt(vector1X*vector1X+vector1Y*vector1Y);
+            double t2 = Math.sqrt(vector2X*vector2X+vector2Y*vector2Y);
+            double angle = Math.acos((vector1X * vector2X + vector1Y * vector2Y) /(t1*t2));
+            System.out.println(Math.toDegrees(angle));
+        }
+    }*/
 }

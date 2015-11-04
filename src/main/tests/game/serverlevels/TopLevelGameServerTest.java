@@ -3,18 +3,15 @@ package game.serverlevels;
 import game.rooms.Room;
 import game.rooms.RoomFFA;
 import game.serverlevels.top.TopLevelGameServer;
+import game.user.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
-import game.user.UserProfile;
 import service.account.AccountService;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyObject;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
