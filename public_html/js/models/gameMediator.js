@@ -165,6 +165,7 @@ define (['backbone'], function(Backbone) {
             if (this.get('socket')) {
                 this.get('socket').close();
             }
+            this.erasePlayers();
         }
     });
 });

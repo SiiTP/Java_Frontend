@@ -1,9 +1,9 @@
 package servlets.authorization;
 
+import game.user.UserProfile;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 import service.account.AccountService;
-import game.user.UserProfile;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

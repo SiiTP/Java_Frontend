@@ -1,11 +1,11 @@
 package servlets.game;
 
 import game.serverlevels.top.TopLevelGameServer;
+import game.sockets.creators.MainWebSocketCreator;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import resource.ResourceFactory;
 import resource.ServletResources;
-import game.sockets.creators.MainWebSocketCreator;
 
 import javax.servlet.annotation.WebServlet;
 

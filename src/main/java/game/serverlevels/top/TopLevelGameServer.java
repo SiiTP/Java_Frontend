@@ -2,11 +2,13 @@ package game.serverlevels.top;
 
 import game.rooms.Room;
 import game.rooms.RoomFFA;
+import game.user.UserProfile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import game.user.UserProfile;
+import org.json.JSONArray;
 import service.account.AccountService;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,8 +81,17 @@ public class TopLevelGameServer {
         this.rooms = rooms;
     }
 
-    public Map<String,Room> getRoomsList(){
-        return rooms;
+    @Nullable
+    public JSONArray getRoomsListJSON(){
+        JSONArray roomsJsonArray = null;
+        if(!rooms.isEmpty()) {
+            roomsJsonArray = new JSONArray();
+            Collection<Room> roomArray = rooms.values();
+            for (Room room : roomArray) {
+                roomsJsonArray.put(room.getJsonRoom());
+            }
+        }
+        return roomsJsonArray;
     }
     public boolean checkIfRoomExist(String roomname){
         return rooms.containsKey(roomname);

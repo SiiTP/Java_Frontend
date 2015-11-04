@@ -1,6 +1,5 @@
 package servlets.game;
 
-import game.rooms.Room;
 import game.serverlevels.top.TopLevelGameServer;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,8 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Map;
 
 /**
  * Created by ivan on 26.10.15.
@@ -29,14 +26,9 @@ public class GetRoomListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, Room> rooms = topLevelGameServer.getRoomsList();
+        JSONArray roomsJsonArray = topLevelGameServer.getRoomsListJSON();
         JSONObject object = new JSONObject();
-        JSONArray roomsJsonArray = new JSONArray();
-        if(!rooms.isEmpty()) {
-            Collection<Room> roomArray = rooms.values();
-            for (Room room : roomArray) {
-                roomsJsonArray.put(room.getJsonRoom());
-            }
+        if(roomsJsonArray != null){
             object.put("status", responseResources.getOk());
             object.put("rooms", roomsJsonArray);
         }else{

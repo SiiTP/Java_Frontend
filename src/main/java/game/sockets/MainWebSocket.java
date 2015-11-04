@@ -12,8 +12,6 @@ import resource.ResourceFactory;
 import resource.ResponseResources;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by ivan on 24.10.15.
