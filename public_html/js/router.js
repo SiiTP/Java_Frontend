@@ -12,8 +12,8 @@ define([
     'collections/scores',
     'models/rooms',
     'models/gameMediator',
-    'models/characters/myCharacter',
-    'models/characters/enemyCharacter',
+    'views/characters/myCharacter',
+    'views/characters/enemyCharacter',
     'constants'
 ], function (
     Backbone,
@@ -48,9 +48,9 @@ define([
     manager.add(roomsView);
     manager.add(fieldView);
     var gameMediator = new GameMediator({
+        user           : user,
         MyCharacter    : MyCharacter,
         EnemyCharacter : EnemyCharacter,
-        roomsView      : roomsView,
         constants      : constants,
         field          : fieldView
     });
@@ -59,13 +59,10 @@ define([
         routes: {
             'scoreboard': 'scoreboardAction',
             'game': 'gameAction',
-            'room': 'roomAction',
             'rooms': 'roomsAction',
             'login': 'loginAction',
-            'logout': 'logoutAction',
             'registration': 'registrationAction',
-            '': 'mainAction',
-            'default': 'defaultActions'
+            '': 'mainAction'
         },
         mainAction: function () {
             mainView.show();

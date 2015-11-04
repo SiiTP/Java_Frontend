@@ -1,3 +1,5 @@
 <fest:template xmlns:fest="http://fest.mail.ru">
+    <canvas class="field"> </canvas> <br/>
+    <button class="button field__button-exit">Exit</button>
 </fest:template>
 

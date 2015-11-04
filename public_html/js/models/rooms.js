@@ -8,7 +8,7 @@ define([
             this.set({'rooms': []}) ;
         },
         onCreate: function() {
-            console.log("---> create room");
+            console.log("<--- create room");
             this.set({'roomName' : $('#roomName').val()});
             this.set({'password' : $('#roomPassword').val()});
             $.ajax({
@@ -27,13 +27,13 @@ define([
             });
         },
         fetch: function() {
-            console.log("---> get room list");
+            console.log("<--- get room list");
             $.ajax({
                 type: "POST",
                 url: "/getRoomList",
                 context: this
             }).done(function(obj) {
-                console.log("<--- get room list");
+                console.log("---> get room list");
                 var answer = JSON.parse(obj);
                 console.log(answer);
                 if (answer.status == 200) {
@@ -44,7 +44,7 @@ define([
             });
         },
         onJoin: function(roomName) {
-            console.log("---> Join");
+            console.log("<--- Join");
             $.ajax({
                 type:'POST',
                 url: '/join',
@@ -52,10 +52,9 @@ define([
                 context: this
             }).done(function(obj) {
                 var answer = JSON.parse(obj);
-                console.log("<--- Join");
+                console.log("---> Join");
                 console.log(answer);
                 if (answer.status == 200) {
-                    this.trigger('joiningToRoom', answer);
                     location.href = '#game';
                 } else {
                     this.trigger('serverError', {'message': answer.message});

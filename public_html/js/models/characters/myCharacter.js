@@ -6,40 +6,35 @@ define([
     CharacterModel
 ){
 
-    var Model = CharacterModel.extend({
+    return CharacterModel.extend({
         mouseX: 0,
         mouseY: 0,
-        /*initialize: function() {
-            console.log("my character model initialize");
-        },*/
-        calculateAngle: function(x, y) {
-            var angle = Math.atan((this.posY-y)/(x-this.posX));
-            angle = angle * (180/Math.PI);
-            if (x < this.posX) {
+        calculateAngle: function (x, y) {
+            var angle = Math.atan((this.get('posY') - y) / (x - this.get('posX')));
+            angle = angle * (180 / Math.PI);
+            if (x < this.get('posX')) {
                 angle += 180;
             }
             angle = (angle + 360) % 360;
-            this.setAngle(angle);
+            this.set({'angle': angle});
             //console.log("angle : " + angle);
         },
-        setMouseCoordinate: function(x, y) {
+        setMouseCoordinate: function (x, y) {
             this.mouseX = x;
             this.mouseY = y;
         },
-        calculateDistanceToMouse: function(x, y) {
-            return Math.sqrt((this.posX - x)*(this.posX - x) + (this.posY - y)*(this.posY - y));
+        calculateDistanceToMouse: function (x, y) {
+            return Math.sqrt((this.get('posX') - x) * (this.get('posX') - x) + (this.get('posY') - y) * (this.get('posY') - y));
         },
-        myMove: function(dt) {
+        myMove: function (dt) {
             //console.log("mouseX : " + this.mouseX + "; mouseY : " + this.mouseY);
             //console.log("MYMOVE : X : " + this.posX + "; Y :  " + this.posY + "; Angle : " + this.angle);
-            if (this.calculateDistanceToMouse(this.mouseX, this.mouseY) > this.getRadius()) {
+            if (this.calculateDistanceToMouse(this.mouseX, this.mouseY) > this.get('radius')) {
+                this.calculateAngle(this.mouseX, this.mouseY);
                 this.move(dt);
+            } else {
+                this.set({'angle': -1})
             }
-        },
-        toJSON: function() {
-            return {'posX': this.getX(), 'posY': this.getY(), 'angle': this.getAngle()}
         }
     });
-
-    return Model;
 });

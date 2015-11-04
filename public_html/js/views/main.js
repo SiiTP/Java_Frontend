@@ -31,6 +31,8 @@ define([
             this.JQmsg = $('.container-game-btn__msg');
         },
         show: function () {
+            console.log("MAIN SHOW");
+            console.log(this.el);
             this.trigger('show');
             this.$el.show();
         },

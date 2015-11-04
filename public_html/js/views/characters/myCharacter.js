@@ -14,8 +14,8 @@ define([
             'mousemove': 'onMouseMove'
         },
         onMouseMove: function (event) {
-            var x = event.pageX - constants.X_OFFSET_TO_CANVAS;
-            var y = event.pageY - constants.Y_OFFSET_TO_CANVAS;
+            var x = event.pageX;
+            var y = event.pageY;
             this.model.calculateAngle(x, y);
             this.model.setMouseCoordinate(x, y);
             //console.log("mouse X : " + x + "; mouse Y : " + y);

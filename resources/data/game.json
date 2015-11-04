@@ -3,7 +3,7 @@
   "maxPlayers":10,
   "gameFieldWidth":800,
   "gameFieldHeight":600,
-  "maxRoomPlayingTimeInSec":10,
+  "maxRoomPlayingTimeInSec":600,
   "defaultWinScore":25,
   "defaultSpeed":200,
   "defaultPlayerRadius":20,

@@ -6,27 +6,26 @@ define([
 
     var View = Backbone.View.extend({
         tagName: 'canvas',
-        className: 'character',
         color: '#ff0',
         borderColor: '#002',
-        context: undefined,
-        initialize: function() {
-            console.log("character view initialize");
+        context: null,
+        canvas: null,
+        initialize: function(args) {
             document.getElementById('page').appendChild(this.el);
-            var canvas = this.el;
-            this.context = canvas.getContext('2d');
+            this.canvas = this.el;
+            this.canvas.width = args.width;
+            this.canvas.height = args.height;
+            this.context = this.canvas.getContext('2d');
         },
         draw: function() {
             this.clear();
-            //console.log("character draw");
-            var posX = this.model.getX();
-            var posY = this.model.getY();
-            var radius = this.model.getRadius();
+            var posX = this.model.get('posX');
+            var posY = this.model.get('posY');
+            var radius = this.model.get('radius');
             var color = this.color;
             var borderColor = this.borderColor;
-            var name = this.model.getName();
-            var score = this.model.getScore();
-
+            var name = this.model.get('name');
+            var score = this.model.get('score');
             this.context.beginPath();
             //тень____________________
             //context.shadowBlur = radius;
@@ -56,16 +55,17 @@ define([
         },
         clear: function() {
             this.context.beginPath();
-            var x = this.model.getX();
-            var y = this.model.getY();
-            var r = this.model.getRadius();
-            var s = this.model.getSpeed();
+            var x = this.model.get('posX');
+            var y = this.model.get('posY');
+            var r = this.model.get('radius');
+            var s = this.model.get('speed');
             //this.context.fillStyle = '#555';
             this.context.clearRect(x - r * 2, y - r * 2, 6 * r + 80, 6 * r);
         },
         show: function() {
-            this.el.width = constants.FIELD_WIDTH;
-            this.el.height = constants.FIELD_HEIGHT;
+            // TODO задать константы для размеров
+            this.el.width = 1000;
+            this.el.height = 700;
             this.$el.show();
         },
         hide: function() {
