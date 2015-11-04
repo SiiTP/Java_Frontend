@@ -4,6 +4,7 @@ import game.serverlevels.top.TopLevelGameServer;
 import game.user.UserProfile;
 import org.eclipse.jetty.server.Server;
 import org.hamcrest.core.StringEndsWith;
+import org.json.JSONArray;
 import org.junit.Before;
 import org.junit.Test;
 import service.account.AccountService;
@@ -102,11 +103,11 @@ public class AdminServletTest {
         AdminServlet adminServlet = new AdminServlet(server, topLevelGameServer);
         UserProfile profile = new UserProfile("test","test");
         doReturn(profile).when(accountService).getUserBySession(anyString());
-        topLevelGameServer.createRoom("test","testRoom",null);
+        topLevelGameServer.createRoom("test", "testRoom", null);
         when(req.getParameter("clear")).thenReturn("");
-        int roomSize = topLevelGameServer.getRoomsList().size();
+
         adminServlet.doGet(req, resp);
 
-        assertTrue(roomSize!=topLevelGameServer.getRoomsList().size());
+        assertTrue(topLevelGameServer.getRoomsListJSON() == null);
     }
 }

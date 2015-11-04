@@ -3,6 +3,7 @@ package servlets.game;
 import game.rooms.Room;
 import game.rooms.RoomFFA;
 import game.serverlevels.top.TopLevelGameServer;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
@@ -35,11 +36,12 @@ public class GetRoomListServletTest {
     private GetRoomListServlet roomServlet;
     private TopLevelGameServer topLevelGameServer;
     private ResponseResources responseResources;
+    private AccountService accountService;
     @Before
     public void setUp() throws IOException {
         responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
-        AccountService service = spy(new AccountService());
-        topLevelGameServer = spy(new TopLevelGameServer(service));
+        accountService = spy(new AccountService());
+        topLevelGameServer = spy(new TopLevelGameServer(accountService));
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
@@ -56,7 +58,10 @@ public class GetRoomListServletTest {
         Map<String,Room> rooms = new HashMap<>();
         Room room = new RoomFFA("test",new UserProfile("test","test"));
         rooms.put("testRoom",room);
-        when(topLevelGameServer.getRoomsList()).thenReturn(rooms);
+        UserProfile profile = new UserProfile("test","test");
+        doReturn(profile).when(accountService).getUserBySession(anyString());
+        topLevelGameServer.createRoom("test", "testRoom", null);
+
         roomServlet.doPost(request, response);
         JSONObject object = new JSONObject(stringWriter.toString());
         int i = object.optInt("status");
@@ -64,7 +69,6 @@ public class GetRoomListServletTest {
     }
     @Test
     public void testDoPostNoRooms() throws ServletException, JSONException, IOException {
-        when(topLevelGameServer.getRoomsList()).thenReturn(new HashMap<>());
         roomServlet.doPost(request, response);
         JSONObject object = new JSONObject(stringWriter.toString());
         int i = object.optInt("status");

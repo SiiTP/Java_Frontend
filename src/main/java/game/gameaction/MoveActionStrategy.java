@@ -66,7 +66,7 @@ public class MoveActionStrategy implements GameActionStrategy {
             }
         }
     }
-    private void checkForCollision(GameProfile gameProfile, Room room){
+  /*  private void checkForCollision(GameProfile gameProfile, Room room){
         List<GameProfile> list = null;
         if(room instanceof RoomFFA){
             RoomFFA roomFFA = (RoomFFA)room;
@@ -148,5 +148,5 @@ public class MoveActionStrategy implements GameActionStrategy {
     }
     private boolean isFourthQuadrant(double direction){
         return direction >= BOTTOM_DEGREE && direction <= RIGHT_DEGREE;
-    }
+    }*/
 }

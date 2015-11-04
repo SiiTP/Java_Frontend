@@ -29,14 +29,9 @@ public class GetRoomListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Map<String, Room> rooms = topLevelGameServer.getRoomsList();
+        JSONArray roomsJsonArray = topLevelGameServer.getRoomsListJSON();
         JSONObject object = new JSONObject();
-        JSONArray roomsJsonArray = new JSONArray();
-        if(!rooms.isEmpty()) {
-            Collection<Room> roomArray = rooms.values();
-            for (Room room : roomArray) {
-                roomsJsonArray.put(room.getJsonRoom());
-            }
+        if(roomsJsonArray != null){
             object.put("status", responseResources.getOk());
             object.put("rooms", roomsJsonArray);
         }else{
