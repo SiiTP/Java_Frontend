@@ -5,21 +5,20 @@ import game.rooms.Room;
 import game.rooms.RoomFFA;
 import game.serverlevels.top.TopLevelGameServer;
 import game.sockets.MainWebSocket;
-import org.json.JSONArray;
+import game.user.UserProfile;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import game.user.UserProfile;
 import resource.GameResources;
 import resource.ResourceFactory;
 import resource.ResponseResources;
 import service.account.AccountService;
 import test.RemoteEndpointStub;
-import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.util.Objects;
 
-import static org.mockito.Matchers.anyObject;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 

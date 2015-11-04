@@ -5,6 +5,7 @@ import game.gameaction.MoveActionStrategy;
 import game.rooms.Room;
 import game.serverlevels.top.TopLevelGameServer;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
