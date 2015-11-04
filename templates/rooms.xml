@@ -31,6 +31,7 @@
                 </div>
             </fest:otherwise>
         </fest:choose>
+        <button class="button rooms__button-refresh">Refresh</button>
         <div class="line line_blue"> </div>
         <div class="rooms__create">
             <div class="header-text rooms__create__header">Create new room</div>

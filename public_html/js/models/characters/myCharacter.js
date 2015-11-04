@@ -33,7 +33,7 @@ define([
                 this.calculateAngle(this.mouseX, this.mouseY);
                 this.move(dt);
             } else {
-                this.set({'angle': -1})
+                this.set({'angle': -1});
             }
         }
     });

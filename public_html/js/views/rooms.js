@@ -13,7 +13,8 @@ define([
         JQ_msg: null,
         events: {
             'click .rooms__lines__line__button': 'onConnect',
-            'click .rooms__create__button': 'onCreateRoom'
+            'click .rooms__create__button': 'onCreateRoom',
+            'click .rooms__button-refresh': 'onRefresh'
         },
         initialize: function () {
             this.model.on('change', this.render.bind(this));
@@ -33,6 +34,9 @@ define([
         onCreateRoom: function(event) {
             event.preventDefault();
             this.model.onCreate();
+        },
+        onRefresh: function() {
+            this.model.fetch();
         },
         show: function() {
             this.model.fetch();
