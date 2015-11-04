@@ -105,6 +105,7 @@ define (['backbone'], function(Backbone) {
                 }
             }, this);
             this.set({'enemyPlayers': players});
+            debugger;
         },
         erasePlayers: function() {
             if (this.get('myPlayer') != null) {
