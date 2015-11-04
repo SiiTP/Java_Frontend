@@ -1,15 +1,15 @@
 package game.rooms;
 
+import game.user.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
 import resource.GameResources;
 import resource.ResourceFactory;
-import game.user.UserProfile;
 
 import java.time.Instant;
 import java.util.Objects;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by ivan on 26.10.15.
