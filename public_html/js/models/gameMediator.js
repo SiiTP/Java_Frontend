@@ -26,8 +26,8 @@ define (['backbone'], function(Backbone) {
                 this.beginningGameWaiting();
             }.bind(this);
             socket.onmessage = function(event) {
-                console.log("___> get message");
-                console.log(event.data);
+                //console.log("___> get message");
+                //console.log(event.data);
                 var answer = JSON.parse(event.data);
 
                 if (answer.status == 301) {
@@ -36,7 +36,7 @@ define (['backbone'], function(Backbone) {
                 }
 
                 if (answer.status == 200) {
-                    console.log("___@ game in proccess");
+                    //console.log("___@ game in proccess");
 
                     this.erasePlayers();
                     this.parsePlayers(answer.players);
@@ -59,15 +59,14 @@ define (['backbone'], function(Backbone) {
             this.set({'socket': socket});
         },
         beginningGameWaiting: function() {
-            this.set({'waitingInterval': setInterval(this.sendMessageWaiting.bind(this), 3000)});
+            this.set({'waitingInterval': setInterval(this.sendMessageWaiting.bind(this), 200)});
         },
         sendMessageWaiting: function() {
-            console.log("<___ send message waiting");
+            //console.log("<___ send message waiting");
             var data = {'direction': -1};
             if (this.get('myPlayer') != null) {
                 data = {'direction': this.get('myPlayer').model.get('angle')};
             }
-            console.log(data);
             this.get('socket').send(JSON.stringify(data));
         },
         parsePlayers: function(answerPlayers) {
