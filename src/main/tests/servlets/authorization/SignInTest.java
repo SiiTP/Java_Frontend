@@ -49,6 +49,8 @@ public class SignInTest {
     public void testDoPostSignInAlreadyAuth() throws ServletException, IOException {
         when(service.isAuthorized(anyString())).thenReturn(true);
         when(service.getUserBySession(anyString())).thenReturn(new UserProfile("abc","abc"));
+        when(request.getParameter("username")).thenReturn(anyString());
+        when(request.getParameter("password")).thenReturn(anyString());
         signIn.doPost(request,response);
         assertTrue(stringWriter.toString().contains("false"));
     }

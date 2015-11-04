@@ -46,6 +46,8 @@ public class SignUpTest {
     @Test
     public void testDoPostIsAvailable() throws ServletException, IOException {
         when(service.isAvailableName(anyString())).thenReturn(false);
+        when(request.getParameter("username")).thenReturn(anyString());
+        when(request.getParameter("password")).thenReturn(anyString());
 
         signUp.doPost(request,response);
 
@@ -66,7 +68,7 @@ public class SignUpTest {
     public void testDoPostNullPass() throws ServletException, IOException {
         setCheckSetting(null);
 
-        assert stringWriter.toString().contains("false");
+        assert stringWriter.toString().isEmpty();
     }
     @Test
     public void testDoPostSuccess() throws ServletException, IOException {

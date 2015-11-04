@@ -1,10 +1,10 @@
 package game.sockets.creators;
 
 import game.serverlevels.top.TopLevelGameServer;
+import game.sockets.MainWebSocket;
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeRequest;
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeResponse;
 import org.eclipse.jetty.websocket.servlet.WebSocketCreator;
-import game.sockets.MainWebSocket;
 
 import javax.servlet.http.HttpSession;
 

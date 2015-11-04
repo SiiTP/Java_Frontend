@@ -1,8 +1,8 @@
 package game.rooms;
 
+import game.user.UserProfile;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import game.user.UserProfile;
 
 /**
  * Created by ivan on 14.10.15.

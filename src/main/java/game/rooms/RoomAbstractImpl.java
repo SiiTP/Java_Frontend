@@ -1,8 +1,8 @@
 package game.rooms;
 
+import game.user.UserProfile;
 import resource.GameResources;
 import resource.ResourceFactory;
-import game.user.UserProfile;
 
 import java.time.Instant;
 

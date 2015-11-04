@@ -1,12 +1,12 @@
 package game.rooms;
 
+import game.user.GameProfile;
+import game.user.UserProfile;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import resource.GameResources;
 import resource.ResourceFactory;
-import game.user.GameProfile;
-import game.user.UserProfile;
 
 import java.time.Instant;
 import java.util.ArrayList;

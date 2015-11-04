@@ -2,9 +2,9 @@ package game.serverlevels.top;
 
 import game.rooms.Room;
 import game.rooms.RoomFFA;
+import game.user.UserProfile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import game.user.UserProfile;
 import org.json.JSONArray;
 import service.account.AccountService;
 
