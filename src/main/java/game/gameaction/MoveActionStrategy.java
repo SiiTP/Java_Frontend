@@ -55,7 +55,7 @@ public class MoveActionStrategy implements GameActionStrategy {
                                 gameProfile.setY((int)newY);
                             }
                         }
-                        checkForCollision(gameProfile, room);
+                     //   checkForCollision(gameProfile, room);
 
                     }
                     gameProfile.setDirection(direction);
@@ -105,7 +105,7 @@ public class MoveActionStrategy implements GameActionStrategy {
         double y = gameProfile.getY();
         double vector2X = (x+radius*Math.cos(Math.toRadians(direction)) - x);
         double vector2Y = (y+radius*Math.sin(Math.toRadians(direction)) - y);
-        System.out.println("2y " + vector2Y + " 2x " + vector2X);
+      //  System.out.println("2y " + vector2Y + " 2x " + vector2X);
         double t1 = Math.sqrt(vectorX*vectorX+vectorY*vectorY);
         double t2 = Math.sqrt(vector2X * vector2X + vector2Y * vector2Y);
         return Math.acos((vectorX * vector2X + vectorY * vector2Y) / (t1 * t2));
