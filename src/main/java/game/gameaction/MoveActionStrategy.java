@@ -11,6 +11,7 @@ import resource.GameResources;
 import resource.ResourceFactory;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -47,10 +48,14 @@ public class MoveActionStrategy implements GameActionStrategy {
                         double radian = Math.toRadians(direction);
                         double x = gameProfile.getX();
                         double y = gameProfile.getY();
-                        double newX = x + Math.cos(radian) * speed * gameProfile.getDeltaTime();
-                        double newY = y + Math.sin(radian) * speed * gameProfile.getDeltaTime();
+                        double delta = gameProfile.getDeltaTime();
+                        double newX = x + Math.cos(radian) * speed * delta;
+                        double newY = y + Math.sin(radian) * speed * delta;
                         if(newX < width && newY < height){
                             if(newX > 0 && newY > 0) {
+                                if(Objects.equals(profile.getUsername(), "admin")) {
+                                    System.out.println("old y " + y +" old x " + x + "X " + newX + " Y " + newY + " delta " +gameProfile.getDeltaTime());
+                                }
                                 gameProfile.setX((int)newX);
                                 gameProfile.setY((int)newY);
                             }
