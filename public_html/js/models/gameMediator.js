@@ -67,6 +67,7 @@ define (['backbone'], function(Backbone) {
             if (this.get('myPlayer') != null) {
                 data = {'direction': this.get('myPlayer').model.get('angle')};
             }
+            console.log("direction : " + data.direction);
             this.get('socket').send(JSON.stringify(data));
         },
         parsePlayers: function(answerPlayers) {
@@ -104,7 +105,6 @@ define (['backbone'], function(Backbone) {
                 }
             }, this);
             this.set({'enemyPlayers': players});
-            debugger;
         },
         erasePlayers: function() {
             if (this.get('myPlayer') != null) {
