@@ -53,9 +53,9 @@ public class MoveActionStrategy implements GameActionStrategy {
                         double newY = y - Math.sin(radian) * speed * delta;
                         if(newX < width && newY < height){
                             if(newX > 0 && newY > 0) {
-                                if(Objects.equals(profile.getUsername(), "admin")) {
+                                /*if(Objects.equals(profile.getUsername(), "admin")) {
                                     System.out.println("old y " + y +" old x " + x + "X " + newX + " Y " + newY + " delta " +gameProfile.getDeltaTime() + "radian " + direction);
-                                }
+                                }*/
                                 gameProfile.setX((int)newX);
                                 gameProfile.setY((int)newY);
                             }
