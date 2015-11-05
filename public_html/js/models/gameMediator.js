@@ -26,8 +26,8 @@ define (['backbone'], function(Backbone) {
                 this.beginningGameWaiting();
             }.bind(this);
             socket.onmessage = function(event) {
-                console.log("___> get message");
-                console.log(event.data);
+                //console.log("___> get message");
+                //console.log(event.data);
                 var answer = JSON.parse(event.data);
 
                 if (answer.status == 301) {
@@ -58,7 +58,7 @@ define (['backbone'], function(Backbone) {
             this.set({'socket': socket});
         },
         beginningGameWaiting: function() {
-            this.set({'waitingInterval': setInterval(this.sendMessageWaiting.bind(this), 200)});
+            this.set({'waitingInterval': setInterval(this.sendMessageWaiting.bind(this), 50)});
         },
         sendMessageWaiting: function() {
             //console.log("<___ send message waiting");
@@ -66,7 +66,7 @@ define (['backbone'], function(Backbone) {
             if (this.get('myPlayer') != null) {
                 data = {'direction': this.get('myPlayer').model.get('angle')};
             }
-            console.log("direction : " + data.direction);
+            //console.log("direction : " + data.direction);
             this.get('socket').send(JSON.stringify(data));
         },
         parsePlayers: function(answerPlayers) {
@@ -145,6 +145,9 @@ define (['backbone'], function(Backbone) {
         loop: function() {
             this.get('myPlayer').model.myMove(0.02);
             this.get('myPlayer').draw();
+            _.each(this.get('enemyPlayers'), function(enemy) {
+                enemy.draw();
+            });
             if (this.get('gameBegin')) {
                 requestAnimationFrame(this.loop.bind(this));
             }
