@@ -28,13 +28,14 @@ define([
         },
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
-            this.JQmsg = $('.container-game-btn__msg');
+            this.JQmsg = $('.container-game-btn__msg').first();
         },
         show: function () {
             console.log("MAIN SHOW");
             console.log(this.el);
             this.trigger('show');
             this.$el.show();
+            this.render(); //TODO убрать
         },
         hide: function () {
             this.$el.hide();
