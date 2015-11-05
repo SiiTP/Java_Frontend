@@ -26,8 +26,8 @@ define (['backbone'], function(Backbone) {
                 this.beginningGameWaiting();
             }.bind(this);
             socket.onmessage = function(event) {
-                //console.log("___> get message");
-                //console.log(event.data);
+                console.log("___> get message");
+                console.log(event.data);
                 var answer = JSON.parse(event.data);
 
                 if (answer.status == 301) {
@@ -40,7 +40,6 @@ define (['backbone'], function(Backbone) {
 
                     this.erasePlayers();
                     this.parsePlayers(answer.players);
-
                     if (!this.get('gameBegin')) {
                         this.startGame();
                     }
