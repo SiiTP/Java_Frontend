@@ -40,7 +40,6 @@ define (['backbone'], function(Backbone) {
 
                     this.erasePlayers();
                     this.parsePlayers(answer.players);
-
                     if (!this.get('gameBegin')) {
                         this.startGame();
                     }
@@ -59,7 +58,7 @@ define (['backbone'], function(Backbone) {
             this.set({'socket': socket});
         },
         beginningGameWaiting: function() {
-            this.set({'waitingInterval': setInterval(this.sendMessageWaiting.bind(this), 200)});
+            this.set({'waitingInterval': setInterval(this.sendMessageWaiting.bind(this), 50)});
         },
         sendMessageWaiting: function() {
             //console.log("<___ send message waiting");
@@ -67,7 +66,7 @@ define (['backbone'], function(Backbone) {
             if (this.get('myPlayer') != null) {
                 data = {'direction': this.get('myPlayer').model.get('angle')};
             }
-            console.log("direction : " + data.direction);
+            //console.log("direction : " + data.direction);
             this.get('socket').send(JSON.stringify(data));
         },
         parsePlayers: function(answerPlayers) {

@@ -50,7 +50,7 @@ public class MoveActionStrategy implements GameActionStrategy {
                         double y = gameProfile.getY();
                         double delta = gameProfile.getDeltaTime();
                         double newX = x + Math.cos(radian) * speed * delta;
-                        double newY = y + Math.sin(radian) * speed * delta;
+                        double newY = y - Math.sin(radian) * speed * delta;
                         if(newX < width && newY < height){
                             if(newX > 0 && newY > 0) {
                                 if(Objects.equals(profile.getUsername(), "admin")) {
