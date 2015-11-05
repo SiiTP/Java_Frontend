@@ -16,8 +16,8 @@ import java.io.IOException;
  * Created by ivan on 26.10.15.
  */
 public class GetRoomListServlet extends HttpServlet {
-    private TopLevelGameServer topLevelGameServer;
-    private ResponseResources responseResources;
+    private final TopLevelGameServer topLevelGameServer;
+    private final ResponseResources responseResources;
 
     public GetRoomListServlet(TopLevelGameServer topLevelGameServer) {
         responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");

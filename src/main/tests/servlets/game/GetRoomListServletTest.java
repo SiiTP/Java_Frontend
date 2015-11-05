@@ -1,7 +1,5 @@
 package servlets.game;
 
-import game.rooms.Room;
-import game.rooms.RoomFFA;
 import game.serverlevels.top.TopLevelGameServer;
 import game.user.UserProfile;
 import org.json.JSONException;
@@ -19,8 +17,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.*;
@@ -54,9 +50,6 @@ public class GetRoomListServletTest {
     }
     @Test
     public void testDoPost() throws ServletException, JSONException, IOException {
-        Map<String,Room> rooms = new HashMap<>();
-        Room room = new RoomFFA("test",new UserProfile("test","test"));
-        rooms.put("testRoom",room);
         UserProfile profile = new UserProfile("test","test");
         doReturn(profile).when(accountService).getUserBySession(anyString());
         topLevelGameServer.createRoom("test", "testRoom", null);

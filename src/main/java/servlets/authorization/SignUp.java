@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 
 public class SignUp extends HttpServlet {
     @NotNull
-    private AccountService accountService;
+    private final AccountService accountService;
 
     public SignUp(@NotNull AccountService service) {
         this.accountService = service;
@@ -27,7 +27,7 @@ public class SignUp extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         JSONObject responseJSON = new JSONObject();
         if (username != null && password != null) {
-            if (!accountService.checkData(username, password)) {
+            if (accountService.isDataWrong(username, password)) {
                 responseJSON.put("success", false);
                 responseJSON.put("message", "wrong data");
             } else {

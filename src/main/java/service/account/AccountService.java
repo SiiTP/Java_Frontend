@@ -16,9 +16,9 @@ import java.util.Map;
 
 public class AccountService{
     @NotNull
-    private Map<String, UserProfile> users = new HashMap<>();
+    private final Map<String, UserProfile> users = new HashMap<>();
     @NotNull
-    private Map<String,UserProfile> sessions = new HashMap<>();
+    private final Map<String,UserProfile> sessions = new HashMap<>();
 
 
 
@@ -30,11 +30,11 @@ public class AccountService{
         return !users.containsKey(name);
     }
 
-    public boolean checkData(String username,String password){
+    public boolean isDataWrong(String username, String password){
         ServletResources servletResources =(ServletResources) ResourceFactory.getResource("resources/data/servlet.json");
         String regex = servletResources.getPasswordRegexPattern();
         int passwordLength = servletResources.getMinPasswordLength();
-        return username.matches(regex) && password.matches(regex) && password.length()>=passwordLength;
+        return !(username.matches(regex) && password.matches(regex) && password.length()>=passwordLength);
     }
     public boolean authtorize(@Nullable String username,@Nullable String password,@NotNull String session){
         UserProfile profile = getUser(username);

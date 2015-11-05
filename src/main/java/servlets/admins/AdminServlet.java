@@ -20,11 +20,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class AdminServlet extends HttpServlet {
     @NotNull
-    private Server server;
+    private final Server server;
     @NotNull
-    private AccountService accountService;
+    private final AccountService accountService;
     @NotNull
-    private TopLevelGameServer topLevelGameServer;
+    private final TopLevelGameServer topLevelGameServer;
     public AdminServlet(@NotNull Server serv,@NotNull TopLevelGameServer topLevelGameServer) {
         this.server = serv;
         this.accountService = topLevelGameServer.getAccountService();
@@ -40,7 +40,7 @@ public class AdminServlet extends HttpServlet {
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType("text/html; charset=UTF-8");
         PrintWriter writer = resp.getWriter();
-        if (shutdown!= null && !shutdown.isEmpty()) {
+        if (shutdown!= null) {
             try {
                 int shut = Integer.parseInt(shutdown);
                 writer.println("выключение сервера через " + shut + " ms");

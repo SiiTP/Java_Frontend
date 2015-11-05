@@ -5,7 +5,6 @@ import game.gameaction.MoveActionStrategy;
 import game.rooms.Room;
 import game.serverlevels.top.TopLevelGameServer;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -17,11 +16,11 @@ import java.io.IOException;
 /**
  * Created by ivan on 24.10.15.
  */
-public class MainWebSocket extends WebSocketAdapter implements GameSocket {
-    private TopLevelGameServer topLevelGameServer;
-    private String httpSession;
-    private GameActionStrategy gameStrategy;
-    private ResponseResources responseResources;
+public class MainWebSocket extends WebSocketAdapter {
+    private final TopLevelGameServer topLevelGameServer;
+    private final String httpSession;
+    private final GameActionStrategy gameStrategy;
+    private final ResponseResources responseResources;
     public MainWebSocket(String httpSession,TopLevelGameServer topLevelGameServer) {
         responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
         this.topLevelGameServer = topLevelGameServer;
@@ -49,13 +48,11 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
             isOkPlayer = topLevelGameServer.isCorrectPlayerInGame(httpSession);
         }
         if(isOkPlayer){
-            processPlayerMessage(data,gameStrategy);
+            processPlayerMessage(data);
         }
     }
 
-
-    @Override
-    public void processPlayerMessage(JSONObject message,GameActionStrategy strategy) {
+    public void processPlayerMessage(JSONObject message) {
         boolean isOkGame = topLevelGameServer.isGameReady(httpSession);
         JSONObject object = new JSONObject();
         if(isOkGame) {

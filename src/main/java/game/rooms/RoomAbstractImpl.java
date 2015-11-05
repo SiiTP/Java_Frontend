@@ -1,6 +1,5 @@
 package game.rooms;
 
-import game.user.UserProfile;
 import resource.GameResources;
 import resource.ResourceFactory;
 
@@ -11,26 +10,22 @@ import java.time.Instant;
  */
 public abstract class RoomAbstractImpl implements Room  {
     private String password;
-    private String roomName;
-    private UserProfile creatorUser;
+    private final String roomName;
     private Instant startTime;
     private Instant finishTime;
     private Integer playersLimit;
-    private Integer scoreLimit;
-    public RoomAbstractImpl(String roomName, UserProfile creatorUser) {
+    private final Integer scoreLimit;
+    public RoomAbstractImpl(String roomName) {
         GameResources gameResources =(GameResources) ResourceFactory.getResource("resources/data/game.json");
         this.roomName = roomName;
-        this.creatorUser = creatorUser;
         playersLimit = gameResources.getMaxPlayers();
         scoreLimit = gameResources.getDefaultWinScore();
     }
-    public RoomAbstractImpl(String roomName, String roomPassword, UserProfile creator) {
-        this(roomName,creator);
+    public RoomAbstractImpl(String roomName, String roomPassword) {
+        this(roomName);
         this.password = roomPassword;
     }
 
-
-    @Override
     public int getPlayersLimit() {
         return playersLimit;
     }
@@ -44,9 +39,6 @@ public abstract class RoomAbstractImpl implements Room  {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Override
     public boolean isRoomHasPass() {
@@ -60,6 +52,7 @@ public abstract class RoomAbstractImpl implements Room  {
         return finishTime;
     }
 
+    @Override
     public String getRoomName() {
         return roomName;
     }
@@ -76,7 +69,4 @@ public abstract class RoomAbstractImpl implements Room  {
         this.finishTime = finishTime;
     }
 
-    public UserProfile getCreatorUser() {
-        return creatorUser;
-    }
 }

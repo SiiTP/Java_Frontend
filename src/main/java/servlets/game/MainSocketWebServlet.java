@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebServlet;
 @WebServlet
 public class MainSocketWebServlet extends WebSocketServlet {
     private final int idleTime;
-    private TopLevelGameServer topLevelGameServer;
+    private final TopLevelGameServer topLevelGameServer;
     public MainSocketWebServlet(TopLevelGameServer topLevelGameServer) {
         this.topLevelGameServer = topLevelGameServer;
         ServletResources servletResources =(ServletResources) ResourceFactory.getResource("resources/data/servlet.json");

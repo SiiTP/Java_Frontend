@@ -14,7 +14,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import static junit.framework.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
@@ -54,14 +53,14 @@ public class SignInTest {
     }
     @Test
     public void testDoPostSignInLoginSuccess() throws ServletException, IOException {
-        checkSignIn(false,true);
+        checkSignIn(true);
     }
     @Test
     public void testDoPostSignInLoginFail() throws ServletException, IOException {
-        checkSignIn(false,false);
+        checkSignIn(false);
     }
-    private void checkSignIn(boolean isAuth, boolean auth) throws ServletException, IOException {
-        when(service.isAuthorized(anyString())).thenReturn(isAuth);
+    private void checkSignIn(boolean auth) throws ServletException, IOException {
+        when(service.isAuthorized(anyString())).thenReturn(false);
         when(service.authtorize(anyString(), anyString(), anyString())).thenReturn(auth);
         when(request.getParameter("username")).thenReturn("aaaa");
         when(request.getParameter("password")).thenReturn("aaaa");

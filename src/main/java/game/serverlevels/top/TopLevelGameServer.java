@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class TopLevelGameServer {
     private Map<String,Room> rooms;
-    private AccountService accountService;
+    private final AccountService accountService;
 
     public TopLevelGameServer(AccountService accountService) {
         rooms = new HashMap<>();
@@ -51,9 +51,7 @@ public class TopLevelGameServer {
     public UserProfile getPlayerBySession(String session){
         return accountService.getUserBySession(session);
     }
-    public Room getRoomByName(String roomname){
-        return rooms.get(roomname);
-    }
+
     @Nullable
     public Room getPlayerRoomBySession(String session){
         UserProfile userProfile = getPlayerBySession(session);
@@ -103,9 +101,9 @@ public class TopLevelGameServer {
             UserProfile profile = accountService.getUserBySession(session);
             if(profile!= null && profile.getCurrentroom() == null) {
                 if (password == null || password.isEmpty()) {
-                    room = new RoomFFA(roomname, profile);
+                    room = new RoomFFA(roomname);
                 } else {
-                    room = new RoomFFA(roomname, password, profile);
+                    room = new RoomFFA(roomname, password);
                 }
                 room.addUser(profile);
 

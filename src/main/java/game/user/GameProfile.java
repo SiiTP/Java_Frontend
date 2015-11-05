@@ -17,7 +17,6 @@ public class GameProfile {
     private double direction;
     private Instant dt;
     private boolean isKilled;
-    private Instant killTime;
     public GameProfile() {
         Random random = new Random(6);
         GameResources gameResources =(GameResources) ResourceFactory.getResource("resources/data/game.json");
@@ -89,7 +88,14 @@ public class GameProfile {
 
     @Override
     public boolean equals(Object obj) {
-        GameProfile profile = (GameProfile)obj;
-        return x == profile.x && y == profile.y && score == profile.score;
+        if(obj instanceof GameProfile) {
+            GameProfile profile = (GameProfile) obj;
+            return x == profile.x && y == profile.y && score == profile.score;
+        }
+        return false;
+    }
+    @Override
+    public int hashCode() {
+        return Double.hashCode(x)+Double.hashCode(y);
     }
 }

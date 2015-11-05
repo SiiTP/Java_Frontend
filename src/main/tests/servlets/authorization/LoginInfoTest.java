@@ -14,7 +14,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import static junit.framework.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**

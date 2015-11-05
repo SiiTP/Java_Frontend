@@ -16,8 +16,8 @@ import java.io.IOException;
  * Created by ivan on 02.10.15.
  */
 public class JoinGame extends HttpServlet {
-    private TopLevelGameServer gameServer;
-    private ResponseResources responseResources;
+    private final TopLevelGameServer gameServer;
+    private final ResponseResources responseResources;
     public JoinGame(TopLevelGameServer gameServer) {
         responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
         this.gameServer = gameServer;

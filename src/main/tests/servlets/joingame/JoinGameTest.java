@@ -7,6 +7,7 @@ import org.junit.Test;
 import resource.ResourceFactory;
 import resource.ResponseResources;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -46,7 +47,7 @@ public class JoinGameTest {
         joinGame = new JoinGame(gameServer);
     }
     @Test
-    public void testDoPostNoAuth() throws Exception {
+    public void testDoPostNoAuth() throws ServletException, IOException {
         when(gameServer.checkIfRoomExist(anyString())).thenReturn(true);
         when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(false);
 
@@ -56,7 +57,7 @@ public class JoinGameTest {
 
     }
     @Test
-    public void testDoPostWrongUserOrPass() throws Exception {
+    public void testDoPostWrongUserOrPass() throws ServletException, IOException {
         when(gameServer.checkIfRoomExist(anyString())).thenReturn(true);
         when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(true);
         when(gameServer.joinRoom(anyString(), anyString(),anyString())).thenReturn(null);
@@ -66,7 +67,7 @@ public class JoinGameTest {
         assertTrue(stringWriter.toString().contains(Integer.toString(responseResources.getWrongUsernameOrPassword())));
     }
     @Test
-    public void testDoPostSuccess() throws Exception {
+    public void testDoPostSuccess() throws ServletException, IOException {
         when(gameServer.checkIfRoomExist(anyString())).thenReturn(true);
         when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(true);
         when(gameServer.joinRoom(anyString(), anyString(),anyString())).thenReturn(mock(Room.class));

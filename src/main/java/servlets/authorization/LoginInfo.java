@@ -18,7 +18,7 @@ import java.io.PrintWriter;
  */
 public class LoginInfo extends HttpServlet {
     @NotNull
-    private AccountService accountService;
+    private final AccountService accountService;
 
     public LoginInfo(@NotNull AccountService service) {
         this.accountService = service;

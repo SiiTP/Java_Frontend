@@ -18,7 +18,7 @@ public class ResourceLoader {
 
     public void loadResources(Map<String,Resource> map) {
 
-        ArrayList<JSONObject> configObjects = loadJsonConfig("data");
+        ArrayList<JSONObject> configObjects = loadJsonConfig();
         if(configObjects != null) {
             for (JSONObject configFile : configObjects) {
                 Object object = constructFromName(configFile.getString("class"));
@@ -40,8 +40,8 @@ public class ResourceLoader {
         }
 
     }
-    private Queue<File> getConfigFiles(String source){
-        File file = new File("resources/"+source);
+    private Queue<File> getConfigFiles(){
+        File file = new File("resources/data");
         Queue<File> files = new LinkedList<>();
         File[] filesArray = file.listFiles();
         if(filesArray != null) {
@@ -60,9 +60,9 @@ public class ResourceLoader {
         }
         return files;
     }
-    private ArrayList<JSONObject> loadJsonConfig(String source) {
+    private ArrayList<JSONObject> loadJsonConfig() {
         ArrayList<JSONObject> configList = new ArrayList<>();
-        for(File f:getConfigFiles(source)) {
+        for(File f:getConfigFiles()) {
             StringBuilder builder = new StringBuilder();
             try(BufferedReader reader = new BufferedReader(new FileReader(f))) {
                 String app;

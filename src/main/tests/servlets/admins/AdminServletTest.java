@@ -44,6 +44,11 @@ public class AdminServletTest {
         AdminServlet adminServlet = new AdminServlet(server, topLevelGameServer);
         when(req.getParameter("shutdown")).thenReturn("vdbdfb");
         adminServlet.doGet(req, resp);
+        assertTrue(stringWriter.toString().isEmpty());
+        stringWriter.getBuffer().setLength(0);
+        when(req.getParameter("shutdown")).thenReturn("");
+        adminServlet.doGet(req, resp);
+        assertTrue(stringWriter.toString().isEmpty());
     }
     @Test
     public void testDoGetStop() throws ServletException, IOException {

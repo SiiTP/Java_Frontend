@@ -17,6 +17,7 @@ import java.io.PrintWriter;
  */
 public class LogOut extends HttpServlet {
     @NotNull
+    final
     AccountService accountService;
 
     public LogOut(@NotNull AccountService service) {

@@ -16,8 +16,8 @@ import java.io.IOException;
  * Created by ivan on 02.10.15.
  */
 public class CreateGame extends HttpServlet {
-    private TopLevelGameServer topLevelGameServer;
-    private ResponseResources responseResources;
+    private final TopLevelGameServer topLevelGameServer;
+    private final ResponseResources responseResources;
     public CreateGame(TopLevelGameServer topLevelGameServer) {
         responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
         this.topLevelGameServer = topLevelGameServer;

@@ -19,7 +19,7 @@ public class RoomFFATest {
     private int scoreLimit;
     @Before
     public void setup(){
-        roomFFA = new RoomFFA("room",new UserProfile("aaaa","bbbb"));
+        roomFFA = new RoomFFA("room");
         GameResources gameResources =(GameResources) ResourceFactory.getResource("resources/data/game.json");
         scoreLimit = gameResources.getDefaultWinScore();
     }
@@ -90,7 +90,7 @@ public class RoomFFATest {
         assertTrue(roomFFA.checkUser(profile));
         assertTrue(!roomFFA.checkUser(profile1));
     }
-
+    @Test
     public void testAddUser()  {
         roomFFA.setPlayersLimit(1);
         UserProfile profile = new UserProfile("aaad","bbbd");
