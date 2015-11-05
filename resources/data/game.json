@@ -1,8 +1,8 @@
 {
 
   "maxPlayers":10,
-  "gameFieldWidth":800,
-  "gameFieldHeight":600,
+  "gameFieldWidth":1000,
+  "gameFieldHeight":700,
   "maxRoomPlayingTimeInSec":600,
   "defaultWinScore":25,
   "defaultSpeed":200,

@@ -29,8 +29,8 @@ public class GameProfile {
     public JSONObject getJSON(){
         JSONObject object = new JSONObject();
         object.put("posX",x);
-        object.put("posY",x);
-        object.put("score",x);
+        object.put("posY",y);
+        object.put("score",score);
         object.put("direction",direction);
         return object;
     }
