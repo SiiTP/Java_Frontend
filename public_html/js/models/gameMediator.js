@@ -20,7 +20,7 @@ define (['backbone'], function(Backbone) {
             this.get('field').on('exit', this.exit.bind(this));
         },
         initializeSocket: function() {
-            var socket = new WebSocket("ws://localhost:8000/gameplay");
+            var socket = new WebSocket("ws://g14.javaprojects.tp-dev.ru/gameplay");//todo localhost в константы
             socket.onopen = function(event) {
                 console.log("____ open socket");
                 this.beginningGameWaiting();
