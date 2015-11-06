@@ -50,7 +50,7 @@ public class AccountService{
         if(isOk){
             addSession(session, profile);
             Marker marker = new MarkerManager.Log4jMarker("LOGIN");
-            logger.info(marker,"user " + username + " with session " + session + " authorized(login)");
+            logger.info(marker,"user " + username + " with session " + session);
         }
         return isOk;
     }
@@ -58,7 +58,7 @@ public class AccountService{
         String userName = userProfile.getUsername();
         if (!users.containsKey(userName)) {
             Marker marker = new MarkerManager.Log4jMarker("REGISTER");
-            logger.info(marker,"user with name " + userName +" has been successfully registered");
+            logger.info(marker,"user name " + userName);
             users.put(userName, userProfile);
         }
     }
@@ -85,7 +85,7 @@ public class AccountService{
     public void deleteSession(String sess) {
         if(sessions.containsKey(sess)) {
             Marker marker = new MarkerManager.Log4jMarker("LOGOUT");
-            logger.info(marker,"user with session " + sess +" and name "+sessions.get(sess).getUsername()+ " log out");
+            logger.info(marker,"user with session " + sess +" and name "+sessions.get(sess).getUsername());
             sessions.remove(sess);
 
         }
