@@ -147,7 +147,7 @@ public class GameServer {
                 logger.info("player " + profile.getUsername() + " kicked from the room " + room.getRoomName());
                 if(room.getPlayersCount()==0){
                     rooms.remove(room.getRoomName());
-                    logger.info("player " +profile.getUsername() + " kicked from the room " + room.getRoomName());
+                    logger.warn("room " +room.getRoomName() + " deleted from room list");
                 }
             }
         }
