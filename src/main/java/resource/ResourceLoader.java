@@ -45,7 +45,7 @@ public class ResourceLoader {
         }
     }
     private Queue<File> getConfigFiles(){
-        String source = "resources/data";
+        String source = "src/main/resources/data";
         logger.info("start scan files from " + source);
         File file = new File(source);
         Queue<File> files = new LinkedList<>();
