@@ -34,7 +34,7 @@ public class GetRoomListServletTest {
     private AccountService accountService;
     @Before
     public void setUp() throws IOException {
-        responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
+        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
         accountService = spy(new AccountService());
         gameServer = spy(new GameServer(accountService));
         request = mock(HttpServletRequest.class);

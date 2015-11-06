@@ -33,7 +33,7 @@ public class CreateGameTest {
 
     @Before
     public void setUp() throws IOException {
-        responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
+        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);

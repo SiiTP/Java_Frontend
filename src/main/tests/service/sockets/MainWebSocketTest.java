@@ -31,14 +31,14 @@ public class MainWebSocketTest {
     ResponseResources responseResources;
     @Before
     public void setup() {
-        responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
+        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
 
         httpSession = "session";
         accountService = spy(new AccountService());
         gameServer = spy(new GameServer(accountService));
         webSocket = spy(new MainWebSocket(httpSession, gameServer));
 
-        endpoint = spy(new RemoteEndpointStub());
+        endpoint = new RemoteEndpointStub();
         doReturn(endpoint).when(webSocket).getRemote();
 
         profile = new UserProfile("name","pass");
