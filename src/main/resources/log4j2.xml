@@ -10,7 +10,7 @@
         <RollingFile name="RollingFile" fileName="${log_dir}/full_server.log"
                      filePattern="${log_dir}/old/full/full_server_%d{HH-mm}_%i.log">
             <PatternLayout>
-                <pattern>%highlight{[%d{MM-dd HH:mm:ss,SSS}, %-9r] %-5p %-40.40c %m%n}</pattern>
+                <pattern>%highlight{[%d{MM-dd HH:mm:ss,SSS}, %-9r] %-5p %-30.40c %-10markerSimpleName %m%n}</pattern>
             </PatternLayout>
             <Policies>
                 <OnStartupTriggeringPolicy/>

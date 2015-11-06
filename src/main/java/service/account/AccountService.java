@@ -4,6 +4,8 @@ package service.account;
 import game.user.UserProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import resource.ResourceFactory;
@@ -47,14 +49,16 @@ public class AccountService{
         }
         if(isOk){
             addSession(session, profile);
-            logger.info("user " + username + " with session " + session + " authorized(login)");
+            Marker marker = new MarkerManager.Log4jMarker("LOGIN");
+            logger.info(marker,"user " + username + " with session " + session + " authorized(login)");
         }
         return isOk;
     }
     public void addUser(@NotNull UserProfile userProfile){
         String userName = userProfile.getUsername();
         if (!users.containsKey(userName)) {
-            logger.info("user with name " + userName +" has been successfully registered");
+            Marker marker = new MarkerManager.Log4jMarker("REGISTER");
+            logger.info(marker,"user with name " + userName +" has been successfully registered");
             users.put(userName, userProfile);
         }
     }
@@ -80,7 +84,8 @@ public class AccountService{
     }
     public void deleteSession(String sess) {
         if(sessions.containsKey(sess)) {
-            logger.info("user with session " + sess +" and name "+sessions.get(sess).getUsername()+ " log out");
+            Marker marker = new MarkerManager.Log4jMarker("LOGOUT");
+            logger.info(marker,"user with session " + sess +" and name "+sessions.get(sess).getUsername()+ " log out");
             sessions.remove(sess);
 
         }
