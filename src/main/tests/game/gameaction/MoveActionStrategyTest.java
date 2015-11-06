@@ -2,7 +2,7 @@ package game.gameaction;
 
 import game.rooms.Room;
 import game.rooms.RoomFFA;
-import game.serverlevels.top.TopLevelGameServer;
+import game.serverlevels.top.GameServer;
 import game.user.GameProfile;
 import game.user.UserProfile;
 import org.json.JSONException;
@@ -18,18 +18,18 @@ import static org.mockito.Mockito.*;
  * Created by ivan on 26.10.15.
  */
 public class MoveActionStrategyTest {
-    private TopLevelGameServer topLevelGameServer;
+    private GameServer gameServer;
     private String httpSession;
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         httpSession = "session";
         AccountService accountService = spy(new AccountService());
-        topLevelGameServer = spy(new TopLevelGameServer(accountService));
+        gameServer = spy(new GameServer(accountService));
     }
 
     @Test
     public void testProcessGameAction() throws JSONException {
-        MoveActionStrategy moveActionStrategy = new MoveActionStrategy(topLevelGameServer);
+        MoveActionStrategy moveActionStrategy = new MoveActionStrategy(gameServer);
         UserProfile profile = new UserProfile("aaaa","bbbb");
         GameProfile gameProfile = profile.getGameProfile();
         gameProfile.setX(1);
@@ -37,8 +37,8 @@ public class MoveActionStrategyTest {
         gameProfile.setScore(1);
         Room room = mock(Room.class);
 
-        doReturn(profile).when(topLevelGameServer).getPlayerBySession(anyString());
-        doReturn(room).when(topLevelGameServer).getPlayerRoomBySession(anyString());
+        doReturn(profile).when(gameServer).getPlayerBySession(anyString());
+        doReturn(room).when(gameServer).getPlayerRoomBySession(anyString());
         when(room.isFinished()).thenReturn(true);
 
         JSONObject object = new JSONObject();
@@ -50,8 +50,8 @@ public class MoveActionStrategyTest {
 
     }
     @Test
-    public void roomReadyAndPlayerDontMove() throws JSONException, InterruptedException {
-        MoveActionStrategy moveActionStrategy = new MoveActionStrategy(topLevelGameServer);
+    public void roomReadyAndPlayerDontMove() throws JSONException {
+        MoveActionStrategy moveActionStrategy = new MoveActionStrategy(gameServer);
         UserProfile profile = new UserProfile("aaaa","bbbb");
         GameProfile gameProfile = profile.getGameProfile();
         final int defaultTestX = 500;
@@ -61,8 +61,8 @@ public class MoveActionStrategyTest {
         gameProfile.setScore(1);
         Room room = mock(Room.class);
 
-        doReturn(profile).when(topLevelGameServer).getPlayerBySession(anyString());
-        doReturn(room).when(topLevelGameServer).getPlayerRoomBySession(anyString());
+        doReturn(profile).when(gameServer).getPlayerBySession(anyString());
+        doReturn(room).when(gameServer).getPlayerRoomBySession(anyString());
         when(room.isFinished()).thenReturn(false);
 
         JSONObject object = new JSONObject();
@@ -90,7 +90,7 @@ public class MoveActionStrategyTest {
         enemy.setX(x2);
         final double y2 = 150;
         enemy.setY(y2);
-        MoveActionStrategy actionStrategy = new MoveActionStrategy(topLevelGameServer);
+        MoveActionStrategy actionStrategy = new MoveActionStrategy(gameServer);
         final double myDirection = 90;
         final double enemyDirection = 90;
         final int testSuccessMyDegree = 45;
@@ -107,7 +107,7 @@ public class MoveActionStrategyTest {
     @SuppressWarnings("MagicNumber")
     @Test
     public void testCheckForCollision(){
-        MoveActionStrategy actionStrategy =new MoveActionStrategy(topLevelGameServer);
+        MoveActionStrategy actionStrategy =new MoveActionStrategy(gameServer);
         UserProfile myProfile = new UserProfile("test","test");
         RoomFFA ffa = new RoomFFA("test");
         UserProfile profile2 = new UserProfile("test2","test2");

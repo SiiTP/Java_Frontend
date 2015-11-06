@@ -1,6 +1,9 @@
 package resource;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -15,7 +18,7 @@ import static reflection.ObjectConstruct.setFields;
  * Created by ivan on 25.10.15.
  */
 public class ResourceLoader {
-
+    private final Logger logger = LogManager.getLogger(ResourceLoader.class);
     public void loadResources(Map<String,Resource> map) {
 
         ArrayList<JSONObject> configObjects = loadJsonConfig();
@@ -35,17 +38,21 @@ public class ResourceLoader {
                         }
                     }
                 }
-                map.put(configFile.getString("filename"), (Resource) object);
+                String filename = configFile.getString("filename");
+                logger.info("resource file " + filename + " loaded");
+                map.put(filename, (Resource) object);
             }
         }
-
     }
     private Queue<File> getConfigFiles(){
-        File file = new File("resources/data");
+        String source = "resources/data";
+        logger.info("start scan files from " + source);
+        File file = new File(source);
         Queue<File> files = new LinkedList<>();
         File[] filesArray = file.listFiles();
         if(filesArray != null) {
             for (File f : filesArray) {
+                String fileName = f.getName();
                 if (f.isDirectory()) {
                     File[] additionalFiles = f.listFiles();
                     if(additionalFiles != null) {
@@ -53,14 +60,20 @@ public class ResourceLoader {
                             files.offer(dirFiles);
                         }
                     }
+                    logger.info("find dirictory " + fileName);
                 } else {
                     files.offer(f);
+                    logger.info("load " + fileName);
                 }
             }
+        }else{
+            logger.error("no files in " + source);
         }
+        logger.info("loaded " + files.size() + " files");
         return files;
     }
     private ArrayList<JSONObject> loadJsonConfig() {
+
         ArrayList<JSONObject> configList = new ArrayList<>();
         for(File f:getConfigFiles()) {
             StringBuilder builder = new StringBuilder();
@@ -70,12 +83,21 @@ public class ResourceLoader {
                     builder.append(app);
                 }
             } catch (IOException e) {
+                logger.error("error whule read from " + f.getName(),e);
                 e.printStackTrace();
             }
-            JSONObject jsonObject = new JSONObject(builder.toString());
-            jsonObject.put("filename",f.getPath());
-            configList.add(jsonObject);
+            String jsonString = builder.toString();
+            try {
+                JSONObject jsonObject = new JSONObject(jsonString);
+                jsonObject.put("filename",f.getPath());
+                configList.add(jsonObject);
+            }catch (JSONException exc){
+                logger.error("cant parse json:\n"+jsonString,exc);
+            }
+
         }
+        logger.info(configList.size() +" JSON files are parsed");
         return configList;
     }
+
 }

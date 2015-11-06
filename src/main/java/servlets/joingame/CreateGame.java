@@ -1,7 +1,7 @@
 package servlets.joingame;
 
 import game.rooms.Room;
-import game.serverlevels.top.TopLevelGameServer;
+import game.serverlevels.top.GameServer;
 import org.json.JSONObject;
 import resource.ResourceFactory;
 import resource.ResponseResources;
@@ -16,11 +16,11 @@ import java.io.IOException;
  * Created by ivan on 02.10.15.
  */
 public class CreateGame extends HttpServlet {
-    private final TopLevelGameServer topLevelGameServer;
+    private final GameServer gameServer;
     private final ResponseResources responseResources;
-    public CreateGame(TopLevelGameServer topLevelGameServer) {
+    public CreateGame(GameServer gameServer) {
         responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
-        this.topLevelGameServer = topLevelGameServer;
+        this.gameServer = gameServer;
     }
 
     @Override
@@ -30,13 +30,13 @@ public class CreateGame extends HttpServlet {
         String session = req.getSession().getId();
         if(roomName != null && !roomName.isEmpty()) {
             JSONObject responseJSON = new JSONObject();
-            if (topLevelGameServer.checkIfRoomExist(roomName)) {
+            if (gameServer.checkIfRoomExist(roomName)) {
                 responseJSON.put("status", responseResources.getRoomAlreadyExist());
                 responseJSON.put("message", "Room with name " + roomName + " already exist");
             } else {
-                boolean auth = topLevelGameServer.isAuthorizedPlayer(session);
+                boolean auth = gameServer.isAuthorizedPlayer(session);
                 if (auth) {
-                    Room room = topLevelGameServer.createRoom(session, roomName, password);
+                    Room room = gameServer.createRoom(session, roomName, password);
                     if (room != null) {
                         responseJSON.put("status", responseResources.getOk());
                         responseJSON.put("message", "successful creating room");

@@ -37,8 +37,6 @@ public class SignUpTest {
         when(response.getWriter()).thenReturn(writer);
 
         signUp = new SignUp(service);
-
-
     }
 
 
@@ -54,10 +52,10 @@ public class SignUpTest {
     }
     @Test
     public void testDoPostEmptyPass() throws ServletException, IOException {
-        setCheckSetting("");
+        setCheckPassword("");
         assert stringWriter.toString().contains("false");
     }
-    private void setCheckSetting(@Nullable String passValue) throws ServletException, IOException {
+    private void setCheckPassword(@Nullable String passValue) throws ServletException, IOException {
         when(service.isAvailableName(anyString())).thenReturn(true);
         when(request.getParameter("username")).thenReturn("aaaa");
         when(request.getParameter("password")).thenReturn(passValue);
@@ -65,13 +63,13 @@ public class SignUpTest {
     }
     @Test
     public void testDoPostNullPass() throws ServletException, IOException {
-        setCheckSetting(null);
+        setCheckPassword(null);
 
         assert stringWriter.toString().isEmpty();
     }
     @Test
     public void testDoPostSuccess() throws ServletException, IOException {
-        setCheckSetting("aaaa");
+        setCheckPassword("aaaa");
 
         assert stringWriter.toString().contains("true");
     }

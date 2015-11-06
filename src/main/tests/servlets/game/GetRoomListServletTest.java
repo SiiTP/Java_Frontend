@@ -1,6 +1,6 @@
 package servlets.game;
 
-import game.serverlevels.top.TopLevelGameServer;
+import game.serverlevels.top.GameServer;
 import game.user.UserProfile;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,14 +29,14 @@ public class GetRoomListServletTest {
     private HttpServletResponse response;
     private StringWriter stringWriter;
     private GetRoomListServlet roomServlet;
-    private TopLevelGameServer topLevelGameServer;
+    private GameServer gameServer;
     private ResponseResources responseResources;
     private AccountService accountService;
     @Before
     public void setUp() throws IOException {
         responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
         accountService = spy(new AccountService());
-        topLevelGameServer = spy(new TopLevelGameServer(accountService));
+        gameServer = spy(new GameServer(accountService));
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
@@ -46,13 +46,13 @@ public class GetRoomListServletTest {
         PrintWriter writer = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(writer);
 
-        roomServlet = new GetRoomListServlet(topLevelGameServer);
+        roomServlet = new GetRoomListServlet(gameServer);
     }
     @Test
     public void testDoPost() throws ServletException, JSONException, IOException {
         UserProfile profile = new UserProfile("test","test");
         doReturn(profile).when(accountService).getUserBySession(anyString());
-        topLevelGameServer.createRoom("test", "testRoom", null);
+        gameServer.createRoom("test", "testRoom", null);
 
         roomServlet.doPost(request, response);
         JSONObject object = new JSONObject(stringWriter.toString());

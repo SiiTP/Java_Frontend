@@ -2,7 +2,7 @@ package game.gameaction;
 
 import game.rooms.Room;
 import game.rooms.RoomFFA;
-import game.serverlevels.top.TopLevelGameServer;
+import game.serverlevels.top.GameServer;
 import game.user.GameProfile;
 import game.user.UserProfile;
 import org.jetbrains.annotations.NotNull;
@@ -17,14 +17,14 @@ import java.util.Random;
  * Created by ivan on 25.10.15.
  */
 public class MoveActionStrategy implements GameActionStrategy {
-    private final TopLevelGameServer topLevelGameServer;
+    private final GameServer gameServer;
     private final int width;
     private final int height;
     private final int speed;
     private final int radius;
     private final int defaultDontMoveValue;
-    public MoveActionStrategy(TopLevelGameServer topLevelGameServer) {
-        this.topLevelGameServer = topLevelGameServer;
+    public MoveActionStrategy(GameServer gameServer) {
+        this.gameServer = gameServer;
         GameResources gameResources =(GameResources) ResourceFactory.getResource("resources/data/game.json");
         defaultDontMoveValue = gameResources.getDefaultStopDirectionValue();
         width = gameResources.getGameFieldWidth();
@@ -35,10 +35,10 @@ public class MoveActionStrategy implements GameActionStrategy {
 
     @Override
     public void processGameAction(@NotNull JSONObject message,@NotNull String httpSession) {
-        Room room = topLevelGameServer.getPlayerRoomBySession(httpSession);
+        Room room = gameServer.getPlayerRoomBySession(httpSession);
         if(room != null) {
             if (!room.isFinished()) {
-                UserProfile profile = topLevelGameServer.getPlayerBySession(httpSession);
+                UserProfile profile = gameServer.getPlayerBySession(httpSession);
                 if (profile != null) {
                     GameProfile gameProfile = profile.getGameProfile();
                     double direction = getDrection(message);
@@ -120,7 +120,7 @@ public class MoveActionStrategy implements GameActionStrategy {
         return Math.acos((vectorX * vector2X + vectorY * vector2Y) / (t1 * t2));
     }
     /*public static void main(String[] args) {
-//        MoveActionStrategy a = new MoveActionStrategy(new TopLevelGameServer(new AccountService()));
+//        MoveActionStrategy a = new MoveActionStrategy(new GameServer(new AccountService()));
         Scanner scanner = new Scanner(System.in);
         while(true){
             double direction = scanner.nextDouble();

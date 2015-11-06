@@ -15,7 +15,7 @@ import static org.mockito.Mockito.spy;
 public class AccountServiceTest {
     private AccountService accountService;
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         accountService = spy(new AccountService());
         accountService.addUser(new UserProfile("first","aaa"));
         accountService.addUser(new UserProfile("second","bbb"));

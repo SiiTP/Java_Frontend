@@ -19,7 +19,6 @@ public class LogOut extends HttpServlet {
     @NotNull
     final
     AccountService accountService;
-
     public LogOut(@NotNull AccountService service) {
         this.accountService = service;
     }
@@ -37,7 +36,6 @@ public class LogOut extends HttpServlet {
                 accountService.deleteSession(session);
                 responseJSON.put("success", true);
                 responseJSON.put("message", "you have been logged out!");
-
             } else {
                 responseJSON.put("success", false);
                 responseJSON.put("message", "you are not being logged in!");

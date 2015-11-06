@@ -3,6 +3,8 @@ package game.serverlevels.top;
 import game.rooms.Room;
 import game.rooms.RoomFFA;
 import game.user.UserProfile;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
@@ -15,11 +17,11 @@ import java.util.Map;
 /**
  * Created by ivan on 02.10.15.
  */
-public class TopLevelGameServer {
+public class GameServer {
     private Map<String,Room> rooms;
     private final AccountService accountService;
-
-    public TopLevelGameServer(AccountService accountService) {
+    private final Logger logger = LogManager.getLogger(GameServer.class);
+    public GameServer(AccountService accountService) {
         rooms = new HashMap<>();
         this.accountService = accountService;
     }
@@ -42,6 +44,7 @@ public class TopLevelGameServer {
                         room.addUser(profile);
                         profile.setCurrentroom(room);
                     }
+                    logger.info("player " + profile.getUsername() + " joined the room " + roomname);
                 }
             }
         }
@@ -109,9 +112,9 @@ public class TopLevelGameServer {
 
                 rooms.put(roomname, room);
                 profile.setCurrentroom(room);
+                logger.info("player " + profile.getUsername() + " created the room " + roomname);
             }
         }
-
         return room;
     }
     public boolean isAuthorizedPlayer(String session){
@@ -141,14 +144,17 @@ public class TopLevelGameServer {
             Room room = profile.getCurrentroom();
             if(room != null) {
                 room.kickPlayer(profile);
+                logger.info("player " + profile.getUsername() + " kicked from the room " + room.getRoomName());
                 if(room.getPlayersCount()==0){
                     rooms.remove(room.getRoomName());
+                    logger.info("player " +profile.getUsername() + " kicked from the room " + room.getRoomName());
                 }
             }
         }
     }
     public void clearRooms(){
         rooms = new HashMap<>();
+        logger.warn("rooms were cleaned");
     }
 
 }

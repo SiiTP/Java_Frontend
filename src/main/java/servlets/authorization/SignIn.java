@@ -16,7 +16,6 @@ import java.io.PrintWriter;
 public class SignIn extends HttpServlet {
     @NotNull
     private final AccountService accountService;
-
     public SignIn(@NotNull AccountService service) {
         this.accountService = service;
     }
@@ -49,7 +48,6 @@ public class SignIn extends HttpServlet {
                         if (auth) {
                             responseJSON.put("success", true);
                             responseJSON.put("message", "you successfully have been logined in!");
-                            // TODO передавать счет
                         } else {
                             responseJSON.put("success", false);
                             responseJSON.put("message", "wrong login or password");

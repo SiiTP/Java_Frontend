@@ -15,7 +15,6 @@ import java.io.PrintWriter;
 public class SignUp extends HttpServlet {
     @NotNull
     private final AccountService accountService;
-
     public SignUp(@NotNull AccountService service) {
         this.accountService = service;
     }

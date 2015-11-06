@@ -1,6 +1,8 @@
 package servlets.admins;
 
-import game.serverlevels.top.TopLevelGameServer;
+import game.serverlevels.top.GameServer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.server.Server;
 import org.jetbrains.annotations.NotNull;
 import service.account.AccountService;
@@ -24,11 +26,12 @@ public class AdminServlet extends HttpServlet {
     @NotNull
     private final AccountService accountService;
     @NotNull
-    private final TopLevelGameServer topLevelGameServer;
-    public AdminServlet(@NotNull Server serv,@NotNull TopLevelGameServer topLevelGameServer) {
+    private final GameServer gameServer;
+    private static final Logger LOGGER = LogManager.getLogger(AdminServlet.class);
+    public AdminServlet(@NotNull Server serv,@NotNull GameServer gameServer) {
         this.server = serv;
-        this.accountService = topLevelGameServer.getAccountService();
-        this.topLevelGameServer = topLevelGameServer;
+        this.accountService = gameServer.getAccountService();
+        this.gameServer = gameServer;
     }
 
     @Override
@@ -45,8 +48,9 @@ public class AdminServlet extends HttpServlet {
                 int shut = Integer.parseInt(shutdown);
                 writer.println("выключение сервера через " + shut + " ms");
                 shutDownServer(shut);
+                LOGGER.info("server stopped");
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                LOGGER.error("wrong shutdown request data ",e);
             }
         }
         if (registeredUsers!= null && !registeredUsers.isEmpty() && registeredUsers.equals("true")) {
@@ -56,7 +60,7 @@ public class AdminServlet extends HttpServlet {
             writer.println("Залогинено пользователей: " + accountService.getLoggedUsersCount());
         }
         if(clean != null){
-            topLevelGameServer.clearRooms();
+            gameServer.clearRooms();
             writer.println("Комнаты очищены");
         }
 

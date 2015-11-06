@@ -38,8 +38,6 @@ public class SignInTest {
         when(response.getWriter()).thenReturn(writer);
 
         signIn = new SignIn(service);
-
-
     }
 
     @Test

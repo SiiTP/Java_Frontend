@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
  * Created by ivan on 02.10.15.
  */
 public class RoomFFA extends RoomAbstractImpl {
-
     private final List<UserProfile> users = new ArrayList<>();
     public boolean isFull(){
         return users.size() == getPlayersLimit();
@@ -86,6 +85,7 @@ public class RoomFFA extends RoomAbstractImpl {
                     }
                 }
             }
+
         return winner.getUsername();
     }
     @Override

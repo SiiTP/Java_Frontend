@@ -2,7 +2,7 @@ package game.serverlevels;
 
 import game.rooms.Room;
 import game.rooms.RoomFFA;
-import game.serverlevels.top.TopLevelGameServer;
+import game.serverlevels.top.GameServer;
 import game.user.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,14 +17,14 @@ import static org.mockito.Mockito.*;
 /**
  * Created by ivan on 11.10.15.
  */
-public class TopLevelGameServerTest {
+public class GameServerTest {
     private AccountService service;
     private final Map<String,Room> rooms = spy(new HashMap<>());
-    private TopLevelGameServer gameServer;
+    private GameServer gameServer;
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         service = mock(AccountService.class);
-        gameServer = new TopLevelGameServer(service);
+        gameServer = new GameServer(service);
         gameServer.setRooms(rooms);
     }
 
@@ -137,7 +137,7 @@ public class TopLevelGameServerTest {
         assertTrue(gameServer.isCorrectPlayerInGame("aa"));
     }
     @Test
-    public void isCorrectPlayerInGameNoPlayer() throws Exception {
+    public void isCorrectPlayerInGameNoPlayer() {
         when(service.isAuthorized(anyString())).thenReturn(true);
         when(service.getUserBySession(anyString())).thenReturn(null);
 

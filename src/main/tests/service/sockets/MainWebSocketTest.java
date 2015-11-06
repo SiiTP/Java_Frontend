@@ -2,7 +2,7 @@ package service.sockets;
 
 import game.rooms.Room;
 import game.rooms.RoomFFA;
-import game.serverlevels.top.TopLevelGameServer;
+import game.serverlevels.top.GameServer;
 import game.sockets.MainWebSocket;
 import game.user.UserProfile;
 import org.json.JSONObject;
@@ -13,7 +13,6 @@ import resource.ResponseResources;
 import service.account.AccountService;
 import test.RemoteEndpointStub;
 
-import java.io.IOException;
 import java.util.Objects;
 
 import static org.junit.Assert.assertTrue;
@@ -23,7 +22,7 @@ import static org.mockito.Mockito.*;
  * Created by ivan on 26.10.15.
  */
 public class MainWebSocketTest {
-    TopLevelGameServer topLevelGameServer;
+    GameServer gameServer;
     AccountService accountService;
     MainWebSocket webSocket;
     String httpSession;
@@ -31,13 +30,13 @@ public class MainWebSocketTest {
     RemoteEndpointStub endpoint;
     ResponseResources responseResources;
     @Before
-    public void setup() throws IOException {
+    public void setup() {
         responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
 
         httpSession = "session";
         accountService = spy(new AccountService());
-        topLevelGameServer = spy(new TopLevelGameServer(accountService));
-        webSocket = spy(new MainWebSocket(httpSession, topLevelGameServer));
+        gameServer = spy(new GameServer(accountService));
+        webSocket = spy(new MainWebSocket(httpSession, gameServer));
 
         endpoint = spy(new RemoteEndpointStub());
         doReturn(endpoint).when(webSocket).getRemote();
@@ -52,7 +51,7 @@ public class MainWebSocketTest {
 
     @Test
     public void testOnWebSocketText() throws Exception {
-        doReturn(false).when(topLevelGameServer).isCorrectPlayerInGame(anyString());
+        doReturn(false).when(gameServer).isCorrectPlayerInGame(anyString());
         String message = "{name:'test'}";
         webSocket.onWebSocketText(message);
 
@@ -60,7 +59,7 @@ public class MainWebSocketTest {
     }
     @Test
     public void testOnWebSocketWongMessage() throws Exception {
-        doReturn(false).when(topLevelGameServer).isCorrectPlayerInGame(anyString());
+        doReturn(false).when(gameServer).isCorrectPlayerInGame(anyString());
         String message = "{nam:''}";
         webSocket.onWebSocketText(message);
 
@@ -68,9 +67,9 @@ public class MainWebSocketTest {
 
     @Test
     public void testRoomFinished() throws Exception {
-        doReturn(true).when(topLevelGameServer).isGameReady(anyString());
+        doReturn(true).when(gameServer).isGameReady(anyString());
         Room room = spy(new RoomFFA("test"));
-        doReturn(room).when(topLevelGameServer).getPlayerRoomBySession(anyString());
+        doReturn(room).when(gameServer).getPlayerRoomBySession(anyString());
         doReturn(true).when(room).isFinished();
         doReturn("test").when(room).getWinner();
         webSocket.processPlayerMessage(new JSONObject());
@@ -79,9 +78,9 @@ public class MainWebSocketTest {
     }
     @Test
     public void testRoomNotFinished() throws Exception {
-        doReturn(true).when(topLevelGameServer).isGameReady(anyString());
+        doReturn(true).when(gameServer).isGameReady(anyString());
         Room room = spy(new RoomFFA("test"));
-        doReturn(room).when(topLevelGameServer).getPlayerRoomBySession(anyString());
+        doReturn(room).when(gameServer).getPlayerRoomBySession(anyString());
         doReturn(false).when(room).isFinished();
 
         webSocket.processPlayerMessage(new JSONObject());
@@ -90,7 +89,7 @@ public class MainWebSocketTest {
     }
     @Test
     public void testRoomNotReady() throws Exception {
-        doReturn(false).when(topLevelGameServer).isGameReady(anyString());
+        doReturn(false).when(gameServer).isGameReady(anyString());
 
         webSocket.processPlayerMessage(new JSONObject());
 
