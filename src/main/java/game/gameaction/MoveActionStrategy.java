@@ -25,7 +25,7 @@ public class MoveActionStrategy implements GameActionStrategy {
     private final int defaultDontMoveValue;
     public MoveActionStrategy(GameServer gameServer) {
         this.gameServer = gameServer;
-        GameResources gameResources =(GameResources) ResourceFactory.getResource("resources/data/game.json");
+        GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
         defaultDontMoveValue = gameResources.getDefaultStopDirectionValue();
         width = gameResources.getGameFieldWidth();
         height = gameResources.getGameFieldHeight();

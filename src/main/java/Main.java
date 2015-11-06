@@ -32,7 +32,7 @@ public class Main {
         accountService.addUser(new UserProfile("adminn","adminn"));
         GameServer gameServer = new GameServer(accountService);
         Properties properties = new Properties();
-        try(FileInputStream inputStream = new FileInputStream("resources/cfg/server.properties")){
+        try(FileInputStream inputStream = new FileInputStream("src/main/resources/cfg/server.properties")){
             properties.load(inputStream);
             LOGGER.info("start prop loaded");
         }catch (IOException exc){

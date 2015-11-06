@@ -26,7 +26,7 @@ public class MainWebSocket extends WebSocketAdapter {
     private final ResponseResources responseResources;
     private static final Logger LOGGER = LogManager.getLogger(MainWebSocket.class);
     public MainWebSocket(String httpSession,GameServer gameServer) {
-        responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
+        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
         this.gameServer = gameServer;
         this.httpSession = httpSession;
         gameStrategy = new MoveActionStrategy(gameServer);

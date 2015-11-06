@@ -19,7 +19,7 @@ public class GameProfile {
     private boolean isKilled;
     public GameProfile() {
         Random random = new Random(6);
-        GameResources gameResources =(GameResources) ResourceFactory.getResource("resources/data/game.json");
+        GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
         x = random.nextInt(gameResources.getGameFieldWidth());
         y = random.nextInt(gameResources.getGameFieldHeight());
         isKilled = false;
@@ -67,7 +67,7 @@ public class GameProfile {
     }
 
     public double getDeltaTime() {
-        final int toSeconds = ((GameResources)ResourceFactory.getResource("resources/data/game.json")).getToSeconds();
+        final int toSeconds = ((GameResources)ResourceFactory.getResource("data/game.json")).getToSeconds();
         if(dt==null){
             dt = Instant.now();
         }

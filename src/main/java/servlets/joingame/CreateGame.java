@@ -19,7 +19,7 @@ public class CreateGame extends HttpServlet {
     private final GameServer gameServer;
     private final ResponseResources responseResources;
     public CreateGame(GameServer gameServer) {
-        responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
+        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
         this.gameServer = gameServer;
     }
 

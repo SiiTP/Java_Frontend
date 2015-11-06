@@ -20,7 +20,7 @@ public class GetRoomListServlet extends HttpServlet {
     private final ResponseResources responseResources;
 
     public GetRoomListServlet(GameServer gameServer) {
-        responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
+        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
         this.gameServer = gameServer;
     }
 

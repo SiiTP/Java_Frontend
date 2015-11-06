@@ -44,7 +44,7 @@ public class RoomFFA extends RoomAbstractImpl {
         boolean isReady =  users.size()>1;
         if(isReady && getStartTime() == null) {
             Instant startTime = Instant.now();
-            GameResources gameResources =(GameResources) ResourceFactory.getResource("resources/data/game.json");
+            GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
             final int maxRoomTime = gameResources.getMaxRoomPlayingTimeInSec();
             Instant finishTime = startTime.plusSeconds(maxRoomTime);
             setStartTime(startTime);

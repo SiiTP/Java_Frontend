@@ -16,7 +16,7 @@ public abstract class RoomAbstractImpl implements Room  {
     private Integer playersLimit;
     private final Integer scoreLimit;
     public RoomAbstractImpl(String roomName) {
-        GameResources gameResources =(GameResources) ResourceFactory.getResource("resources/data/game.json");
+        GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
         this.roomName = roomName;
         playersLimit = gameResources.getMaxPlayers();
         scoreLimit = gameResources.getDefaultWinScore();

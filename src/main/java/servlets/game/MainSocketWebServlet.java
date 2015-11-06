@@ -18,7 +18,7 @@ public class MainSocketWebServlet extends WebSocketServlet {
     private final GameServer gameServer;
     public MainSocketWebServlet(GameServer gameServer) {
         this.gameServer = gameServer;
-        ServletResources servletResources =(ServletResources) ResourceFactory.getResource("resources/data/servlet.json");
+        ServletResources servletResources =(ServletResources) ResourceFactory.getResource("data/servlet.json");
         idleTime = servletResources.getWebSocketIdleTimeMillisec();
     }
 
