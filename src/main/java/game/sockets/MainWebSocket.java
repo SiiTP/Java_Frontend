@@ -84,6 +84,7 @@ public class MainWebSocket extends WebSocketAdapter {
         try {
             getRemote().sendString(object.toString());
         } catch (IOException e) {
+            LOGGER.error("cant send message back, user session " + httpSession);
             e.printStackTrace();
         }
 

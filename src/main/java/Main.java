@@ -36,14 +36,14 @@ public class Main {
             properties.load(inputStream);
             LOGGER.info("start prop loaded");
         }catch (IOException exc){
-                LOGGER.error("wrong prop file",exc);
+                LOGGER.fatal("wrong prop file",exc);
         }
         int port = Integer.parseInt(properties.getProperty("server.PORT"));
         if (args.length == 1) {
             String portString = args[0];
             port = Integer.parseInt(portString);
             if(port <= 0){
-                LOGGER.error("wrong port argument");
+                LOGGER.fatal("wrong port argument");
                 throw  new IllegalArgumentException("port must be above zero");
             }
         }

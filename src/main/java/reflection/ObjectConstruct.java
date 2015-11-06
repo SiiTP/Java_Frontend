@@ -1,5 +1,7 @@
 package reflection;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
@@ -8,7 +10,7 @@ import java.lang.reflect.Field;
  * Created by ivan on 26.10.15.
  */
 public class ObjectConstruct {
-
+    private static final Logger LOGGER = LogManager.getLogger(ObjectConstruct.class);
     @Nullable
     public static Object constructFromName(String className){
         Object o = null;
@@ -17,7 +19,7 @@ public class ObjectConstruct {
             o = c.newInstance();
 
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+            LOGGER.fatal("cant create instance ", e);
         }
         return o;
     }
@@ -32,7 +34,7 @@ public class ObjectConstruct {
                 field.set(object, fieldValue);
             }
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            LOGGER.fatal("cant set field value ",e);
         }
         field.setAccessible(false);
     }

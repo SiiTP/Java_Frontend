@@ -18,7 +18,7 @@ import static reflection.ObjectConstruct.setFields;
  * Created by ivan on 25.10.15.
  */
 public class ResourceLoader {
-    private final Logger logger = LogManager.getLogger(ResourceLoader.class);
+    private static final Logger LOGGER = LogManager.getLogger(ResourceLoader.class);
     public void loadResources(Map<String,Resource> map) {
 
         ArrayList<JSONObject> configObjects = loadJsonConfig();
@@ -33,20 +33,20 @@ public class ResourceLoader {
                             try {
                                 setFields(object, key, configFile.get(key));
                             } catch (NoSuchFieldException e) {
-                                e.printStackTrace();
+                                LOGGER.fatal("no such field to set value", e);
                             }
                         }
                     }
                 }
                 String filename = configFile.getString("filename");
-                logger.info("resource file " + filename + " loaded");
+                LOGGER.info("resource file " + filename + " loaded");
                 map.put(filename, (Resource) object);
             }
         }
     }
     private Queue<File> getConfigFiles(){
         String source = "src/main/resources/data";
-        logger.info("start scan files from " + source);
+        LOGGER.info("start scan files from " + source);
         File file = new File(source);
         Queue<File> files = new LinkedList<>();
         File[] filesArray = file.listFiles();
@@ -60,16 +60,16 @@ public class ResourceLoader {
                             files.offer(dirFiles);
                         }
                     }
-                    logger.info("find dirictory " + fileName);
+                    LOGGER.info("find dirictory " + fileName);
                 } else {
                     files.offer(f);
-                    logger.info("load " + fileName);
+                    LOGGER.info("load " + fileName);
                 }
             }
         }else{
-            logger.error("no files in " + source);
+            LOGGER.error("no files in " + source);
         }
-        logger.info("loaded " + files.size() + " files");
+        LOGGER.info("loaded " + files.size() + " files");
         return files;
     }
     private ArrayList<JSONObject> loadJsonConfig() {
@@ -83,7 +83,7 @@ public class ResourceLoader {
                     builder.append(app);
                 }
             } catch (IOException e) {
-                logger.error("error whule read from " + f.getName(),e);
+                LOGGER.error("error whule read from " + f.getName(), e);
                 e.printStackTrace();
             }
             String jsonString = builder.toString();
@@ -92,11 +92,11 @@ public class ResourceLoader {
                 jsonObject.put("filename",f.getPath());
                 configList.add(jsonObject);
             }catch (JSONException exc){
-                logger.error("cant parse json:\n"+jsonString,exc);
+                LOGGER.error("cant parse json:\n" + jsonString, exc);
             }
 
         }
-        logger.info(configList.size() +" JSON files are parsed");
+        LOGGER.info(configList.size() + " JSON files are parsed");
         return configList;
     }
 
