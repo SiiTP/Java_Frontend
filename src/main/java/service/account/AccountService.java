@@ -43,7 +43,7 @@ public class AccountService{
     public boolean authtorize(@Nullable String username,@Nullable String password,@NotNull String session){
         UserProfile profile = getUser(username);
         boolean isOk = false;
-        if(profile != null){
+        if(profile != null && !profile.isAuthorized()){
             isOk = profile.checkPassword(password);
 
         }
@@ -51,6 +51,7 @@ public class AccountService{
             addSession(session, profile);
             Marker marker = new MarkerManager.Log4jMarker("LOGIN");
             logger.info(marker,"user " + username + " with session " + session);
+            profile.setIsAuthorized(true);
         }
         return isOk;
     }

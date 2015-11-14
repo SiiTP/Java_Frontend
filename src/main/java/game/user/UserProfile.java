@@ -15,6 +15,7 @@ public class UserProfile {
     private final String password;
     private final GameProfile gameProfile;
     private Room currentroom;
+    private boolean isAuthorized;
     public UserProfile(@NotNull String name,@NotNull String pass) {
         this.username = name;
         this.password = pass;
@@ -48,4 +49,11 @@ public class UserProfile {
         return gameProfile;
     }
 
+    public boolean isAuthorized() {
+        return isAuthorized;
+    }
+
+    public void setIsAuthorized(boolean isAuthorized) {
+        this.isAuthorized = isAuthorized;
+    }
 }
