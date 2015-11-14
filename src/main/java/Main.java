@@ -62,6 +62,7 @@ public class Main {
         resourceHandler.setResourceBase("public_html");
         HandlerList list = new HandlerList();
         list.setHandlers(new Handler[]{resourceHandler, context});
+            //some test
         server.setHandler(list);
         server.start();
         LOGGER.info("server started");
