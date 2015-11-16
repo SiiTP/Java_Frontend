@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -27,11 +28,11 @@ public class GameProfileTest {
         assertTrue(object.has("posX"));
         assertTrue(object.has("posY"));
         assertTrue(object.has("score"));
-        assertTrue(object.getInt("posX")==10);
+        assertEquals(object.getInt("posX"), 10);
 
         profile.setX(2);
         object = profile.getJSON();
-        assertTrue(object.getInt("posX")==2);
+        assertEquals(object.getInt("posX"),2);
 
 
 

@@ -18,7 +18,7 @@ public class GameProfile {
     private Instant dt;
     private boolean isKilled;
     public GameProfile() {
-        Random random = new Random(6);
+        Random random = new Random(System.currentTimeMillis());
         GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
         x = random.nextInt(gameResources.getGameFieldWidth());
         y = random.nextInt(gameResources.getGameFieldHeight());

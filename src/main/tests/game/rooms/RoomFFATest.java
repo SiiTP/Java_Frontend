@@ -9,7 +9,7 @@ import resource.ResourceFactory;
 import java.time.Instant;
 import java.util.Objects;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created by ivan on 26.10.15.
@@ -29,7 +29,7 @@ public class RoomFFATest {
         UserProfile profile1 = new UserProfile("aaac","bbbc");
         roomFFA.addUser(profile);
 
-        assertTrue(!roomFFA.isRoomReady());
+        assertFalse(roomFFA.isRoomReady());
 
 
         roomFFA.addUser(profile1);
@@ -43,7 +43,7 @@ public class RoomFFATest {
         roomFFA.addUser(profile);
         roomFFA.addUser(profile1);
         roomFFA.isRoomReady();
-        assertTrue(!roomFFA.isFinished());
+        assertFalse(roomFFA.isFinished());
 
         profile.getGameProfile().setScore(scoreLimit);
 
@@ -51,7 +51,7 @@ public class RoomFFATest {
 
         profile.getGameProfile().setScore(2);
 
-        assertTrue(!roomFFA.isFinished());
+        assertFalse(roomFFA.isFinished());
     }
     @Test
     public void testIsFinishedTime()  {
@@ -63,7 +63,7 @@ public class RoomFFATest {
         roomFFA.isRoomReady();
         roomFFA.setFinishTime(Instant.now().plusSeconds(1000));
 
-        assertTrue(!roomFFA.isFinished());
+        assertFalse(roomFFA.isFinished());
 
         roomFFA.setFinishTime(Instant.now().minusSeconds(1000));
         assertTrue(roomFFA.isFinished());
@@ -77,7 +77,7 @@ public class RoomFFATest {
         roomFFA.isRoomReady();
         profile.getGameProfile().setScore(scoreLimit);
         profile1.getGameProfile().setScore(2);
-        assertTrue(!Objects.equals(roomFFA.getWinner(), profile1.getUsername()));
+        assertFalse(Objects.equals(roomFFA.getWinner(), profile1.getUsername()));
 
         assertTrue(Objects.equals(roomFFA.getWinner(), profile.getUsername()));
     }
@@ -88,7 +88,7 @@ public class RoomFFATest {
         UserProfile profile1 = new UserProfile("aaad","bbbd");
         roomFFA.addUser(profile);
         assertTrue(roomFFA.checkUser(profile));
-        assertTrue(!roomFFA.checkUser(profile1));
+        assertFalse(roomFFA.checkUser(profile1));
     }
     @Test
     public void testAddUser()  {
@@ -96,8 +96,11 @@ public class RoomFFATest {
         UserProfile profile = new UserProfile("aaad","bbbd");
         roomFFA.addUser(profile);
 
+        assertTrue(roomFFA.isFull());
+
         UserProfile profile1 = new UserProfile("aaad","bbbd");
         roomFFA.addUser(profile1);
 
+        assertEquals(roomFFA.getPlayersCount(), 1);
     }
 }

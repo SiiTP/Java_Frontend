@@ -87,6 +87,10 @@ public class AccountService{
         if(sessions.containsKey(sess)) {
             Marker marker = new MarkerManager.Log4jMarker("LOGOUT");
             logger.info(marker,"user with session " + sess +" and name "+sessions.get(sess).getUsername());
+            UserProfile profile = getUserBySession(sess);
+            if(profile != null) {
+                profile.setIsAuthorized(false);
+            }
             sessions.remove(sess);
 
         }

@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 /**
@@ -57,14 +57,14 @@ public class GetRoomListServletTest {
         roomServlet.doPost(request, response);
         JSONObject object = new JSONObject(stringWriter.toString());
         int i = object.optInt("status");
-        assertTrue(i==responseResources.getOk());
+        assertEquals(i,responseResources.getOk());
     }
     @Test
     public void testDoPostNoRooms() throws ServletException, JSONException, IOException {
         roomServlet.doPost(request, response);
         JSONObject object = new JSONObject(stringWriter.toString());
         int i = object.optInt("status");
-        assertTrue(i==responseResources.getZeroPlayingRoomsNow());
+        assertEquals(i, responseResources.getZeroPlayingRoomsNow());
     }
 
 }

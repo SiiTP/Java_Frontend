@@ -64,7 +64,6 @@ public class Main {
         list.setHandlers(new Handler[]{resourceHandler, context});
 
         server.setHandler(list);
-        server.setHandler(list);
         server.start();
         LOGGER.info("server started");
         server.join();

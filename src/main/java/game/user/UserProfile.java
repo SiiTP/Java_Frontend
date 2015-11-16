@@ -49,6 +49,7 @@ public class UserProfile {
         return gameProfile;
     }
 
+
     public boolean isAuthorized() {
         return isAuthorized;
     }

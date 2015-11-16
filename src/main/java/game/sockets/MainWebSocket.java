@@ -64,8 +64,8 @@ public class MainWebSocket extends WebSocketAdapter {
         boolean isOkGame = gameServer.isGameReady(httpSession);
         JSONObject object = new JSONObject();
         if(isOkGame) {
-            Room room = gameServer.getPlayerRoomBySession(httpSession);
             analyseActionType(message);
+            Room room = gameServer.getPlayerRoomBySession(httpSession);
             if (room != null) {
                 if(room.isFinished()){
                     String winner = room.getWinner();

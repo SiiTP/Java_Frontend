@@ -13,8 +13,7 @@ import resource.ResponseResources;
 import service.account.AccountService;
 import test.RemoteEndpointStub;
 
-import java.util.Objects;
-
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
@@ -43,8 +42,6 @@ public class MainWebSocketTest {
 
         profile = new UserProfile("name","pass");
         accountService.addUser(profile);
-
-
     }
 
 
@@ -54,15 +51,12 @@ public class MainWebSocketTest {
         doReturn(false).when(gameServer).isCorrectPlayerInGame(anyString());
         String message = "{name:'test'}";
         webSocket.onWebSocketText(message);
-
-
     }
     @Test
     public void testOnWebSocketWongMessage() throws Exception {
         doReturn(false).when(gameServer).isCorrectPlayerInGame(anyString());
         String message = "{nam:''}";
         webSocket.onWebSocketText(message);
-
     }
 
     @Test
@@ -74,7 +68,7 @@ public class MainWebSocketTest {
         doReturn("test").when(room).getWinner();
         webSocket.processPlayerMessage(new JSONObject());
 
-        assertTrue(Objects.equals(endpoint.getMessage().optString("winner"), "test"));
+        assertEquals(endpoint.getMessage().optString("winner"), "test");
     }
     @Test
     public void testRoomNotFinished() throws Exception {
@@ -93,6 +87,6 @@ public class MainWebSocketTest {
 
         webSocket.processPlayerMessage(new JSONObject());
 
-        assertTrue(endpoint.getMessage().optInt("status")==responseResources.getRoomIsNotReadyCode());
+        assertEquals(endpoint.getMessage().optInt("status"), responseResources.getRoomIsNotReadyCode());
     }
 }

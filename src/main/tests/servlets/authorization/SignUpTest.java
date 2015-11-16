@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 /**
@@ -48,12 +49,12 @@ public class SignUpTest {
 
         signUp.doPost(request,response);
 
-        assert stringWriter.toString().contains("false");
+        assertTrue(stringWriter.toString().contains("false"));
     }
     @Test
     public void testDoPostEmptyPass() throws ServletException, IOException {
         setCheckPassword("");
-        assert stringWriter.toString().contains("false");
+        assertTrue(stringWriter.toString().contains("false"));
     }
     private void setCheckPassword(@Nullable String passValue) throws ServletException, IOException {
         when(service.isAvailableName(anyString())).thenReturn(true);
@@ -65,12 +66,12 @@ public class SignUpTest {
     public void testDoPostNullPass() throws ServletException, IOException {
         setCheckPassword(null);
 
-        assert stringWriter.toString().isEmpty();
+        assertTrue(stringWriter.toString().isEmpty());
     }
     @Test
     public void testDoPostSuccess() throws ServletException, IOException {
         setCheckPassword("aaaa");
 
-        assert stringWriter.toString().contains("true");
+        assertTrue(stringWriter.toString().contains("true"));
     }
 }

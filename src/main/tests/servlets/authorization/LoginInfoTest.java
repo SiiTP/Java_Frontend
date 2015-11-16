@@ -44,20 +44,26 @@ public class LoginInfoTest {
         when(service.isAuthorized(anyString())).thenReturn(true);
         UserProfile profile = new UserProfile("aaaa","bbbb");
         when(service.getUserBySession(anyString())).thenReturn(profile);
+
         logInfo.doPost(request, response);
+
         assertTrue(stringWriter.toString().contains("aaaa"));
     }
     @Test
     public void testDoPostNoUser() throws ServletException, IOException {
         when(service.isAuthorized(anyString())).thenReturn(true);
         when(service.getUserBySession(anyString())).thenReturn(null);
+
         logInfo.doPost(request, response);
+
         assertTrue(stringWriter.toString().contains("false"));
     }
     @Test
     public void testDoPostNoAuth() throws ServletException, IOException {
         when(service.isAuthorized(anyString())).thenReturn(false);
+
         logInfo.doPost(request, response);
+
         assertTrue(stringWriter.toString().contains("false"));
     }
 }

@@ -41,16 +41,7 @@ public class RoomFFA extends RoomAbstractImpl {
 
     @Override
     public boolean isRoomReady() {
-        boolean isReady =  users.size()>1;
-        if(isReady && getStartTime() == null) {
-            Instant startTime = Instant.now();
-            GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
-            final int maxRoomTime = gameResources.getMaxRoomPlayingTimeInSec();
-            Instant finishTime = startTime.plusSeconds(maxRoomTime);
-            setStartTime(startTime);
-            setFinishTime(finishTime);
-        }
-        return isReady;
+        return users.size()>1;
     }
     public int maxScore(){
         int max = -1;
@@ -96,7 +87,18 @@ public class RoomFFA extends RoomAbstractImpl {
     public void addUser(UserProfile profile) {
         if(!isFull()){
             users.add(profile);
+            if(isRoomReady() && getStartTime() == null){
+                setGamePlayInterval();
+            }
         }
+    }
+    private void setGamePlayInterval(){
+            Instant startTime = Instant.now();
+            GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
+            final int maxRoomTime = gameResources.getMaxRoomPlayingTimeInSec();
+            Instant finishTime = startTime.plusSeconds(maxRoomTime);
+            setStartTime(startTime);
+            setFinishTime(finishTime);
     }
     @Override
     public JSONObject getJsonRoom(){
