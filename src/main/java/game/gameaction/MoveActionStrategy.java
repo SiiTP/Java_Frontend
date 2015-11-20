@@ -47,8 +47,8 @@ public class MoveActionStrategy implements GameActionStrategy {
                         double x = gameProfile.getX();
                         double y = gameProfile.getY();
                         double delta = gameProfile.getDeltaTime();
-                        double newX = x + Math.cos(radian) * speed * delta;
-                        double newY = y - Math.sin(radian) * speed * delta;
+                        double newX = x + Math.cos(radian) * 8;
+                        double newY = y - Math.sin(radian) * 8;
                         if(newX < width && newY < height){
                             if(newX > 0 && newY > 0) {
                                 gameProfile.setX((int)newX);

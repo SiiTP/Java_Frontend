@@ -55,7 +55,11 @@ public class RoomFFA extends RoomAbstractImpl {
     }
     @Override
     public boolean isFinished() {
-        return Instant.now().isAfter(getFinishTime()) || maxScore()==getScoreLimit();
+        boolean isFinished = false;
+        if(getFinishTime()!=null) {
+            isFinished = Instant.now().isAfter(getFinishTime()) || maxScore() == getScoreLimit();
+        }
+        return isFinished;
     }
 
     public List<GameProfile> getGameProfiles(){
