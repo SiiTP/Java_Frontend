@@ -1,7 +1,7 @@
 package servlets.joingame;
 
 import game.rooms.Room;
-import game.serverlevels.top.TopLevelGameServer;
+import game.serverlevels.top.GameServer;
 import org.json.JSONObject;
 import resource.ResourceFactory;
 import resource.ResponseResources;
@@ -16,10 +16,10 @@ import java.io.IOException;
  * Created by ivan on 02.10.15.
  */
 public class JoinGame extends HttpServlet {
-    private TopLevelGameServer gameServer;
-    private ResponseResources responseResources;
-    public JoinGame(TopLevelGameServer gameServer) {
-        responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
+    private final GameServer gameServer;
+    private final ResponseResources responseResources;
+    public JoinGame(GameServer gameServer) {
+        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
         this.gameServer = gameServer;
     }
 

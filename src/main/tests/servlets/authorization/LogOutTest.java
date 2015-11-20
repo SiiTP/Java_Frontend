@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 
@@ -40,9 +41,9 @@ public class LogOutTest {
         when(service.isAuthorized(anyString())).thenReturn(true);
 
         LogOut logOut = new LogOut(service);
-        logOut.doPost(request,response);
+        logOut.doPost(request, response);
 
-        assert stringWriter.toString().contains("true");
+        assertTrue(stringWriter.toString().contains("true"));
     }
     @Test
     public void testDoPostLogOutFail() throws ServletException, IOException {
@@ -51,6 +52,6 @@ public class LogOutTest {
         LogOut logOut = new LogOut(service);
         logOut.doPost(request,response);
 
-        assert stringWriter.toString().contains("false");
+        assertTrue(stringWriter.toString().contains("false"));
     }
 }

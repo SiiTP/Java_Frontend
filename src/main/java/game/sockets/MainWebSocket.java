@@ -3,9 +3,11 @@ package game.sockets;
 import game.gameaction.GameActionStrategy;
 import game.gameaction.MoveActionStrategy;
 import game.rooms.Room;
-import game.serverlevels.top.TopLevelGameServer;
+import game.serverlevels.top.GameServer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -17,22 +19,27 @@ import java.io.IOException;
 /**
  * Created by ivan on 24.10.15.
  */
-public class MainWebSocket extends WebSocketAdapter implements GameSocket {
-    private TopLevelGameServer topLevelGameServer;
-    private String httpSession;
-    private GameActionStrategy gameStrategy;
-    private ResponseResources responseResources;
-    public MainWebSocket(String httpSession,TopLevelGameServer topLevelGameServer) {
-        responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
-        this.topLevelGameServer = topLevelGameServer;
+public class MainWebSocket extends WebSocketAdapter {
+    private final GameServer gameServer;
+    private final String httpSession;
+    private final GameActionStrategy gameStrategy;
+    private final ResponseResources responseResources;
+    private static final Logger LOGGER = LogManager.getLogger(MainWebSocket.class);
+    public MainWebSocket(String httpSession,GameServer gameServer) {
+        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
+        this.gameServer = gameServer;
         this.httpSession = httpSession;
-        gameStrategy = new MoveActionStrategy(topLevelGameServer);
+        gameStrategy = new MoveActionStrategy(gameServer);
     }
 
     @Override
     public void onWebSocketClose(int statusCode, String reason) {
-        topLevelGameServer.kickPlayer(httpSession);
-        System.out.println("socket closed " + statusCode + ' ' + reason);
+        if(statusCode == StatusCode.SHUTDOWN || statusCode == StatusCode.NORMAL) {
+            LOGGER.info("socket closed with code " + statusCode);
+        }else{
+            LOGGER.warn("socket closed with code " + statusCode + " for reason " + reason);
+        }
+        gameServer.kickPlayer(httpSession);
         super.onWebSocketClose(statusCode, reason);
     }
 
@@ -42,28 +49,27 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
         try {
             data= new JSONObject(new JSONTokener(message));
         }catch (JSONException exc){
-            exc.printStackTrace();
+            LOGGER.error("bad json message " + message, exc);
         }
         boolean isOkPlayer = false;
         if(data != null) {
-            isOkPlayer = topLevelGameServer.isCorrectPlayerInGame(httpSession);
+            isOkPlayer = gameServer.isCorrectPlayerInGame(httpSession);
         }
         if(isOkPlayer){
-            processPlayerMessage(data,gameStrategy);
+            processPlayerMessage(data);
         }
     }
 
-
-    @Override
-    public void processPlayerMessage(JSONObject message,GameActionStrategy strategy) {
-        boolean isOkGame = topLevelGameServer.isGameReady(httpSession);
+    public void processPlayerMessage(JSONObject message) {
+        boolean isOkGame = gameServer.isGameReady(httpSession);
         JSONObject object = new JSONObject();
         if(isOkGame) {
-            Room room = topLevelGameServer.getPlayerRoomBySession(httpSession);
             analyseActionType(message);
+            Room room = gameServer.getPlayerRoomBySession(httpSession);
             if (room != null) {
                 if(room.isFinished()){
                     String winner = room.getWinner();
+                    LOGGER.info("winner in room " + room.getRoomName() + ':' + winner );
                     object.put("winner", winner);
                     object.put("status", responseResources.getWinnerMessageCode());
                 }else {
@@ -78,6 +84,7 @@ public class MainWebSocket extends WebSocketAdapter implements GameSocket {
         try {
             getRemote().sendString(object.toString());
         } catch (IOException e) {
+            LOGGER.error("cant send message back, user session " + httpSession);
             e.printStackTrace();
         }
 

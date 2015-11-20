@@ -6,4 +6,7 @@ target/
 L1.2-1.0-jar-with-dependencies.jar
 node_modules
 target/
-
+logs/
+*.css.map
+public_html/scss
+.sass-cache/

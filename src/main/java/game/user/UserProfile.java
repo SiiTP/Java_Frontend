@@ -10,11 +10,12 @@ import org.json.JSONObject;
  */
 public class UserProfile {
     @NotNull
-    private String username;
+    private final String username;
     @NotNull
-    private String password;
-    private GameProfile gameProfile;
+    private final String password;
+    private final GameProfile gameProfile;
     private Room currentroom;
+    private boolean isAuthorized;
     public UserProfile(@NotNull String name,@NotNull String pass) {
         this.username = name;
         this.password = pass;
@@ -38,18 +39,6 @@ public class UserProfile {
         this.currentroom = currentroom;
     }
 
-    public void setUsername(@NotNull String name) {
-        this.username = name;
-    }
-
-    @NotNull
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(@NotNull String pass) {
-        this.password = pass;
-    }
     public JSONObject getJson(){
         JSONObject object = gameProfile.getJSON();
         object.put("name",username);
@@ -60,4 +49,12 @@ public class UserProfile {
         return gameProfile;
     }
 
+
+    public boolean isAuthorized() {
+        return isAuthorized;
+    }
+
+    public void setIsAuthorized(boolean isAuthorized) {
+        this.isAuthorized = isAuthorized;
+    }
 }
