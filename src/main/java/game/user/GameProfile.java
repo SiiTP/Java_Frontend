@@ -18,11 +18,7 @@ public class GameProfile {
     private Instant dt;
     private boolean isKilled;
     public GameProfile() {
-        Random random = new Random(System.currentTimeMillis());
-        GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
-        x = random.nextInt(gameResources.getGameFieldWidth());
-        y = random.nextInt(gameResources.getGameFieldHeight());
-        isKilled = false;
+            resetSetting();
     }
 
     public JSONObject getJSON(){
@@ -97,5 +93,12 @@ public class GameProfile {
     @Override
     public int hashCode() {
         return Double.hashCode(x)+Double.hashCode(y);
+    }
+    public void resetSetting(){
+        Random random = new Random(System.currentTimeMillis());
+        GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
+        x = random.nextInt(gameResources.getGameFieldWidth());
+        y = random.nextInt(gameResources.getGameFieldHeight());
+        isKilled = false;
     }
 }

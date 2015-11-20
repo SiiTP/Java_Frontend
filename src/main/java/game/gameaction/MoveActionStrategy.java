@@ -4,7 +4,7 @@ import game.rooms.Room;
 import game.rooms.RoomFFA;
 import game.serverlevels.top.GameServer;
 import game.user.GameProfile;
-import game.user.UserProfile;
+import persistance.UserProfile;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 import resource.GameResources;
@@ -55,7 +55,7 @@ public class MoveActionStrategy implements GameActionStrategy {
                                 gameProfile.setY((int)newY);
                             }
                         }
-                     //   checkForCollision(gameProfile, room);
+                        checkForCollision(gameProfile, room);
 
                     }
                     gameProfile.setDirection(direction);

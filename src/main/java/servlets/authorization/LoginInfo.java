@@ -1,6 +1,6 @@
 package servlets.authorization;
 
-import game.user.UserProfile;
+import persistance.UserProfile;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 import service.account.AccountService;

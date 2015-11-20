@@ -4,7 +4,7 @@ import game.rooms.Room;
 import game.rooms.RoomFFA;
 import game.serverlevels.top.GameServer;
 import game.sockets.MainWebSocket;
-import game.user.UserProfile;
+import persistance.UserProfile;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;

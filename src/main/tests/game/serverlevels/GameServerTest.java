@@ -3,7 +3,7 @@ package game.serverlevels;
 import game.rooms.Room;
 import game.rooms.RoomFFA;
 import game.serverlevels.top.GameServer;
-import game.user.UserProfile;
+import persistance.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
 import service.account.AccountService;
