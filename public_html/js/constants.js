@@ -4,7 +4,7 @@ define(['backbone'], function(Backbone) {
             FIELD_WIDTH: 1000,
             FIELD_HEIGHT: 700,
             //__________________________
-            // OFFSETS BEFOR CANVAS_____
+            // OFFSETS BEFORE CANVAS_____
             X_OFFSET_TO_CANVAS: 20,
             Y_OFFSET_TO_CANVAS: 30
             //__________________________
