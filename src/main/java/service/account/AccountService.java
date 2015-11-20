@@ -1,7 +1,7 @@
 package service.account;
 
 
-import game.user.UserProfile;
+import persistance.UserProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -45,7 +45,6 @@ public class AccountService{
         boolean isOk = false;
         if(profile != null && !profile.isAuthorized()){
             isOk = profile.checkPassword(password);
-
         }
         if(isOk){
             addSession(session, profile);
