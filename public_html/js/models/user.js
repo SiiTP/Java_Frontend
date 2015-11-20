@@ -4,6 +4,7 @@ define([
     Backbone
 ){
     var Model = Backbone.Model.extend({
+        url: "",
         initialize: function() {
             this.set({'username'    : null});
             this.set({'password'    : null});
@@ -11,6 +12,8 @@ define([
             this.set({validUsername : false});
             this.set({validPassword : false});
             this.set({'score'       : 0});
+            console.log("context before fetch : ");
+            console.log(this);
             this.fetch();
         },
         patterns: {
@@ -101,23 +104,6 @@ define([
         },
         isValid: function() {
             return this.get('validUsername') && this.get('validPassword')
-        },
-        fetch: function() {
-            console.log("---> fetch user model : " + this.username);
-            $.ajax({
-                type: "POST",
-                url: "/logininfo",
-                context: this
-            }).done(function(obj) {
-                console.log("SERVER ANSWER : " + obj);
-                var answer = JSON.parse(obj);
-                if (answer.success) {
-                    //TODO если ответ от аякса приходит позже отрисовки, отрисовываются данные без учета ответа
-                    this.set({'username': answer.username});
-                    this.set({'logged': true});
-                    //TODO присваивать счет
-                }
-            });
         },
         onLogout: function() {
             console.log("---> logout");

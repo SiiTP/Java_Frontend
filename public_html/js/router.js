@@ -33,6 +33,7 @@ define([
     EnemyCharacter,
     constants
 ) {
+    debugger;
     var mainView =         new MainView         ({model: user});
     var registrationView = new RegistrationView ({model: user});
     var loginView =        new LoginView        ({model: user});
@@ -54,7 +55,6 @@ define([
         constants      : constants,
         field          : fieldView
     });
-    //manager.add(gameView);
     var Router = Backbone.Router.extend({
         routes: {
             'scoreboard': 'scoreboardAction',
