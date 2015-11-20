@@ -13,6 +13,11 @@ public class GameResources implements Resource {
     private int defaultSpeed;
     private int defaultPlayerRadius;
     private int millsToSeconds;
+    private int defaultStopDirectionValue;
+
+    public int getDefaultStopDirectionValue() {
+        return defaultStopDirectionValue;
+    }
 
     public int getToSeconds() {
         return millsToSeconds;

@@ -1,7 +1,7 @@
 package servlets.joingame;
 
 import game.rooms.Room;
-import game.serverlevels.top.TopLevelGameServer;
+import game.serverlevels.top.GameServer;
 import org.junit.Before;
 import org.junit.Test;
 import resource.ResourceFactory;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
  * Created by ivan on 11.10.15.
  */
 public class CreateGameTest {
-    private TopLevelGameServer gameServer;
+    private GameServer gameServer;
     private HttpServletRequest request;
     private HttpServletResponse response;
     private StringWriter stringWriter;
@@ -33,11 +33,11 @@ public class CreateGameTest {
 
     @Before
     public void setUp() throws IOException {
-        responseResources =(ResponseResources) ResourceFactory.getResource("resources/data/responseCodes.json");
+        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);
-        gameServer = mock(TopLevelGameServer.class);
+        gameServer = mock(GameServer.class);
         when(request.getSession()).thenReturn(session);
 
         stringWriter = new StringWriter();

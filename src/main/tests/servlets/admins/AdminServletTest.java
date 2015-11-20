@@ -1,6 +1,6 @@
 package servlets.admins;
 
-import game.serverlevels.top.TopLevelGameServer;
+import game.serverlevels.top.GameServer;
 import game.user.UserProfile;
 import org.eclipse.jetty.server.Server;
 import org.junit.Before;
@@ -25,12 +25,12 @@ public class AdminServletTest {
     private AccountService accountService;
     private HttpServletRequest req;
     private HttpServletResponse resp;
-    private TopLevelGameServer topLevelGameServer;
+    private GameServer gameServer;
     private StringWriter stringWriter;
     @Before
     public void setup() throws IOException {
         accountService = spy(new AccountService());
-        topLevelGameServer = new TopLevelGameServer(accountService);
+        gameServer = new GameServer(accountService);
         server = spy(new Server());
         req = mock(HttpServletRequest.class);
         resp = mock(HttpServletResponse.class);
@@ -41,20 +41,25 @@ public class AdminServletTest {
     }
     @Test
     public void testDoGet() throws ServletException, IOException {
-        AdminServlet adminServlet = new AdminServlet(server, topLevelGameServer);
+        AdminServlet adminServlet = new AdminServlet(server, gameServer);
         when(req.getParameter("shutdown")).thenReturn("vdbdfb");
         adminServlet.doGet(req, resp);
+        assertTrue(stringWriter.toString().isEmpty());
+        stringWriter.getBuffer().setLength(0);
+        when(req.getParameter("shutdown")).thenReturn("");
+        adminServlet.doGet(req, resp);
+        assertTrue(stringWriter.toString().isEmpty());
     }
     @Test
     public void testDoGetStop() throws ServletException, IOException {
-        AdminServlet adminServlet = new AdminServlet(server, topLevelGameServer);
+        AdminServlet adminServlet = new AdminServlet(server, gameServer);
         when(req.getParameter("shutdown")).thenReturn("1000");
         adminServlet.doGet(req, resp);
 
     }
     @Test
     public void testDoGetLogged() throws ServletException, IOException {
-        AdminServlet adminServlet = new AdminServlet(server, topLevelGameServer);
+        AdminServlet adminServlet = new AdminServlet(server, gameServer);
         accountService.addUser(new UserProfile("test", "test"));
         when(req.getParameter("log")).thenReturn("true");
 
@@ -77,7 +82,7 @@ public class AdminServletTest {
     }
     @Test
     public void testDoGetRegistered() throws ServletException, IOException {
-        AdminServlet adminServlet = new AdminServlet(server, topLevelGameServer);
+        AdminServlet adminServlet = new AdminServlet(server, gameServer);
         when(req.getParameter("reg")).thenReturn("true");
 
         adminServlet.doGet(req, resp);
@@ -98,14 +103,14 @@ public class AdminServletTest {
     }
     @Test
     public void testDoGetClear() throws ServletException, IOException {
-        AdminServlet adminServlet = new AdminServlet(server, topLevelGameServer);
+        AdminServlet adminServlet = new AdminServlet(server, gameServer);
         UserProfile profile = new UserProfile("test","test");
         doReturn(profile).when(accountService).getUserBySession(anyString());
-        topLevelGameServer.createRoom("test", "testRoom", null);
+        gameServer.createRoom("test", "testRoom", null);
         when(req.getParameter("clear")).thenReturn("");
 
         adminServlet.doGet(req, resp);
 
-        assertTrue(topLevelGameServer.getRoomsListJSON() == null);
+        assertTrue(gameServer.getRoomsListJSON() == null);
     }
 }

@@ -14,6 +14,6 @@ public final class ResourceFactory {
             s_cachedResources = new HashMap<>();
             new ResourceLoader().loadResources(s_cachedResources);
         }
-        return s_cachedResources.get(resourceSource);
+        return s_cachedResources.get("src/main/resources/"+resourceSource);
     }
 }

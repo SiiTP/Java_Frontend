@@ -12,23 +12,22 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by ivan on 02.10.15.
  */
 public class RoomFFA extends RoomAbstractImpl {
-
-    private List<UserProfile> users = new ArrayList<>();
-    @Override
+    private final List<UserProfile> users = new ArrayList<>();
     public boolean isFull(){
         return users.size() == getPlayersLimit();
     }
-    public RoomFFA(String roomName, UserProfile creatorUser) {
-        super(roomName,creatorUser);
+    public RoomFFA(String roomName) {
+        super(roomName);
     }
 
-    public RoomFFA(String roomName, String roomPassword, UserProfile creator) {
-        super(roomName, roomPassword, creator);
+    public RoomFFA(String roomName, String roomPassword) {
+        super(roomName, roomPassword);
     }
 
     @Override
@@ -42,16 +41,7 @@ public class RoomFFA extends RoomAbstractImpl {
 
     @Override
     public boolean isRoomReady() {
-        boolean isReady =  users.size()>1;
-        if(isReady && getStartTime() == null) {
-            Instant startTime = Instant.now();
-            GameResources gameResources =(GameResources) ResourceFactory.getResource("resources/data/game.json");
-            final int maxRoomTime = gameResources.getMaxRoomPlayingTimeInSec();
-            Instant finishTime = startTime.plusSeconds(maxRoomTime);
-            setStartTime(startTime);
-            setFinishTime(finishTime);
-        }
-        return isReady;
+        return users.size()>1;
     }
     public int maxScore(){
         int max = -1;
@@ -65,15 +55,15 @@ public class RoomFFA extends RoomAbstractImpl {
     }
     @Override
     public boolean isFinished() {
-        return Instant.now().isAfter(getFinishTime()) || maxScore()==getScoreLimit();
+        boolean isFinished = false;
+        if(getFinishTime()!=null) {
+            isFinished = Instant.now().isAfter(getFinishTime()) || maxScore() == getScoreLimit();
+        }
+        return isFinished;
     }
 
     public List<GameProfile> getGameProfiles(){
-        List<GameProfile> gameProfiles = new ArrayList<>();
-        for(UserProfile profile :users){
-            gameProfiles.add(profile.getGameProfile());
-        }
-        return gameProfiles;
+        return users.stream().map(UserProfile::getGameProfile).collect(Collectors.toList());
     }
 
     @Override
@@ -90,6 +80,7 @@ public class RoomFFA extends RoomAbstractImpl {
                     }
                 }
             }
+
         return winner.getUsername();
     }
     @Override
@@ -100,12 +91,22 @@ public class RoomFFA extends RoomAbstractImpl {
     public void addUser(UserProfile profile) {
         if(!isFull()){
             users.add(profile);
+            if(isRoomReady() && getStartTime() == null){
+                setGamePlayInterval();
+            }
         }
+    }
+    private void setGamePlayInterval(){
+            Instant startTime = Instant.now();
+            GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
+            final int maxRoomTime = gameResources.getMaxRoomPlayingTimeInSec();
+            Instant finishTime = startTime.plusSeconds(maxRoomTime);
+            setStartTime(startTime);
+            setFinishTime(finishTime);
     }
     @Override
     public JSONObject getJsonRoom(){
         JSONObject object = new JSONObject();
-        //object.put("roomID",1);//TODO еще нет БД для ID
         object.put("name",getRoomName());
         object.put("players",getPlayersCount());
         object.put("maxPlayers",getPlayersLimit());
@@ -116,11 +117,7 @@ public class RoomFFA extends RoomAbstractImpl {
     public JSONArray getJsonRoomPlayers() {
 
         JSONArray array = new JSONArray();
-        for(UserProfile profile : users){
-            if(!profile.getGameProfile().isKilled()) {
-                array.put(profile.getJson());
-            }
-        }
+        users.stream().filter(profile -> !profile.getGameProfile().isKilled()).forEach(profile -> array.put(profile.getJson()));
         return array;
     }
 

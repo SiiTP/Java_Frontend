@@ -1,6 +1,6 @@
 package servlets.game;
 
-import game.serverlevels.top.TopLevelGameServer;
+import game.serverlevels.top.GameServer;
 import game.sockets.creators.MainWebSocketCreator;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
@@ -15,16 +15,16 @@ import javax.servlet.annotation.WebServlet;
 @WebServlet
 public class MainSocketWebServlet extends WebSocketServlet {
     private final int idleTime;
-    private TopLevelGameServer topLevelGameServer;
-    public MainSocketWebServlet(TopLevelGameServer topLevelGameServer) {
-        this.topLevelGameServer = topLevelGameServer;
-        ServletResources servletResources =(ServletResources) ResourceFactory.getResource("resources/data/servlet.json");
+    private final GameServer gameServer;
+    public MainSocketWebServlet(GameServer gameServer) {
+        this.gameServer = gameServer;
+        ServletResources servletResources =(ServletResources) ResourceFactory.getResource("data/servlet.json");
         idleTime = servletResources.getWebSocketIdleTimeMillisec();
     }
 
     @Override
     public void configure(WebSocketServletFactory webSocketServletFactory) {
         webSocketServletFactory.getPolicy().setIdleTimeout(idleTime);
-        webSocketServletFactory.setCreator(new MainWebSocketCreator(topLevelGameServer));
+        webSocketServletFactory.setCreator(new MainWebSocketCreator(gameServer));
     }
 }
