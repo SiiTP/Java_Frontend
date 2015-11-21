@@ -49,6 +49,7 @@
             <div class="validation-info validation-info-common validation-info_error rooms__create__message"> </div>
         </div>
         <div class="line line_blue"> </div>
+        <button class="button rooms__button-onMain js-onMain" data-href="#">On main</button>
     </div>
 </fest:template>
 

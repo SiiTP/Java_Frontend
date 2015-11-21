@@ -531,6 +531,10 @@ html, body {
 .rooms__create__message {
     margin: 0;
 }
+.rooms__button-onMain {
+    width: 100%;
+    margin-top: 10px;
+}
 /*GAME PAGE*/
 .field {
     margin: 0 0 0 10px;
