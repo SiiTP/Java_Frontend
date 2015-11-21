@@ -6,7 +6,7 @@
             ;
             <fest:space/>
             <div class="logout__info">Ваш счет :<fest:space/><span><fest:value>data.score</fest:value></span></div><br/>
-            <button type="button" class="button button_long button_smallMargTop logout__button" data-href="#logout">Logout</button>
+            <button type="button" class="button button_long smallMargTop logout__button" data-href="#logout">Logout</button>
         </div>
     </fest:set>
 
@@ -34,11 +34,11 @@
                 </fest:otherwise>
             </fest:choose>
         </div>
+        <div class="line line_blue mediumMargTop"> </div>
         <div class="menu">
             <div class="container-game-btn">
                 <button class="button container-game-btn__button container-game-btn__button_game
                 {data.logged ? '' : 'container-game-btn__button_disabled'}" data-href="#rooms">Game</button>
-                <label class="container-game-btn__msg"> </label>
             </div>
             <div class="container-game-btn">
                 <button class="button container-game-btn__button container-game-btn__button_scoreboard" data-href="#scoreboard">Scoreboard</button>
@@ -53,6 +53,7 @@
                     </fest:otherwise>
                 </fest:choose>
             </div>
+            <div class="menu__msg-game"> </div>
         </div>
         <div class="line line_blue"> </div>
     </div>

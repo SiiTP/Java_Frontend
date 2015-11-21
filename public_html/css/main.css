@@ -19,6 +19,12 @@ html, body {
     padding-top: 20px;
 
 }
+.smallMargTop {
+    margin-top: 10px;
+}
+.mediumMargTop {
+    margin-top: 20px;
+}
 /*BUTTON BLOCK*/
 .button {
     box-sizing: border-box;
@@ -33,9 +39,6 @@ html, body {
 }
 .button_long {
     width: 100%;
-}
-.button_smallMargTop {
-    margin-top: 10px;
 }
 .button:hover {
     box-shadow: #ff0 0 0 6px 4px,
@@ -68,6 +71,7 @@ html, body {
     box-shadow: #05f 0  0 5px 2px;
     background: #03f;
 }
+
 .vertical-line {
     display: inline-block;
     width: 1px;
@@ -194,7 +198,7 @@ html, body {
 .logout {
     display: inline-block;
     width: 48%;
-    margin-left: 10px;
+    margin-left: 20px;
 }
 .logout__info {
     display: inline-block;
@@ -211,7 +215,7 @@ html, body {
     width: 48%;
     box-sizing: border-box;
     text-align: right;
-    margin-left: 10px;
+    margin-left: 20px;
     font-family: UbuntuItalic;
     font-size: 30px;
     text-shadow: whitesmoke 0 0 1em;
@@ -219,27 +223,25 @@ html, body {
 /*-------------*/
 
 .menu {
-    min-height: 150px;
-    margin: 20px 0 10px;
-    padding: 80px 20px 0 20px;
+    min-height: 100px;
+    margin: 0;
+    padding: 25px 0 0 0;
     border-radius: 10px;
-    box-shadow: inset #004 0 0 20px 15px;
 }
 
 .container-game-btn {
     display: inline-block;
     box-sizing: border-box;
-    vertical-align: top;
     width: 33%;
+    height: 100px;
     color: whitesmoke;
-    /*background: #444;*/
 }
-.container-game-btn__msg {
-    display: block;
-    margin-top: 30px;
+.menu__msg-game {
+    width: 33%;
+    margin-top: 15px;
     text-align: center;
-    min-height: 50px;
-    font-size: 18px;
+    white-space: normal;
+    font-size: 14px;
 }
 .container-game-btn__button {
     display: block;
@@ -300,7 +302,9 @@ html, body {
 /*LOGIN PAGE*/
 .login {
     margin: auto;
-    width: 400px;
+    width: 40%;
+    min-width: 400px;
+    max-width: 500px;
     padding-bottom: 10px;
 }
 .input-field {
@@ -351,11 +355,15 @@ html, body {
     margin-top: 10px;
 }
 .login__buttons-container__button {
-    width: 60%;
+    width: 40%;
 }
 .login__buttons-container__registration-link {
-    margin-left: 30px;
-    font-size:24px;
+    display: inline-block;
+    width: 58%;
+    margin-left: 2%;
+    text-align: right;
+    box-sizing: border-box;
+    font-size: 20px;
     font-family: NunitoNormal;
     color: #f5f5f5;
     text-shadow: whitesmoke 0 0 1em;
@@ -373,16 +381,17 @@ html, body {
 .registration {
     color: #003;
     margin: auto;
-    width: 400px;
+    min-width: 310px;
+    width: 40%
 }
 .registration__button {
-    width: 99%;
+    width: 100%;
     margin-top: 10px;
 }
 
 /*SCOREBOARD PAGE*/
 .scoreboard {
-    width: 300px;
+    width: 50%;
     margin: auto;
 }
 .scoreboard__header {
@@ -446,6 +455,8 @@ html, body {
 /*ROOMS PAGE*/
 .rooms {
     width: 70%;
+    min-width: 715px;
+    max-width: 1000px;
     margin: auto;
 }
 .rooms__lines {
@@ -524,18 +535,21 @@ html, body {
     margin-bottom: 20px;
 }
 .rooms__create__input-line {
-    width: 40%;
+    width: 41%;
     display: inline-block;
-    box-sizing: border-box;
     font-family: UbuntuItalic;
 }
+.rooms__create__input-line__username {
+    width: 43%;
+}
 .rooms__create__input-line__password {
-    margin-left: 5%;
+    width: 41%;
+    margin-left: 2%;
 }
 .rooms__create__button {
-    width: 9%;
+    width: 14%;
     display: inline-block;
-    margin-left: 5%;
+    margin-left: 2%;
 }
 .rooms__create__message {
     margin: 0;

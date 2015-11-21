@@ -1,7 +1,7 @@
 define(['backbone'], function(Backbone) {
     Backbone.sync = function(method, model, options) {
         var url = model.url;
-        console.log("<--- query : " + url + " CRUD : " + method);
+        console.log("<--- query : /" + url + " CRUD : " + method);
         switch (method) {
             case "create":
                 var data = model.toJSON();
@@ -11,8 +11,7 @@ define(['backbone'], function(Backbone) {
                     url: url + "/create",
                     data: data
                 }).done(function(obj) {
-                    console.log("SERVER ANSWER : ");
-                    console.log(obj);
+                    console.log("---> SERVER ANSWER : " + obj);
                     var answer = JSON.parse(obj);
                     if (answer.success) {
                         location.href = "#login";
@@ -24,30 +23,25 @@ define(['backbone'], function(Backbone) {
             case "read":
                 $.ajax({
                     type: "POST",
-                    url: url + "/read",
-                    context: model
+                    url: url + "/read"
                 }).done(function(obj) {
                     console.log("---> SERVER ANSWER : " + obj);
                     var answer = JSON.parse(obj);
                     if (answer.success) {
-                        this.set({id:1});
-                        this.set({'username': answer.username});
-                        this.set({'logged': true});
+                        options.success(answer);
                         //TODO присваивать счет
                     }
                 });
                 break;
             case "update":
                 var data = model.toJSON();
-                console.log("data : " + JSON.stringify(data));
                 $.ajax({
                     type: "POST",
                     url: url + "/update",
                     data: data
                 }).done(function(obj) {
+                    console.log("---> SERVER ANSWER : " + obj);
                     var answer = JSON.parse(obj);
-                    console.log("---> login ");
-                    console.log(answer);
                     if (answer.success) {
                         model.set({'logged': true});
                         model.set({'password': null});
@@ -66,10 +60,9 @@ define(['backbone'], function(Backbone) {
                     console.log("---> SERVER ANSWER : " + obj);
                     var answer = JSON.parse(obj);
                     if (answer.success) {
-                        model.uninitialize();
-                        model.trigger('toMain');
+                        options.success(model, answer);
                     } else {
-                        console.log(answer.message);
+                        options.error(answer.message);
                     }
                 });
                 break;

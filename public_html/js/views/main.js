@@ -28,7 +28,7 @@ define([
         },
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
-            this.JQmsg = $('.container-game-btn__msg').first();
+            this.JQmsg = $('.menu__msg-game').first();
         },
         show: function () {
             this.trigger('show');
@@ -44,9 +44,7 @@ define([
             if (!$(targetElement).hasClass('container-game-btn__button_disabled')) {
                 var href = targetElement.attributes.getNamedItem('data-href').value;
                 if (href == "#logout") {
-                    this.model.destroy();
-                    console.log("deleted");
-                    this.model.unset("id");
+                    this.model.destroy(this.model.optionsDestroy);
                 } else {
                     location.href = href;
                 }
@@ -63,7 +61,7 @@ define([
             targetElement.removeClass("container-game-btn__button_active");
         },
         printMessage: function () {
-            this.JQmsg.text("Please, login if you want play");
+            this.JQmsg.text("Пожалуйста, авторизуйтесь, если хотите сыграть");
         },
         deleteMessage: function () {
             this.JQmsg.text("");

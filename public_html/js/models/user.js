@@ -5,6 +5,27 @@ define([
 ){
     var Model = Backbone.Model.extend({
         url: "user",
+
+        optionsFetch: ({
+            success: function(model, response, parse) {
+                model.set({id:1});
+                model.set({'username': response.username});
+                model.set({'logged': true});
+            },
+            error: function() {
+                console.log("Unexpected error");
+            }
+        }),
+        optionsDestroy: ({
+            success: function(model, response, parse) {
+                model.uninitialize();
+                model.trigger('toMain');
+            },
+            error: function(msg) {
+                console.log("Unexpected error : " + msg);
+            }
+        }),
+
         initialize: function() {
             this.set({'username'    : null});
             this.set({'password'    : null});
@@ -12,7 +33,7 @@ define([
             this.set({validUsername : false});
             this.set({validPassword : false});
             this.set({'score'       : 0});
-            this.fetch();
+            this.fetch(this.optionsFetch);
         },
         patterns: {
             loginAvailableSymbols: '^[a-zA-Z]+$',
@@ -111,6 +132,7 @@ define([
             this.set({'validPassword' : false});
             this.set({'logged'        : false});
             this.set({'score'         : 0});
+            this.unset("id");
         }
     });
     return new Model();
