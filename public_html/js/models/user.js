@@ -35,7 +35,6 @@ define([
             }
         },
         validate: function(attrs) {
-            console.log("user validation");
             var error = [];
             if (attrs.username == "") {
                 error.push({
@@ -103,36 +102,6 @@ define([
         },
         isValid: function() {
             return this.get('validUsername') && this.get('validPassword')
-        },
-        onLogout: function() {
-            this.destroy();
-            console.log("ZAGLUSHKA");
-        },
-        onLogin: function() {
-            this.set({id: 1});
-            this.save();
-
-        },
-        onRegistration: function() {
-            this.unset("id");
-            this.save();
-            //var data = this.toJSON();
-            //console.log(data);
-            //$.ajax({
-            //    type: "POST",
-            //    url: "/signup",
-            //    data: data
-            //}).done(function(obj) {
-            //    var answer = JSON.parse(obj);
-            //    console.log("SERVER ANSWER : ");
-            //    console.log(answer);
-            //    if (answer.success) {
-            //        location.href = "#login";
-            //    } else {
-            //        //TODO надо выводить через вьюху, наверное надо хранить объект вьюхи в моделе
-            //        $(".registration__validation-info-common").text(answer.message);
-            //    }
-            //});
         },
         uninitialize: function() {
             console.log("user model uninitialize");

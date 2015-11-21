@@ -21,7 +21,7 @@
                 </fest:each>
             </main>
             <div class="line line_blue table__line"> </div>
-            <button class="button scoreboard__button" data-href="#">On main</button>
+            <button class="button button_long button_smallMargTop js-button-onMain" data-href="#">On main</button>
         </div>
     </div>
 </fest:template>

@@ -31,7 +31,7 @@
                 </div>
             </fest:otherwise>
         </fest:choose>
-        <button class="button rooms__button-refresh">Refresh</button>
+        <button class="button button_long button_smallMargTop js-button-refresh">Refresh</button>
         <div class="line line_blue"> </div>
         <div class="rooms__create">
             <div class="header-text rooms__create__header">Create new room</div>
@@ -49,7 +49,7 @@
             <div class="validation-info validation-info-common validation-info_error rooms__create__message"> </div>
         </div>
         <div class="line line_blue"> </div>
-        <button class="button rooms__button-onMain js-onMain" data-href="#">On main</button>
+        <button class="button button_long button_smallMargTop js-button-onMain" data-href="#">On main</button>
     </div>
 </fest:template>
 

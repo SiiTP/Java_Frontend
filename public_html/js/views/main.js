@@ -12,7 +12,7 @@ define([
         JQmsg: undefined,
         events: {
             "click .container-game-btn__button": "onClick",
-            "click .button_logout": "onClick",
+            "click .logout__button": "onClick",
             "mousedown .container-game-btn__button": "onMouseDown",
             "mouseout .container-game-btn__button": "onMouseUp",
             "mouseover .button.container-game-btn__button.container-game-btn__button_disabled": "printMessage", //выдача сообщения о том что игрок не залогинен.
@@ -44,7 +44,9 @@ define([
             if (!$(targetElement).hasClass('container-game-btn__button_disabled')) {
                 var href = targetElement.attributes.getNamedItem('data-href').value;
                 if (href == "#logout") {
-                    this.model.onLogout();
+                    this.model.destroy();
+                    console.log("deleted");
+                    this.model.unset("id");
                 } else {
                     location.href = href;
                 }

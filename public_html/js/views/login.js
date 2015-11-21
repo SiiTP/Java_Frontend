@@ -130,7 +130,8 @@ define([
             event.preventDefault();
             this.JQ_cashing();
             if (this.model.isValid()) {
-                this.model.onLogin();
+                this.model.set({id: 1});
+                this.model.save();
             } else {
                 $(".login__validation-info-common").text("Не все поля заданы корректно.");
                 this.focusOnErrorField();

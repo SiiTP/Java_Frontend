@@ -31,16 +31,18 @@ html, body {
             inset #004 0 0 6px 4px;
     outline: none;
 }
+.button_long {
+    width: 100%;
+}
+.button_smallMargTop {
+    margin-top: 10px;
+}
 .button:hover {
     box-shadow: #ff0 0 0 6px 4px,
     inset #004 0 0 6px 4px;
 }
 .button:active {
     color: #005;
-}
-.button_logout {
-    width: 100%;
-    margin-top: 10px;
 }
 /*LINE BLOCK*/
 .line {
@@ -101,11 +103,11 @@ html, body {
 }
 .header {
     background: #002;
+    box-sizing: border-box;
     border-radius: 10px;
     box-shadow: inset #004 0  0 10px 5px,
     #000 0 0 10px 5px;
-    padding: 20px;
-    padding-bottom: 10px;
+    padding: 20px 20px 10px 20px;
 
 }
 .header-text {
@@ -122,13 +124,15 @@ html, body {
 .menu-container {
     white-space: nowrap;
     width: 70%;
+    min-width: 670px;
+    max-width: 1000px;
     margin: auto;
     border-radius: 20px;
 
 }
 .logo {
     display: inline-block;
-    width: 36%;
+    width: 50%;
     margin-bottom: 10px;
     box-sizing: border-box;
     /*border: solid 1px #111;*/
@@ -160,22 +164,26 @@ html, body {
     background: #f00;
 }
 .logo__center {
+    display: flex;
     color: #ff0;
-    text-shadow: #ff2 0 0 8px;
+    text-shadow: #ff2 0 0 1em;
 }
 .logo__beam {
-    display: inline-block;
+    text-align: right;
+    width: 49%;
     font-size: 48px;
 }
 .logo__balls {
-    display: inline-block;
+    text-align: left;
+    width: 49%;
+
     font-size: 48px;
 }
 .logo__divider {
-    display: inline-block;
+    display: inline-flex;
     width: 1px;
     height: 2em;
-    margin: 0 20px 0;
+    margin: auto 20px;
     border: solid 1px #ff0;
     box-shadow: #ff1 0  0 4px 3px;
     -webkit-box-shadow: #ff1 0 0 5px 2px;
@@ -185,20 +193,25 @@ html, body {
 /*LOGOUT MODULE*/
 .logout {
     display: inline-block;
-    width: 36%;
+    width: 48%;
+    margin-left: 10px;
 }
 .logout__info {
     display: inline-block;
-
 }
 .logout__on-main-page {
     width: 100px;
+}
+.logout__button {
 }
 .dontLogged {
     position: relative;
     top: -8px;
     display: inline-block;
-    width: 36%;
+    width: 48%;
+    box-sizing: border-box;
+    text-align: right;
+    margin-left: 10px;
     font-family: UbuntuItalic;
     font-size: 30px;
     text-shadow: whitesmoke 0 0 1em;
@@ -224,11 +237,14 @@ html, body {
 .container-game-btn__msg {
     display: block;
     margin-top: 30px;
+    text-align: center;
     min-height: 50px;
     font-size: 18px;
 }
 .container-game-btn__button {
+    display: block;
     width: 100px;
+    margin: 0 auto;
     height: 100px;
     border: #002 solid 2px;
     border-radius: 50%;
@@ -424,9 +440,7 @@ html, body {
 }
 
 .scoreboard__button {
-    width: 100%;
     margin: 5px 0;
-    box-sizing: border-box;
 }
 
 /*ROOMS PAGE*/
@@ -502,10 +516,6 @@ html, body {
     margin: 30px 0 20px;
 
 }
-.rooms__button-refresh {
-    width: 100%;
-    margin-top: 10px;
-}
 .rooms__create {
     white-space: nowrap;
     margin: 10px 0 0;
@@ -525,15 +535,10 @@ html, body {
 .rooms__create__button {
     width: 9%;
     display: inline-block;
-    box-sizing: border-box;
     margin-left: 5%;
 }
 .rooms__create__message {
     margin: 0;
-}
-.rooms__button-onMain {
-    width: 100%;
-    margin-top: 10px;
 }
 /*GAME PAGE*/
 .field {

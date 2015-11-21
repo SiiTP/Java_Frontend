@@ -1,10 +1,3 @@
-<!--Классы:
-    registration__input-line__input__username
-    registration__username__validation-info
-    registration__username__line
-    и т. д.
-нужны для однозначного нахождения соответствующих полей при валидации
- -->
 <fest:template xmlns:fest="http://fest.mail.ru">
     <div class="registration">
         <div class="header-noBorder">
@@ -43,6 +36,7 @@
             </div>
             <button type="submit" class="button registration__button">Registration</button>
         </form>
+        <button class="button button_long button_smallMargTop js-button-onMain" data-href="#">On main</button>
         <div class="validation-info validation-info-common registration__validation-info-common validation-info_error "> </div>
     </div>
 </fest:template>

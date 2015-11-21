@@ -6,7 +6,7 @@
             ;
             <fest:space/>
             <div class="logout__info">Ваш счет :<fest:space/><span><fest:value>data.score</fest:value></span></div><br/>
-            <button type="button" class="button button_logout" data-href="#logout">Logout</button>
+            <button type="button" class="button button_long button_smallMargTop logout__button" data-href="#logout">Logout</button>
         </div>
     </fest:set>
 
@@ -16,7 +16,7 @@
                 <div class="logo__top">
                     <div class="logo__top__line"> </div>
                 </div>
-                <div align="center" class="logo__center">
+                <div class="logo__center">
                     <span class="logo__beam">Beam</span>
                     <span class="logo__divider"> </span>
                     <span class="logo__balls">Balls</span>
@@ -25,7 +25,6 @@
                     <div class="logo__bottom__line"> </div>
                 </div>
             </div>
-            <div class="vertical-line vertical-line_headerSmall"> </div>
             <fest:choose>
                 <fest:when test="data.logged">
                     <fest:get name="LoggedBar"/>
@@ -35,10 +34,10 @@
                 </fest:otherwise>
             </fest:choose>
         </div>
-        <div align="center" class="menu">
+        <div class="menu">
             <div class="container-game-btn">
                 <button class="button container-game-btn__button container-game-btn__button_game
-                {data.logged == true ? '' : 'container-game-btn__button_disabled'}" data-href="#rooms">Game</button>
+                {data.logged ? '' : 'container-game-btn__button_disabled'}" data-href="#rooms">Game</button>
                 <label class="container-game-btn__msg"> </label>
             </div>
             <div class="container-game-btn">

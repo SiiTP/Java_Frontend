@@ -1,7 +1,6 @@
 define(['backbone'], function(Backbone) {
     Backbone.sync = function(method, model, options) {
         var url = model.url;
-        console.log(typeof "azaza");
         console.log("<--- query : " + url + " CRUD : " + method);
         switch (method) {
             case "create":
@@ -18,7 +17,6 @@ define(['backbone'], function(Backbone) {
                     if (answer.success) {
                         location.href = "#login";
                     } else {
-                        //TODO надо выводить через вьюху, наверное надо хранить объект вьюхи в моделе
                         $(".registration__validation-info-common").text(answer.message);
                     }
                 });
@@ -27,12 +25,12 @@ define(['backbone'], function(Backbone) {
                 $.ajax({
                     type: "POST",
                     url: url + "/read",
-                    context: model,
-                    async: false
+                    context: model
                 }).done(function(obj) {
                     console.log("---> SERVER ANSWER : " + obj);
                     var answer = JSON.parse(obj);
                     if (answer.success) {
+                        this.set({id:1});
                         this.set({'username': answer.username});
                         this.set({'logged': true});
                         //TODO присваивать счет
