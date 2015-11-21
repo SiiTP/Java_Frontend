@@ -35,7 +35,6 @@ public class RoomFFA extends RoomAbstractImpl {
         if(users.contains(profile)){
             profile.setCurrentroom(null);
             users.remove(profile);
-
         }
     }
 

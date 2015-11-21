@@ -2,6 +2,8 @@ package service.account;
 
 
 import dao.UserDAO;
+import game.user.GameProfile;
+import persistance.PlayerDataSet;
 import persistance.UserProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -67,6 +69,12 @@ public class AccountService{
         }
         return isOk;
     }
+    public void updatePlayerInfo(UserProfile user,GameProfile profile){
+        Session session = ProjectDB.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        userDAO.updatePlayerInfo(user, profile.getScore());
+        session.getTransaction().commit();
+    }
     public void addUser(@NotNull UserProfile userProfile){
         String userName = userProfile.getUsername();
         if (isAvailableName(userName)) {
@@ -81,8 +89,11 @@ public class AccountService{
 
     @Nullable
     public UserProfile getUser(@Nullable String username){
+        Session session = ProjectDB.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
         UserProfile profile = userDAO.get(username);
-        return users.get(username);
+        session.getTransaction().commit();
+        return profile;
     }
     public long getRegisterdUsersCount(){
         Session session = ProjectDB.getSessionFactory().getCurrentSession();
@@ -99,6 +110,14 @@ public class AccountService{
            sessions.put(session,userProfile);
         }
     }
+    public PlayerDataSet getPlayerInfo(long user_id){
+        Session session = ProjectDB.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        PlayerDataSet player = userDAO.getPlayerDataSetById(user_id);
+        session.getTransaction().commit();
+        return player;
+    }
+
     @Nullable
     public UserProfile getUserBySession(String sessionId){
         return sessions.get(sessionId);

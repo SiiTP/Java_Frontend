@@ -94,7 +94,11 @@
             <version>2.4.1</version>
         </dependency>
         <!-- HIBERNATE -->
-
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>3.2.0.Final</version>
+        </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>

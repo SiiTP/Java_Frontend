@@ -30,6 +30,8 @@ public class Main {
         public static void main(String[] args) throws Exception {
             ProjectDB.getSessionFactory();
             LOGGER.info("main begin");
+            LOGGER.info("connect to production BD");
+            ProjectDB.initBD();
             AccountService accountService = new AccountService();
             accountService.addUser(new UserProfile("admin","admin"));
             accountService.addUser(new UserProfile("adminn","adminn"));

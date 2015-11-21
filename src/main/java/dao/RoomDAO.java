@@ -1,5 +1,6 @@
 package dao;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import persistance.ProjectDB;
@@ -17,5 +18,11 @@ public class RoomDAO {
     public void saveRoomInfo(RoomDataSet dataSet){
         Session session = sessionFactory.getCurrentSession();
         session.save(dataSet);
+    }
+    public RoomDataSet getRoomInfoByName(String roomname){
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.getNamedQuery("roomInfoByName");
+        query.setString("name", roomname);
+        return (RoomDataSet)query.uniqueResult();
     }
 }

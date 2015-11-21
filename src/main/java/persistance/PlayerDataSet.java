@@ -12,8 +12,8 @@ public class PlayerDataSet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column
-    private Long scoreCount;
+    @Column(nullable = false)
+    private Long scoreCount = 0L;
     @OneToOne
     private UserProfile user;
     @OneToMany(mappedBy = "winner")

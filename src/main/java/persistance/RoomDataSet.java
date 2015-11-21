@@ -11,6 +11,9 @@ import java.time.ZoneId;
 /**
  * Created by ivan on 20.11.15.
  */
+@NamedQueries({
+        @NamedQuery(name = "roomInfoByName",query = "from room r where r.roomName=:name")
+})
 @Entity(name="room")
 public class RoomDataSet {
     @Id

@@ -141,16 +141,20 @@ public class GameServer {
         UserProfile profile = accountService.getUserBySession(httpSession);
         if(profile != null) {
             Room room = profile.getCurrentroom();
-            GameProfile gameProfile = profile.getGameProfile();
-            gameProfile.resetSetting();
+
             if(room != null) {
-                room.kickPlayer(profile);
+                roomService.kickPlayerFromRoom(room.getRoomName(), profile);
+                GameProfile gameProfile = profile.getGameProfile();
+                accountService.updatePlayerInfo(profile, gameProfile);
+                gameProfile.resetSetting();
                 logger.info("player " + profile.getUsername() + " kicked from the room " + room.getRoomName());
                 if(room.getPlayersCount()==0){
                     roomService.finishRoom(room.getRoomName());
                     logger.warn("room " +room.getRoomName() + " deleted from room list");
                 }
             }
+
+
         }
     }
     public void clearRooms(){
@@ -161,4 +165,5 @@ public class GameServer {
     public boolean checkIfRoomExist(String roomName) {
         return !roomService.isAvailable(roomName);
     }
+
 }

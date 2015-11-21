@@ -19,14 +19,10 @@ public class UserDAO {
     }
 
     public UserProfile get(@Nullable String username) {
-        try(Session session = sessionFactory.getCurrentSession()){
-            session.beginTransaction();
-            Query query = session.getNamedQuery("userByName");
-            query.setString("username", username);
-            UserProfile p = (UserProfile) query.uniqueResult();
-            session.getTransaction().commit();
-            return p;
-        }
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.getNamedQuery("userByName");
+        query.setString("username", username);
+        return (UserProfile) query.uniqueResult();
     }
 
     public boolean isAvailable(@Nullable String name) {
@@ -48,5 +44,18 @@ public class UserDAO {
     public long count() {
         Query query = sessionFactory.getCurrentSession().createQuery("select count(*) from user");
         return (long)query.uniqueResult();
+    }
+
+    public void updatePlayerInfo(UserProfile user, long score) {
+        Query query = sessionFactory.getCurrentSession().getNamedQuery("updatePlayer");
+        query.setLong("score", score);
+        query.setLong("user_id", user.getId());
+        query.executeUpdate();
+    }
+
+    public PlayerDataSet getPlayerDataSetById(long user_id) {
+        Query query = sessionFactory.getCurrentSession().getNamedQuery("getPlayerInfo");
+        query.setLong("id", user_id);
+        return (PlayerDataSet) query.uniqueResult();
     }
 }

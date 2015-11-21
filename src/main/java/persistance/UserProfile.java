@@ -15,7 +15,9 @@ import javax.persistence.*;
  */
 @NamedQueries({
         @NamedQuery(name = "userByName",query = "from user u where u.username = :username"),
-        @NamedQuery(name = "isAvailable",query = "from user u where u.username =:username")
+        @NamedQuery(name = "isAvailable",query = "from user u where u.username =:username"),
+        @NamedQuery(name = "updatePlayer",query = "update player set scoreCount=scoreCount+:score where user.id=:user_id"),
+        @NamedQuery(name = "getPlayerInfo",query = "from player p where p.user.id=:id")
 })
 @Entity(name="user")
 public class UserProfile {
@@ -43,7 +45,9 @@ public class UserProfile {
         gameProfile = new GameProfile();
         currentroom = null;
     }
-
+    public UserProfile(){
+        gameProfile = new GameProfile();
+    }
     public boolean checkPassword(@Nullable String pass){
         return pass != null && pass.equals(this.password);
     }
@@ -98,5 +102,13 @@ public class UserProfile {
 
     public void setIsAuthorized(boolean isAuthorized) {
         this.isAuthorized = isAuthorized;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
