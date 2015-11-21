@@ -31,8 +31,6 @@ define([
             this.JQmsg = $('.container-game-btn__msg').first();
         },
         show: function () {
-            console.log("MAIN SHOW");
-            console.log(this.el);
             this.trigger('show');
             this.$el.show();
             this.render(); //TODO убрать
@@ -51,7 +49,6 @@ define([
                     location.href = href;
                 }
             }
-
         },
         onMouseDown: function (event) {
             var targetElement = $(event.currentTarget);

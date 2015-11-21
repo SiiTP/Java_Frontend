@@ -4,7 +4,7 @@ define([
     Backbone
 ){
     var Model = Backbone.Model.extend({
-        url: "",
+        url: "user",
         initialize: function() {
             this.set({'username'    : null});
             this.set({'password'    : null});
@@ -12,8 +12,6 @@ define([
             this.set({validUsername : false});
             this.set({validPassword : false});
             this.set({'score'       : 0});
-            console.log("context before fetch : ");
-            console.log(this);
             this.fetch();
         },
         patterns: {
@@ -37,6 +35,7 @@ define([
             }
         },
         validate: function(attrs) {
+            console.log("user validation");
             var error = [];
             if (attrs.username == "") {
                 error.push({
@@ -106,62 +105,34 @@ define([
             return this.get('validUsername') && this.get('validPassword')
         },
         onLogout: function() {
-            console.log("---> logout");
-            $.ajax({
-                type: "POST",
-                url: "/logout",
-                context: this
-            }).done(function(obj) {
-                console.log("<--- SERVER ANSWER : " + obj);
-                var answer = JSON.parse(obj);
-                if (answer.success) {
-                    this.uninitialize();
-                    this.trigger('toMain');
-                } else {
-                    console.log(answer.message);
-                }
-            });
+            this.destroy();
+            console.log("ZAGLUSHKA");
         },
         onLogin: function() {
-            console.log("---> login");
-            var data = this.toJSON();
-            $.ajax({
-                type: "POST",
-                url: "/signin",
-                data: data,
-                context: this
-            }).done(function(obj) {
-                var answer = JSON.parse(obj);
-                console.log("<--- login ");
-                console.log(answer);
-                if (answer.success) {
-                    this.set({'logged': true});
-                    this.set({'password': null});
-                    this.trigger('toMain');
-                } else {
-                    $(".login__validation-info-common").text(answer.message);
-                }
-                //TODO get user score from database in the future
-            });
+            this.set({id: 1});
+            this.save();
+
         },
         onRegistration: function() {
-            var data = this.toJSON();
-            console.log(data);
-            $.ajax({
-                type: "POST",
-                url: "/signup",
-                data: data
-            }).done(function(obj) {
-                var answer = JSON.parse(obj);
-                console.log("SERVER ANSWER : ");
-                console.log(answer);
-                if (answer.success) {
-                    location.href = "#login";
-                } else {
-                    //TODO надо выводить через вьюху, наверное надо хранить объект вьюхи в моделе
-                    $(".registration__validation-info-common").text(answer.message);
-                }
-            });
+            this.unset("id");
+            this.save();
+            //var data = this.toJSON();
+            //console.log(data);
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/signup",
+            //    data: data
+            //}).done(function(obj) {
+            //    var answer = JSON.parse(obj);
+            //    console.log("SERVER ANSWER : ");
+            //    console.log(answer);
+            //    if (answer.success) {
+            //        location.href = "#login";
+            //    } else {
+            //        //TODO надо выводить через вьюху, наверное надо хранить объект вьюхи в моделе
+            //        $(".registration__validation-info-common").text(answer.message);
+            //    }
+            //});
         },
         uninitialize: function() {
             console.log("user model uninitialize");

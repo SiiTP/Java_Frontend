@@ -23,6 +23,5 @@ define(['backbone', 'sync', 'router','constants'], function(
     router,
     constants
 ){
-
     Backbone.history.start();
 });

@@ -1,26 +1,38 @@
 define(['backbone'], function(Backbone) {
-    console.log("!");
     Backbone.sync = function(method, model, options) {
-        console.log("context after fetch : ");
-        console.log(this);
-        console.log(model);
+        var url = model.url;
+        console.log(typeof "azaza");
+        console.log("<--- query : " + url + " CRUD : " + method);
         switch (method) {
             case "create":
-                console.log("<-- creating query");
-                break;
-            case "read":
-                console.log("---> fetch user model : " + this.username);
+                var data = model.toJSON();
+                console.log(data);
                 $.ajax({
                     type: "POST",
-                    url: model.url + "/logininfo",
-                    context: model
+                    url: url + "/create",
+                    data: data
                 }).done(function(obj) {
-                    console.log("SERVER ANSWER : " + obj);
-                    console.log("context in ajax : ");
-                    console.log(this);
+                    console.log("SERVER ANSWER : ");
+                    console.log(obj);
                     var answer = JSON.parse(obj);
                     if (answer.success) {
-                        //TODO если ответ от аякса приходит позже отрисовки, отрисовываются данные без учета ответа
+                        location.href = "#login";
+                    } else {
+                        //TODO надо выводить через вьюху, наверное надо хранить объект вьюхи в моделе
+                        $(".registration__validation-info-common").text(answer.message);
+                    }
+                });
+                break;
+            case "read":
+                $.ajax({
+                    type: "POST",
+                    url: url + "/read",
+                    context: model,
+                    async: false
+                }).done(function(obj) {
+                    console.log("---> SERVER ANSWER : " + obj);
+                    var answer = JSON.parse(obj);
+                    if (answer.success) {
                         this.set({'username': answer.username});
                         this.set({'logged': true});
                         //TODO присваивать счет
@@ -28,10 +40,40 @@ define(['backbone'], function(Backbone) {
                 });
                 break;
             case "update":
-                console.log("<-- updating query");
+                var data = model.toJSON();
+                console.log("data : " + JSON.stringify(data));
+                $.ajax({
+                    type: "POST",
+                    url: url + "/update",
+                    data: data
+                }).done(function(obj) {
+                    var answer = JSON.parse(obj);
+                    console.log("---> login ");
+                    console.log(answer);
+                    if (answer.success) {
+                        model.set({'logged': true});
+                        model.set({'password': null});
+                        model.trigger('toMain');
+                    } else {
+                        $(".login__validation-info-common").text(answer.message);
+                    }
+                    //TODO get user score from database in the future
+                });
                 break;
             case "delete":
-                console.log("<-- deleting query");
+                $.ajax({
+                    type: "POST",
+                    url: url + "/delete"
+                }).done(function(obj) {
+                    console.log("---> SERVER ANSWER : " + obj);
+                    var answer = JSON.parse(obj);
+                    if (answer.success) {
+                        model.uninitialize();
+                        model.trigger('toMain');
+                    } else {
+                        console.log(answer.message);
+                    }
+                });
                 break;
             default:
                 console.log("unresolved operation");
