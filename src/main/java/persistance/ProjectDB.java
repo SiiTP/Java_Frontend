@@ -1,13 +1,9 @@
 package persistance;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.mapping.MetadataSource;
-import org.hibernate.metamodel.MetadataSources;
-import org.hibernate.service.ServiceRegistry;
 
 /**
  * Created by ivan on 20.11.15.

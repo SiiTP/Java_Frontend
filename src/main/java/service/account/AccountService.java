@@ -1,13 +1,17 @@
 package service.account;
 
 
+import dao.UserDAO;
 import persistance.UserProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import persistance.ProjectDB;
 import resource.ResourceFactory;
 import resource.ServletResources;
 
@@ -21,17 +25,26 @@ import java.util.Map;
 public class AccountService{
     @NotNull
     private final Map<String, UserProfile> users = new HashMap<>();
+    private UserDAO userDAO;
     @NotNull
     private final Map<String,UserProfile> sessions = new HashMap<>();
 
     private final Logger logger = LogManager.getLogger(AccountService.class);
 
+    public AccountService(){
+        userDAO = new UserDAO();
+    }
     public boolean isAuthorized(String session){
         return sessions.containsKey(session);
     }
 
     public boolean isAvailableName(@Nullable String name){
-        return !users.containsKey(name);
+        boolean isAvailable;
+        try(Session session = ProjectDB.getSessionFactory().getCurrentSession()){
+            Transaction t = session.beginTransaction();
+            isAvailable =userDAO.isAvailable(name);
+       }
+        return isAvailable;
     }
 
     public boolean isDataWrong(String username, String password){
@@ -56,19 +69,27 @@ public class AccountService{
     }
     public void addUser(@NotNull UserProfile userProfile){
         String userName = userProfile.getUsername();
-        if (!users.containsKey(userName)) {
+        if (isAvailableName(userName)) {
             Marker marker = new MarkerManager.Log4jMarker("REGISTER");
-            logger.info(marker,"user name " + userName);
-            users.put(userName, userProfile);
+            logger.info(marker, "user name " + userName);
+            Session session = ProjectDB.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            userDAO.create(userProfile);
+            session.getTransaction().commit();
         }
     }
 
     @Nullable
     public UserProfile getUser(@Nullable String username){
+        UserProfile profile = userDAO.get(username);
         return users.get(username);
     }
-    public int getRegisterdUsersCount(){
-        return users.size();
+    public long getRegisterdUsersCount(){
+        Session session = ProjectDB.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        long count = userDAO.count();
+        session.getTransaction().commit();
+        return count;
     }
     public int getLoggedUsersCount(){
         return sessions.size();
@@ -91,8 +112,14 @@ public class AccountService{
                 profile.setIsAuthorized(false);
             }
             sessions.remove(sess);
-
         }
+    }
+
+    public static void main(String[] args) {
+        AccountService service = new AccountService();
+        UserProfile p = new UserProfile("test2","test2");
+        service.addUser(p);
+        System.out.println(service.getRegisterdUsersCount());
     }
 }
 

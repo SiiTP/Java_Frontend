@@ -10,30 +10,30 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import service.account.AccountService;
+import service.account.RoomService;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by ivan on 02.10.15.
  */
 public class GameServer {
-    private Map<String,Room> rooms;
     private final AccountService accountService;
+    private final RoomService roomService;
     private final Logger logger = LogManager.getLogger(GameServer.class);
     public GameServer(AccountService accountService) {
-        rooms = new HashMap<>();
         this.accountService = accountService;
+        roomService = new RoomService();//todo replace with context service
     }
     @Nullable
     public Room joinRoom(String roomname, @Nullable String password, String userSession) {
         UserProfile profile = accountService.getUserBySession(userSession);
         Room room = null;
         if(profile != null) {
-            if (rooms.containsKey(roomname)) {
+            if (roomService.isAvailable(roomname)) {
                 if (profile.getCurrentroom() == null) {
-                    room = rooms.get(roomname);
+                    room = roomService.getRoomByName(roomname);
                     if (room.isRoomHasPass()) {
                         if (password != null && password.equals(room.getPassword())) {
                             room.addUser(profile);
@@ -80,28 +80,25 @@ public class GameServer {
         return isReady;
     }
     public void setRooms(Map<String, Room> rooms) {
-        this.rooms = rooms;
+        roomService.setRooms(rooms);
     }
 
     @Nullable
     public JSONArray getRoomsListJSON(){
         JSONArray roomsJsonArray = null;
-        if(!rooms.isEmpty()) {
+        if(roomService.isAnyRoomExist()) {
             roomsJsonArray = new JSONArray();
-            Collection<Room> roomArray = rooms.values();
+            Collection<Room> roomArray = roomService.getRooms();
             for (Room room : roomArray) {
                 roomsJsonArray.put(room.getJsonRoom());
             }
         }
         return roomsJsonArray;
     }
-    public boolean checkIfRoomExist(String roomname){
-        return rooms.containsKey(roomname);
-    }
     @Nullable
     public Room createRoom(String session,String roomname, @Nullable String password) {
         Room room = null;
-        if (!checkIfRoomExist(roomname)) {
+        if (roomService.isAvailable(roomname)) {
             UserProfile profile = accountService.getUserBySession(session);
             if(profile!= null && profile.getCurrentroom() == null) {
                 if (password == null || password.isEmpty()) {
@@ -111,7 +108,7 @@ public class GameServer {
                 }
                 room.addUser(profile);
 
-                rooms.put(roomname, room);
+                roomService.addRoom(roomname,room);
                 profile.setCurrentroom(room);
                 logger.info("player " + profile.getUsername() + " created the room " + roomname);
             }
@@ -150,15 +147,18 @@ public class GameServer {
                 room.kickPlayer(profile);
                 logger.info("player " + profile.getUsername() + " kicked from the room " + room.getRoomName());
                 if(room.getPlayersCount()==0){
-                    rooms.remove(room.getRoomName());
+                    roomService.finishRoom(room.getRoomName());
                     logger.warn("room " +room.getRoomName() + " deleted from room list");
                 }
             }
         }
     }
     public void clearRooms(){
-        rooms = new HashMap<>();
+        roomService.clear();
         logger.warn("rooms were cleaned");
     }
 
+    public boolean checkIfRoomExist(String roomName) {
+        return !roomService.isAvailable(roomName);
+    }
 }

@@ -65,7 +65,7 @@ public class MainWebSocketTest {
         Room room = spy(new RoomFFA("test"));
         doReturn(room).when(gameServer).getPlayerRoomBySession(anyString());
         doReturn(true).when(room).isFinished();
-        doReturn("test").when(room).getWinner();
+        doReturn("test").when(room).getWinner().getUsername();
         webSocket.processPlayerMessage(new JSONObject());
 
         assertEquals(endpoint.getMessage().optString("winner"), "test");

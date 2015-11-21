@@ -63,8 +63,6 @@ public class AdminServlet extends HttpServlet {
             gameServer.clearRooms();
             writer.println("Комнаты очищены");
         }
-
-
     }
 
     private void shutDownServer(int shutdownCount){//TODO rework with properly test

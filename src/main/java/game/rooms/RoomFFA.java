@@ -68,7 +68,7 @@ public class RoomFFA extends RoomAbstractImpl {
 
     @Override
     @Nullable
-    public String getWinner(){
+    public UserProfile getWinner(){
         int max = maxScore();
         UserProfile winner = null;
             Iterator<UserProfile> iterator = users.iterator();
@@ -81,7 +81,7 @@ public class RoomFFA extends RoomAbstractImpl {
                 }
             }
 
-        return winner.getUsername();
+        return winner;
     }
     @Override
     public boolean checkUser(UserProfile user){
