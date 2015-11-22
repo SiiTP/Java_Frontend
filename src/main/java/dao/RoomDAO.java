@@ -25,4 +25,8 @@ public class RoomDAO {
         query.setString("name", roomname);
         return (RoomDataSet)query.uniqueResult();
     }
+
+    public RoomDataSet getRoomInfoById(long id) {
+        return sessionFactory.getCurrentSession().get(RoomDataSet.class,id);
+    }
 }

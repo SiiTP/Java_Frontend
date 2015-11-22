@@ -50,6 +50,13 @@ public class RoomService {
         session.getTransaction().commit();
         rooms.remove(roomname);
     }
+    public RoomDataSet getRoomInfoByName(String name){
+        Session session = ProjectDB.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        RoomDataSet roomDataSet = dao.getRoomInfoByName(name);
+        session.getTransaction().commit();
+        return roomDataSet;
+    }
     public void kickPlayerFromRoom(String roomname,UserProfile profile){
         rooms.get(roomname).kickPlayer(profile);
     }
@@ -57,28 +64,4 @@ public class RoomService {
         this.rooms = rooms;
     }
 
-    public static void main(String[] args) {
-        AccountService service1 = new AccountService();
-        UserProfile p = new UserProfile("test2","test2");
-        UserProfile p2 = new UserProfile("test1","test1");
-        UserProfile p3 = new UserProfile("test3","test3");
-        service1.addUser(p);
-        service1.addUser(p2);
-        service1.addUser(p3);
-        RoomService service = new RoomService();
-        RoomFFA ffa = new RoomFFA("test","test");
-        GameProfile gameProfile = p.getGameProfile();
-        gameProfile.setScore(23);
-        GameProfile gameProfile1 = p2.getGameProfile();
-        gameProfile1.setScore(1);
-        GameProfile gameProfile2 = p3.getGameProfile();
-        gameProfile2.setScore(55);
-        ffa.addUser(p);
-        ffa.addUser(p2);
-        ffa.addUser(p3);
-        service1.updatePlayerInfo(p,gameProfile);
-        ffa.kickPlayer(p);
-        service.addRoom("test",ffa);
-        service.finishRoom("test");
-    }
 }

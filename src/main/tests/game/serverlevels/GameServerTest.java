@@ -19,11 +19,12 @@ import static org.mockito.Mockito.*;
  */
 public class GameServerTest {
     private AccountService service;
-    private final Map<String,Room> rooms = spy(new HashMap<>());
+    private Map<String,Room> rooms;
     private GameServer gameServer;
     @Before
     public void setUp() {
         service = mock(AccountService.class);
+        rooms = spy(new HashMap<>());
         gameServer = new GameServer(service);
         gameServer.setRooms(rooms);
     }
@@ -115,9 +116,9 @@ public class GameServerTest {
         when(profile.getCurrentroom()).thenReturn(null);
         when(rooms.containsKey(anyString())).thenReturn(true);
 
-        Room endRoom = gameServer.createRoom("aaa","aaa",null);
+        Room room = gameServer.createRoom("aaa","aaa",null);
 
-        assertNull(endRoom);
+        assertNull(room);
     }
 
     @Test

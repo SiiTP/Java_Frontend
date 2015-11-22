@@ -33,20 +33,22 @@ public class ProjectDB {
     }
     @SuppressWarnings("SqlNoDataSourceInspection")
     public static void truncateTables(){
-        if(Objects.equals(s_currentBD, "test")) {
-            try (Session session = s_sesssionFactory.openSession()) {
-                session.beginTransaction();
-                Query query = session.createSQLQuery(" SET FOREIGN_KEY_CHECKS=0");
-                query.executeUpdate();
-                query = session.createSQLQuery("TRUNCATE TABLE room");
-                query.executeUpdate();
-                query = session.createSQLQuery("TRUNCATE TABLE player");
-                query.executeUpdate();
-                query = session.createSQLQuery("TRUNCATE TABLE user");
-                query.executeUpdate();
-                query = session.createSQLQuery(" SET FOREIGN_KEY_CHECKS=1");
-                query.executeUpdate();
-                session.getTransaction().commit();
+        if(s_sesssionFactory != null) {
+            if (Objects.equals(s_currentBD, "test")) {
+                try (Session session = s_sesssionFactory.openSession()) {
+                    session.beginTransaction();
+                    Query query = session.createSQLQuery(" SET FOREIGN_KEY_CHECKS=0");
+                    query.executeUpdate();
+                    query = session.createSQLQuery("TRUNCATE TABLE room");
+                    query.executeUpdate();
+                    query = session.createSQLQuery("TRUNCATE TABLE player");
+                    query.executeUpdate();
+                    query = session.createSQLQuery("TRUNCATE TABLE user");
+                    query.executeUpdate();
+                    query = session.createSQLQuery(" SET FOREIGN_KEY_CHECKS=1");
+                    query.executeUpdate();
+                    session.getTransaction().commit();
+                }
             }
         }
     }

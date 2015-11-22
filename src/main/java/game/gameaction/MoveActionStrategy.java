@@ -114,45 +114,9 @@ public class MoveActionStrategy implements GameActionStrategy {
         double y = gameProfile.getY();
         double vector2X = (x+radius*Math.cos(Math.toRadians(direction)) - x);
         double vector2Y = (y+radius*Math.sin(Math.toRadians(direction)) - y);
-      //  System.out.println("2y " + vector2Y + " 2x " + vector2X);
         double t1 = Math.sqrt(vectorX*vectorX+vectorY*vectorY);
         double t2 = Math.sqrt(vector2X * vector2X + vector2Y * vector2Y);
         return Math.acos((vectorX * vector2X + vectorY * vector2Y) / (t1 * t2));
     }
-    /*public static void main(String[] args) {
-//        MoveActionStrategy a = new MoveActionStrategy(new GameServer(new AccountService()));
-        Scanner scanner = new Scanner(System.in);
-        while(true){
-            double direction = scanner.nextDouble();
-            double enemyX = scanner.nextDouble();
-            double enemyY = scanner.nextDouble();
-            GameProfile enemt = new GameProfile();
-            enemt.setX(enemyX);
-            enemt.setY(enemyY);
-            GameProfile profile = new GameProfile();
-            profile.setX(100);
-            profile.setY(100);
-            double ttt = enemt.getX() - profile.getX();
-            double ttt2 = enemt.getY() - profile.getY();
 
-            System.out.println(Math.toDegrees(a.getDegree(profile, direction, ttt, ttt2)));
-            direction = scanner.nextDouble();
-            System.out.println(Math.toDegrees(a.getDegree(enemt,direction,-ttt,-ttt2)));
-            double x1=100,x2=125;
-            double y1=100,y2=125;
-            int radius = 20;
-
-            double vector1X = -x2+x1;
-            double vector1Y = -y2+y1;
-            double testangle = Math.atan(vector1Y/vector1X);
-            System.out.println(Math.toDegrees(testangle));
-            double vector2X = (x1+radius*Math.cos(Math.toRadians(direction)) - x1);
-            double vector2Y = (y1+radius*Math.sin(Math.toRadians(direction)) - y1);
-            System.out.println("2y " + vector2Y + " 2x " + vector2X);
-            double t1 = Math.sqrt(vector1X*vector1X+vector1Y*vector1Y);
-            double t2 = Math.sqrt(vector2X*vector2X+vector2Y*vector2Y);
-            double angle = Math.acos((vector1X * vector2X + vector1Y * vector2Y) /(t1*t2));
-            System.out.println(Math.toDegrees(angle));
-        }
-    }*/
 }

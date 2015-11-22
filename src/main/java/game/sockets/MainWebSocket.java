@@ -69,6 +69,7 @@ public class MainWebSocket extends WebSocketAdapter {
             if (room != null) {
                 if(room.isFinished()){
                     String winner = room.getWinner().getUsername();
+                    gameServer.kickPlayer(httpSession);
                     LOGGER.info("winner in room " + room.getRoomName() + ':' + winner );
                     object.put("winner", winner);
                     object.put("status", responseResources.getWinnerMessageCode());

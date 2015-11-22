@@ -1,6 +1,7 @@
 package servlets.admins;
 
 import game.serverlevels.top.GameServer;
+import persistance.ProjectDB;
 import persistance.UserProfile;
 import org.eclipse.jetty.server.Server;
 import org.junit.Before;
@@ -82,6 +83,7 @@ public class AdminServletTest {
     }
     @Test
     public void testDoGetRegistered() throws ServletException, IOException {
+        ProjectDB.truncateTables();
         AdminServlet adminServlet = new AdminServlet(server, gameServer);
         when(req.getParameter("reg")).thenReturn("true");
 

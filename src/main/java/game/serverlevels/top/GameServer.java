@@ -31,7 +31,7 @@ public class GameServer {
         UserProfile profile = accountService.getUserBySession(userSession);
         Room room = null;
         if(profile != null) {
-            if (roomService.isAvailable(roomname)) {
+            if (!checkIfRoomExist(roomname)) {
                 if (profile.getCurrentroom() == null) {
                     room = roomService.getRoomByName(roomname);
                     if (room.isRoomHasPass()) {
@@ -98,7 +98,7 @@ public class GameServer {
     @Nullable
     public Room createRoom(String session,String roomname, @Nullable String password) {
         Room room = null;
-        if (roomService.isAvailable(roomname)) {
+        if (checkIfRoomExist(roomname)) {
             UserProfile profile = accountService.getUserBySession(session);
             if(profile!= null && profile.getCurrentroom() == null) {
                 if (password == null || password.isEmpty()) {
@@ -141,7 +141,6 @@ public class GameServer {
         UserProfile profile = accountService.getUserBySession(httpSession);
         if(profile != null) {
             Room room = profile.getCurrentroom();
-
             if(room != null) {
                 roomService.kickPlayerFromRoom(room.getRoomName(), profile);
                 GameProfile gameProfile = profile.getGameProfile();
@@ -153,8 +152,6 @@ public class GameServer {
                     logger.warn("room " +room.getRoomName() + " deleted from room list");
                 }
             }
-
-
         }
     }
     public void clearRooms(){
