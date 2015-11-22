@@ -30,6 +30,7 @@ public class AdminServletTest {
     private StringWriter stringWriter;
     @Before
     public void setup() throws IOException {
+        ProjectDB.initBD("hibernate-test.cfg.xml");
         accountService = spy(new AccountService());
         gameServer = new GameServer(accountService);
         server = spy(new Server());

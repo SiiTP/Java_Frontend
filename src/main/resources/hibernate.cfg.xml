@@ -34,7 +34,7 @@
             true
         </property>
         <property name="hibernate.current_session_context_class">thread</property>
-        <property name="hbm2ddl.auto">create-drop</property>
+        <property name="hbm2ddl.auto">update</property>
         <mapping class="persistance.PlayerDataSet"/>
         <mapping class="persistance.RoomDataSet"/>
         <mapping class="persistance.UserProfile"/>
