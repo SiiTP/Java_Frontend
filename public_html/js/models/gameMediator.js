@@ -58,7 +58,7 @@ define (['backbone'], function(Backbone) {
             this.set({'socket': socket});
         },
         beginningGameWaiting: function() {
-            this.set({'waitingInterval': setInterval(this.sendMessageWaiting.bind(this), 50)});
+            this.set({'waitingInterval': setInterval(this.sendMessageWaiting.bind(this), 500)});
         },
         sendMessageWaiting: function() {
             //console.log("<___ send message waiting");
@@ -143,11 +143,13 @@ define (['backbone'], function(Backbone) {
             requestAnimationFrame(this.loop.bind(this));
         },
         loop: function() {
-            this.get('myPlayer').model.myMove(0.02);
+            this.get('myPlayer').model.myMove(0.002);
             this.get('myPlayer').draw();
             _.each(this.get('enemyPlayers'), function(enemy) {
                 enemy.draw();
+                console.log(enemy);
             });
+            console.log("===================");
             if (this.get('gameBegin')) {
                 requestAnimationFrame(this.loop.bind(this));
             }

@@ -10,8 +10,8 @@
                     <div class="rooms__lines__header">
                         <div class="rooms__lines__header__index">№</div>
                         <div class="rooms__lines__header__name">Название</div>
-                        <div class="rooms__lines__header__players">Сейчас игроков</div>
-                        <div class="rooms__lines__header__maxPlayers">Максимум</div>
+                        <div class="rooms__lines__header__players">Сейчас</div>
+                        <div class="rooms__lines__header__maxPlayers">Лимит</div>
                     </div>
                     <fest:each iterate="data.rooms" index="i" value="item">
                         <div class="rooms__lines__line">

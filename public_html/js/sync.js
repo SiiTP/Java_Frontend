@@ -14,12 +14,13 @@ define(['backbone'], function(Backbone) {
                     console.log("---> SERVER ANSWER : " + obj);
                     var answer = JSON.parse(obj);
                     if (answer.success) {
-                        location.href = "#login";
+                        options.success(answer);
                     } else {
-                        $(".registration__validation-info-common").text(answer.message);
+                        options.error(answer.message);
                     }
                 });
                 break;
+
             case "read":
                 $.ajax({
                     type: "POST",
@@ -29,10 +30,10 @@ define(['backbone'], function(Backbone) {
                     var answer = JSON.parse(obj);
                     if (answer.success) {
                         options.success(answer);
-                        //TODO присваивать счет
                     }
                 });
                 break;
+
             case "update":
                 var data = model.toJSON();
                 $.ajax({
@@ -43,15 +44,14 @@ define(['backbone'], function(Backbone) {
                     console.log("---> SERVER ANSWER : " + obj);
                     var answer = JSON.parse(obj);
                     if (answer.success) {
-                        model.set({'logged': true});
-                        model.set({'password': null});
-                        model.trigger('toMain');
+                        options.success(answer);
+
                     } else {
-                        $(".login__validation-info-common").text(answer.message);
+                        options.error(answer.message);
                     }
-                    //TODO get user score from database in the future
                 });
                 break;
+
             case "delete":
                 $.ajax({
                     type: "POST",

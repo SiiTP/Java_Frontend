@@ -13,7 +13,7 @@ html, body {
 }
 #page {
     background: #001;
-    height: 800px;
+    height: 2000px;
     color: whitesmoke;
     font-family: UbuntuItalic;
     padding-top: 20px;
@@ -303,7 +303,7 @@ html, body {
 .login {
     margin: auto;
     width: 40%;
-    min-width: 400px;
+    min-width: 375px;
     max-width: 500px;
     padding-bottom: 10px;
 }
@@ -348,7 +348,7 @@ html, body {
 .validation-info-common {
     margin-top: 20px;
     font-size: 24px;
-    text-shadow: #f00 0 0 10px;
+    text-shadow: #f00 0 0 1em;
     text-align: center;
 }
 .login__buttons-container {
@@ -382,6 +382,7 @@ html, body {
     color: #003;
     margin: auto;
     min-width: 310px;
+    max-width: 600px;
     width: 40%
 }
 .registration__button {
@@ -392,6 +393,8 @@ html, body {
 /*SCOREBOARD PAGE*/
 .scoreboard {
     width: 50%;
+    min-width: 200px;
+    max-width: 400px;
     margin: auto;
 }
 .scoreboard__header {
@@ -401,7 +404,7 @@ html, body {
 
 }
 .table {
-    width: 300px;
+
 }
 .table-header {
     margin-top: 10px;
@@ -411,39 +414,39 @@ html, body {
 }
 .table__table-header__item {
     display: inline-block;
-    width: 50%;
     box-sizing: border-box;
+    width: 50%;
 }
 .table__table-header__item_alignRight {
     text-align: right;
 }
-.table__line {
-
+.table__content-line__line {
+    margin: 0 2%;
 }
 .table__content {
     margin-top: 10px;
     font-family: NunitoNormal;
 }
 .table__content-line {
-    padding: 3px 0 3px;
+    padding: 2px 0 2px;
 }
-.table__item {
+.table__content-line__item {
     display: inline-block;
-    width: 43%;
+    width: 47%;
     box-sizing: border-box;
     text-align: left;
 }
-.table__item-name {
+.table__content-line__item-name {
     text-align: left;
 }
-.table__item-score {
+.table__content-line__item-score {
      text-align: right;
  }
-.table__item_even {
+.table__content-line__item_even {
     color: #0f0;
     background: #003;
 }
-.table__item_odd {
+.table__content-line__item_odd {
     color: #ff0;
     /*background: #001;*/
 }

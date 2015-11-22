@@ -13,16 +13,29 @@ define([
                 model.set({'logged': true});
             },
             error: function() {
-                console.log("Unexpected error");
+                console.log("Unexpected error fetch");
             }
         }),
         optionsDestroy: ({
             success: function(model, response, parse) {
                 model.uninitialize();
-                model.trigger('toMain');
             },
-            error: function(msg) {
-                console.log("Unexpected error : " + msg);
+            error: function() {
+                console.log("Unexpected error destroy");
+            }
+        }),
+        optionsReg: ({
+            success: function(model, response) {
+                debugger;
+                model.trigger('onLogin');
+            }
+        }),
+        optionsLog: ({
+            success: function(model, response) {
+                model.set({'logged': true});
+                model.set({'password': null});
+                //TODO get user score from database in the future
+                model.trigger('toMain');
             }
         }),
 
@@ -34,6 +47,9 @@ define([
             this.set({validPassword : false});
             this.set({'score'       : 0});
             this.fetch(this.optionsFetch);
+            this.on("sync",    function() {console.log("___sync event!");});
+            this.on("error",   function() {console.log("___error event!");});
+            this.on("request", function() {console.log("___request event!");});
         },
         patterns: {
             loginAvailableSymbols: '^[a-zA-Z]+$',
@@ -76,21 +92,21 @@ define([
                     error.push({
                         'field':'username',
                         'status': 'error',
-                        'message': "В поле Username содержатся некорректные символы"
+                        'message': "В поле ЛОГИН содержатся некорректные символы"
                     });
                 } else
                 if (!Model.prototype.validators.minLength(attrs.username, 4)) {
                     error.push({
                         'field':'username',
                         'status': 'error',
-                        'message': "Поле Username должно содержать минимум 4 символа"
+                        'message': "Поле ЛОГИН должно содержать минимум 4 символа"
                     });
                 } else
                 if (!Model.prototype.validators.maxLength(attrs.username, 9)) {
                     error.push({
                         'field': 'username',
                         'status': 'error',
-                        'message': "Поле Username должно содержать максимум 9 символов"
+                        'message': "Поле ЛОГИН должно содержать максимум 9 символов"
                     });
                 }
             }
@@ -99,21 +115,21 @@ define([
                     error.push({
                         'field': 'password',
                         'status': 'error',
-                        'message': "В поле Password содержатся некорректные символы"
+                        'message': "В поле ПАРОЛЬ содержатся некорректные символы"
                     });
                 } else
                 if (!Model.prototype.validators.minLength(attrs.password, 4)) {
                     error.push({
                         'field': 'password',
                         'status': 'error',
-                        'message': "Поле Password должно содержать минимум 4 символа"
+                        'message': "Поле ПАРОЛЬ должно содержать минимум 4 символа"
                     });
                 } else
                 if (!Model.prototype.validators.maxLength(attrs.password, 16)) {
                     error.push({
                         'field': 'password',
                         'status': 'error',
-                        'message': "Поле Password должно содержать максимум 16 символов"
+                        'message': "Поле ПАРОЛЬ должно содержать максимум 16 символов"
                     });
                 }
             }

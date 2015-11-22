@@ -17,6 +17,10 @@ define([
             "input .registration__input-field-confirm__input-line__input": "validateConfirm",
             "click .js-button-onMain": "onMain"
         },
+        initialize: function() {
+            this.model.on("onLogin", this.onLogin);
+            this.model.on("error", this.onError);
+        },
         JQ_cashing: function () {
             if (this.JQ_cacheInput == null) {
                 this.JQ_cacheInput = {
@@ -145,7 +149,7 @@ define([
         onSubmit: function (event) {
             event.preventDefault();
             if (this.validateConfirm() && this.model.isValid()) {
-                this.model.save();
+                this.model.save(null, this.model.optionsReg);
             } else {
                 $(".registration__validation-info-common").text("Не все поля заданы корректно.");
                 this.focusOnErrorField();
@@ -154,6 +158,13 @@ define([
         onMain: function() {
             location.href = "#";
         },
+        onLogin: function() {
+            location.href = "#login"
+        },
+        onError: function(model, msg) {
+            $(".registration__validation-info-common").text(msg);
+
+        },
         show: function () {
             this.trigger('show');
             this.$el.show();
@@ -161,6 +172,5 @@ define([
         hide: function () {
             this.$el.hide();
         }
-
     });
 });
