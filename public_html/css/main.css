@@ -574,4 +574,7 @@ html, body {
     margin: 0;
     /*TODO отступы задавать с помощью jquery на основе констант отступов*/
 }
+canvas {
+    background: transparent;
+}
 
