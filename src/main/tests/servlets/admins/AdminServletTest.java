@@ -1,7 +1,7 @@
 package servlets.admins;
 
 import game.serverlevels.top.GameServer;
-import game.user.UserProfile;
+import persistance.UserProfile;
 import org.eclipse.jetty.server.Server;
 import org.junit.Before;
 import org.junit.Test;

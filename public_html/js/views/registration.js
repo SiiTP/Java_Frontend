@@ -14,7 +14,12 @@ define([
             "click .registration__button": "onSubmit",
             "input .registration__input-field-username__input-line__input": "validateUsername",
             "input .registration__input-field-password__input-line__input": "validatePassword",
-            "input .registration__input-field-confirm__input-line__input": "validateConfirm"
+            "input .registration__input-field-confirm__input-line__input": "validateConfirm",
+            "click .js-button-onMain": "onMain"
+        },
+        initialize: function() {
+            this.model.on("onLogin", this.onLogin);
+            this.model.on("error", this.onError);
         },
         JQ_cashing: function () {
             if (this.JQ_cacheInput == null) {
@@ -144,11 +149,21 @@ define([
         onSubmit: function (event) {
             event.preventDefault();
             if (this.validateConfirm() && this.model.isValid()) {
-                this.model.onRegistration();
+                this.model.save(null, this.model.optionsReg);
             } else {
                 $(".registration__validation-info-common").text("Не все поля заданы корректно.");
                 this.focusOnErrorField();
             }
+        },
+        onMain: function() {
+            location.href = "#";
+        },
+        onLogin: function() {
+            location.href = "#login"
+        },
+        onError: function(model, msg) {
+            $(".registration__validation-info-common").text(msg);
+
         },
         show: function () {
             this.trigger('show');
@@ -157,6 +172,5 @@ define([
         hide: function () {
             this.$el.hide();
         }
-
     });
 });

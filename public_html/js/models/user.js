@@ -4,6 +4,41 @@ define([
     Backbone
 ){
     var Model = Backbone.Model.extend({
+        url: "user",
+
+        optionsFetch: ({
+            success: function(model, response, parse) {
+                model.set({id:1});
+                model.set({'username': response.username});
+                model.set({'logged': true});
+            },
+            error: function() {
+                console.log("Unexpected error fetch");
+            }
+        }),
+        optionsDestroy: ({
+            success: function(model, response, parse) {
+                model.uninitialize();
+            },
+            error: function() {
+                console.log("Unexpected error destroy");
+            }
+        }),
+        optionsReg: ({
+            success: function(model, response) {
+                debugger;
+                model.trigger('onLogin');
+            }
+        }),
+        optionsLog: ({
+            success: function(model, response) {
+                model.set({'logged': true});
+                model.set({'password': null});
+                //TODO get user score from database in the future
+                model.trigger('toMain');
+            }
+        }),
+
         initialize: function() {
             this.set({'username'    : null});
             this.set({'password'    : null});
@@ -11,7 +46,10 @@ define([
             this.set({validUsername : false});
             this.set({validPassword : false});
             this.set({'score'       : 0});
-            this.fetch();
+            this.fetch(this.optionsFetch);
+            this.on("sync",    function() {console.log("___sync event!");});
+            this.on("error",   function() {console.log("___error event!");});
+            this.on("request", function() {console.log("___request event!");});
         },
         patterns: {
             loginAvailableSymbols: '^[a-zA-Z]+$',
@@ -54,21 +92,21 @@ define([
                     error.push({
                         'field':'username',
                         'status': 'error',
-                        'message': "В поле Username содержатся некорректные символы"
+                        'message': "В поле ЛОГИН содержатся некорректные символы"
                     });
                 } else
                 if (!Model.prototype.validators.minLength(attrs.username, 4)) {
                     error.push({
                         'field':'username',
                         'status': 'error',
-                        'message': "Поле Username должно содержать минимум 4 символа"
+                        'message': "Поле ЛОГИН должно содержать минимум 4 символа"
                     });
                 } else
                 if (!Model.prototype.validators.maxLength(attrs.username, 9)) {
                     error.push({
                         'field': 'username',
                         'status': 'error',
-                        'message': "Поле Username должно содержать максимум 9 символов"
+                        'message': "Поле ЛОГИН должно содержать максимум 9 символов"
                     });
                 }
             }
@@ -77,21 +115,21 @@ define([
                     error.push({
                         'field': 'password',
                         'status': 'error',
-                        'message': "В поле Password содержатся некорректные символы"
+                        'message': "В поле ПАРОЛЬ содержатся некорректные символы"
                     });
                 } else
                 if (!Model.prototype.validators.minLength(attrs.password, 4)) {
                     error.push({
                         'field': 'password',
                         'status': 'error',
-                        'message': "Поле Password должно содержать минимум 4 символа"
+                        'message': "Поле ПАРОЛЬ должно содержать минимум 4 символа"
                     });
                 } else
                 if (!Model.prototype.validators.maxLength(attrs.password, 16)) {
                     error.push({
                         'field': 'password',
                         'status': 'error',
-                        'message': "Поле Password должно содержать максимум 16 символов"
+                        'message': "Поле ПАРОЛЬ должно содержать максимум 16 символов"
                     });
                 }
             }
@@ -102,81 +140,6 @@ define([
         isValid: function() {
             return this.get('validUsername') && this.get('validPassword')
         },
-        fetch: function() {
-            console.log("---> fetch user model : " + this.username);
-            $.ajax({
-                type: "POST",
-                url: "/logininfo",
-                context: this
-            }).done(function(obj) {
-                console.log("SERVER ANSWER : " + obj);
-                var answer = JSON.parse(obj);
-                if (answer.success) {
-                    //TODO если ответ от аякса приходит позже отрисовки, отрисовываются данные без учета ответа
-                    this.set({'username': answer.username});
-                    this.set({'logged': true});
-                    //TODO присваивать счет
-                }
-            });
-        },
-        onLogout: function() {
-            console.log("---> logout");
-            $.ajax({
-                type: "POST",
-                url: "/logout",
-                context: this
-            }).done(function(obj) {
-                console.log("<--- SERVER ANSWER : " + obj);
-                var answer = JSON.parse(obj);
-                if (answer.success) {
-                    this.uninitialize();
-                    this.trigger('toMain');
-                } else {
-                    console.log(answer.message);
-                }
-            });
-        },
-        onLogin: function() {
-            console.log("---> login");
-            var data = this.toJSON();
-            $.ajax({
-                type: "POST",
-                url: "/signin",
-                data: data,
-                context: this
-            }).done(function(obj) {
-                var answer = JSON.parse(obj);
-                console.log("<--- login ");
-                console.log(answer);
-                if (answer.success) {
-                    this.set({'logged': true});
-                    this.set({'password': null});
-                    this.trigger('toMain');
-                } else {
-                    $(".login__validation-info-common").text(answer.message);
-                }
-                //TODO get user score from database in the future
-            });
-        },
-        onRegistration: function() {
-            var data = this.toJSON();
-            console.log(data);
-            $.ajax({
-                type: "POST",
-                url: "/signup",
-                data: data
-            }).done(function(obj) {
-                var answer = JSON.parse(obj);
-                console.log("SERVER ANSWER : ");
-                console.log(answer);
-                if (answer.success) {
-                    location.href = "#login";
-                } else {
-                    //TODO надо выводить через вьюху, наверное надо хранить объект вьюхи в моделе
-                    $(".registration__validation-info-common").text(answer.message);
-                }
-            });
-        },
         uninitialize: function() {
             console.log("user model uninitialize");
             this.set({'username'      : null});
@@ -185,6 +148,7 @@ define([
             this.set({'validPassword' : false});
             this.set({'logged'        : false});
             this.set({'score'         : 0});
+            this.unset("id");
         }
     });
     return new Model();

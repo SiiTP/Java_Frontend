@@ -1,7 +1,7 @@
 package game.rooms;
 
 import game.user.GameProfile;
-import game.user.UserProfile;
+import persistance.UserProfile;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONObject;

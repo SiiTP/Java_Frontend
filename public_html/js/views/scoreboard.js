@@ -11,7 +11,7 @@ define([
         tagName: 'div',
         template: tmpl,
         events: {
-            "click button.scoreboard__button" : 'onClick'
+            "click .js-button-onMain" : 'onClick'
         },
         initialize: function () {
             this.model.on('change', this.render.bind(this));

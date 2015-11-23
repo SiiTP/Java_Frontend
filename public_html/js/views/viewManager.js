@@ -3,7 +3,7 @@ define (['backbone'], function(Backbone) {
         views: [],
         hideAllOther: function (view) {
             _.each(this.views, function(item) {
-                if (item != view) {
+                if (item != view && item.$el.css("display") != "none") {
                     item.hide();
                 } else {
                     if (item.$el.is(':empty')) {
