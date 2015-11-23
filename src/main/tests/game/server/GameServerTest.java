@@ -1,8 +1,7 @@
-package game.serverlevels;
+package game.server;
 
 import game.rooms.Room;
 import game.rooms.RoomFFA;
-import game.serverlevels.top.GameServer;
 import persistance.UserProfile;
 import org.junit.Before;
 import org.junit.Test;

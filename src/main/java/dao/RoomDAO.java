@@ -10,7 +10,7 @@ import persistance.RoomDataSet;
  * Created by ivan on 20.11.15.
  */
 public class RoomDAO {
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public RoomDAO() {
         this.sessionFactory = ProjectDB.getSessionFactory();
@@ -26,7 +26,4 @@ public class RoomDAO {
         return (RoomDataSet)query.uniqueResult();
     }
 
-    public RoomDataSet getRoomInfoById(long id) {
-        return sessionFactory.getCurrentSession().get(RoomDataSet.class,id);
-    }
 }

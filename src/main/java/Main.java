@@ -1,4 +1,4 @@
-import game.serverlevels.top.GameServer;
+import game.server.GameServer;
 import persistance.UserProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -54,9 +54,9 @@ public class Main {
             }
             Server server = new Server(port);
             ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-            context.addServlet(new ServletHolder(new SignIn(accountService)), "/signin");
-            context.addServlet(new ServletHolder(new SignUp(accountService)),"/signup");
-            context.addServlet(new ServletHolder(new LogOut(accountService)), "/logout");
+            context.addServlet(new ServletHolder(new SignIn(accountService)), "/user/update");
+            context.addServlet(new ServletHolder(new SignUp(accountService)),"/user/create");
+            context.addServlet(new ServletHolder(new LogOut(accountService)), "/user/delete");
             context.addServlet(new ServletHolder(new LoginInfo(accountService)), "/user/read");
             context.addServlet(new ServletHolder(new AdminServlet(server, gameServer)), "/admin");
             context.addServlet(new ServletHolder(new CreateGame(gameServer)), "/create");

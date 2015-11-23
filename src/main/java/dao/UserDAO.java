@@ -12,7 +12,7 @@ import persistance.ProjectDB;
  * Created by ivan on 20.11.15.
  */
 public class UserDAO {
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public UserDAO() {
         this.sessionFactory = ProjectDB.getSessionFactory();

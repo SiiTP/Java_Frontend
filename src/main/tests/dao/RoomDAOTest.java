@@ -19,7 +19,6 @@ import static org.junit.Assert.*;
  */
 public class RoomDAOTest {
     RoomDAO roomDAO;
-    Transaction t;
     SessionFactory sessionFactory;
     @Before
     public void setUp() throws Exception {
@@ -37,7 +36,7 @@ public class RoomDAOTest {
         service1.addUser(p2);
         RoomFFA ffa = new RoomFFA("test","test");
         GameProfile gameProfile = p.getGameProfile();
-        gameProfile.setScore(23);
+        gameProfile.setScore(10);
         GameProfile gameProfile1 = p2.getGameProfile();
         gameProfile1.setScore(1);
         ffa.addUser(p);

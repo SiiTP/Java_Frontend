@@ -1,4 +1,4 @@
-package game.serverlevels.top;
+package game.server;
 
 import game.rooms.Room;
 import game.rooms.RoomFFA;
@@ -125,7 +125,6 @@ public class GameServer {
             boolean rightRoom = true;
             if (profile != null) {
                 if(profile.getCurrentroom()==null){
-                    rightRoom = false;
                 }
             }else{
                 auth = false;
@@ -143,8 +142,8 @@ public class GameServer {
             Room room = profile.getCurrentroom();
             if(room != null) {
                 roomService.kickPlayerFromRoom(room.getRoomName(), profile);
+                accountService.updatePlayerInfo(profile);
                 GameProfile gameProfile = profile.getGameProfile();
-                accountService.updatePlayerInfo(profile, gameProfile);
                 gameProfile.resetSetting();
                 logger.info("player " + profile.getUsername() + " kicked from the room " + room.getRoomName());
                 if(room.getPlayersCount()==0){

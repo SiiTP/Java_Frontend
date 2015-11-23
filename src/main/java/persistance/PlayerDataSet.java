@@ -1,7 +1,6 @@
 package persistance;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
 import java.util.Set;
 
 /**

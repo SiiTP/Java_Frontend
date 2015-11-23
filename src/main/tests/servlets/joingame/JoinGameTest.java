@@ -1,7 +1,7 @@
 package servlets.joingame;
 
 import game.rooms.Room;
-import game.serverlevels.top.GameServer;
+import game.server.GameServer;
 import org.junit.Before;
 import org.junit.Test;
 import resource.ResourceFactory;

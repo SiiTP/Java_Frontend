@@ -2,7 +2,7 @@ package service.sockets;
 
 import game.rooms.Room;
 import game.rooms.RoomFFA;
-import game.serverlevels.top.GameServer;
+import game.server.GameServer;
 import game.sockets.MainWebSocket;
 import persistance.UserProfile;
 import org.json.JSONObject;

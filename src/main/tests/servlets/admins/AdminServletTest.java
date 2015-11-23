@@ -1,6 +1,6 @@
 package servlets.admins;
 
-import game.serverlevels.top.GameServer;
+import game.server.GameServer;
 import persistance.ProjectDB;
 import persistance.UserProfile;
 import org.eclipse.jetty.server.Server;

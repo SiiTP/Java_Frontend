@@ -13,6 +13,7 @@ import javax.persistence.*;
 /**
  * Created by ivan on 21.09.15.
  */
+@SuppressWarnings("FieldCanBeLocal")
 @NamedQueries({
         @NamedQuery(name = "userByName",query = "from user u where u.username = :username"),
         @NamedQuery(name = "isAvailable",query = "from user u where u.username =:username"),
@@ -65,11 +66,6 @@ public class UserProfile {
         this.currentroom = currentroom;
     }
 
-    @NotNull
-    public String getPassword() {
-        return password;
-    }
-
     public JSONObject getJson(){
         JSONObject object = gameProfile.getJSON();
         object.put("name",username);
@@ -78,18 +74,6 @@ public class UserProfile {
     @NotNull
     public GameProfile getGameProfile(){
         return gameProfile;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public PlayerDataSet getPlayer() {
-        return player;
     }
 
     public void setPlayer(PlayerDataSet player) {
@@ -108,7 +92,4 @@ public class UserProfile {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

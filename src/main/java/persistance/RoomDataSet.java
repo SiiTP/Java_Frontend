@@ -4,13 +4,13 @@ import game.rooms.Room;
 import game.rooms.RoomAbstractImpl;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 /**
  * Created by ivan on 20.11.15.
  */
+@SuppressWarnings("FieldCanBeLocal")
 @NamedQueries({
         @NamedQuery(name = "roomInfoByName",query = "from room r where r.roomName=:name")
 })
@@ -48,56 +48,9 @@ public class RoomDataSet {
     public RoomDataSet() {
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRoomName() {
-        return roomName;
-    }
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setPlayersLimit(Integer playersLimit) {
-        this.playersLimit = playersLimit;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
-    }
-
-    public LocalDateTime getFinishTime() {
-        return finishTime;
-    }
-
-    public void setFinishTime(LocalDateTime finishTime) {
-        this.finishTime = finishTime;
-    }
-
-    public Integer getPlayersLimit() {
-        return playersLimit;
-    }
 
     public UserProfile getWinner() {
         return winner;
     }
 
-    public void setWinner(UserProfile winner) {
-        this.winner = winner;
-    }
 }

@@ -1,7 +1,6 @@
 package service.account;
 
 import game.rooms.RoomFFA;
-import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -2,8 +2,6 @@ package service.account;
 
 import dao.RoomDAO;
 import game.rooms.Room;
-import game.rooms.RoomFFA;
-import game.user.GameProfile;
 import persistance.UserProfile;
 import org.hibernate.Session;
 import persistance.ProjectDB;
@@ -18,7 +16,7 @@ import java.util.Map;
  */
 public class RoomService {
     private Map<String,Room> rooms;
-    RoomDAO dao;
+    final RoomDAO dao;
     public RoomService(){
         dao = new RoomDAO();
         rooms = new HashMap<>();

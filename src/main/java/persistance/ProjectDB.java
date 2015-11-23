@@ -1,5 +1,10 @@
 package persistance;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
+import org.apache.logging.log4j.MarkerManager;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,6 +18,7 @@ import java.util.Objects;
  * Created by ivan on 20.11.15.
  */
 public class ProjectDB {
+    private static final Logger LOGGER = LogManager.getLogger(ProjectDB.class);
     private static SessionFactory s_sesssionFactory;
     private static String s_currentBD;
     public static void initBD(){
@@ -48,8 +54,13 @@ public class ProjectDB {
                     query = session.createSQLQuery(" SET FOREIGN_KEY_CHECKS=1");
                     query.executeUpdate();
                     session.getTransaction().commit();
+                }catch (HibernateException exc){
+                    LOGGER.error("Truncate failed",exc);
                 }
             }
+        }else{
+            Marker marker = new MarkerManager.Log4jMarker("FAIL INIT");
+            LOGGER.error(marker,"db failed");
         }
     }
 

@@ -2,9 +2,6 @@ package service.account;
 
 
 import dao.UserDAO;
-import game.user.GameProfile;
-import persistance.PlayerDataSet;
-import persistance.UserProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
@@ -13,7 +10,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import persistance.PlayerDataSet;
 import persistance.ProjectDB;
+import persistance.UserProfile;
 import resource.ResourceFactory;
 import resource.ServletResources;
 
@@ -25,9 +24,7 @@ import java.util.Map;
  */
 
 public class AccountService{
-    @NotNull
-    private final Map<String, UserProfile> users = new HashMap<>();
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
     @NotNull
     private final Map<String,UserProfile> sessions = new HashMap<>();
 
@@ -41,11 +38,10 @@ public class AccountService{
     }
 
     public boolean isAvailableName(@Nullable String name){
-        boolean isAvailable;
-        try(Session session = ProjectDB.getSessionFactory().getCurrentSession()){
-            Transaction t = session.beginTransaction();
-            isAvailable =userDAO.isAvailable(name);
-       }
+        Session session = ProjectDB.getSessionFactory().getCurrentSession();
+        Transaction t = session.beginTransaction();
+        boolean isAvailable = userDAO.isAvailable(name);
+        t.commit();
         return isAvailable;
     }
 
@@ -69,10 +65,10 @@ public class AccountService{
         }
         return isOk;
     }
-    public void updatePlayerInfo(UserProfile user,GameProfile profile){
+    public void updatePlayerInfo(UserProfile user){
         Session session = ProjectDB.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        userDAO.updatePlayerInfo(user, profile.getScore());
+        userDAO.updatePlayerInfo(user, user.getGameProfile().getScore());
         session.getTransaction().commit();
     }
     public void addUser(@NotNull UserProfile userProfile){
@@ -132,13 +128,6 @@ public class AccountService{
             }
             sessions.remove(sess);
         }
-    }
-
-    public static void main(String[] args) {
-        AccountService service = new AccountService();
-        UserProfile p = new UserProfile("test2","test2");
-        service.addUser(p);
-        System.out.println(service.getRegisterdUsersCount());
     }
 }
 

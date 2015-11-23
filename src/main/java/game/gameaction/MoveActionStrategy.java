@@ -2,7 +2,7 @@ package game.gameaction;
 
 import game.rooms.Room;
 import game.rooms.RoomFFA;
-import game.serverlevels.top.GameServer;
+import game.server.GameServer;
 import game.user.GameProfile;
 import persistance.UserProfile;
 import org.jetbrains.annotations.NotNull;

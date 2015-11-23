@@ -1,6 +1,6 @@
 package servlets.game;
 
-import game.serverlevels.top.GameServer;
+import game.server.GameServer;
 import persistance.UserProfile;
 import org.json.JSONException;
 import org.json.JSONObject;

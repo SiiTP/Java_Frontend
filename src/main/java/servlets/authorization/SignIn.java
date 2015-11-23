@@ -22,7 +22,6 @@ public class SignIn extends HttpServlet {
 
     @Override
     protected void doPost(@NotNull HttpServletRequest req, @NotNull HttpServletResponse resp) throws ServletException, IOException {
-
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         PrintWriter writer = resp.getWriter();

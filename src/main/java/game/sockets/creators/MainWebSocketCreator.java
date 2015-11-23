@@ -1,6 +1,6 @@
 package game.sockets.creators;
 
-import game.serverlevels.top.GameServer;
+import game.server.GameServer;
 import game.sockets.MainWebSocket;
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeRequest;
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeResponse;

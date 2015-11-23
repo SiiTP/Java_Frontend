@@ -3,7 +3,7 @@ package game.sockets;
 import game.gameaction.GameActionStrategy;
 import game.gameaction.MoveActionStrategy;
 import game.rooms.Room;
-import game.serverlevels.top.GameServer;
+import game.server.GameServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.websocket.api.StatusCode;
