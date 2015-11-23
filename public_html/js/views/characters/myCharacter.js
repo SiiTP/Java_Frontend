@@ -14,6 +14,7 @@ define([
             'mousemove': 'onMouseMove'
         },
         onMouseMove: function (event) {
+            console.log("view on mouse move");
             var x = event.pageX;
             var y = event.pageY;
             this.model.calculateAngle(x, y);

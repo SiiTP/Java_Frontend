@@ -13,11 +13,17 @@ html, body {
 }
 #page {
     background: #001;
-    height: 800px;
+    height: 2000px;
     color: whitesmoke;
     font-family: UbuntuItalic;
     padding-top: 20px;
 
+}
+.smallMargTop {
+    margin-top: 10px;
+}
+.mediumMargTop {
+    margin-top: 20px;
 }
 /*BUTTON BLOCK*/
 .button {
@@ -31,16 +37,15 @@ html, body {
             inset #004 0 0 6px 4px;
     outline: none;
 }
+.button_long {
+    width: 100%;
+}
 .button:hover {
     box-shadow: #ff0 0 0 6px 4px,
     inset #004 0 0 6px 4px;
 }
 .button:active {
     color: #005;
-}
-.button_logout {
-    width: 100%;
-    margin-top: 10px;
 }
 /*LINE BLOCK*/
 .line {
@@ -66,6 +71,7 @@ html, body {
     box-shadow: #05f 0  0 5px 2px;
     background: #03f;
 }
+
 .vertical-line {
     display: inline-block;
     width: 1px;
@@ -101,11 +107,11 @@ html, body {
 }
 .header {
     background: #002;
+    box-sizing: border-box;
     border-radius: 10px;
     box-shadow: inset #004 0  0 10px 5px,
     #000 0 0 10px 5px;
-    padding: 20px;
-    padding-bottom: 10px;
+    padding: 20px 20px 10px 20px;
 
 }
 .header-text {
@@ -122,13 +128,15 @@ html, body {
 .menu-container {
     white-space: nowrap;
     width: 70%;
+    min-width: 670px;
+    max-width: 1000px;
     margin: auto;
     border-radius: 20px;
 
 }
 .logo {
     display: inline-block;
-    width: 36%;
+    width: 50%;
     margin-bottom: 10px;
     box-sizing: border-box;
     /*border: solid 1px #111;*/
@@ -160,22 +168,26 @@ html, body {
     background: #f00;
 }
 .logo__center {
+    display: flex;
     color: #ff0;
-    text-shadow: #ff2 0 0 8px;
+    text-shadow: #ff2 0 0 1em;
 }
 .logo__beam {
-    display: inline-block;
+    text-align: right;
+    width: 49%;
     font-size: 48px;
 }
 .logo__balls {
-    display: inline-block;
+    text-align: left;
+    width: 49%;
+
     font-size: 48px;
 }
 .logo__divider {
-    display: inline-block;
+    display: inline-flex;
     width: 1px;
     height: 2em;
-    margin: 0 20px 0;
+    margin: auto 20px;
     border: solid 1px #ff0;
     box-shadow: #ff1 0  0 4px 3px;
     -webkit-box-shadow: #ff1 0 0 5px 2px;
@@ -185,50 +197,58 @@ html, body {
 /*LOGOUT MODULE*/
 .logout {
     display: inline-block;
-    width: 36%;
+    width: 48%;
+    margin-left: 20px;
 }
 .logout__info {
     display: inline-block;
-
 }
 .logout__on-main-page {
     width: 100px;
+}
+.logout__button {
 }
 .dontLogged {
     position: relative;
     top: -8px;
     display: inline-block;
-    width: 36%;
+    width: 48%;
+    box-sizing: border-box;
+    text-align: right;
+    margin-left: 20px;
     font-family: UbuntuItalic;
     font-size: 30px;
     text-shadow: whitesmoke 0 0 1em;
 }
 /*-------------*/
 
+/*MENU MODULE*/
 .menu {
-    min-height: 150px;
-    margin: 20px 0 10px;
-    padding: 80px 20px 0 20px;
+    min-height: 100px;
+    margin: 0;
+    padding: 25px 0 0 0;
     border-radius: 10px;
-    box-shadow: inset #004 0 0 20px 15px;
 }
 
 .container-game-btn {
     display: inline-block;
     box-sizing: border-box;
-    vertical-align: top;
     width: 33%;
+    height: 100px;
     color: whitesmoke;
-    /*background: #444;*/
 }
-.container-game-btn__msg {
-    display: block;
-    margin-top: 30px;
-    min-height: 50px;
-    font-size: 18px;
+.menu__msg-game {
+    width: 33%;
+    margin-top: 15px;
+    text-align: center;
+    white-space: normal;
+    font-size: 14px;
 }
+
 .container-game-btn__button {
+    display: block;
     width: 100px;
+    margin: 0 auto;
     height: 100px;
     border: #002 solid 2px;
     border-radius: 50%;
@@ -284,7 +304,9 @@ html, body {
 /*LOGIN PAGE*/
 .login {
     margin: auto;
-    width: 400px;
+    width: 40%;
+    min-width: 375px;
+    max-width: 500px;
     padding-bottom: 10px;
 }
 .input-field {
@@ -328,18 +350,22 @@ html, body {
 .validation-info-common {
     margin-top: 20px;
     font-size: 24px;
-    text-shadow: #f00 0 0 10px;
+    text-shadow: #f00 0 0 1em;
     text-align: center;
 }
 .login__buttons-container {
     margin-top: 10px;
 }
 .login__buttons-container__button {
-    width: 60%;
+    width: 40%;
 }
 .login__buttons-container__registration-link {
-    margin-left: 30px;
-    font-size:24px;
+    display: inline-block;
+    width: 58%;
+    margin-left: 2%;
+    text-align: right;
+    box-sizing: border-box;
+    font-size: 20px;
     font-family: NunitoNormal;
     color: #f5f5f5;
     text-shadow: whitesmoke 0 0 1em;
@@ -357,16 +383,20 @@ html, body {
 .registration {
     color: #003;
     margin: auto;
-    width: 400px;
+    min-width: 310px;
+    max-width: 600px;
+    width: 40%
 }
 .registration__button {
-    width: 99%;
+    width: 100%;
     margin-top: 10px;
 }
 
 /*SCOREBOARD PAGE*/
 .scoreboard {
-    width: 300px;
+    width: 50%;
+    min-width: 200px;
+    max-width: 400px;
     margin: auto;
 }
 .scoreboard__header {
@@ -376,7 +406,7 @@ html, body {
 
 }
 .table {
-    width: 300px;
+
 }
 .table-header {
     margin-top: 10px;
@@ -386,52 +416,52 @@ html, body {
 }
 .table__table-header__item {
     display: inline-block;
-    width: 50%;
     box-sizing: border-box;
+    width: 50%;
 }
 .table__table-header__item_alignRight {
     text-align: right;
 }
-.table__line {
-
+.table__content-line__line {
+    margin: 0 2%;
 }
 .table__content {
     margin-top: 10px;
     font-family: NunitoNormal;
 }
 .table__content-line {
-    padding: 3px 0 3px;
+    padding: 2px 0 2px;
 }
-.table__item {
+.table__content-line__item {
     display: inline-block;
-    width: 43%;
+    width: 47%;
     box-sizing: border-box;
     text-align: left;
 }
-.table__item-name {
+.table__content-line__item-name {
     text-align: left;
 }
-.table__item-score {
+.table__content-line__item-score {
      text-align: right;
  }
-.table__item_even {
+.table__content-line__item_even {
     color: #0f0;
     background: #003;
 }
-.table__item_odd {
+.table__content-line__item_odd {
     color: #ff0;
     /*background: #001;*/
 }
 
 .scoreboard__button {
-    width: 100%;
     margin: 5px 0;
-    box-sizing: border-box;
 }
 
 /*ROOMS PAGE*/
 .rooms {
     width: 70%;
+    min-width: 715px;
+    max-width: 1000px;
     margin: auto;
 }
 .rooms__lines {
@@ -502,10 +532,6 @@ html, body {
     margin: 30px 0 20px;
 
 }
-.rooms__button-refresh {
-    width: 100%;
-    margin-top: 10px;
-}
 .rooms__create {
     white-space: nowrap;
     margin: 10px 0 0;
@@ -514,19 +540,21 @@ html, body {
     margin-bottom: 20px;
 }
 .rooms__create__input-line {
-    width: 40%;
+    width: 41%;
     display: inline-block;
-    box-sizing: border-box;
     font-family: UbuntuItalic;
 }
+.rooms__create__input-line__username {
+    width: 43%;
+}
 .rooms__create__input-line__password {
-    margin-left: 5%;
+    width: 41%;
+    margin-left: 2%;
 }
 .rooms__create__button {
-    width: 9%;
+    width: 14%;
     display: inline-block;
-    box-sizing: border-box;
-    margin-left: 5%;
+    margin-left: 2%;
 }
 .rooms__create__message {
     margin: 0;
@@ -547,5 +575,8 @@ html, body {
     left: 10px;
     margin: 0;
     /*TODO отступы задавать с помощью jquery на основе констант отступов*/
+}
+canvas {
+    background: transparent;
 }
 

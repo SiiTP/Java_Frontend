@@ -22,7 +22,7 @@ define([
         },
         onSubmit: function() {
             console.log("logout-view logout click event");
-            this.model.onLogout();
+            this.model.destroy();
         }
     });
 

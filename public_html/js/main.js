@@ -17,8 +17,9 @@ require.config({
     }
 });
 
-define(['backbone', 'router','constants'], function(
+define(['backbone', 'sync', 'router','constants'], function(
     Backbone,
+    sync,
     router,
     constants
 ){

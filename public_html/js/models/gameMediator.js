@@ -73,6 +73,7 @@ define (['backbone'], function(Backbone) {
             var players = [];
             var Enemy = this.get('EnemyCharacter');
             var My = this.get('MyCharacter');
+            var my = null;
             _.each(answerPlayers, function(player) {
                 if (this.get('user').get('username') != player.name) {
                     var item = new Enemy({
@@ -89,21 +90,25 @@ define (['backbone'], function(Backbone) {
                     });
                     players.push(item);
                 } else {
-                    item = new My({
-                        className: "character character_" + player.name,
-                        'width': 1000,
-                        'height': 700});
-                    item.model.set({
-                        posX  : player.posX,
-                        posY  : player.posY,
-                        name  : player.name,
-                        angle : player.direction,
-                        score : player.score
-                    });
-                    this.set({'myPlayer': item});
+                    //нужно чтобы наш игрок был самым верхним слоем, добавим в конце
+                    my = player;
                 }
             }, this);
             this.set({'enemyPlayers': players});
+            if (my != null) {
+                var item = new My({
+                    className: "character character_" + my.name,
+                    'width': 1000,
+                    'height': 700});
+                item.model.set({
+                    posX  : my.posX,
+                    posY  : my.posY,
+                    name  : my.name,
+                    angle : my.direction,
+                    score : my.score
+                });
+                this.set({'myPlayer': item});
+            }
         },
         erasePlayers: function() {
             if (this.get('myPlayer') != null) {
@@ -143,8 +148,10 @@ define (['backbone'], function(Backbone) {
             requestAnimationFrame(this.loop.bind(this));
         },
         loop: function() {
-            this.get('myPlayer').model.myMove(0.02);
-            this.get('myPlayer').draw();
+            if (this.get('myPlayer') != null) {
+                this.get('myPlayer').model.myMove(0.02);
+                this.get('myPlayer').draw();
+            }
             _.each(this.get('enemyPlayers'), function(enemy) {
                 enemy.draw();
             });

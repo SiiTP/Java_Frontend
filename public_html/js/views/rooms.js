@@ -14,7 +14,8 @@ define([
         events: {
             'click .rooms__lines__line__button': 'onConnect',
             'click .rooms__create__button': 'onCreateRoom',
-            'click .rooms__button-refresh': 'onRefresh'
+            'click .js-button-refresh': 'onRefresh',
+            'click .js-button-onMain': 'onMain'
         },
         initialize: function () {
             this.model.on('change', this.render.bind(this));
@@ -37,6 +38,9 @@ define([
         },
         onRefresh: function() {
             this.model.fetch();
+        },
+        onMain: function() {
+            location.href = "#"
         },
         show: function() {
             this.model.fetch();
