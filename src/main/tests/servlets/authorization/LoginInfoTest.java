@@ -1,6 +1,6 @@
 package servlets.authorization;
 
-import game.user.UserProfile;
+import persistance.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
 import service.account.AccountService;

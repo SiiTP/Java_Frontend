@@ -1,6 +1,6 @@
 package game.rooms;
 
-import game.user.UserProfile;
+import persistance.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
 import resource.GameResources;

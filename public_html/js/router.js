@@ -54,7 +54,6 @@ define([
         constants      : constants,
         field          : fieldView
     });
-    //manager.add(gameView);
     var Router = Backbone.Router.extend({
         routes: {
             'scoreboard': 'scoreboardAction',

@@ -1,27 +1,27 @@
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="scores">
     <div class="scoreboard">
-        <div class="header-text">Scoreboard</div>
+        <div class="header-text">Топ-10</div>
         <div class="table">
             <header class="table-header">
-                <div class="table__table-header__item">Username</div>
-                <div class="table__table-header__item table__table-header__item_alignRight">Score</div>
+                <div class="table__table-header__item">Логин</div>
+                <div class="table__table-header__item table__table-header__item_alignRight">Счёт</div>
             </header>
             <div class="line line_blue table__line"> </div>
             <main class="table__content">
                 <fest:each iterate="scores" index="i" value="v">
-                    <div align="center" class="table__content-line {i % 2 == 0 ? 'table__item_even' : 'table__item_odd'}">
-                        <div class="table__item table__item-name">
+                    <div class="table__content-line {i % 2 == 0 ? 'table__content-line__item_even' : 'table__content-line__item_odd'}">
+                        <div class="table__content-line__item table__content-line__item-name">
                             <fest:value>v.name</fest:value>
                         </div>
-                        <div class="vertical-line vertical-line_tableRelPos {i % 2 == 0 ? 'vertical-line_green' : ''}" style=""> </div>
-                        <div class="table__item table__item-score">
+                        <div class="vertical-line vertical-line_tableRelPos table__content-line__line {i % 2 == 0 ? 'vertical-line_green' : ''}"> </div>
+                        <div class="table__content-line__item table__content-line__item-score">
                             <fest:value>v.score</fest:value>
                         </div>
                     </div>
                 </fest:each>
             </main>
             <div class="line line_blue table__line"> </div>
-            <button class="button scoreboard__button" data-href="#">On main</button>
+            <button class="button button_long smallMargTop js-button-onMain" data-href="#">На главную</button>
         </div>
     </div>
 </fest:template>

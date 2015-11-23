@@ -21,21 +21,12 @@ define([
             "input .login__input-field-password__input-line__input": "validatePassword"
         },
         initialize: function () {
-            this.model.on('toMain', function() {
+            this.model.on("toMain", function() {
                 location.href = '#';
             });
-        },
-        show: function () {
-            this.trigger('show');
-            this.$el.show();
-            if (this.JQ_cacheInput) {
-                _.each(this.JQ_cacheInput, function (inputField) {
-                    inputField.trigger('input');
-                });
-            }
-        },
-        hide: function () {
-            this.$el.hide();
+            this.model.on("error", function(model, message) {
+                $(".login__validation-info-common").text(message);
+            })
         },
         JQ_cashing: function () {
             if (this.JQ_cacheInput == null) {
@@ -130,11 +121,24 @@ define([
             event.preventDefault();
             this.JQ_cashing();
             if (this.model.isValid()) {
-                this.model.onLogin();
+                this.model.set({id: 1});
+                this.model.save(null, this.model.optionsLog);
             } else {
                 $(".login__validation-info-common").text("Не все поля заданы корректно.");
                 this.focusOnErrorField();
             }
+        },
+        show: function () {
+            this.trigger('show');
+            this.$el.show();
+            if (this.JQ_cacheInput) {
+                _.each(this.JQ_cacheInput, function (inputField) {
+                    inputField.trigger('input');
+                });
+            }
+        },
+        hide: function () {
+            this.$el.hide();
         }
     });
 });

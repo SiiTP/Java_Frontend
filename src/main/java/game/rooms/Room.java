@@ -1,6 +1,6 @@
 package game.rooms;
 
-import game.user.UserProfile;
+import persistance.UserProfile;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

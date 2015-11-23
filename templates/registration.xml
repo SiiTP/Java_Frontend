@@ -1,20 +1,13 @@
-<!--Классы:
-    registration__input-line__input__username
-    registration__username__validation-info
-    registration__username__line
-    и т. д.
-нужны для однозначного нахождения соответствующих полей при валидации
- -->
 <fest:template xmlns:fest="http://fest.mail.ru">
     <div class="registration">
         <div class="header-noBorder">
-            <h1 class="header-text">Registration</h1>
+            <h1 class="header-text">Регистрация</h1>
             <div class="line line_blue"> </div>
         </div>
         <form id="registration-form" method="post">
             <div class="input-field input-field-username">
                 <div class="input-line">
-                    <label for="username" class="input-line__header">Username </label>
+                    <label for="username" class="input-line__header">Логин </label>
                     <input class="input-line__input registration__input-field-username__input-line__input"
                            type="text" name="username" id="username"/>
                 </div>
@@ -24,7 +17,7 @@
             </div>
             <div class="input-field input-field-password">
                 <div class="input-line input-line-password">
-                    <label for="password" class="input-line__header">Password </label>
+                    <label for="password" class="input-line__header">Пароль </label>
                     <input class="input-line__input  registration__input-field-password__input-line__input"
                            type="password" name="password" id="password"/>
                 </div>
@@ -34,15 +27,16 @@
             </div>
             <div class="input-field input-field-confirm">
                 <p class="input-line input-line-confirm">
-                        <label for="confirm" class="input-line__header">Confirm</label>
-                        <input class="input-line__input registration__input-field-confirm__input-line__input"
-                               type="password" name="confirm" id="confirm"/>
+                    <label for="confirm" class="input-line__header">Еще раз</label>
+                    <input class="input-line__input registration__input-field-confirm__input-line__input"
+                           type="password" name="confirm" id="confirm"/>
                 </p>
                 <div class="validation-info registration__input-field-confirm__validation-info">Повторите введенный пароль</div>
                 <div class="line registration__input-field-confirm__line"> </div>
             </div>
-            <button type="submit" class="button registration__button">Registration</button>
+            <button type="submit" class="button registration__button">Зарегистрироваться</button>
         </form>
+        <button class="button button_long smallMargTop js-button-onMain" data-href="#">На главную</button>
         <div class="validation-info validation-info-common registration__validation-info-common validation-info_error "> </div>
     </div>
 </fest:template>

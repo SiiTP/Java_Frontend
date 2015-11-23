@@ -2,7 +2,8 @@ package game.serverlevels.top;
 
 import game.rooms.Room;
 import game.rooms.RoomFFA;
-import game.user.UserProfile;
+import game.user.GameProfile;
+import persistance.UserProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -143,6 +144,8 @@ public class GameServer {
         UserProfile profile = accountService.getUserBySession(httpSession);
         if(profile != null) {
             Room room = profile.getCurrentroom();
+            GameProfile gameProfile = profile.getGameProfile();
+            gameProfile.resetSetting();
             if(room != null) {
                 room.kickPlayer(profile);
                 logger.info("player " + profile.getUsername() + " kicked from the room " + room.getRoomName());
