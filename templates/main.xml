@@ -17,9 +17,9 @@
                     <div class="logo__top__line"> </div>
                 </div>
                 <div class="logo__center">
-                    <span class="logo__beam">Beam</span>
-                    <span class="logo__divider"> </span>
-                    <span class="logo__balls">Balls</span>
+                    <span class="logo__center__beam">Beam</span>
+                    <span class="logo__center__divider"> </span>
+                    <span class="logo__center__balls">Balls</span>
                 </div>
                 <div class="logo__bottom">
                     <div class="logo__bottom__line"> </div>

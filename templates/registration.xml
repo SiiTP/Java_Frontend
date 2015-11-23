@@ -27,9 +27,9 @@
             </div>
             <div class="input-field input-field-confirm">
                 <p class="input-line input-line-confirm">
-                        <label for="confirm" class="input-line__header">Еще раз</label>
-                        <input class="input-line__input registration__input-field-confirm__input-line__input"
-                               type="password" name="confirm" id="confirm"/>
+                    <label for="confirm" class="input-line__header">Еще раз</label>
+                    <input class="input-line__input registration__input-field-confirm__input-line__input"
+                           type="password" name="confirm" id="confirm"/>
                 </p>
                 <div class="validation-info registration__input-field-confirm__validation-info">Повторите введенный пароль</div>
                 <div class="line registration__input-field-confirm__line"> </div>

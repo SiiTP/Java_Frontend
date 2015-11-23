@@ -222,6 +222,7 @@ html, body {
 }
 /*-------------*/
 
+/*MENU MODULE*/
 .menu {
     min-height: 100px;
     margin: 0;
@@ -243,6 +244,7 @@ html, body {
     white-space: normal;
     font-size: 14px;
 }
+
 .container-game-btn__button {
     display: block;
     width: 100px;

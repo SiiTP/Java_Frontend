@@ -30,10 +30,28 @@ module.exports = function (grunt) {
                 }
             }
         },
+        sass: {
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: 'public_html/scss',
+                    src: ['*.scss'],
+                    dest: 'public_html/css',
+                    ext: '.css'
+                }]
+            }
+        },
         watch: {
             fest: {
                 files: ['templates/*.xml'],
                 tasks: ['fest'],
+                options: {
+                    atBegin: true
+                }
+            },
+            sass: {
+                files: ['public_html/scss/*.scss'],
+                tasks: ['sass'],
                 options: {
                     atBegin: true
                 }
@@ -58,6 +76,7 @@ module.exports = function (grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-fest');
