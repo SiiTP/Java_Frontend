@@ -1,0 +1,14 @@
+/*MENU MODULE*/
+.menu {
+  min-height: 100px;
+  margin: 0;
+  padding: 25px 0 0 0;
+  border-radius: 10px;
+  &__msg-game {
+    width: 33%;
+    margin-top: 15px;
+    text-align: center;
+    white-space: normal;
+    font-size: $font-size_medium;
+  }
+}

@@ -2,25 +2,25 @@
     <div class="scoreboard">
         <div class="header-text">Топ-10</div>
         <div class="table">
-            <header class="table-header">
-                <div class="table__table-header__item">Логин</div>
-                <div class="table__table-header__item table__table-header__item_alignRight">Счёт</div>
+            <header class="scoreboard__table__table-header">
+                <div class="scoreboard__table__table-header__item">Логин</div>
+                <div class="scoreboard__table__table-header__item scoreboard__table__table-header__item_alignRight">Счёт</div>
             </header>
-            <div class="line line_blue table__line"> </div>
-            <main class="table__content">
+            <div class="line line_blue scoreboard__table__line"> </div>
+            <div class="scoreboard__table__content">
                 <fest:each iterate="scores" index="i" value="v">
-                    <div class="table__content-line {i % 2 == 0 ? 'table__content-line__item_even' : 'table__content-line__item_odd'}">
-                        <div class="table__content-line__item table__content-line__item-name">
+                    <div class="scoreboard__table__content__c-line {i % 2 == 0 ? 'scoreboard__table__content__c-line__item_even' : 'scoreboard__table__content__c-line__item_odd'}">
+                        <div class="scoreboard__table__content__c-line__item scoreboard__table__content__c-line__item_name">
                             <fest:value>v.name</fest:value>
                         </div>
-                        <div class="vertical-line vertical-line_tableRelPos table__content-line__line {i % 2 == 0 ? 'vertical-line_green' : ''}"> </div>
-                        <div class="table__content-line__item table__content-line__item-score">
+                        <div class="vertical-line vertical-line_tableRelPos scoreboard__table__content__c-line__line {i % 2 == 0 ? 'vertical-line_green' : ''}"> </div>
+                        <div class="scoreboard__table__content__c-line__item scoreboard__table__content__c-line__item_score">
                             <fest:value>v.score</fest:value>
                         </div>
                     </div>
                 </fest:each>
-            </main>
-            <div class="line line_blue table__line"> </div>
+            </div>
+            <div class="line line_blue scoreboard__table__line"> </div>
             <button class="button button_long smallMargTop js-button-onMain" data-href="#">На главную</button>
         </div>
     </div>

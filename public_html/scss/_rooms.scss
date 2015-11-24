@@ -1,0 +1,194 @@
+.rooms {
+  width: 70%;
+  min-width: 715px;
+  max-width: 1000px;
+  margin: auto;
+  &__lines {
+    margin: 10px 0 10px;
+    &__header {
+      white-space: nowrap;
+      font-size: 20px;
+      color: #ff0;
+      text-shadow: #ff0 0 0 10px;
+      &__index {
+        width: 5%;
+        display: inline-block;
+        box-sizing: border-box;
+      }
+      &__name {
+        width: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+      }
+      &__players {
+        width: 10%;
+        display: inline-block;
+        box-sizing: border-box;
+        text-align: right;
+      }
+      &__maxPlayers {
+        width: 10%;
+        display: inline-block;
+        box-sizing: border-box;
+        text-align: right;
+      }
+    }
+    &__line {
+      white-space: nowrap;
+      margin-top: 10px;
+      font-family: NunitoNormal;
+      font-size: 16px;
+      box-sizing: border-box;
+      &__index {
+        width: 5%;
+        display: inline-block;
+        box-sizing: border-box;
+      }
+      &__name {
+        width: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+      }
+      &__players {
+        width: 10%;
+        display: inline-block;
+        box-sizing: border-box;
+        text-align: right;
+      }
+      &__maxPlayers {
+        width: 10%;
+        display: inline-block;
+        box-sizing: border-box;
+        text-align: right;
+      }
+      &__button {
+        width: 23%;
+        margin-left: 2%;
+      }
+    }
+  }
+  &__noRooms {
+    margin: 30px 0 20px;
+  }
+  &__create {
+    white-space: nowrap;
+    margin: 10px 0 0;
+    &__header {
+      margin-bottom: 20px;
+    }
+    &__input-line {
+      width: 41%;
+      display: inline-block;
+      font-family: UbuntuItalic;
+      &__username {
+        width: 43%;
+      }
+      &__password {
+        width: 41%;
+        margin-left: 2%;
+      }
+    }
+    &__button {
+      width: 14%;
+      display: inline-block;
+      margin-left: 2%;
+    }
+    &__message {
+      margin: 0;
+    }
+  }
+}
+//.rooms__lines {
+//  margin: 10px 0 10px;
+//}
+//.rooms__lines__header {
+//  white-space: nowrap;
+//  font-size: 20px;
+//  color: #ff0;
+//  text-shadow: #ff0 0 0 10px;
+//}
+//.rooms__lines__header__index {
+//  width: 5%;
+//  display: inline-block;
+//  box-sizing: border-box;
+//}
+//.rooms__lines__header__name {
+//  width: 50%;
+//  display: inline-block;
+//  box-sizing: border-box;
+//}
+//.rooms__lines__header__players {
+//  width: 10%;
+//  display: inline-block;
+//  box-sizing: border-box;
+//  text-align: right;
+//}
+//.rooms__lines__header__maxPlayers {
+//  width: 10%;
+//  display: inline-block;
+//  box-sizing: border-box;
+//  text-align: right;
+//}
+//.rooms__lines__line {
+//  white-space: nowrap;
+//  margin-top: 10px;
+//  font-family: NunitoNormal;
+//  font-size: 16px;
+//  box-sizing: border-box;
+//}
+//.rooms__lines__line__index {
+//  width: 5%;
+//  display: inline-block;
+//  box-sizing: border-box;
+//}
+//.rooms__lines__line__name {
+//  width: 50%;
+//  display: inline-block;
+//  box-sizing: border-box;
+//}
+//.rooms__lines__line__players {
+//  width: 10%;
+//  display: inline-block;
+//  box-sizing: border-box;
+//  text-align: right;
+//}
+//.rooms__lines__line__maxPlayers {
+//  width: 10%;
+//  display: inline-block;
+//  box-sizing: border-box;
+//  text-align: right;
+//}
+//.rooms__lines__line__button {
+//  width: 23%;
+//  margin-left: 2%;
+//}
+//.rooms__noRooms {
+//  margin: 30px 0 20px;
+//}
+//.rooms__create {
+//  white-space: nowrap;
+//  margin: 10px 0 0;
+//}
+//.rooms__create__header {
+//  margin-bottom: 20px;
+//}
+//.rooms__create__input-line {
+//  width: 41%;
+//  display: inline-block;
+//  font-family: UbuntuItalic;
+//}
+//.rooms__create__input-line__username {
+//  width: 43%;
+//}
+//.rooms__create__input-line__password {
+//  width: 41%;
+//  margin-left: 2%;
+//}
+//.rooms__create__button {
+//  width: 14%;
+//  display: inline-block;
+//  margin-left: 2%;
+//}
+//.rooms__create__message {
+//  margin: 0;
+//}

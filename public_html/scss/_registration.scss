@@ -1,0 +1,11 @@
+.registration {
+  color: #003;
+  margin: auto;
+  min-width: 310px;
+  max-width: 600px;
+  width: 50%;
+  &__button {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

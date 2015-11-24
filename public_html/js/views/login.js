@@ -17,8 +17,8 @@ define([
         JQ_cacheInput: null,
         events: {
             "click .login__buttons-container__button": "onSubmit",
-            "input .login__input-field-username__input-line__input": "validateUsername",
-            "input .login__input-field-password__input-line__input": "validatePassword"
+            "input .js-login__input-field-username__input-line__input": "validateUsername",
+            "input .js-login__input-field-password__input-line__input": "validatePassword"
         },
         initialize: function () {
             this.model.on("toMain", function() {
@@ -31,20 +31,20 @@ define([
         JQ_cashing: function () {
             if (this.JQ_cacheInput == null) {
                 this.JQ_cacheInput = {
-                    'username': $(".login__input-field-username__input-line__input"),
-                    'password': $(".login__input-field-password__input-line__input")
+                    'username': $(".js-login__input-field-username__input-line__input"),
+                    'password': $(".js-login__input-field-password__input-line__input")
                 };
             }
             if (this.JQ_cacheText == null) {
                 this.JQ_cacheText = {
-                    'username': $(".login__input-field-username__validation-info"),
-                    'password': $(".login__input-field-password__validation-info")
+                    'username': $(".js-login__input-field-username__validation-info"),
+                    'password': $(".js-login__input-field-password__validation-info")
                 };
             }
             if (this.JQ_cacheLine == null) {
                 this.JQ_cacheLine = {
-                    'username': $(".login__input-field-username__line"),
-                    'password': $(".login__input-field-password__line")
+                    'username': $(".js-login__input-field-username__line"),
+                    'password': $(".js-login__input-field-password__line")
                 };
             }
         },
@@ -101,7 +101,7 @@ define([
                 this.model.set({'validPassword': true});
                 this.JQ_cacheText['password'].removeClass("validation-info_error");
                 this.JQ_cacheText['password'].addClass("validation-info_correct");
-                this.JQ_cacheText['password'].text("Поле Password задано корректно");
+                this.JQ_cacheText['password'].text("Поле ПАРОЛЬ задано корректно");
                 this.JQ_cacheLine['password'].removeClass("line_red");
                 this.JQ_cacheLine['password'].addClass("line_green");
             } else {

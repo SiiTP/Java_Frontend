@@ -1,0 +1,27 @@
+$input-border: #00f;
+$input-background: #88f;
+$input-shadow: #33f;
+
+.input-line {
+  display: block;
+  box-sizing: border-box;
+  margin-bottom: 1em;
+  color: $color-default;
+  &__header {
+    display: inline-block;
+    width: 35%;
+    font-size: $font-size_medium;
+    color: $color-font-base;
+    text-shadow: $color-font-base 0 0 1em;
+    box-sizing: border-box;
+  }
+  &__input {
+    width: 64%;
+    margin-bottom: 0;
+    border: solid 1px $input-border;
+    background: $input-background;
+    box-shadow: $input-shadow 0 0 4px 3px;
+    color: $color-font-base_inverse;
+    box-sizing: border-box;
+  }
+}
