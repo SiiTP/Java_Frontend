@@ -1,11 +1,9 @@
 package servlets.authorization;
 
+import persistance.UserProfile;
 import org.jetbrains.annotations.NotNull;
-
 import org.json.JSONObject;
-import service.AccountService;
-import service.UserProfile;
-
+import service.account.AccountService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,8 +15,7 @@ import java.io.PrintWriter;
 
 public class SignIn extends HttpServlet {
     @NotNull
-    private AccountService accountService;
-
+    private final AccountService accountService;
     public SignIn(@NotNull AccountService service) {
         this.accountService = service;
     }
@@ -28,35 +25,41 @@ public class SignIn extends HttpServlet {
 
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-
-        HttpSession httpSession = req.getSession();
         PrintWriter writer = resp.getWriter();
         JSONObject responseJSON = new JSONObject();
-        if (httpSession != null) {
-            String session = httpSession.getId();
-            boolean auth = accountService.isAuthorized(session);
-            if (auth) {
-                UserProfile profile = accountService.getUserBySession(session);
-                if(profile != null) {
-                    responseJSON.put("success", false);
-                    responseJSON.put("message", "you have already auth as" + profile.getUsername());
-                }
+        if (username != null && password != null) {
+            if (accountService.isDataWrong(username, password)) {
+                responseJSON.put("success", false);
+                responseJSON.put("message", "wrong data");
             } else {
-                auth = accountService.authtorize(username, password, session);
-                if (auth) {
-                    responseJSON.put("success", true);
-                    responseJSON.put("message","you successfully have been logined in!");
-                    // TODO передавать счет
-                } else {
-                    responseJSON.put("success", false);
-                    responseJSON.put("message", "wrong login or password");
+                HttpSession httpSession = req.getSession();
+
+                if (httpSession != null) {
+                    String session = httpSession.getId();
+                    boolean auth = accountService.isAuthorized(session);
+                    if (auth) {
+                        UserProfile profile = accountService.getUserBySession(session);
+                        if (profile != null) {
+                            responseJSON.put("success", false);
+                            responseJSON.put("message", "you have already auth as" + profile.getUsername());
+                        }
+                    } else {
+                        auth = accountService.authtorize(username, password, session);
+                        if (auth) {
+                            responseJSON.put("success", true);
+                            responseJSON.put("message", "you successfully have been logined in!");
+                        } else {
+                            responseJSON.put("success", false);
+                            responseJSON.put("message", "wrong login or password");
+                        }
+                    }
                 }
             }
-        }
-        if(writer != null) {
-            writer.println(responseJSON.toString());
-        }
+            if (writer != null) {
+                writer.println(responseJSON.toString());
+            }
 
+        }
     }
 
 }

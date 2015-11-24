@@ -4,8 +4,7 @@ require.config({
     paths: {
         jquery: "lib/jquery",
         underscore: "lib/underscore",
-        backbone: "lib/backbone",
-        user: "models/user"
+        backbone: "lib/backbone"
     },
     shim: {
         'backbone': {
@@ -18,11 +17,11 @@ require.config({
     }
 });
 
-define(['backbone', 'router','user'], function(
+define(['backbone', 'sync', 'router','constants'], function(
     Backbone,
+    sync,
     router,
-    User
+    constants
 ){
-    auth_user = new User();
     Backbone.history.start();
 });

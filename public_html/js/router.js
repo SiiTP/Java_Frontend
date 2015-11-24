@@ -1,59 +1,85 @@
-define(['backbone'], function(Backbone){
-
+define([
+    'backbone',
+    'views/viewManager',
+    'views/main',
+    'views/field',
+    'views/login',
+    'views/logout',
+    'views/rooms',
+    'views/registration',
+    'views/scoreboard',
+    'models/user',
+    'collections/scores',
+    'models/rooms',
+    'models/gameMediator',
+    'views/characters/myCharacter',
+    'views/characters/enemyCharacter',
+    'constants'
+], function (
+    Backbone,
+    manager,
+    MainView,
+    FieldView,
+    LoginView,
+    LogoutView,
+    RoomsView,
+    RegistrationView,
+    ScoreboardView,
+    user,
+    scores,
+    rooms,
+    GameMediator,
+    MyCharacter,
+    EnemyCharacter,
+    constants
+) {
+    var mainView =         new MainView         ({model: user});
+    var registrationView = new RegistrationView ({model: user});
+    var loginView =        new LoginView        ({model: user});
+    var logoutView =       new LogoutView       ({model: user});
+    var scoreboardView =   new ScoreboardView   ({model: scores});
+    var roomsView =        new RoomsView        ({model: rooms});
+    var fieldView =        new FieldView        ();
+    manager.add(scoreboardView);
+    manager.add(loginView);
+    manager.add(logoutView);
+    manager.add(registrationView);
+    manager.add(mainView);
+    manager.add(roomsView);
+    manager.add(fieldView);
+    var gameMediator = new GameMediator({
+        user           : user,
+        MyCharacter    : MyCharacter,
+        EnemyCharacter : EnemyCharacter,
+        constants      : constants,
+        field          : fieldView
+    });
     var Router = Backbone.Router.extend({
         routes: {
             'scoreboard': 'scoreboardAction',
             'game': 'gameAction',
+            'rooms': 'roomsAction',
             'login': 'loginAction',
-            'logout': 'logoutAction',
             'registration': 'registrationAction',
-            '*main': 'mainAction',
-            'default': 'defaultActions'
+            '': 'mainAction'
         },
         mainAction: function () {
-            require(['views/main'],function(view){
-                //view.el = '#page';
-                view.render();
-            });
-            console.log("main action");
+            mainView.show();
         },
         scoreboardAction: function () {
-            require(['views/scoreboard'],function(view){
-                //view.el = '#page';
-                view.render();
-            });
-            console.log("scoreboard action");
+            scoreboardView.show();
         },
         gameAction: function () {
-            require(['views/game'],function(view){
-                //view.el = '#page';
-                view.render();
-            });
-            console.log("game action");
+            fieldView.show();
+        },
+        roomsAction: function () {
+            roomsView.show();
         },
         loginAction: function () {
-            require(['views/login'],function(view){
-                //view.el = '#page';
-                view.render();
-            });
-            console.log("login action");
-        },
-        logoutAction: function () {
-            require(['views/logout'],function(view){
-                //view.el = '#page';
-                view.onSubmit();
-            });
-            console.log("logout action");
+            loginView.show();
         },
         registrationAction: function () {
-            require(['views/registration'],function(view){
-                //view.el = '#page';
-                view.render();
-            });
-            console.log("registration action");
-        },
-        defaultAction: function () {
-            console.log("default");
+            registrationView.show();
         }
     });
     return new Router();

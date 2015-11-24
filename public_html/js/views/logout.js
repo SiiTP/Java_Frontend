@@ -1,28 +1,17 @@
 //форма выхода из учентной записи
 define([
     'backbone',
-    'tmpl/logout',
-    'models/logout'
+    'tmpl/logout'
 ], function(
     Backbone,
-    tmpl,
-    logout
+    tmpl
 ){
 
     var View = Backbone.View.extend({
-        el: 'div#page',
         template: tmpl,
-        model: new logout(),
+        model: null,
         events: {
             "click .button_logout" : "onSubmit"
-        },
-        initialize: function () {
-            console.log("logout initialize");
-        },
-        render: function () {
-            console.log("logout render");
-            //var data = {"name": auth_user.name, "score": auth_user.score};
-            //this.$el.html(this.template(data));
         },
         show: function () {
             this.$el.show();
@@ -33,9 +22,9 @@ define([
         },
         onSubmit: function() {
             console.log("logout-view logout click event");
-            this.model.onSubmit();
+            this.model.destroy();
         }
     });
 
-    return new View();
+    return View;
 });

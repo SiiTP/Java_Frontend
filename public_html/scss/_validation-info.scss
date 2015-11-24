@@ -1,0 +1,19 @@
+
+.validation-info {
+  box-sizing: border-box;
+  font-size: 12px;
+  font-family: NunitoNormal;
+  color: $color-default;
+  &_correct {
+    color: $color-correct;
+  }
+  &_error {
+    color: $color-error;
+  }
+}
+.validation-info-common {
+  margin-top: 20px;
+  font-size: 24px;
+  text-shadow: #f00 0 0 1em;
+  text-align: center;
+}

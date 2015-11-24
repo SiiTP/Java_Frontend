@@ -1,9 +1,9 @@
 package servlets.authorization;
 
+import persistance.UserProfile;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
-import service.AccountService;
-import service.UserProfile;
+import service.account.AccountService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +18,7 @@ import java.io.PrintWriter;
  */
 public class LoginInfo extends HttpServlet {
     @NotNull
-    private AccountService accountService;
+    private final AccountService accountService;
 
     public LoginInfo(@NotNull AccountService service) {
         this.accountService = service;
@@ -39,7 +39,9 @@ public class LoginInfo extends HttpServlet {
                     responseJSON.put("success", true);
                     responseJSON.put("username", profile.getUsername());
                     responseJSON.put("message", "You logged!");
-                    // TODO передавть счет
+                }else{
+                    responseJSON.put("success", false);
+                    responseJSON.put("message", "something wrong!");
                 }
             } else {
                 responseJSON.put("success", false);

@@ -1,0 +1,63 @@
+$green:  #0f0; $green-difference: #003;
+$blue:   #0ff; $blue-difference: #300;
+$orange: #f90; $orange-difference: #011;
+$hovered: #ff0;
+$disabled: #555;
+$active: #03b;
+$radius: 10px;
+$radius-hover-active: 15px;
+$radius-difference: 2;
+
+@mixin game-btn($color, $difference) {
+  box-shadow: inset $color 0 0 7px 4px,
+  $color + $difference + $difference 0 0 $radius*$radius-difference $radius;
+  background: $color + $difference;
+  &:hover:not(:active) {
+    box-shadow: inset $color 0 0 14px 9px,
+    $hovered 0 0 ($radius-hover-active*$radius-difference) $radius-hover-active;
+  }
+}
+
+@mixin game-btn-disabled($disabled) {
+  background: $disabled + #111 !important;
+  box-shadow: inset $disabled 0 0 14px 9px,
+  $disabled + #333 0 0 $radius $radius !important;
+  &:hover {
+    background: $disabled + #111;
+    border-color: $disabled - #333;
+  }
+}
+
+.game-btn-container {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 33%;
+  height: 100px;
+  color: $color-font-base;
+  &__button {
+    display: block;
+    width: 100px;
+    margin: 0 auto;
+    height: 100px;
+    color: $color-font-base_inverse;
+    border: #002 solid 2px;
+    border-radius: 50%;
+    &:active {
+      background: $active + #002;
+      box-shadow: inset $active 0 0 14px 9px,
+      $active + #004 0 0 ($radius-hover-active*$radius-difference) $radius-hover-active;
+    }
+    &_game {
+      @include game-btn($green, $green-difference)
+    }
+    &_scoreboard {
+      @include game-btn($blue, $blue-difference)
+    }
+    &_log {
+      @include game-btn($orange, $orange-difference)
+    }
+    &_disabled {
+      @include game-btn-disabled($disabled)
+    }
+  }
+}

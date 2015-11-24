@@ -1,9 +1,9 @@
 package servlets.authorization;
 
+import persistance.UserProfile;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
-import service.AccountService;
-import service.UserProfile;
+import service.account.AccountService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,8 +14,7 @@ import java.io.PrintWriter;
 
 public class SignUp extends HttpServlet {
     @NotNull
-    private AccountService accountService;
-
+    private final AccountService accountService;
     public SignUp(@NotNull AccountService service) {
         this.accountService = service;
     }
@@ -26,27 +25,30 @@ public class SignUp extends HttpServlet {
         String password = req.getParameter("password");
         PrintWriter writer = resp.getWriter();
         JSONObject responseJSON = new JSONObject();
-
-        boolean isAvailableName = accountService.isAvailableName(username);
-        if(isAvailableName) {
-            if (username != null && password != null && !username.isEmpty() && !password.isEmpty()) {
-                UserProfile profile = new UserProfile(username, password);
-                accountService.addUser(profile);
-                responseJSON.put("success", true);
-                responseJSON.put("message", "you successfully registered!");
-
-            } else {
+        if (username != null && password != null) {
+            if (accountService.isDataWrong(username, password)) {
                 responseJSON.put("success", false);
-                responseJSON.put("message", "all fields required!");
-            }
-        }else{
-            responseJSON.put("success", false);
-            responseJSON.put("message", "you login have been already used");
-        }
-        if(writer != null) {
-            writer.println(responseJSON.toString());
-        }
+                responseJSON.put("message", "wrong data");
+            } else {
+                boolean isAvailableName = accountService.isAvailableName(username);
+                if (isAvailableName) {
+                    if (!username.isEmpty() && !password.isEmpty()) {
+                        UserProfile profile = new UserProfile(username, password);
+                        accountService.addUser(profile);
+                        responseJSON.put("success", true);
+                        responseJSON.put("message", "you successfully registered!");
+                    }
 
+                } else {
+                    responseJSON.put("success", false);
+                    responseJSON.put("message", "you login have been already used");
+                }
+
+            }
+            if (writer != null) {
+                writer.println(responseJSON.toString());
+            }
+        }
     }
 
 }

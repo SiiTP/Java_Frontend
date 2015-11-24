@@ -1,150 +1,176 @@
 //форма регистрации
 define([
     'backbone',
-    'tmpl/registration',
-    'models/registration'
+    'tmpl/registration'
 ], function(
     Backbone,
-    tmpl,
-    registration
+    tmpl
 ){
 
-    var View = Backbone.View.extend({
-        el: 'div',
+    return Backbone.View.extend({
+        tagName: 'div',
         template: tmpl,
-        model: new registration(),
         events: {
             "click .registration__button": "onSubmit",
-            "input .registration__input-line__input__username": "validateUsername",
-            "input .registration__input-line__input__password": "validatePassword",
-            "input .registration__input-line__input__confirm": "validateConfirm"
+            "input .registration__input-field-username__input-line__input": "validateUsername",
+            "input .registration__input-field-password__input-line__input": "validatePassword",
+            "input .registration__input-field-confirm__input-line__input": "validateConfirm",
+            "click .js-button-onMain": "onMain"
         },
         initialize: function() {
-            console.log("registration initialize");
+            this.model.on("onLogin", this.onLogin);
+            this.model.on("error", this.onError);
         },
-        render: function() {
-            console.log("registration render");
-            console.log(this.model.confirmStatus.status);
-            //очистка старых значений моделей при прорисовке страницы
-            this.model.set({'username':undefined, 'password':undefined, 'confirm':undefined}, {validate:true});
-            this.$el.html(this.template());
+        JQ_cashing: function () {
+            if (this.JQ_cacheInput == null) {
+                this.JQ_cacheInput = {
+                    'username': $(".registration__input-field-username__input-line__input"),
+                    'password': $(".registration__input-field-password__input-line__input"),
+                    'confirm': $(".registration__input-field-confirm__input-line__input")
+                };
+            }
+            if (this.JQ_cacheText == null) {
+                this.JQ_cacheText = {
+                    'username': $(".registration__input-field-username__validation-info"),
+                    'password': $(".registration__input-field-password__validation-info"),
+                    'confirm': $(".registration__input-field-confirm__validation-info")
+                };
+            }
+            if (this.JQ_cacheLine == null) {
+                this.JQ_cacheLine = {
+                    'username': $(".registration__input-field-username__line"),
+                    'password': $(".registration__input-field-password__line"),
+                    'confirm': $(".registration__input-field-confirm__line")
+                };
+            }
         },
-        validateUsername: function(event) {
+        renderValidationText: function (errors) {
+            _.each(errors, function (error) {
+                if (error.status == 'empty') {
+                    this.JQ_cacheText[error.field].removeClass("validation-info_error");
+                    this.JQ_cacheText[error.field].removeClass("validation-info_correct");
+                    this.JQ_cacheText[error.field].text(error.message);
+                }
+                if (error.status == 'error') {
+                    this.JQ_cacheText[error.field].addClass("validation-info_error");
+                    this.JQ_cacheText[error.field].removeClass("validation-info_correct");
+                    this.JQ_cacheText[error.field].text(error.message);
+                }
+            }, this);
+        },
+        renderValidationLine: function (errors) {
+            _.each(errors, function (error) {
+                if (error.status == 'empty') {
+                    this.JQ_cacheLine[error.field].removeClass("line_red");
+                    this.JQ_cacheLine[error.field].removeClass("line_green");
+                }
+                if (error.status == 'error') {
+                    this.JQ_cacheLine[error.field].addClass("line_red");
+                    this.JQ_cacheLine[error.field].removeClass("line_green");
+                }
+            }, this);
+        },
+        validateUsername: function (event) {
+            this.JQ_cashing();
             $(".validation-info-common").text("");
-            //console.log("username validation. registration view");
             this.model.set({'username': $(event.currentTarget).val()}, {validate: true});
-            var usernameInfoField = $(".registration__username__validation-info");
-            var usernameInfoLine = $(".registration__username__line");
-            if (this.model.usernameStatus.status == 'empty') {
-                usernameInfoField.removeClass("validation-info_error");
-                usernameInfoField.removeClass("validation-info_correct");
-                usernameInfoField.text(this.model.usernameStatus.message);
-                usernameInfoLine.removeClass("line_red");
-                usernameInfoLine.removeClass("line_green");
-            }
-            if (this.model.usernameStatus.status == 'error') {
-                usernameInfoField.addClass("validation-info_error");
-                usernameInfoField.removeClass("validation-info_correct");
-                usernameInfoField.text(this.model.usernameStatus.message);
-                usernameInfoLine.addClass("line_red");
-                usernameInfoLine.removeClass("line_green");
-            }
-            if (this.model.usernameStatus.status == 'correct') {
-                usernameInfoField.removeClass("validation-info_error");
-                usernameInfoField.addClass("validation-info_correct");
-                usernameInfoField.text(this.model.usernameStatus.message);
-                usernameInfoLine.removeClass("line_red");
-                usernameInfoLine.addClass("line_green");
-            }
-        },
-        validatePassword: function(event) {
-            $(".validation-info-common").text("");
-            this.model.set({'password':$(event.currentTarget).val()}, {validate: true});
-            var passwordInfoField = $(".registration__password__validation-info");
-            var passwordInfoLine = $(".registration__password__line");
-            //console.log("pass status : " + this.model.passwordStatus.status + "; message : " + this.model.passwordStatus.message);
-            if (this.model.passwordStatus.status == 'empty') {
-                passwordInfoField.removeClass("validation-info_error");
-                passwordInfoField.removeClass("validation-info_correct");
-                passwordInfoField.text(this.model.passwordStatus.message);
-                passwordInfoLine.removeClass("line_red");
-                passwordInfoLine.removeClass("line_green");
-            }
-            if (this.model.passwordStatus.status == 'error') {
-                passwordInfoField.addClass("validation-info_error");
-                passwordInfoField.removeClass("validation-info_correct");
-                passwordInfoField.text(this.model.passwordStatus.message);
-                passwordInfoLine.addClass("line_red");
-                passwordInfoLine.removeClass("line_green");
-            }
-            if (this.model.passwordStatus.status == 'correct') {
-                passwordInfoField.removeClass("validation-info_error");
-                passwordInfoField.addClass("validation-info_correct");
-                passwordInfoField.text(this.model.passwordStatus.message);
-                passwordInfoLine.removeClass("line_red");
-                passwordInfoLine.addClass("line_green");
-            }
-            this.updateConfirmView();
-        },
-        validateConfirm: function(event) {
-            $(".validation-info-common").text("");
-            //console.log("confirm validation. registration view. VALUE : " + $(event.currentTarget).val());
-            this.model.set({'confirm':$(event.currentTarget).val()}, {validate: true});
-            this.updateConfirmView();
-        },
-        //нужна чтобы корректно отображать валидацию поля повторения при изменении поля пароля
-        updateConfirmView: function() {
-            var confirmInfoField = $(".registration__confirm__validation-info");
-            var confirmInfoLine = $(".registration__confirm__line");
-            if (this.model.confirmStatus.status == 'empty') {
-                confirmInfoField.removeClass("validation-info_error");
-                confirmInfoField.removeClass("validation-info_correct");
-                confirmInfoField.text(this.model.confirmStatus.message);
-                confirmInfoLine.removeClass("line_red");
-                confirmInfoLine.removeClass("line_green");
-            }
-            if (this.model.confirmStatus.status == 'error') {
-                confirmInfoField.addClass("validation-info_error");
-                confirmInfoField.removeClass("validation-info_correct");
-                confirmInfoField.text(this.model.confirmStatus.message);
-                confirmInfoLine.addClass("line_red");
-                confirmInfoLine.removeClass("line_green");
-            }
-            if (this.model.confirmStatus.status == 'correct') {
-                confirmInfoField.removeClass("validation-info_error");
-                confirmInfoField.addClass("validation-info_correct");
-                confirmInfoField.text(this.model.confirmStatus.message);
-                confirmInfoLine.removeClass("line_red");
-                confirmInfoLine.addClass("line_green");
-            }
-        },
-        focusOnErrorField: function() {
-            if (this.model.usernameStatus.status != 'correct') {
-                $(".registration__input-line__input__username").focus();
-            } else
-            if (this.model.passwordStatus.status != 'correct') {
-                $(".registration__input-line__input__password").focus();
-            } else
-            if (this.model.confirmStatus.status != 'correct') {
-                $(".registration__input-line__input__confirm").focus();
-            }
-        },
-        onSubmit: function() {
-            console.log("on submit registration view");
-            if (this.model.isValid()) {
-                this.model.onSubmit();
+            var errors = this.model.validationError;
+            if (!errors) {
+                this.model.set({'validUsername': true});
+                this.JQ_cacheText['username'].removeClass("validation-info_error");
+                this.JQ_cacheText['username'].addClass("validation-info_correct");
+                this.JQ_cacheText['username'].text("Поле Username задано корректно");
+                this.JQ_cacheLine['username'].removeClass("line_red");
+                this.JQ_cacheLine['username'].addClass("line_green");
             } else {
-                $(".validation-info-common").text("Не все поля заданы корректно.");
+                this.model.set({'validUsername': false});
+                this.renderValidationText(errors);
+                this.renderValidationLine(errors);
+            }
+
+        },
+        validatePassword: function (event) {
+            this.JQ_cashing();
+            $(".validation-info-common").text("");
+            this.model.set({'password': $(event.currentTarget).val()}, {validate: true});
+            var errors = this.model.validationError;
+            if (!errors) {
+                this.model.set({'validPassword': true});
+                this.JQ_cacheText['password'].removeClass("validation-info_error");
+                this.JQ_cacheText['password'].addClass("validation-info_correct");
+                this.JQ_cacheText['password'].text("Поле Password задано корректно");
+                this.JQ_cacheLine['password'].removeClass("line_red");
+                this.JQ_cacheLine['password'].addClass("line_green");
+            } else {
+                this.model.set({'validPassword': false});
+                this.renderValidationText(errors);
+                this.renderValidationLine(errors);
+            }
+            this.validateConfirm();
+        },
+        validateConfirm: function () {
+            this.JQ_cashing();
+            var errors = [];
+            if (!this.JQ_cacheInput['confirm'].val()) {
+                errors.push({
+                    'field': 'confirm',
+                    'status': 'empty',
+                    'message': "Подтвердите введенный пароль"
+                });
+            } else if (this.JQ_cacheInput['password'].val() != this.JQ_cacheInput['confirm'].val()) {
+                errors.push({
+                    'field': 'confirm',
+                    'status': 'error',
+                    'message': "Пароли не совпадают"
+                });
+            }
+            if (errors.length == 0) {
+                this.JQ_cacheText['confirm'].removeClass("validation-info_error");
+                this.JQ_cacheText['confirm'].addClass("validation-info_correct");
+                this.JQ_cacheText['confirm'].text("Поле Confirm задано корректно");
+                this.JQ_cacheLine['confirm'].removeClass("line_red");
+                this.JQ_cacheLine['confirm'].addClass("line_green");
+                return true;
+            } else {
+                this.renderValidationText(errors);
+                this.renderValidationLine(errors);
+                return false;
+            }
+        },
+        focusOnErrorField: function () {
+            if (!this.model.get('validUsername')) {
+                this.JQ_cacheInput['username'].focus();
+            } else if (!this.model.get('validPassword')) {
+                this.JQ_cacheInput['password'].focus();
+            } else {
+                this.JQ_cacheInput['confirm'].focus();
+            }
+        },
+        onSubmit: function (event) {
+            event.preventDefault();
+            if (this.validateConfirm() && this.model.isValid()) {
+                this.model.save(null, this.model.optionsReg);
+            } else {
+                $(".registration__validation-info-common").text("Не все поля заданы корректно.");
                 this.focusOnErrorField();
             }
         },
-        show: function () {
+        onMain: function() {
+            location.href = "#";
+        },
+        onLogin: function() {
+            location.href = "#login"
+        },
+        onError: function(model, msg) {
+            $(".registration__validation-info-common").text(msg);
 
         },
+        show: function () {
+            this.trigger('show');
+            this.$el.show();
+        },
         hide: function () {
+            this.$el.hide();
         }
-
     });
-
-    return new View();
 });

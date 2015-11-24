@@ -1,0 +1,55 @@
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <div class="rooms">
+        <div class="rooms__header">
+            <div class="header-text">Список комнат:</div>
+        </div>
+        <div class="line line_blue"> </div>
+        <fest:choose>
+            <fest:when test="data.rooms.length != 0">
+                <div class="rooms__lines">
+                    <div class="rooms__lines__header">
+                        <div class="rooms__lines__header__index">№</div>
+                        <div class="rooms__lines__header__name">Название</div>
+                        <div class="rooms__lines__header__players">Сейчас</div>
+                        <div class="rooms__lines__header__maxPlayers">Лимит</div>
+                    </div>
+                    <fest:each iterate="data.rooms" index="i" value="item">
+                        <div class="rooms__lines__line">
+                            <div class="rooms__lines__line__index"><fest:value>i</fest:value></div>
+                            <div class="rooms__lines__line__name"><fest:value>item.name</fest:value></div>
+                            <div class="rooms__lines__line__players"><fest:value>item.players</fest:value></div>
+                            <div class="rooms__lines__line__maxPlayers"><fest:value>item.maxPlayers</fest:value></div>
+                            <!-- TODO вместо имени подставлять роомИД в данные-->
+                            <button class="button rooms__lines__line__button" data-roomid="{item.name}">Connect!</button>
+                        </div>
+                    </fest:each>
+                </div>
+            </fest:when>
+            <fest:otherwise>
+                <div class="rooms__noRooms">
+                    <div class="header-text rooms__noRooms__message">Созданных комнат нет</div>
+                </div>
+            </fest:otherwise>
+        </fest:choose>
+        <button class="button button_long smallMargTop js-button-refresh">Обновить</button>
+        <div class="line line_blue"> </div>
+        <div class="rooms__create">
+            <div class="header-text rooms__create__header">Создание новой комнаты</div>
+            <form method="post">
+                <div class="input-line rooms__create__input-line">
+                    <label for="roomName" class="input-line__header rooms__create__input-line__header">Название</label>
+                    <input class="input-line__input" type="text" name="roomName" id="roomName"/>
+                </div>
+                <div class="input-line rooms__create__input-line rooms__create__input-line__password">
+                    <label for="roomPassword" class="input-line__header">Пароль</label>
+                    <input class="input-line__input" type="password" name="roomPassword" id="roomPassword"/>
+                </div>
+                <button class="button rooms__create__button">Создать!</button>
+            </form>
+            <div class="validation-info validation-info-common validation-info_error rooms__create__message"> </div>
+        </div>
+        <div class="line line_blue"> </div>
+        <button class="button button_long smallMargTop js-button-onMain" data-href="#">На главную</button>
+    </div>
+</fest:template>
+

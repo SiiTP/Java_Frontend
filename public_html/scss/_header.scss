@@ -1,0 +1,21 @@
+.header {
+  background: #002;
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: inset #004 0  0 10px 5px,
+  #000 0 0 10px 5px;
+  padding: 20px 20px 10px 20px;
+}
+.header-noBorder {
+  margin-bottom: 40px;
+}
+
+.header-text {
+  display: block;
+  font-size: $font-size_xlarge;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  text-shadow: $color-font-base 0 0 1em;
+  color: $color-font-base;
+}
