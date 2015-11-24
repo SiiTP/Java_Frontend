@@ -3,7 +3,7 @@ package game.sockets;
 import game.gameaction.GameActionStrategy;
 import game.gameaction.MoveActionStrategy;
 import game.rooms.Room;
-import game.serverlevels.top.GameServer;
+import game.server.GameServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.websocket.api.StatusCode;
@@ -68,7 +68,8 @@ public class MainWebSocket extends WebSocketAdapter {
             Room room = gameServer.getPlayerRoomBySession(httpSession);
             if (room != null) {
                 if(room.isFinished()){
-                    String winner = room.getWinner();
+                    String winner = room.getWinner().getUsername();
+                    gameServer.kickPlayer(httpSession);
                     LOGGER.info("winner in room " + room.getRoomName() + ':' + winner );
                     object.put("winner", winner);
                     object.put("status", responseResources.getWinnerMessageCode());

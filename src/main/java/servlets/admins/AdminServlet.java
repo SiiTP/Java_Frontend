@@ -1,6 +1,6 @@
 package servlets.admins;
 
-import game.serverlevels.top.GameServer;
+import game.server.GameServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.server.Server;
@@ -63,8 +63,6 @@ public class AdminServlet extends HttpServlet {
             gameServer.clearRooms();
             writer.println("Комнаты очищены");
         }
-
-
     }
 
     private void shutDownServer(int shutdownCount){//TODO rework with properly test

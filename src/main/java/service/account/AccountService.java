@@ -1,13 +1,18 @@
 package service.account;
 
 
-import persistance.UserProfile;
+import dao.UserDAO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import persistance.PlayerDataSet;
+import persistance.ProjectDB;
+import persistance.UserProfile;
 import resource.ResourceFactory;
 import resource.ServletResources;
 
@@ -19,19 +24,25 @@ import java.util.Map;
  */
 
 public class AccountService{
-    @NotNull
-    private final Map<String, UserProfile> users = new HashMap<>();
+    private final UserDAO userDAO;
     @NotNull
     private final Map<String,UserProfile> sessions = new HashMap<>();
 
     private final Logger logger = LogManager.getLogger(AccountService.class);
 
+    public AccountService(){
+        userDAO = new UserDAO();
+    }
     public boolean isAuthorized(String session){
         return sessions.containsKey(session);
     }
 
     public boolean isAvailableName(@Nullable String name){
-        return !users.containsKey(name);
+        Session session = ProjectDB.getSessionFactory().getCurrentSession();
+        Transaction t = session.beginTransaction();
+        boolean isAvailable = userDAO.isAvailable(name);
+        t.commit();
+        return isAvailable;
     }
 
     public boolean isDataWrong(String username, String password){
@@ -50,25 +61,49 @@ public class AccountService{
             addSession(session, profile);
             Marker marker = new MarkerManager.Log4jMarker("LOGIN");
             logger.info(marker,"user " + username + " with session " + session);
-            profile.setIsAuthorized(true);
+            updateUserAuthorize(profile,true);
         }
         return isOk;
     }
+    public void updateUserAuthorize(UserProfile profile,boolean isAuth){
+        Session session = ProjectDB.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        profile.setIsAuthorized(isAuth);
+        userDAO.updateUserAuth(profile);
+        session.getTransaction().commit();
+    }
+    public void updatePlayerInfo(UserProfile user){
+        Session session = ProjectDB.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        userDAO.updatePlayerInfo(user, user.getGameProfile().getScore());
+        session.getTransaction().commit();
+    }
     public void addUser(@NotNull UserProfile userProfile){
         String userName = userProfile.getUsername();
-        if (!users.containsKey(userName)) {
+        if (isAvailableName(userName)) {
             Marker marker = new MarkerManager.Log4jMarker("REGISTER");
-            logger.info(marker,"user name " + userName);
-            users.put(userName, userProfile);
+            logger.info(marker, "user name " + userName);
+            Session session = ProjectDB.getSessionFactory().getCurrentSession();
+            session.beginTransaction();
+            userDAO.create(userProfile);
+            session.getTransaction().commit();
         }
     }
 
     @Nullable
     public UserProfile getUser(@Nullable String username){
-        return users.get(username);
+        Session session = ProjectDB.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        UserProfile profile = userDAO.get(username);
+        session.getTransaction().commit();
+        return profile;
     }
-    public int getRegisterdUsersCount(){
-        return users.size();
+    public long getRegisterdUsersCount(){
+        Session session = ProjectDB.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        long count = userDAO.count();
+        session.getTransaction().commit();
+        return count;
     }
     public int getLoggedUsersCount(){
         return sessions.size();
@@ -78,6 +113,14 @@ public class AccountService{
            sessions.put(session,userProfile);
         }
     }
+    public PlayerDataSet getPlayerInfo(long user_id){
+        Session session = ProjectDB.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        PlayerDataSet player = userDAO.getPlayerDataSetById(user_id);
+        session.getTransaction().commit();
+        return player;
+    }
+
     @Nullable
     public UserProfile getUserBySession(String sessionId){
         return sessions.get(sessionId);
@@ -88,10 +131,9 @@ public class AccountService{
             logger.info(marker,"user with session " + sess +" and name "+sessions.get(sess).getUsername());
             UserProfile profile = getUserBySession(sess);
             if(profile != null) {
-                profile.setIsAuthorized(false);
+                updateUserAuthorize(profile,false);
             }
             sessions.remove(sess);
-
         }
     }
 }

@@ -14,7 +14,7 @@ public interface Room {
     boolean checkUser(UserProfile user);
     void addUser(UserProfile profile);
     void kickPlayer(UserProfile profile);
-    String getWinner();
+    UserProfile getWinner();
     String getRoomName();
     String getPassword();
     boolean isRoomReady();

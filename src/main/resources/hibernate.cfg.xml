@@ -20,7 +20,7 @@
             root
         </property>
         <property name="connection.password">
-            Qq1234
+            Йй1234
         </property>
          <property name="show_sql">
                true
@@ -33,8 +33,11 @@
         <property name="use_sql_comments">
             true
         </property>
+        <property name="hibernate.current_session_context_class">thread</property>
         <property name="hbm2ddl.auto">update</property>
-        <mapping class="com.springapp.persistance.Answer"/>
+        <mapping class="persistance.PlayerDataSet"/>
+        <mapping class="persistance.RoomDataSet"/>
+        <mapping class="persistance.UserProfile"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

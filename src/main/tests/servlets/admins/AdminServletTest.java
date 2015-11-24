@@ -1,6 +1,7 @@
 package servlets.admins;
 
-import game.serverlevels.top.GameServer;
+import game.server.GameServer;
+import persistance.ProjectDB;
 import persistance.UserProfile;
 import org.eclipse.jetty.server.Server;
 import org.junit.Before;
@@ -29,6 +30,7 @@ public class AdminServletTest {
     private StringWriter stringWriter;
     @Before
     public void setup() throws IOException {
+        ProjectDB.initBD("hibernate-test.cfg.xml");
         accountService = spy(new AccountService());
         gameServer = new GameServer(accountService);
         server = spy(new Server());
@@ -82,6 +84,7 @@ public class AdminServletTest {
     }
     @Test
     public void testDoGetRegistered() throws ServletException, IOException {
+        ProjectDB.truncateTables();
         AdminServlet adminServlet = new AdminServlet(server, gameServer);
         when(req.getParameter("reg")).thenReturn("true");
 

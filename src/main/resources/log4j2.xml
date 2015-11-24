@@ -29,6 +29,28 @@
             </Policies>
             <DefaultRolloverStrategy max="20"/>
         </RollingFile>
+        <RollingFile name="Hibernate" fileName="${log_dir}/hibernate.log"
+                     filePattern="${log_dir}/old/err/hibernate_%d{HH-mm}_%i.log">
+            <PatternLayout>
+                <pattern>%highlight{[%d{MM-dd HH:mm:ss,SSS}, %-9r] %-5p %-40.40c %m%n}</pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="50MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+        <RollingFile name="Hibernate_queries" fileName="${log_dir}/hiber_queries.log"
+                     filePattern="${log_dir}/old/err/hiber_queries_%d{HH-mm}_%i.log">
+            <PatternLayout>
+                <pattern>%highlight{[%d{MM-dd HH:mm:ss,SSS}, %-9r] %-5p %-40.40c %m%n}</pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="50MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
         <Async name="AsyncFile">
             <AppenderRef ref="RollingFile"/>
         </Async>
@@ -38,6 +60,12 @@
         <Async name="AsyncErr">
             <AppenderRef ref="ErrFile"/>
         </Async>
+        <Async name="AsyncHiber">
+            <AppenderRef ref="Hibernate"/>
+        </Async>
+        <Async name="AsyncHiberSQL">
+            <AppenderRef ref="Hibernate_queries"/>
+        </Async>
     </Appenders>
     <Loggers>
         <Root level="ALL">
@@ -45,6 +73,13 @@
             <AppenderRef ref="AsyncFile" level="ALL"/>
             <AppenderRef ref="AsyncConsole" level="ERROR"/>
         </Root>
-
+        <logger name="org.hibernate" additivity="false">
+            <level value="INFO" />
+            <appender-ref ref="AsyncHiber" />
+        </logger>
+        <logger name="org.hibernate.SQL" additivity="false">
+            <level value="INFO" />
+            <appender-ref ref="AsyncHiberSQL" />
+        </logger>
     </Loggers>
 </Configuration>

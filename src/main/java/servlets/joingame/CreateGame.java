@@ -1,7 +1,7 @@
 package servlets.joingame;
 
 import game.rooms.Room;
-import game.serverlevels.top.GameServer;
+import game.server.GameServer;
 import org.json.JSONObject;
 import resource.ResourceFactory;
 import resource.ResponseResources;
@@ -30,7 +30,7 @@ public class CreateGame extends HttpServlet {
         String session = req.getSession().getId();
         if(roomName != null && !roomName.isEmpty()) {
             JSONObject responseJSON = new JSONObject();
-            if (gameServer.checkIfRoomExist(roomName)) {
+            if (!gameServer.checkIfRoomExist(roomName)) {
                 responseJSON.put("status", responseResources.getRoomAlreadyExist());
                 responseJSON.put("message", "Room with name " + roomName + " already exist");
             } else {

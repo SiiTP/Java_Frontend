@@ -1,6 +1,6 @@
 package servlets.game;
 
-import game.serverlevels.top.GameServer;
+import game.server.GameServer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import resource.ResourceFactory;

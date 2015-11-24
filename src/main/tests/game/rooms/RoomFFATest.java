@@ -77,9 +77,11 @@ public class RoomFFATest {
         roomFFA.isRoomReady();
         profile.getGameProfile().setScore(scoreLimit);
         profile1.getGameProfile().setScore(2);
-        assertFalse(Objects.equals(roomFFA.getWinner(), profile1.getUsername()));
-
-        assertTrue(Objects.equals(roomFFA.getWinner(), profile.getUsername()));
+        UserProfile winner = roomFFA.getWinner();
+        if(winner != null) {
+            assertFalse(Objects.equals(winner.getUsername(), profile1.getUsername()));
+            assertTrue(Objects.equals(winner.getUsername(), profile.getUsername()));
+        }
     }
 
     @Test

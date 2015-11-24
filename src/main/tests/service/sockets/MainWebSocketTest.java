@@ -2,7 +2,7 @@ package service.sockets;
 
 import game.rooms.Room;
 import game.rooms.RoomFFA;
-import game.serverlevels.top.GameServer;
+import game.server.GameServer;
 import game.sockets.MainWebSocket;
 import persistance.UserProfile;
 import org.json.JSONObject;
@@ -65,7 +65,8 @@ public class MainWebSocketTest {
         Room room = spy(new RoomFFA("test"));
         doReturn(room).when(gameServer).getPlayerRoomBySession(anyString());
         doReturn(true).when(room).isFinished();
-        doReturn("test").when(room).getWinner();
+        UserProfile p = new UserProfile("test","test");
+        doReturn(p).when(room).getWinner();
         webSocket.processPlayerMessage(new JSONObject());
 
         assertEquals(endpoint.getMessage().optString("winner"), "test");

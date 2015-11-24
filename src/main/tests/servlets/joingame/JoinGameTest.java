@@ -1,7 +1,7 @@
 package servlets.joingame;
 
 import game.rooms.Room;
-import game.serverlevels.top.GameServer;
+import game.server.GameServer;
 import org.junit.Before;
 import org.junit.Test;
 import resource.ResourceFactory;
@@ -48,7 +48,7 @@ public class JoinGameTest {
     }
     @Test
     public void testDoPostNoAuth() throws ServletException, IOException {
-        when(gameServer.checkIfRoomExist(anyString())).thenReturn(true);
+        when(gameServer.checkIfRoomExist(anyString())).thenReturn(false);
         when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(false);
 
         joinGame.doPost(request, response);
@@ -58,7 +58,7 @@ public class JoinGameTest {
     }
     @Test
     public void testDoPostWrongUserOrPass() throws ServletException, IOException {
-        when(gameServer.checkIfRoomExist(anyString())).thenReturn(true);
+        when(gameServer.checkIfRoomExist(anyString())).thenReturn(false);
         when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(true);
         when(gameServer.joinRoom(anyString(), anyString(),anyString())).thenReturn(null);
 
@@ -68,7 +68,7 @@ public class JoinGameTest {
     }
     @Test
     public void testDoPostSuccess() throws ServletException, IOException {
-        when(gameServer.checkIfRoomExist(anyString())).thenReturn(true);
+        when(gameServer.checkIfRoomExist(anyString())).thenReturn(false);
         when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(true);
         when(gameServer.joinRoom(anyString(), anyString(),anyString())).thenReturn(mock(Room.class));
 
