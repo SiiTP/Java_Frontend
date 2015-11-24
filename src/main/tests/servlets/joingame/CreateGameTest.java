@@ -2,8 +2,10 @@ package servlets.joingame;
 
 import game.rooms.Room;
 import game.server.GameServer;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import persistance.ProjectDB;
 import resource.ResourceFactory;
 import resource.ResponseResources;
 
@@ -48,16 +50,16 @@ public class CreateGameTest {
     }
     @Test
     public void testDoPostRoomExist() throws ServletException, IOException {
-        when(gameServer.checkIfRoomExist(anyString())).thenReturn(true);
+        when(gameServer.checkIfRoomExist(anyString())).thenReturn(false);
         gameServlet.doPost(request, response);
         assertTrue(stringWriter.toString().contains(Integer.toString(responseResources.getRoomAlreadyExist())));
     }
     @Test
     public void testDoPostuccess() throws ServletException, IOException {
-        when(gameServer.checkIfRoomExist(anyString())).thenReturn(false);
+        when(gameServer.checkIfRoomExist(anyString())).thenReturn(true);
         when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(true);
         Room room = mock(Room.class);
-        when(gameServer.createRoom(anyString(), anyString(),anyString())).thenReturn(room);
+        when(gameServer.createRoom(anyString(), anyString(), anyString())).thenReturn(room);
 
         gameServlet.doPost(request, response);
 
@@ -65,7 +67,7 @@ public class CreateGameTest {
     }
     @Test
     public void testDoPostAlreadyInRoom() throws ServletException, IOException {
-        when(gameServer.checkIfRoomExist(anyString())).thenReturn(false);
+        when(gameServer.checkIfRoomExist(anyString())).thenReturn(true);
         when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(true);
 
         when(gameServer.createRoom(anyString(), anyString(), anyString())).thenReturn(null);
@@ -76,7 +78,7 @@ public class CreateGameTest {
     }
     @Test
     public void testDoPostNoAuthUser() throws ServletException, IOException {
-        when(gameServer.checkIfRoomExist(anyString())).thenReturn(false);
+        when(gameServer.checkIfRoomExist(anyString())).thenReturn(true);
         when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(false);
 
         gameServlet.doPost(request, response);
