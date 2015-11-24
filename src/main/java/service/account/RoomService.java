@@ -56,7 +56,8 @@ public class RoomService {
         return roomDataSet;
     }
     public void kickPlayerFromRoom(String roomname,UserProfile profile){
-        rooms.get(roomname).kickPlayer(profile);
+        Room room = rooms.get(roomname);
+        room.kickPlayer(profile);
     }
     public void setRooms(Map<String, Room> rooms) {
         this.rooms = rooms;

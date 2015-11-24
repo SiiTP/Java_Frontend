@@ -37,8 +37,8 @@ public class UserProfile {
     private final GameProfile gameProfile;
     @Transient
     private Room currentroom;
-    @Transient
-    private boolean isAuthorized;
+    @Column
+    private boolean isAuthorized = false;
 
     public UserProfile(@NotNull String name,@NotNull String pass) {
         this.username = name;

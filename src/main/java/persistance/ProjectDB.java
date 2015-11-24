@@ -37,7 +37,6 @@ public class ProjectDB {
             s_sesssionFactory = new MetadataSources(serviceRegistry).buildMetadata().buildSessionFactory();
         }
     }
-    @SuppressWarnings("SqlNoDataSourceInspection")
     public static void truncateTables(){
         if(s_sesssionFactory != null) {
             if (Objects.equals(s_currentBD, "test")) {

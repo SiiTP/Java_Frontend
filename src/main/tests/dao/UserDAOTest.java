@@ -20,7 +20,7 @@ public class UserDAOTest {
     Transaction t;
     SessionFactory sessionFactory;
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         ProjectDB.initBD("hibernate-test.cfg.xml");
         userDAO = new UserDAO();
         sessionFactory = ProjectDB.getSessionFactory();

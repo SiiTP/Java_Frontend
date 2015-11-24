@@ -10,7 +10,6 @@ import resource.ResourceFactory;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,16 +69,11 @@ public class RoomFFA extends RoomAbstractImpl {
     public UserProfile getWinner(){
         int max = maxScore();
         UserProfile winner = null;
-            Iterator<UserProfile> iterator = users.iterator();
-            while (winner == null) {
-                if (iterator.hasNext()) {
-                    UserProfile user = iterator.next();
-                    if (user.getGameProfile().getScore() == max) {
-                        winner = user;
-                    }
-                }
+        for(UserProfile user : users){
+            if (user.getGameProfile().getScore() == max) {
+                winner = user;
             }
-
+        }
         return winner;
     }
     @Override

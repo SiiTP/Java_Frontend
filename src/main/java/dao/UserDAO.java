@@ -58,4 +58,10 @@ public class UserDAO {
         query.setLong("id", user_id);
         return (PlayerDataSet) query.uniqueResult();
     }
+
+
+    public void updateUserAuth(UserProfile profile) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(profile);
+    }
 }

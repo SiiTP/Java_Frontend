@@ -4,6 +4,7 @@ import game.rooms.Room;
 import game.rooms.RoomAbstractImpl;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -38,8 +39,16 @@ public class RoomDataSet {
             RoomAbstractImpl roomAbstract = (RoomAbstractImpl) room;
             password = roomAbstract.getPassword();
             roomName = roomAbstract.getRoomName();
-            startTime = LocalDateTime.ofInstant(roomAbstract.getStartTime(), ZoneId.of("Europe/Moscow"));
-            finishTime = LocalDateTime.ofInstant(roomAbstract.getFinishTime(), ZoneId.of("Europe/Moscow"));
+            Instant roomStartTime = roomAbstract.getStartTime();
+            if(roomStartTime == null){
+                roomStartTime = Instant.now();
+            }
+            startTime = LocalDateTime.ofInstant(roomStartTime, ZoneId.of("Europe/Moscow"));
+            Instant roomFinistTime = roomAbstract.getFinishTime();
+            if(roomFinistTime == null){
+                roomFinistTime = Instant.now();
+            }
+            finishTime = LocalDateTime.ofInstant(roomFinistTime, ZoneId.of("Europe/Moscow"));
             playersLimit = roomAbstract.getPlayersLimit();
             winner = roomAbstract.getWinner();
         }

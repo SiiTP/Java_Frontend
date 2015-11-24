@@ -28,7 +28,6 @@ public class Main {
         private static final Logger LOGGER = LogManager.getLogger(Main.class);
         @SuppressWarnings("OverlyBroadThrowsClause")
         public static void main(String[] args) throws Exception {
-            ProjectDB.initBD();
             LOGGER.info("main begin");
             LOGGER.info("connect to production BD");
             ProjectDB.initBD();

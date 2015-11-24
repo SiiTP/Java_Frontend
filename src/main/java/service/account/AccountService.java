@@ -61,9 +61,16 @@ public class AccountService{
             addSession(session, profile);
             Marker marker = new MarkerManager.Log4jMarker("LOGIN");
             logger.info(marker,"user " + username + " with session " + session);
-            profile.setIsAuthorized(true);
+            updateUserAuthorize(profile,true);
         }
         return isOk;
+    }
+    public void updateUserAuthorize(UserProfile profile,boolean isAuth){
+        Session session = ProjectDB.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        profile.setIsAuthorized(isAuth);
+        userDAO.updateUserAuth(profile);
+        session.getTransaction().commit();
     }
     public void updatePlayerInfo(UserProfile user){
         Session session = ProjectDB.getSessionFactory().getCurrentSession();
@@ -124,7 +131,7 @@ public class AccountService{
             logger.info(marker,"user with session " + sess +" and name "+sessions.get(sess).getUsername());
             UserProfile profile = getUserBySession(sess);
             if(profile != null) {
-                profile.setIsAuthorized(false);
+                updateUserAuthorize(profile,false);
             }
             sessions.remove(sess);
         }

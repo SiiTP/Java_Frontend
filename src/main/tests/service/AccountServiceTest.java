@@ -15,6 +15,8 @@ public class AccountServiceTest {
     private AccountService accountService;
     @Before
     public void setUp() {
+        ProjectDB.initBD("hibernate-test.cfg.xml");
+        ProjectDB.truncateTables();
         accountService = new AccountService();
         accountService.addUser(new UserProfile("first","aaa"));
         accountService.addUser(new UserProfile("second","bbb"));

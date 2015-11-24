@@ -3,7 +3,6 @@ package dao;
 import game.rooms.RoomFFA;
 import game.user.GameProfile;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +20,7 @@ public class RoomDAOTest {
     RoomDAO roomDAO;
     SessionFactory sessionFactory;
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         ProjectDB.initBD("hibernate-test.cfg.xml");
         roomDAO = new RoomDAO();
         sessionFactory = ProjectDB.getSessionFactory();

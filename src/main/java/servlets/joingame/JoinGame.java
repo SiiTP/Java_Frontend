@@ -29,7 +29,7 @@ public class JoinGame extends HttpServlet {
         String password = req.getParameter("password");
         String session = req.getSession().getId();
         JSONObject responseJSON = new JSONObject();
-        if(!gameServer.checkIfRoomExist(roomName)){
+        if(gameServer.checkIfRoomExist(roomName)){
             responseJSON.put("status", responseResources.getNoSuchRoom());
             responseJSON.put("message", "Room with name "+roomName + " not exist");
         }else {

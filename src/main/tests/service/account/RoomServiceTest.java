@@ -17,7 +17,7 @@ public class RoomServiceTest {
     RoomService roomService;
     AccountService accountService;
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         ProjectDB.initBD("hibernate-test.cfg.xml");
         roomService = new RoomService();
         accountService = new AccountService();

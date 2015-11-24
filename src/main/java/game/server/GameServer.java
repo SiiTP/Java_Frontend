@@ -120,17 +120,18 @@ public class GameServer {
     }
     public boolean isCorrectPlayerInGame(String session){
         boolean auth = accountService.isAuthorized(session);
+        boolean rightRoom = true;
         if(auth) {
             UserProfile profile = accountService.getUserBySession(session);
-            boolean rightRoom = true;
             if (profile != null) {
                 if(profile.getCurrentroom()==null){
+                    rightRoom = false;
                 }
             }else{
                 auth = false;
             }
         }
-        return auth ;//todo add && rightroom;
+        return auth && rightRoom;
     }
 
     public AccountService getAccountService() {
