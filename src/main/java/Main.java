@@ -58,10 +58,10 @@ public class Main {
             context.addServlet(new ServletHolder(new LogOut(accountService)), "/user/delete");
             context.addServlet(new ServletHolder(new LoginInfo(accountService)), "/user/read");
             context.addServlet(new ServletHolder(new AdminServlet(server, gameServer)), "/admin");
-            context.addServlet(new ServletHolder(new CreateGame(gameServer)), "/create");
-            context.addServlet(new ServletHolder(new JoinGame(gameServer)), "/join");
+            context.addServlet(new ServletHolder(new CreateGame(gameServer)), "/rooms/create");
+            context.addServlet(new ServletHolder(new JoinGame(gameServer)), "/rooms/update");
             context.addServlet(new ServletHolder(new MainSocketWebServlet(gameServer)), "/gameplay");
-            context.addServlet(new ServletHolder(new GetRoomListServlet(gameServer)), "/getRoomList");
+            context.addServlet(new ServletHolder(new GetRoomListServlet(gameServer)), "/rooms/read");
             ResourceHandler resourceHandler = new ResourceHandler();
             resourceHandler.setResourceBase("public_html");
             HandlerList list = new HandlerList();

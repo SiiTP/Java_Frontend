@@ -34,7 +34,7 @@ define([
         },
         onCreateRoom: function(event) {
             event.preventDefault();
-            this.model.onCreate();
+            this.model.save();
         },
         onRefresh: function() {
             this.model.fetch();

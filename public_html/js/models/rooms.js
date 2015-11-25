@@ -4,6 +4,7 @@ define([
     Backbone
 ){
     var Model = Backbone.Model.extend({
+        url: "rooms",
         initialize: function() {
             this.set({'rooms': []}) ;
         },
@@ -26,23 +27,24 @@ define([
                 }
             });
         },
-        fetch: function() {
-            console.log("<--- get room list");
-            $.ajax({
-                type: "POST",
-                url: "/getRoomList",
-                context: this
-            }).done(function(obj) {
-                console.log("---> get room list");
-                var answer = JSON.parse(obj);
-                console.log(answer);
-                if (answer.status == 200) {
-                     this.set({'rooms' : answer.rooms});
-                } else {
-                    this.set({'rooms' : []});
-                }
-            });
-        },
+        //getRooms: function() {
+        //    this.fetch();
+        //    //console.log("<--- get room list");
+        //    //$.ajax({
+        //    //    type: "POST",
+        //    //    url: "/getRoomList",
+        //    //    context: this
+        //    //}).done(function(obj) {
+        //    //    console.log("---> get room list");
+        //    //    var answer = JSON.parse(obj);
+        //    //    console.log(answer);
+        //    //    if (answer.status == 200) {
+        //    //         this.set({'rooms' : answer.rooms});
+        //    //    } else {
+        //    //        this.set({'rooms' : []});
+        //    //    }
+        //    //});
+        //},
         onJoin: function(roomName) {
             console.log("<--- Join");
             $.ajax({

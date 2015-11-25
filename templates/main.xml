@@ -25,16 +25,6 @@
                     <div class="logo__bottom__line"> </div>
                 </div>
             </div>
-<<<<<<< HEAD
-            <div class="vertical-line vertical-line_header50px"> </div>
-            <fest:choose>
-                <fest:when test="data.isLogged">
-                    <fest:get name="LoggedBar"/>
-                </fest:when>
-                <fest:when test="!data.isLogged">
-                    <div class="dontLogged">Вы не авторизованы</div>
-                </fest:when>
-=======
             <fest:choose>
                 <fest:when test="data.logged">
                     <fest:get name="LoggedBar"/>
@@ -42,7 +32,6 @@
                 <fest:otherwise>
                     <div class="dontLogged">Вы не авторизованы</div>
                 </fest:otherwise>
->>>>>>> scss
             </fest:choose>
         </div>
         <div class="line line_blue mediumMargTop"> </div>
@@ -68,8 +57,4 @@
         </div>
         <div class="line line_blue"> </div>
     </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> scss
 </fest:template>
