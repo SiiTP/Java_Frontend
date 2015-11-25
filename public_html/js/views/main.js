@@ -31,7 +31,6 @@ define([
         show: function () {
             this.trigger('show');
             this.$el.show();
-            this.render(); //TODO убрать
         },
         hide: function () {
             this.$el.hide();

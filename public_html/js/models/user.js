@@ -26,7 +26,6 @@ define([
         }),
         optionsReg: ({
             success: function(model, response) {
-                debugger;
                 model.trigger('onLogin');
             }
         }),

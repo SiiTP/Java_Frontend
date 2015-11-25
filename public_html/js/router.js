@@ -40,11 +40,11 @@ define([
     var scoreboardView =   new ScoreboardView   ({model: scores});
     var roomsView =        new RoomsView        ({model: rooms});
     var fieldView =        new FieldView        ();
+    manager.add(mainView);
     manager.add(scoreboardView);
     manager.add(loginView);
     manager.add(logoutView);
     manager.add(registrationView);
-    manager.add(mainView);
     manager.add(roomsView);
     manager.add(fieldView);
     var gameMediator = new GameMediator({
