@@ -12,14 +12,12 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import persistance.ProjectDB;
 import service.account.AccountService;
 import servlets.admins.AdminServlet;
-import servlets.authorization.LogOut;
-import servlets.authorization.LoginInfo;
-import servlets.authorization.SignIn;
-import servlets.authorization.SignUp;
+import servlets.authorization.*;
 import servlets.game.GetRoomListServlet;
 import servlets.game.MainSocketWebServlet;
 import servlets.joingame.CreateGame;
 import servlets.joingame.JoinGame;
+import servlets.room.RoomServlet;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -53,15 +51,17 @@ public class Main {
             }
             Server server = new Server(port);
             ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-            context.addServlet(new ServletHolder(new SignIn(accountService)), "/user/update");
+            /*context.addServlet(new ServletHolder(new SignIn(accountService)), "/user/update");
             context.addServlet(new ServletHolder(new SignUp(accountService)),"/user/create");
             context.addServlet(new ServletHolder(new LogOut(accountService)), "/user/delete");
-            context.addServlet(new ServletHolder(new LoginInfo(accountService)), "/user/read");
+            context.addServlet(new ServletHolder(new LoginInfo(accountService)), "/user/read");*/
+            context.addServlet(new ServletHolder(new UserServlet(accountService)),"/user");
             context.addServlet(new ServletHolder(new AdminServlet(server, gameServer)), "/admin");
-            context.addServlet(new ServletHolder(new CreateGame(gameServer)), "/create");
+            /*context.addServlet(new ServletHolder(new CreateGame(gameServer)), "/create");
             context.addServlet(new ServletHolder(new JoinGame(gameServer)), "/join");
+            context.addServlet(new ServletHolder(new GetRoomListServlet(gameServer)), "/getRoomList");*/
+            context.addServlet(new ServletHolder(new RoomServlet(gameServer)), "/rooms");
             context.addServlet(new ServletHolder(new MainSocketWebServlet(gameServer)), "/gameplay");
-            context.addServlet(new ServletHolder(new GetRoomListServlet(gameServer)), "/getRoomList");
             ResourceHandler resourceHandler = new ResourceHandler();
             resourceHandler.setResourceBase("public_html");
             HandlerList list = new HandlerList();
