@@ -1,5 +1,8 @@
 package servlets.authorization;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 import persistance.UserProfile;
@@ -18,7 +21,7 @@ import java.io.PrintWriter;
  */
 public class UserServlet extends HttpServlet{
     private final AccountService accountService;
-
+    private static final Logger LOGGER = LogManager.getLogger("ReqResp");
     public UserServlet(AccountService accountService) {
         this.accountService = accountService;
     }
@@ -31,6 +34,7 @@ public class UserServlet extends HttpServlet{
 
         if (httpSession != null) {
             String session = httpSession.getId();
+            LOGGER.info(new MarkerManager.Log4jMarker("REQUEST"),"user info data: " + session);
             boolean auth = accountService.isAuthorized(session);
             if (auth) {
                 UserProfile profile = accountService.getUserBySession(session);
@@ -44,7 +48,7 @@ public class UserServlet extends HttpServlet{
                 }
             } else {
                 responseJSON.put("success", false);
-                responseJSON.put("message", "You do not logged!");
+                responseJSON.put("message", "You are not logged!");
             }
         }
         if (writer != null) {
@@ -66,7 +70,7 @@ public class UserServlet extends HttpServlet{
         }
     }
     @Nullable
-    private JSONObject loginRequest(HttpServletRequest req) throws IOException {
+    private JSONObject loginRequest(HttpServletRequest req) {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
         JSONObject responseJSON = new JSONObject();
@@ -78,6 +82,7 @@ public class UserServlet extends HttpServlet{
                 HttpSession httpSession = req.getSession();
                 if (httpSession != null) {
                     String session = httpSession.getId();
+                    LOGGER.info(new MarkerManager.Log4jMarker("REQUEST"),"login data: " + username + ' ' + password + ' ' + session);
                     boolean auth = accountService.isAuthorized(session);
                     if (auth) {
                         UserProfile profile = accountService.getUserBySession(session);
@@ -88,8 +93,12 @@ public class UserServlet extends HttpServlet{
                     } else {
                         auth = accountService.authtorize(username, password, session);
                         if (auth) {
-                            responseJSON.put("success", true);
-                            responseJSON.put("message", "you successfully have been logined in!");
+                            UserProfile profile = accountService.getUserBySession(session);
+                            if (profile != null) {
+                                responseJSON.put("success", true);
+                                responseJSON.put("message", "you successfully have been logined in!");
+                                responseJSON.put("id", profile.getId());
+                            }
                         } else {
                             responseJSON.put("success", false);
                             responseJSON.put("message", "wrong login or password");
@@ -102,9 +111,10 @@ public class UserServlet extends HttpServlet{
         return null;
     }
     @Nullable
-    private JSONObject registerRequest(HttpServletRequest req) throws IOException {
+    private JSONObject registerRequest(HttpServletRequest req) {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
+        LOGGER.info(new MarkerManager.Log4jMarker("REQUEST")," register data: " + username + ' ' + password + ' ' + req.getSession().getId());
         JSONObject responseJSON = new JSONObject();
         if (username != null && password != null) {
             if (accountService.isDataWrong(username, password)) {
@@ -118,6 +128,7 @@ public class UserServlet extends HttpServlet{
                         accountService.addUser(profile);
                         responseJSON.put("success", true);
                         responseJSON.put("message", "you successfully registered!");
+                        responseJSON.put("id", JSONObject.NULL);
                     }
                 } else {
                     responseJSON.put("success", false);
@@ -135,6 +146,7 @@ public class UserServlet extends HttpServlet{
         JSONObject responseJSON = new JSONObject();
         if (httpSession != null) {
             String session = httpSession.getId();
+            LOGGER.info(new MarkerManager.Log4jMarker("REQUEST"),"logout data: " + session);
             boolean auth = accountService.isAuthorized(session);
             if (auth) {
                 accountService.deleteSession(session);

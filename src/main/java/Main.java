@@ -13,11 +13,8 @@ import persistance.ProjectDB;
 import service.account.AccountService;
 import servlets.admins.AdminServlet;
 import servlets.authorization.*;
-import servlets.game.GetRoomListServlet;
 import servlets.game.MainSocketWebServlet;
-import servlets.joingame.CreateGame;
-import servlets.joingame.JoinGame;
-import servlets.room.RoomServlet;
+import servlets.game.room.RoomServlet;
 
 import java.io.FileInputStream;
 import java.io.IOException;

@@ -51,6 +51,17 @@
             </Policies>
             <DefaultRolloverStrategy max="20"/>
         </RollingFile>
+        <RollingFile name="RRfile" fileName="${log_dir}/RRfile.log"
+                     filePattern="${log_dir}/old/err/RRfile_%d{HH-mm}_%i.log">
+            <PatternLayout>
+                <pattern>%highlight{[%d{MM-dd HH:mm:ss,SSS}, %-9r] %-5p %-40.40c %m%n}</pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="50MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
         <Async name="AsyncFile">
             <AppenderRef ref="RollingFile"/>
         </Async>
@@ -66,6 +77,9 @@
         <Async name="AsyncHiberSQL">
             <AppenderRef ref="Hibernate_queries"/>
         </Async>
+        <Async name="RequestResponse">
+            <AppenderRef ref="RRfile"/>
+        </Async>
     </Appenders>
     <Loggers>
         <Root level="ALL">
@@ -75,11 +89,15 @@
         </Root>
         <logger name="org.hibernate" additivity="false">
             <level value="INFO" />
-            <appender-ref ref="AsyncHiber" />
+            <appender-ref ref="AsyncHiber"/>
+        </logger>
+        <logger name="ReqResp" additivity="false">
+            <level value="INFO" />
+            <appender-ref ref="RequestResponse"/>
         </logger>
         <logger name="org.hibernate.SQL" additivity="false">
             <level value="INFO" />
-            <appender-ref ref="AsyncHiberSQL" />
+            <appender-ref ref="AsyncHiberSQL"/>
         </logger>
     </Loggers>
 </Configuration>

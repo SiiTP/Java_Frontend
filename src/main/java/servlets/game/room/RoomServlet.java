@@ -1,7 +1,10 @@
-package servlets.room;
+package servlets.game.room;
 
 import game.rooms.Room;
 import game.server.GameServer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.MarkerManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import resource.ResourceFactory;
@@ -19,6 +22,7 @@ import java.io.IOException;
 public class RoomServlet extends HttpServlet {
     private final GameServer gameServer;
     private final ResponseResources responseResources;
+    private static final Logger LOGGER = LogManager.getLogger("ReqResp");
     public RoomServlet(GameServer gameServer) {
         responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
         this.gameServer = gameServer;
@@ -28,6 +32,7 @@ public class RoomServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String roomName = req.getParameter("roomName");
         String password = req.getParameter("password");
+        LOGGER.info(new MarkerManager.Log4jMarker("REQUEST"),"data: " + roomName + ' ' + password);
         String session = req.getSession().getId();
         if(roomName != null && !roomName.isEmpty()) {
             JSONObject responseJSON = new JSONObject();
@@ -58,6 +63,7 @@ public class RoomServlet extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String roomName = req.getParameter("roomName");
         String password = req.getParameter("password");
+        LOGGER.info(new MarkerManager.Log4jMarker("REQUEST"),"data: " + roomName + ' ' + password);
         String session = req.getSession().getId();
         JSONObject responseJSON = new JSONObject();
         if(gameServer.checkIfRoomExist(roomName)){
