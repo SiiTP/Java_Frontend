@@ -13,6 +13,7 @@ import service.account.AccountService;
 import service.account.RoomService;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,7 +25,7 @@ public class GameServer {
     private final Logger logger = LogManager.getLogger(GameServer.class);
     public GameServer(AccountService accountService) {
         this.accountService = accountService;
-        roomService = new RoomService();//todo replace with context service
+        roomService = new RoomService();
     }
     @Nullable
     public Room joinRoom(String roomname, @Nullable String password, String userSession) {
@@ -133,7 +134,9 @@ public class GameServer {
         }
         return auth && rightRoom;
     }
-
+    public List getTopPlayers(int limit){
+        return roomService.getTopPlayers(limit);
+    }
     public AccountService getAccountService() {
         return accountService;
     }

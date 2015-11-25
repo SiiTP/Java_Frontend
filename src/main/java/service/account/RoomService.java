@@ -2,14 +2,15 @@ package service.account;
 
 import dao.RoomDAO;
 import game.rooms.Room;
+import javafx.util.Pair;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import persistance.UserProfile;
 import org.hibernate.Session;
 import persistance.ProjectDB;
 import persistance.RoomDataSet;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by ivan on 20.11.15.
@@ -55,12 +56,39 @@ public class RoomService {
         session.getTransaction().commit();
         return roomDataSet;
     }
+    public ArrayList<Pair<String,Integer>> getTopPlayers(int limit){
+        Session session = ProjectDB.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        List list = dao.getTopPlayers(limit);
+
+        for(Object o : list){
+
+        }
+        session.getTransaction().commit();
+        return null;
+    }
     public void kickPlayerFromRoom(String roomname,UserProfile profile){
         Room room = rooms.get(roomname);
         room.kickPlayer(profile);
     }
     public void setRooms(Map<String, Room> rooms) {
         this.rooms = rooms;
+    }
+
+    public static void main(String[] args) {
+        ProjectDB.getSessionFactory().getCurrentSession().beginTransaction();
+        RoomDAO dao = new RoomDAO();
+        List list = dao.getTopPlayers(3);
+        ProjectDB.getSessionFactory().getCurrentSession().getTransaction().commit();
+        JSONArray array = new JSONArray();
+        for(Object o : list){
+            Object[] objects = (Object[])o;
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("score",objects[0]);
+            jsonObject.put("login",objects[1]);
+            array.put(jsonObject);
+        }
+        int a =5;
     }
 
 }
