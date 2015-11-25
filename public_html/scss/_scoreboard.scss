@@ -1,0 +1,67 @@
+$c_line-odd: #ff0;
+$c_line-even: #0f0;
+
+.scoreboard {
+  width: 50%;
+  min-width: 200px;
+  max-width: 450px;
+  margin: auto;
+  &__header {
+    font-size: $font-size_xlarge;
+    font-family: UbuntuItalic;
+    text-shadow: $color-font-base 0 0 1em;
+  }
+  &__button {
+    margin: 5px 0;
+  }
+  &__table {
+    &__table-header {
+      margin-top: 10px;
+      font-size: 22px;
+      color: $color-font-base;
+      text-shadow: $color-font-base 0 0 1em;
+      &__item {
+        display: inline-block;
+        box-sizing: border-box;
+        width: 50%;
+        &_alignRight {
+          text-align: right;
+        }
+      }
+    }
+    &__content {
+      margin-top: 10px;
+      font-family: NunitoNormal;
+      &__c-line {
+        padding: 2px 0 2px;
+        white-space: nowrap;
+        &:hover {
+          background: $color-background + #003;
+        }
+        &__line {
+          margin: 0 2%;
+        }
+        &__item {
+          display: inline-block;
+          width: 48%;
+          box-sizing: border-box;
+          text-align: left;
+          &_name {
+            text-align: left;
+          }
+          &_score {
+            text-align: right;
+          }
+          &_even {
+            color: #0f0;
+            background: $color-background + #001;
+          }
+          &_odd {
+            color: #ff0;
+            background: $color-background - #001;
+          }
+        }
+      }
+    }
+  }
+}

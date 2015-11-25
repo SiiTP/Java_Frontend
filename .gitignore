@@ -8,4 +8,4 @@ node_modules
 logs/
 .sass-cache/
 *.css.map
-public_html/scss/
+

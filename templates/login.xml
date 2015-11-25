@@ -5,21 +5,21 @@
             <div class="line line_blue"> </div>
         </div>
         <form id="login-form" method="post">
-            <div class="input-field input-field-username">
+            <div class="input-field">
                 <div class="input-line">
                     <label for="username" class="input-line__header">Логин</label>
-                    <input class="input-line__input login__input-field-username__input-line__input" type="text" name="username" id="username"/>
+                    <input class="input-line__input js-login__input-field-username__input-line__input" type="text" name="username" id="username"/>
                 </div>
-                <div class="validation-info login__input-field-username__validation-info">Введите ваш логин.</div>
-                <div class="line login__input-field-username__line"> </div>
+                <div class="validation-info js-login__input-field-username__validation-info">Введите ваш логин.</div>
+                <div class="line js-login__input-field-username__line"> </div>
             </div>
-            <div class="input-field input-field-password">
+            <div class="input-field">
                 <div class="input-line input-line-password">
                     <label for="password" class="input-line__header">Пароль</label>
-                    <input class="input-line__input login__input-field-password__input-line__input" type="password" name="password" id="password"/>
+                    <input class="input-line__input js-login__input-field-password__input-line__input" type="password" name="password" id="password"/>
                 </div>
-                <div class="validation-info login__input-field-password__validation-info">Введите ваш пароль.</div>
-                <div class="line login__input-field-password__line"> </div>
+                <div class="validation-info js-login__input-field-password__validation-info">Введите ваш пароль.</div>
+                <div class="line js-login__input-field-password__line"> </div>
             </div>
             <div class="login__buttons-container">
                 <button type="submit" class="button login__buttons-container__button">Авторизоваться</button>

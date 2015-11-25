@@ -10,7 +10,7 @@
         </div>
     </fest:set>
 
-    <div class="menu-container">
+    <div class="container-main">
         <div class="header">
             <div class="logo">
                 <div class="logo__top">
@@ -36,20 +36,20 @@
         </div>
         <div class="line line_blue mediumMargTop"> </div>
         <div class="menu">
-            <div class="container-game-btn">
-                <button class="button container-game-btn__button container-game-btn__button_game
-                {data.logged ? '' : 'container-game-btn__button_disabled'}" data-href="#rooms">Game</button>
+            <div class="game-btn-container">
+                <button class="button game-btn-container__button game-btn-container__button_game
+                {data.logged ? '' : 'game-btn-container__button_disabled'}" data-href="#rooms">Game</button>
             </div>
-            <div class="container-game-btn">
-                <button class="button container-game-btn__button container-game-btn__button_scoreboard" data-href="#scoreboard">Scoreboard</button>
+            <div class="game-btn-container">
+                <button class="button game-btn-container__button game-btn-container__button_scoreboard" data-href="#scoreboard">Scoreboard</button>
             </div>
-            <div class="container-game-btn">
+            <div class="game-btn-container">
                 <fest:choose>
                     <fest:when test="data.logged">
-                        <button class="button container-game-btn__button container-game-btn__button_log" data-href="#logout">Logout</button>
+                        <button class="button game-btn-container__button game-btn-container__button_log" data-href="#logout">Logout</button>
                     </fest:when>
                     <fest:otherwise>
-                        <button class="button container-game-btn__button container-game-btn__button_log" data-href="#login">Login</button>
+                        <button class="button game-btn-container__button game-btn-container__button_log" data-href="#login">Login</button>
                     </fest:otherwise>
                 </fest:choose>
             </div>

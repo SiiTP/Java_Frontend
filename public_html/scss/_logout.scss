@@ -1,0 +1,28 @@
+/*LOGOUT MODULE*/
+.logout {
+  display: inline-block;
+  width: 48%;
+  margin-left: 20px;
+  &__info {
+    display: inline-block;
+    font-size: $font-size_medium;
+  }
+  &__on-main-page {
+    width: 100px;
+  }
+  &__button {
+  }
+}
+.dontLogged {
+  position: relative;
+  top: -8px;
+  display: inline-block;
+  width: 48%;
+  box-sizing: border-box;
+  text-align: right;
+  margin-left: 20px;
+  font-family: UbuntuItalic;
+  font-size: $font-size_large;
+  text-shadow: $color-font-base 0 0 1em;
+}
+/*-------------*/

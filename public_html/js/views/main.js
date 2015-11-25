@@ -11,12 +11,10 @@ define([
         template: tmpl,
         JQmsg: undefined,
         events: {
-            "click .container-game-btn__button": "onClick",
+            "click .game-btn-container__button": "onClick",
             "click .logout__button": "onClick",
-            "mousedown .container-game-btn__button": "onMouseDown",
-            "mouseout .container-game-btn__button": "onMouseUp",
-            "mouseover .button.container-game-btn__button.container-game-btn__button_disabled": "printMessage", //выдача сообщения о том что игрок не залогинен.
-            "mouseout .button.container-game-btn__button.container-game-btn__button_disabled": "deleteMessage"
+            "mouseover .button.game-btn-container__button.game-btn-container__button_disabled": "printMessage", //выдача сообщения о том что игрок не залогинен.
+            "mouseout .button.game-btn-container__button.game-btn-container__button_disabled": "deleteMessage"
         },
         initialize: function () {
             this.model.on('change', this.checkChanges.bind(this));
@@ -41,7 +39,7 @@ define([
         onClick: function (event) {
             event.preventDefault();
             var targetElement = event.currentTarget;
-            if (!$(targetElement).hasClass('container-game-btn__button_disabled')) {
+            if (!$(targetElement).hasClass('game-btn-container__button_disabled')) {
                 var href = targetElement.attributes.getNamedItem('data-href').value;
                 if (href == "#logout") {
                     this.model.destroy(this.model.optionsDestroy);
@@ -49,16 +47,6 @@ define([
                     location.href = href;
                 }
             }
-        },
-        onMouseDown: function (event) {
-            var targetElement = $(event.currentTarget);
-            if (!targetElement.hasClass('container-game-btn__button_disabled')) {
-                targetElement.addClass('container-game-btn__button_active');
-            }
-        },
-        onMouseUp: function (event) {
-            var targetElement = $(event.currentTarget);
-            targetElement.removeClass("container-game-btn__button_active");
         },
         printMessage: function () {
             this.JQmsg.text("Пожалуйста, авторизуйтесь, если хотите сыграть");

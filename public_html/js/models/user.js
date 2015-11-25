@@ -47,9 +47,9 @@ define([
             this.set({validPassword : false});
             this.set({'score'       : 0});
             this.fetch(this.optionsFetch);
-            this.on("sync",    function() {console.log("___sync event!");});
-            this.on("error",   function() {console.log("___error event!");});
-            this.on("request", function() {console.log("___request event!");});
+            //this.on("sync",    function() {console.log("___sync event!");});
+            //this.on("error",   function() {console.log("___error event!");});
+            //this.on("request", function() {console.log("___request event!");});
         },
         patterns: {
             loginAvailableSymbols: '^[a-zA-Z]+$',

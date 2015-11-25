@@ -1,0 +1,61 @@
+@font-face {
+  font-family: UbuntuItalic;
+  //noinspection CssUnknownTarget
+  src: url(Ubuntu/Ubuntu-Italic.ttf);
+}
+@font-face {
+  font-family: NunitoNormal;
+  //noinspection CssUnknownTarget
+  src: url(Nunito/Nunito-Regular.ttf);
+}
+
+$color-background: #001;
+$color-font-base:  #f5f5f5;
+  $color-font-base_inverse:  #002;
+$color-font-extra: #ff0;
+$color-correct: #0f0;
+$color-error: #f00;
+$color-default: #ff0;
+
+$font-size_small:   12px;
+$font-size_medium:  20px;
+$font-size_large:   30px;
+$font-size_xlarge:  36px;
+$font-size_xxlarge: 48px;
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  background: transparent;
+}
+#page {
+  background: $color-background;
+  height: 2000px;
+  color: $color-font-base;
+  font-family: UbuntuItalic;
+  font-size: $font-size_medium;
+  padding-top: 20px;
+}
+
+@import "margins";
+@import "line";
+@import "button";
+
+@import "container-main";
+@import "header";
+@import "logo";
+@import "menu";
+@import "game-btn-container";
+@import "logout";
+
+@import "input-field";
+@import "input-line";
+@import "validation-info";
+
+@import "login";
+@import "registration";
+@import "scoreboard";
+@import "rooms";
+@import "field";
