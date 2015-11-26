@@ -46,7 +46,6 @@ define(['backbone'], function(Backbone) {
             case "update":
                 var data = model.toJSON();
                 console.log(JSON.stringify(data));
-                debugger;
                 $.ajax({
                     type: "PUT",
                     url: url,
@@ -54,6 +53,9 @@ define(['backbone'], function(Backbone) {
                 }).done(function(obj) {
                     console.log("---> SERVER ANSWER : " + obj);
                     var answer = JSON.parse(obj);
+                    if (!("success" in answer)) {
+                        answer["success"] = answer.status == 200;
+                    }
                     if (answer.success) {
                         options.success(answer);
                     } else {

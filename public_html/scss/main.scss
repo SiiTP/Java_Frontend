@@ -28,7 +28,9 @@ html, body {
   padding: 0;
 }
 canvas {
-  background: transparent;
+  position:absolute;
+  top: 20px;
+  left: 10px;
 }
 #page {
   background: $color-background;

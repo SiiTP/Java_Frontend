@@ -14,13 +14,10 @@ define([
             'mousemove': 'onMouseMove'
         },
         onMouseMove: function (event) {
-            console.log("view on mouse move");
             var x = event.pageX;
             var y = event.pageY;
             this.model.calculateAngle(x, y);
             this.model.setMouseCoordinate(x, y);
-            //console.log("mouse X : " + x + "; mouse Y : " + y);
-            //console.log("mouse move event");
         }
     });
 });
