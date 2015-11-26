@@ -1,4 +1,3 @@
-//форма выхода из учентной записи
 define([
     'backbone',
     'tmpl/rooms'

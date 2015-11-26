@@ -58,7 +58,7 @@ define (['backbone'], function(Backbone) {
             this.set({'socket': socket});
         },
         beginningGameWaiting: function() {
-            this.set({'waitingInterval': setInterval(this.sendMessageWaiting.bind(this), 300)});
+            this.set({'waitingInterval': setInterval(this.sendMessageWaiting.bind(this), 50)});
         },
         sendMessageWaiting: function() {
             var data = {'direction': -1};
