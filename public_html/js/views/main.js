@@ -13,11 +13,13 @@ define([
         events: {
             "click .game-btn-container__button": "onClick",
             "click .logout__button": "onClick",
-            "mouseover .button.game-btn-container__button.game-btn-container__button_disabled": "printMessage", //выдача сообщения о том что игрок не залогинен.
-            "mouseout .button.game-btn-container__button.game-btn-container__button_disabled": "deleteMessage"
         },
         initialize: function () {
             this.model.on('change', this.checkChanges.bind(this));
+            this.model.on('error', function() {
+                console.log("ERROR");
+            }.bind(this));
+            this.render();
         },
         checkChanges: function () {
             if (this.model.hasChanged('logged') || this.model.hasChanged('score')) {
@@ -26,7 +28,6 @@ define([
         },
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
-            this.JQmsg = $('.menu__msg-game').first();
         },
         show: function () {
             this.trigger('show');
@@ -46,12 +47,6 @@ define([
                     location.href = href;
                 }
             }
-        },
-        printMessage: function () {
-            this.JQmsg.text("Пожалуйста, авторизуйтесь, если хотите сыграть");
-        },
-        deleteMessage: function () {
-            this.JQmsg.text("");
         }
     });
 });

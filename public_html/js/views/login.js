@@ -27,8 +27,8 @@ define([
             this.model.on("toMain", function() {
                 location.href = '#';
             });
-            this.model.on("error", function(model, message) {
-                $(".login__validation-info-common").text(message);
+            this.model.on("error", function(model, response) {
+                $(".login__validation-info-common").text(response.message);
             })
         },
         JQ_cashing: function () {
@@ -126,7 +126,6 @@ define([
             if (this.model.isValid()) {
                 this.storage.setItem("username", this.model.get("username"));
                 this.storage.setItem("password", this.model.get("password"));
-                this.model.set({id: 1});
                 this.model.save(null, this.model.optionsLog);
             } else {
                 $(".login__validation-info-common").text("Не все поля заданы корректно.");

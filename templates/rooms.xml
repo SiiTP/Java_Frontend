@@ -5,7 +5,7 @@
         </div>
         <div class="line line_blue"> </div>
         <fest:choose>
-            <fest:when test="data.rooms.length != 0">
+            <fest:when test="data.rooms.length > 0">
                 <div class="rooms__lines">
                     <div class="rooms__lines__header">
                         <div class="rooms__lines__header__index">№</div>
@@ -46,10 +46,10 @@
                 </div>
                 <button class="button rooms__create__button">Создать!</button>
             </form>
-            <div class="validation-info validation-info-common validation-info_error rooms__create__message"> </div>
         </div>
         <div class="line line_blue"> </div>
         <button class="button button_long smallMargTop js-button-onMain" data-href="#">На главную</button>
+        <div class="validation-info validation-info-common validation-info_error rooms__create__message"> </div>
     </div>
 </fest:template>
 
