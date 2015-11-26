@@ -93,4 +93,7 @@ public class UserProfile {
         return id;
     }
 
+    public PlayerDataSet getPlayer() {
+        return player;
+    }
 }

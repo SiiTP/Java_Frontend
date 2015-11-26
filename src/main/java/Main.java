@@ -13,9 +13,12 @@ import persistance.ProjectDB;
 import service.account.AccountService;
 import servlets.admins.AdminServlet;
 import servlets.authorization.*;
+import servlets.game.GetRoomListServlet;
 import servlets.game.MainSocketWebServlet;
 import servlets.game.ScoreServlet;
 import servlets.game.room.RoomServlet;
+import servlets.joingame.CreateGame;
+import servlets.joingame.JoinGame;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -49,14 +52,14 @@ public class Main {
             }
             Server server = new Server(port);
             ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-            /*context.addServlet(new ServletHolder(new SignIn(accountService)), "/user/update");
+       /*     context.addServlet(new ServletHolder(new SignIn(accountService)), "/user/update");
             context.addServlet(new ServletHolder(new SignUp(accountService)),"/user/create");
             context.addServlet(new ServletHolder(new LogOut(accountService)), "/user/delete");
             context.addServlet(new ServletHolder(new LoginInfo(accountService)), "/user/read");*/
             context.addServlet(new ServletHolder(new UserServlet(accountService)),"/user");
             context.addServlet(new ServletHolder(new AdminServlet(server, gameServer)), "/admin");
-            /*context.addServlet(new ServletHolder(new CreateGame(gameServer)), "/create");
-            context.addServlet(new ServletHolder(new JoinGame(gameServer)), "/join");
+/*            context.addServlet(new ServletHolder(new CreateGame(gameServer)), "/rooms/create");
+            context.addServlet(new ServletHolder(new JoinGame(gameServer)), "/rooms/join");
             context.addServlet(new ServletHolder(new GetRoomListServlet(gameServer)), "/getRoomList");*/
             context.addServlet(new ServletHolder(new RoomServlet(gameServer)), "/rooms");
             context.addServlet(new ServletHolder(new ScoreServlet(gameServer)), "/score");

@@ -54,9 +54,9 @@ public class UserDAO {
     }
 
     public PlayerDataSet getPlayerDataSetById(long user_id) {
-        Query query = sessionFactory.getCurrentSession().getNamedQuery("getPlayerInfo");
-        query.setLong("id", user_id);
-        return (PlayerDataSet) query.uniqueResult();
+        Session session = sessionFactory.getCurrentSession();
+        UserProfile profile = session.get(UserProfile.class,user_id);
+        return profile.getPlayer();
     }
 
 
