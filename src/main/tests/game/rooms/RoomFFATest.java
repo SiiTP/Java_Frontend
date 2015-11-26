@@ -14,6 +14,7 @@ import static org.junit.Assert.*;
 /**
  * Created by ivan on 26.10.15.
  */
+@SuppressWarnings("unused")
 public class RoomFFATest {
     private  RoomFFA roomFFA;
     private int scoreLimit;

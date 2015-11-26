@@ -20,6 +20,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by ivan on 26.10.15.
  */
+@SuppressWarnings("unused")
 public class MainWebSocketTest {
     GameServer gameServer;
     AccountService accountService;

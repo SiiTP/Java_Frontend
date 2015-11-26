@@ -16,6 +16,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by ivan on 11.10.15.
  */
+@SuppressWarnings("unused")
 public class GameServerTest {
     private AccountService service;
     private Map<String,Room> rooms;

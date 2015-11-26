@@ -16,8 +16,7 @@ import java.util.List;
  * Created by ivan on 25.11.15.
  */
 public class ScoreServlet extends HttpServlet {
-    GameServer server;
-
+    private final GameServer server;
     public ScoreServlet(GameServer server) {
         this.server = server;
     }

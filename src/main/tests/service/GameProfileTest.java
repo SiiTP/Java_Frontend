@@ -12,6 +12,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by ivan on 26.10.15.
  */
+@SuppressWarnings("unused")
 public class GameProfileTest {
     GameProfile profile ;
     @Before

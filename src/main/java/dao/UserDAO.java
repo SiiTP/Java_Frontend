@@ -47,16 +47,16 @@ public class UserDAO {
     }
 
     public void updatePlayerInfo(UserProfile user, long score) {
-        Query query = sessionFactory.getCurrentSession().getNamedQuery("updatePlayer");
-        query.setLong("score", score);
-        query.setLong("user_id", user.getId());
-        query.executeUpdate();
+        Session session = sessionFactory.getCurrentSession();
+        PlayerDataSet dataSet = user.getPlayerDataSet();
+        dataSet.setScoreCount(dataSet.getScoreCount()+score);
+        session.update(dataSet);
     }
 
     public PlayerDataSet getPlayerDataSetById(long user_id) {
         Session session = sessionFactory.getCurrentSession();
         UserProfile profile = session.get(UserProfile.class,user_id);
-        return profile.getPlayer();
+        return profile.getPlayerDataSet();
     }
 
 

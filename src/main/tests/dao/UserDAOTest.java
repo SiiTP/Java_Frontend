@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 /**
  * Created by ivan on 21.11.15.
  */
+@SuppressWarnings("unused")
 public class UserDAOTest {
     UserDAO userDAO;
     Transaction t;

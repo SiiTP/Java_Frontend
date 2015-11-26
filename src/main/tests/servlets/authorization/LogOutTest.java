@@ -19,6 +19,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by Ivan on 10.10.15.
  */
+@SuppressWarnings("unused")
 public class LogOutTest {
     private AccountService service;
     private HttpServletRequest request;

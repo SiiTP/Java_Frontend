@@ -2,9 +2,6 @@ package service.account;
 
 import dao.RoomDAO;
 import game.rooms.Room;
-import javafx.util.Pair;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import persistance.UserProfile;
 import org.hibernate.Session;
 import persistance.ProjectDB;

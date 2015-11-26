@@ -6,6 +6,7 @@ import java.util.Set;
 /**
  * Created by ivan on 20.11.15.
  */
+@SuppressWarnings("unused")
 @Entity(name="player")
 public class PlayerDataSet {
     @Id

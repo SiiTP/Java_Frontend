@@ -23,6 +23,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by ivan on 29.10.15.
  */
+@SuppressWarnings("unused")
 public class JoinGameTest {
     private GameServer gameServer;
     private HttpServletRequest request;

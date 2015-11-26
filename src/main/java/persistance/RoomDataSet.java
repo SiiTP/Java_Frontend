@@ -11,7 +11,7 @@ import java.time.ZoneId;
 /**
  * Created by ivan on 20.11.15.
  */
-@SuppressWarnings("FieldCanBeLocal")
+@SuppressWarnings({"FieldCanBeLocal", "unused"})
 @NamedQueries({
         @NamedQuery(name = "roomInfoByName",query = "from room r where r.roomName=:name")
 })

@@ -13,16 +13,14 @@ import javax.persistence.*;
 /**
  * Created by ivan on 21.09.15.
  */
-@SuppressWarnings("FieldCanBeLocal")
 @NamedQueries({
         @NamedQuery(name = "userByName",query = "from user u where u.username = :username"),
         @NamedQuery(name = "isAvailable",query = "from user u where u.username =:username"),
-        @NamedQuery(name = "updatePlayer",query = "update player set scoreCount=scoreCount+:score where user.id=:user_id"),
-        @NamedQuery(name = "getPlayerInfo",query = "from player p where p.user.id=:id"),
         @NamedQuery(name = "getTopPlayers",query = "select p.scoreCount, u.username from player p join p.user u")
 })
 @Entity(name="user")
 public class UserProfile {
+    @SuppressWarnings("unused")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -93,7 +91,7 @@ public class UserProfile {
         return id;
     }
 
-    public PlayerDataSet getPlayer() {
+    public PlayerDataSet getPlayerDataSet() {
         return player;
     }
 }

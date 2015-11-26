@@ -11,6 +11,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Ivan on 11.10.15.
  */
+@SuppressWarnings("unused")
 public class AccountServiceTest {
     private AccountService accountService;
     @Before

@@ -4,7 +4,6 @@ import org.json.JSONObject;
 import resource.GameResources;
 import resource.ResourceFactory;
 
-import java.time.Instant;
 import java.util.Random;
 
 /**
@@ -15,7 +14,6 @@ public class GameProfile {
     private double x;
     private double y;
     private double direction;
-    private Instant dt;
     private boolean isKilled;
     public GameProfile() {
             resetSetting();
@@ -62,7 +60,7 @@ public class GameProfile {
         this.direction = direction;
     }
 
-    public double getDeltaTime() {
+    /*public double getDeltaTime() {
         final int toSeconds = ((GameResources)ResourceFactory.getResource("data/game.json")).getToSeconds();
         if(dt==null){
             dt = Instant.now();
@@ -72,7 +70,7 @@ public class GameProfile {
         dt = Instant.now();
 
         return (diff.toEpochMilli()+0.0)/toSeconds;
-    }
+    }*/
 
     public boolean isKilled() {
         return isKilled;

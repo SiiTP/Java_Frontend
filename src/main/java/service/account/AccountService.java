@@ -10,7 +10,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import persistance.PlayerDataSet;
 import persistance.ProjectDB;
 import persistance.UserProfile;
 import resource.ResourceFactory;
@@ -113,13 +112,13 @@ public class AccountService{
            sessions.put(session,userProfile);
         }
     }
-    public PlayerDataSet getPlayerInfo(long user_id){
+    /*public PlayerDataSet getPlayerInfo(long user_id){
         Session session = ProjectDB.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         PlayerDataSet player = userDAO.getPlayerDataSetById(user_id);
         session.getTransaction().commit();
         return player;
-    }
+    }*/
 
     @Nullable
     public UserProfile getUserBySession(String sessionId){
