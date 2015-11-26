@@ -56,16 +56,12 @@ public class RoomService {
         session.getTransaction().commit();
         return roomDataSet;
     }
-    public ArrayList<Pair<String,Integer>> getTopPlayers(int limit){
+    public List getTopPlayers(int limit){
         Session session = ProjectDB.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         List list = dao.getTopPlayers(limit);
-
-        for(Object o : list){
-
-        }
         session.getTransaction().commit();
-        return null;
+        return list;
     }
     public void kickPlayerFromRoom(String roomname,UserProfile profile){
         Room room = rooms.get(roomname);
@@ -75,20 +71,5 @@ public class RoomService {
         this.rooms = rooms;
     }
 
-    public static void main(String[] args) {
-        ProjectDB.getSessionFactory().getCurrentSession().beginTransaction();
-        RoomDAO dao = new RoomDAO();
-        List list = dao.getTopPlayers(3);
-        ProjectDB.getSessionFactory().getCurrentSession().getTransaction().commit();
-        JSONArray array = new JSONArray();
-        for(Object o : list){
-            Object[] objects = (Object[])o;
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("score",objects[0]);
-            jsonObject.put("login",objects[1]);
-            array.put(jsonObject);
-        }
-        int a =5;
-    }
 
 }

@@ -35,6 +35,15 @@ public class ProjectDB {
                 serviceRegistry = new StandardServiceRegistryBuilder().configure(source).build();
             }
             s_sesssionFactory = new MetadataSources(serviceRegistry).buildMetadata().buildSessionFactory();
+            setDefaultTable();
+        }
+    }
+    private static void setDefaultTable(){
+        try(Session session = s_sesssionFactory.openSession()) {
+            session.beginTransaction();
+            Query query = session.createQuery("update user u set u.isAuthorized=0");
+            query.executeUpdate();
+            session.getTransaction().commit();
         }
     }
     public static void truncateTables(){

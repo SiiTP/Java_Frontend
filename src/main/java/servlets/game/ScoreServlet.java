@@ -24,30 +24,26 @@ public class ScoreServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Integer limit = null;
+        Integer limit;
         JSONArray array = new JSONArray();
         PrintWriter writer = resp.getWriter();
         try {
-            try {
-                limit = Integer.parseInt(req.getParameter("limit"));
-            } catch (NullPointerException e) {
-                limit = 10;
-            }
-            System.out.println("=================================");
-            System.out.println(limit);
-            List list = server.getTopPlayers(limit);
-            for(Object o : list){
-                Object[] objects = (Object[])o;
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("score",objects[0]);
-                jsonObject.put("username",objects[1]);
-                array.put(jsonObject);
-            }
-            if (writer != null) {
-                writer.println(array.toString());
-            }
-        }catch (NumberFormatException exc){
-            exc.printStackTrace();
+            limit = Integer.parseInt(req.getParameter("limit"));
+        } catch (NullPointerException | NumberFormatException e) {
+            limit = 10;
+        }
+        System.out.println("=================================");
+        System.out.println(limit);
+        List list = server.getTopPlayers(limit);
+        for(Object o : list){
+            Object[] objects = (Object[])o;
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("score",objects[0]);
+            jsonObject.put("username",objects[1]);
+            array.put(jsonObject);
+        }
+        if (writer != null) {
+            writer.println(array.toString());
         }
 
     }
