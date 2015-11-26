@@ -20,7 +20,6 @@ define([
             //console.log("angle : " + angle);
         },
         setMouseCoordinate: function (x, y) {
-            console.log(x + " : " + y);
             this.mouseX = x;
             this.mouseY = y;
         },

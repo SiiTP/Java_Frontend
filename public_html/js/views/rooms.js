@@ -21,6 +21,7 @@ define([
             this.model.on('change', this.render.bind(this));
             this.model.on('error', this.printMessage.bind(this));
             this.model.on('onGame', function() {
+                console.log("on game link");
                 location.href = "#game";
             })
         },

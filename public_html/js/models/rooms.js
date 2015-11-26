@@ -7,21 +7,18 @@ define([
         url: "rooms",
         optionsFetch: ({
             success: function(model, response, parse) {
-                console.log("success fetch o");
                 model.set({"rooms": response.rooms});
             }
         }),
         optionsCreate: ({
             success: function(model, response, parse) {
-                console.log("success create o");
                 model.trigger('onGame');
             }
         }),
         optionsJoin: ({
             success: function(model, response, parse) {
-                console.log("success join o");
+                console.log("update onGame");
                 model.trigger('onGame');
-                debugger;
             }
         }),
         initialize: function() {
@@ -29,25 +26,25 @@ define([
             this.set({'roomName': null}) ;
             this.set({'password': null}) ;
         },
-        onCreate: function() {
-            console.log("<--- create room");
-            this.set({'roomName' : $('#roomName').val()});
-            this.set({'password' : $('#roomPassword').val()});
-            $.ajax({
-                type: "POST",
-                url: "/create",
-                data: this.toJSON(),
-                context: this
-            }).done(function(obj) {
-                var answer = JSON.parse(obj);
-                if (answer.status == 200) {
-                    this.trigger('joiningToRoom', answer);
-                    location.href = "#game";
-                } else {
-                    this.trigger('error', {'message': answer.message});
-                }
-            });
-        },
+        //onCreate: function() {
+        //    console.log("<--- create room");
+        //    this.set({'roomName' : $('#roomName').val()});
+        //    this.set({'password' : $('#roomPassword').val()});
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "/create",
+        //        data: this.toJSON(),
+        //        context: this
+        //    }).done(function(obj) {
+        //        var answer = JSON.parse(obj);
+        //        if (answer.status == 200) {
+        //            this.trigger('joiningToRoom', answer);
+        //            location.href = "#game";
+        //        } else {
+        //            this.trigger('error', {'message': answer.message});
+        //        }
+        //    });
+        //},
         //getRooms: function() {
         //    this.fetch();
         //    //console.log("<--- get room list");
