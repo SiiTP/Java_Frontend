@@ -12,10 +12,10 @@ define([
                 model.set({'username': response.username});
                 model.set({'logged': true});
             },
-            error: function() {
-                console.log("Unexpected error fetch");
+            error: function(model, response, parse) {
+                console.log("");
             }
-        }),
+}),
         optionsDestroy: ({
             success: function(model, response, parse) {
                 model.uninitialize();
@@ -26,15 +26,15 @@ define([
         }),
         optionsReg: ({
             success: function(model, response) {
-                debugger;
                 model.trigger('onLogin');
+                model.set({id: response["id"]});
             }
         }),
         optionsLog: ({
             success: function(model, response) {
                 model.set({'logged': true});
                 model.set({'password': null});
-                //TODO get user score from database in the future
+                model.set({id: response["id"]});
                 model.trigger('toMain');
             }
         }),
@@ -47,6 +47,7 @@ define([
             this.set({validPassword : false});
             this.set({'score'       : 0});
             this.fetch(this.optionsFetch);
+
             //this.on("sync",    function() {console.log("___sync event!");});
             //this.on("error",   function() {console.log("___error event!");});
             //this.on("request", function() {console.log("___request event!");});
@@ -148,7 +149,7 @@ define([
             this.set({'validPassword' : false});
             this.set({'logged'        : false});
             this.set({'score'         : 0});
-            this.unset("id");
+            this.set({"id": null});
         }
     });
     return new Model();

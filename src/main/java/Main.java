@@ -15,6 +15,7 @@ import servlets.admins.AdminServlet;
 import servlets.authorization.*;
 import servlets.game.GetRoomListServlet;
 import servlets.game.MainSocketWebServlet;
+import servlets.game.ScoreServlet;
 import servlets.game.room.RoomServlet;
 import servlets.joingame.CreateGame;
 import servlets.joingame.JoinGame;
@@ -61,6 +62,7 @@ public class Main {
             context.addServlet(new ServletHolder(new JoinGame(gameServer)), "/rooms/join");
             context.addServlet(new ServletHolder(new GetRoomListServlet(gameServer)), "/getRoomList");*/
             context.addServlet(new ServletHolder(new RoomServlet(gameServer)), "/rooms");
+            context.addServlet(new ServletHolder(new ScoreServlet(gameServer)), "/score");
             context.addServlet(new ServletHolder(new MainSocketWebServlet(gameServer)), "/gameplay");
             ResourceHandler resourceHandler = new ResourceHandler();
             resourceHandler.setResourceBase("public_html");

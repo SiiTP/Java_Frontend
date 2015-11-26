@@ -149,7 +149,9 @@ define([
         onSubmit: function (event) {
             event.preventDefault();
             if (this.validateConfirm() && this.model.isValid()) {
+                this.model.set({"type":"reg"});
                 this.model.save(null, this.model.optionsReg);
+                this.model.unset("type");
             } else {
                 $(".registration__validation-info-common").text("Не все поля заданы корректно.");
                 this.focusOnErrorField();
@@ -161,8 +163,8 @@ define([
         onLogin: function() {
             location.href = "#login"
         },
-        onError: function(model, msg) {
-            $(".registration__validation-info-common").text(msg);
+        onError: function(model, response) {
+            $(".registration__validation-info-common").text(response.message);
 
         },
         show: function () {

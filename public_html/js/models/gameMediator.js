@@ -61,12 +61,10 @@ define (['backbone'], function(Backbone) {
             this.set({'waitingInterval': setInterval(this.sendMessageWaiting.bind(this), 50)});
         },
         sendMessageWaiting: function() {
-            //console.log("<___ send message waiting");
             var data = {'direction': -1};
             if (this.get('myPlayer') != null) {
                 data = {'direction': this.get('myPlayer').model.get('angle')};
             }
-            //console.log("direction : " + data.direction);
             this.get('socket').send(JSON.stringify(data));
         },
         parsePlayers: function(answerPlayers) {

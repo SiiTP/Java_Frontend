@@ -25,6 +25,7 @@ define([
         },
         show: function () {
             this.$el.show();
+            this.model.fetch();
             this.trigger('show');
         },
         hide: function () {

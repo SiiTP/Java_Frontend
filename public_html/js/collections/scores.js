@@ -7,6 +7,7 @@ define([
 ){
 
     var Collection = Backbone.Collection.extend({
+        url: "score?limit=10",
         model: ScoreModel,
         initialize: function() {
             this.push(new this.model({'name': 'Ivan', 'score': 200}));

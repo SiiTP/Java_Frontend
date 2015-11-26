@@ -1,10 +1,12 @@
 // форма входа в уч. запись
 define([
     'backbone',
-    'tmpl/login'
+    'tmpl/login',
+    'storage'
 ], function(
     Backbone,
-    tmpl
+    tmpl,
+    storage
 ){
 
     return Backbone.View.extend({
@@ -12,6 +14,7 @@ define([
         tagName: 'div',
         template: tmpl,
         model: null,
+        storage: storage,
         JQ_cacheText: null,
         JQ_cacheLine: null,
         JQ_cacheInput: null,
@@ -24,8 +27,8 @@ define([
             this.model.on("toMain", function() {
                 location.href = '#';
             });
-            this.model.on("error", function(model, message) {
-                $(".login__validation-info-common").text(message);
+            this.model.on("error", function(model, response) {
+                $(".login__validation-info-common").text(response.message);
             })
         },
         JQ_cashing: function () {
@@ -121,20 +124,41 @@ define([
             event.preventDefault();
             this.JQ_cashing();
             if (this.model.isValid()) {
-                this.model.set({id: 1});
+                this.storage.setItem("username", this.model.get("username"));
+                this.storage.setItem("password", this.model.get("password"));
                 this.model.save(null, this.model.optionsLog);
             } else {
                 $(".login__validation-info-common").text("Не все поля заданы корректно.");
                 this.focusOnErrorField();
             }
         },
-        show: function () {
-            this.trigger('show');
-            this.$el.show();
+        getInputedData: function() {
             if (this.JQ_cacheInput) {
                 _.each(this.JQ_cacheInput, function (inputField) {
                     inputField.trigger('input');
                 });
+                return true;
+            }
+            return false
+        },
+        getStorageData: function() {
+            var username = this.storage.getItem("username");
+            var password = this.storage.getItem("password");
+            if (username) {
+                this.JQ_cashing();
+                this.JQ_cacheInput["username"].val(username);
+            }
+            if (password) {
+                this.JQ_cashing();
+                this.JQ_cacheInput["password"].val(password);
+            }
+            this.getInputedData();
+        },
+        show: function () {
+            this.trigger('show');
+            this.$el.show();
+            if (!this.getInputedData()) {
+                this.getStorageData();
             }
         },
         hide: function () {

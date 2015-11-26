@@ -16,6 +16,7 @@ import java.io.IOException;
  * Created by ivan on 02.10.15.
  */
 public class CreateGame extends HttpServlet {
+
     private final GameServer gameServer;
     private final ResponseResources responseResources;
     public CreateGame(GameServer gameServer) {

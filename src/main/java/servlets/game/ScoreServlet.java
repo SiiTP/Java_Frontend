@@ -28,7 +28,13 @@ public class ScoreServlet extends HttpServlet {
         JSONArray array = new JSONArray();
         PrintWriter writer = resp.getWriter();
         try {
-            limit = Integer.parseInt(req.getParameter("limit"));
+            try {
+                limit = Integer.parseInt(req.getParameter("limit"));
+            } catch (NullPointerException e) {
+                limit = 10;
+            }
+            System.out.println("=================================");
+            System.out.println(limit);
             List list = server.getTopPlayers(limit);
             for(Object o : list){
                 Object[] objects = (Object[])o;

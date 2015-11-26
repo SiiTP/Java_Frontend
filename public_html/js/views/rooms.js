@@ -19,31 +19,48 @@ define([
         },
         initialize: function () {
             this.model.on('change', this.render.bind(this));
-            this.model.on('serverError', this.printMessage.bind(this));
+            this.model.on('error', this.printMessage.bind(this));
+            this.model.on('onGame', function() {
+                location.href = "#game";
+            })
         },
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
             this.JQ_msg = $('.rooms__create__message').first();
         },
-        printMessage: function(args) {
-            this.JQ_msg.text(args.message);
+        printMessage: function(model, response) {
+            if (response.status == 300) {
+                model.set({"rooms": []});
+            }
+            if (!this.JQ_msg) {
+                this.JQ_msg = $('.rooms__create__message').first();
+            }
+            this.JQ_msg.text(response.message);
         },
         onConnect: function(event) {
-            var roomID = event.currentTarget.attributes.getNamedItem('data-roomid').value;
-            this.model.onJoin(roomID);
+            console.log("error message");
+            var roomName = event.currentTarget.attributes.getNamedItem('data-roomid').value;
+            this.model.set({'roomName' : roomName});
+            this.model.set({'password' : null});
+            this.model.set({'id'       : 1});
+            this.model.save(null, this.model.optionsJoin);
+            this.model.unset("id")
         },
         onCreateRoom: function(event) {
             event.preventDefault();
-            this.model.save();
+            this.model.set({'roomName' : $('#roomName').val()});
+            this.model.set({'password' : null});
+            this.model.unset("id");
+            this.model.save(null, this.model.optionsCreate);
         },
         onRefresh: function() {
-            this.model.fetch();
+            this.model.fetch(this.model.optionsFetch);
         },
         onMain: function() {
             location.href = "#"
         },
         show: function() {
-            this.model.fetch();
+            this.model.fetch(this.model.optionsFetch);
             this.trigger('show');
             this.$el.show();
         },
