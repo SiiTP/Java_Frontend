@@ -3,6 +3,8 @@ package servlets.game;
 import game.server.GameServer;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import resource.ResourceFactory;
+import resource.ResponseResources;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,8 +19,10 @@ import java.util.List;
  */
 public class ScoreServlet extends HttpServlet {
     private final GameServer server;
+    private final ResponseResources responseResources;
     public ScoreServlet(GameServer server) {
         this.server = server;
+        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
     }
 
     @Override
@@ -41,8 +45,11 @@ public class ScoreServlet extends HttpServlet {
             jsonObject.put("username",objects[1]);
             array.put(jsonObject);
         }
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("scores", array);
+        responseJson.put("status", responseResources.getOk());
         if (writer != null) {
-            writer.println(array.toString());
+            writer.println(responseJson.toString());
         }
 
     }
