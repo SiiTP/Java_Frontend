@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import resource.GameResources;
 import resource.ResourceFactory;
 
+import java.time.Instant;
 import java.util.Random;
 
 /**
@@ -15,6 +16,7 @@ public class GameProfile {
     private double y;
     private double direction;
     private boolean isKilled;
+    private Instant respawnTime;
     public GameProfile() {
             resetSetting();
     }
@@ -73,11 +75,19 @@ public class GameProfile {
     }*/
 
     public boolean isKilled() {
+        if(respawnTime != null){
+            if(Instant.now().isAfter(respawnTime)){
+                isKilled = false;
+                respawnTime = null;
+                resetSetting();
+            }
+        }
         return isKilled;
     }
 
     public void setIsKilled(boolean isKilled) {
         this.isKilled = isKilled;
+        this.respawnTime = Instant.now().plusSeconds(5);
     }
 
     @Override
@@ -98,5 +108,13 @@ public class GameProfile {
         x = random.nextInt(gameResources.getGameFieldWidth());
         y = random.nextInt(gameResources.getGameFieldHeight());
         isKilled = false;
+    }
+
+    public Instant getRespawnTime() {
+        return respawnTime;
+    }
+
+    public void setRespawnTime(Instant respawnTime) {
+        this.respawnTime = respawnTime;
     }
 }

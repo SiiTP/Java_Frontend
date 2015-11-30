@@ -1,7 +1,9 @@
 package game.sockets;
 
-import game.gameaction.GameActionStrategy;
-import game.gameaction.MoveActionStrategy;
+import game.action.gameaction.GameActionStrategy;
+import game.action.gameaction.MoveActionStrategy;
+import game.action.processor.ActionProcessor;
+import game.action.processor.MoveActionProcessor;
 import game.rooms.Room;
 import game.server.GameServer;
 import org.apache.logging.log4j.LogManager;
@@ -22,16 +24,19 @@ import java.io.IOException;
 public class MainWebSocket extends WebSocketAdapter {
     private final GameServer gameServer;
     private final String httpSession;
-    private final GameActionStrategy gameStrategy;
+    //private final GameActionStrategy gameStrategy;
+    private ActionProcessor actionProcessor;
     private final ResponseResources responseResources;
     private static final Logger LOGGER = LogManager.getLogger(MainWebSocket.class);
     public MainWebSocket(String httpSession,GameServer gameServer) {
         responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
         this.gameServer = gameServer;
         this.httpSession = httpSession;
-        gameStrategy = new MoveActionStrategy(gameServer);
+        //gameStrategy = new MoveActionStrategy(gameServer);
     }
-
+    public String getHttpSession(){
+        return httpSession;
+    }
     @Override
     public void onWebSocketClose(int statusCode, String reason) {
         if(statusCode == StatusCode.SHUTDOWN || statusCode == StatusCode.NORMAL) {
@@ -61,38 +66,23 @@ public class MainWebSocket extends WebSocketAdapter {
     }
 
     public void processPlayerMessage(JSONObject message) {
-        boolean isOkGame = gameServer.isGameReady(httpSession);
-        JSONObject object = new JSONObject();
-        if(isOkGame) {
-            analyseActionType(message);
-            Room room = gameServer.getPlayerRoomBySession(httpSession);
-            if (room != null) {
-                if(room.isFinished()){
-                    String winner = room.getWinner().getUsername();
-                    gameServer.kickPlayer(httpSession);
-                    LOGGER.info("winner in room " + room.getRoomName() + ':' + winner );
-                    object.put("winner", winner);
-                    object.put("status", responseResources.getWinnerMessageCode());
-                }else {
-                    object.put("players", room.getJsonRoomPlayers());
-                    object.put("status", responseResources.getOk());
-                }
+        JSONObject response = null;
+        if(!message.has("type")){
+            if(!(actionProcessor instanceof MoveActionProcessor)) {
+                actionProcessor = new MoveActionProcessor(gameServer);
             }
-        }else{
-            object.put("status", responseResources.getRoomIsNotReadyCode());
-            object.put("message", "Wait for your enemy!");
+            response = actionProcessor.processMessage(message,this);
         }
         try {
-            getRemote().sendString(object.toString());
+            if(response != null) {
+                getRemote().sendString(response.toString());
+            }else{
+                LOGGER.error("wrong message from " + httpSession + " message:" + message);
+            }
         } catch (IOException e) {
             LOGGER.error("cant send message back, user session " + httpSession);
             e.printStackTrace();
         }
 
-    }
-    public void analyseActionType(JSONObject message){
-        if(!message.has("type") && gameStrategy instanceof MoveActionStrategy){
-            gameStrategy.processGameAction(message,httpSession);
-        }
     }
 }

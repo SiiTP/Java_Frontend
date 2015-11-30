@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import resource.ResourceFactory;
 import resource.ResponseResources;
+import servlets.game.room.RoomServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class JoinGameTest {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private StringWriter stringWriter;
-    private JoinGame joinGame;
+    private RoomServlet joinGame;
     private ResponseResources responseResources;
 
     @Before
@@ -45,14 +46,14 @@ public class JoinGameTest {
         PrintWriter writer = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(writer);
 
-        joinGame = new JoinGame(gameServer);
+        joinGame = new RoomServlet(gameServer);
     }
     @Test
     public void testDoPostNoAuth() throws ServletException, IOException {
         when(gameServer.checkIfRoomExist(anyString())).thenReturn(false);
         when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(false);
 
-        joinGame.doPost(request, response);
+        joinGame.doPut(request, response);
 
         assertTrue(stringWriter.toString().contains(Integer.toString(responseResources.getNotAuthorized())));
 
@@ -63,7 +64,7 @@ public class JoinGameTest {
         when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(true);
         when(gameServer.joinRoom(anyString(), anyString(),anyString())).thenReturn(null);
 
-        joinGame.doPost(request, response);
+        joinGame.doPut(request, response);
 
         assertTrue(stringWriter.toString().contains(Integer.toString(responseResources.getWrongUsernameOrPassword())));
     }
@@ -73,7 +74,7 @@ public class JoinGameTest {
         when(gameServer.isAuthorizedPlayer(anyString())).thenReturn(true);
         when(gameServer.joinRoom(anyString(), anyString(),anyString())).thenReturn(mock(Room.class));
 
-        joinGame.doPost(request, response);
+        joinGame.doPut(request, response);
 
         assertTrue(stringWriter.toString().contains(Integer.toString(responseResources.getOk())));
     }

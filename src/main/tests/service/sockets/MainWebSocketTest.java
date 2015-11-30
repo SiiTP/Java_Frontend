@@ -59,36 +59,4 @@ public class MainWebSocketTest {
         String message = "{nam:''}";
         webSocket.onWebSocketText(message);
     }
-
-    @Test
-    public void testRoomFinished() throws Exception {
-        doReturn(true).when(gameServer).isGameReady(anyString());
-        Room room = spy(new RoomFFA("test"));
-        doReturn(room).when(gameServer).getPlayerRoomBySession(anyString());
-        doReturn(true).when(room).isFinished();
-        UserProfile p = new UserProfile("test","test");
-        doReturn(p).when(room).getWinner();
-        webSocket.processPlayerMessage(new JSONObject());
-
-        assertEquals(endpoint.getMessage().optString("winner"), "test");
-    }
-    @Test
-    public void testRoomNotFinished() throws Exception {
-        doReturn(true).when(gameServer).isGameReady(anyString());
-        Room room = spy(new RoomFFA("test"));
-        doReturn(room).when(gameServer).getPlayerRoomBySession(anyString());
-        doReturn(false).when(room).isFinished();
-
-        webSocket.processPlayerMessage(new JSONObject());
-
-        assertTrue(endpoint.getMessage().has("players"));
-    }
-    @Test
-    public void testRoomNotReady() throws Exception {
-        doReturn(false).when(gameServer).isGameReady(anyString());
-
-        webSocket.processPlayerMessage(new JSONObject());
-
-        assertEquals(endpoint.getMessage().optInt("status"), responseResources.getRoomIsNotReadyCode());
-    }
 }

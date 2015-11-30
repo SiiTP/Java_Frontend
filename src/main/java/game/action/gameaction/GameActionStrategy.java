@@ -1,4 +1,4 @@
-package game.gameaction;
+package game.action.gameaction;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package game.gameaction;
+package game.action.gameaction;
 
 import game.rooms.Room;
 import game.rooms.RoomFFA;

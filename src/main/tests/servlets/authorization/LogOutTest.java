@@ -25,6 +25,7 @@ public class LogOutTest {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private StringWriter stringWriter;
+    private UserServlet logOut;
     @Before
     public void setUp() throws IOException {
         service = mock(AccountService.class);
@@ -35,14 +36,15 @@ public class LogOutTest {
         stringWriter = new StringWriter();
         PrintWriter writer = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(writer);
+        logOut = new UserServlet(service);
     }
 
     @Test
     public void testDoPostLogOutSuccess() throws ServletException, IOException {
         when(service.isAuthorized(anyString())).thenReturn(true);
 
-        LogOut logOut = new LogOut(service);
-        logOut.doPost(request, response);
+
+        logOut.doDelete(request, response);
 
         assertTrue(stringWriter.toString().contains("true"));
     }
@@ -50,8 +52,7 @@ public class LogOutTest {
     public void testDoPostLogOutFail() throws ServletException, IOException {
         when(service.isAuthorized(anyString())).thenReturn(false);
 
-        LogOut logOut = new LogOut(service);
-        logOut.doPost(request,response);
+        logOut.doDelete(request,response);
 
         assertTrue(stringWriter.toString().contains("false"));
     }

@@ -25,7 +25,7 @@ public class SignInTest {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private StringWriter stringWriter;
-    private SignIn signIn;
+    private UserServlet signIn;
     @Before
     public void setUp() throws IOException {
         service = spy(new AccountService());
@@ -38,20 +38,22 @@ public class SignInTest {
         PrintWriter writer = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(writer);
 
-        signIn = new SignIn(service);
+        signIn = new UserServlet(service);
+        when(request.getParameter("type")).thenReturn(null);
     }
 
     @Test
     public void testDoPostSignInAlreadyAuth() throws ServletException, IOException {
         when(service.isAuthorized(anyString())).thenReturn(true);
         when(service.getUserBySession(anyString())).thenReturn(new UserProfile("abc","abc"));
-        when(request.getParameter("username")).thenReturn(anyString());
-        when(request.getParameter("password")).thenReturn(anyString());
+        when(request.getParameter("username")).thenReturn("test");
+        when(request.getParameter("password")).thenReturn("test");
         signIn.doPost(request,response);
         assertTrue(stringWriter.toString().contains("false"));
     }
     @Test
     public void testDoPostSignInLoginSuccess() throws ServletException, IOException {
+        when(service.getUserBySession(anyString())).thenReturn(new UserProfile("abc","abc"));
         checkSignIn(true);
     }
     @Test
