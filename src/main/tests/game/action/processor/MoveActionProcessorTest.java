@@ -11,24 +11,22 @@ import persistance.UserProfile;
 import resource.ResourceFactory;
 import resource.ResponseResources;
 import service.account.AccountService;
-import test.RemoteEndpointStub;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by ivan on 30.11.15.
  */
+@SuppressWarnings("unused")
 public class MoveActionProcessorTest {
     GameServer gameServer;
     AccountService accountService;
     MoveActionProcessor actionProcessor;
     String httpSession;
     UserProfile profile;
-    RemoteEndpointStub endpoint;
     ResponseResources responseResources;
     MainWebSocket socket;
     @Before

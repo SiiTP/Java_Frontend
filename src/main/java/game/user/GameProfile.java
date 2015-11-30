@@ -110,11 +110,4 @@ public class GameProfile {
         isKilled = false;
     }
 
-    public Instant getRespawnTime() {
-        return respawnTime;
-    }
-
-    public void setRespawnTime(Instant respawnTime) {
-        this.respawnTime = respawnTime;
-    }
 }

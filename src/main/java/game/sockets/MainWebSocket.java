@@ -1,10 +1,7 @@
 package game.sockets;
 
-import game.action.gameaction.GameActionStrategy;
-import game.action.gameaction.MoveActionStrategy;
 import game.action.processor.ActionProcessor;
 import game.action.processor.MoveActionProcessor;
-import game.rooms.Room;
 import game.server.GameServer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,8 +10,6 @@ import org.eclipse.jetty.websocket.api.WebSocketAdapter;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import resource.ResourceFactory;
-import resource.ResponseResources;
 
 import java.io.IOException;
 
@@ -24,15 +19,11 @@ import java.io.IOException;
 public class MainWebSocket extends WebSocketAdapter {
     private final GameServer gameServer;
     private final String httpSession;
-    //private final GameActionStrategy gameStrategy;
     private ActionProcessor actionProcessor;
-    private final ResponseResources responseResources;
     private static final Logger LOGGER = LogManager.getLogger(MainWebSocket.class);
     public MainWebSocket(String httpSession,GameServer gameServer) {
-        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
         this.gameServer = gameServer;
         this.httpSession = httpSession;
-        //gameStrategy = new MoveActionStrategy(gameServer);
     }
     public String getHttpSession(){
         return httpSession;

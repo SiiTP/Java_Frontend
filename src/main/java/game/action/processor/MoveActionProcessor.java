@@ -1,5 +1,6 @@
 package game.action.processor;
 
+import game.action.gameaction.GameActionStrategy;
 import game.action.gameaction.MoveActionStrategy;
 import game.rooms.Room;
 import game.server.GameServer;
@@ -17,7 +18,7 @@ public class MoveActionProcessor implements ActionProcessor {
     private final ResponseResources responseResources;
     private final GameServer gameServer;
     private static final Logger LOGGER = LogManager.getLogger(MoveActionProcessor.class);
-    private MoveActionStrategy strategy;
+    private final GameActionStrategy strategy;
     public MoveActionProcessor(GameServer server) {
         this.gameServer = server;
         responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");

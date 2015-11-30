@@ -1,20 +1,14 @@
 package service.sockets;
 
-import game.rooms.Room;
-import game.rooms.RoomFFA;
 import game.server.GameServer;
 import game.sockets.MainWebSocket;
-import persistance.UserProfile;
-import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import persistance.UserProfile;
 import resource.ResourceFactory;
 import resource.ResponseResources;
 import service.account.AccountService;
-import test.RemoteEndpointStub;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 /**
@@ -27,7 +21,6 @@ public class MainWebSocketTest {
     MainWebSocket webSocket;
     String httpSession;
     UserProfile profile;
-    RemoteEndpointStub endpoint;
     ResponseResources responseResources;
     @Before
     public void setup() {
@@ -38,8 +31,7 @@ public class MainWebSocketTest {
         gameServer = spy(new GameServer(accountService));
         webSocket = spy(new MainWebSocket(httpSession, gameServer));
 
-        endpoint = new RemoteEndpointStub();
-        doReturn(endpoint).when(webSocket).getRemote();
+
 
         profile = new UserProfile("name","pass");
         accountService.addUser(profile);
