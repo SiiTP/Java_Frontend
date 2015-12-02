@@ -25,7 +25,7 @@ public class SignUpTest {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private StringWriter stringWriter;
-    private SignUp signUp;
+    private UserServlet signUp;
     @Before
     public void setUp() throws IOException {
         service = spy(new AccountService());
@@ -38,15 +38,16 @@ public class SignUpTest {
         PrintWriter writer = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(writer);
 
-        signUp = new SignUp(service);
+        signUp = new UserServlet(service);
+        when(request.getParameter("type")).thenReturn("reg");
     }
 
 
     @Test
     public void testDoPostIsAvailable() throws ServletException, IOException {
         when(service.isAvailableName(anyString())).thenReturn(false);
-        when(request.getParameter("username")).thenReturn(anyString());
-        when(request.getParameter("password")).thenReturn(anyString());
+        when(request.getParameter("username")).thenReturn("test");
+        when(request.getParameter("password")).thenReturn("test");
 
         signUp.doPost(request,response);
 

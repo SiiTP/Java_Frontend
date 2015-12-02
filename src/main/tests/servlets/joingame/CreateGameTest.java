@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import resource.ResourceFactory;
 import resource.ResponseResources;
+import servlets.game.room.RoomServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class CreateGameTest {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private StringWriter stringWriter;
-    private CreateGame gameServlet;
+    private RoomServlet gameServlet;
     private ResponseResources responseResources;
 
     @Before
@@ -45,7 +46,7 @@ public class CreateGameTest {
         PrintWriter writer = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(writer);
         when(request.getParameter("roomName")).thenReturn("test");
-        gameServlet = new CreateGame(gameServer);
+        gameServlet = new RoomServlet(gameServer);
     }
     @Test
     public void testDoPostRoomExist() throws ServletException, IOException {

@@ -9,6 +9,7 @@ import org.junit.Test;
 import resource.ResourceFactory;
 import resource.ResponseResources;
 import service.account.AccountService;
+import servlets.game.room.RoomServlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class GetRoomListServletTest {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private StringWriter stringWriter;
-    private GetRoomListServlet roomServlet;
+    private RoomServlet roomServlet;
     private GameServer gameServer;
     private ResponseResources responseResources;
     private AccountService accountService;
@@ -47,7 +48,7 @@ public class GetRoomListServletTest {
         PrintWriter writer = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(writer);
 
-        roomServlet = new GetRoomListServlet(gameServer);
+        roomServlet = new RoomServlet(gameServer);
     }
     @Test
     public void testDoPost() throws ServletException, JSONException, IOException {
@@ -55,14 +56,14 @@ public class GetRoomListServletTest {
         doReturn(profile).when(accountService).getUserBySession(anyString());
         gameServer.createRoom("test", "testRoom", null);
 
-        roomServlet.doPost(request, response);
+        roomServlet.doGet(request, response);
         JSONObject object = new JSONObject(stringWriter.toString());
         int i = object.optInt("status");
         assertEquals(i,responseResources.getOk());
     }
     @Test
     public void testDoPostNoRooms() throws ServletException, JSONException, IOException {
-        roomServlet.doPost(request, response);
+        roomServlet.doGet(request, response);
         JSONObject object = new JSONObject(stringWriter.toString());
         int i = object.optInt("status");
         assertEquals(i, responseResources.getZeroPlayingRoomsNow());

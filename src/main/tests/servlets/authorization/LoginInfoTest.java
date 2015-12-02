@@ -25,7 +25,7 @@ public class LoginInfoTest {
     private HttpServletRequest request;
     private HttpServletResponse response;
     private StringWriter stringWriter;
-    private LoginInfo logInfo;
+    private UserServlet logInfo;
     @Before
     public void setUp() throws IOException {
         service = spy(new AccountService());
@@ -38,7 +38,7 @@ public class LoginInfoTest {
         PrintWriter writer = new PrintWriter(stringWriter);
         when(response.getWriter()).thenReturn(writer);
 
-        logInfo = new LoginInfo(service);
+        logInfo = new UserServlet(service);
     }
     @Test
     public void testDoPostSuccess() throws ServletException, IOException {
@@ -46,7 +46,7 @@ public class LoginInfoTest {
         UserProfile profile = new UserProfile("aaaa","bbbb");
         when(service.getUserBySession(anyString())).thenReturn(profile);
 
-        logInfo.doPost(request, response);
+        logInfo.doGet(request, response);
 
         assertTrue(stringWriter.toString().contains("aaaa"));
     }
@@ -55,7 +55,7 @@ public class LoginInfoTest {
         when(service.isAuthorized(anyString())).thenReturn(true);
         when(service.getUserBySession(anyString())).thenReturn(null);
 
-        logInfo.doPost(request, response);
+        logInfo.doGet(request, response);
 
         assertTrue(stringWriter.toString().contains("false"));
     }
@@ -63,7 +63,7 @@ public class LoginInfoTest {
     public void testDoPostNoAuth() throws ServletException, IOException {
         when(service.isAuthorized(anyString())).thenReturn(false);
 
-        logInfo.doPost(request, response);
+        logInfo.doGet(request, response);
 
         assertTrue(stringWriter.toString().contains("false"));
     }

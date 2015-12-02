@@ -16,7 +16,7 @@ import javax.persistence.*;
 @NamedQueries({
         @NamedQuery(name = "userByName",query = "from user u where u.username = :username"),
         @NamedQuery(name = "isAvailable",query = "from user u where u.username =:username"),
-        @NamedQuery(name = "getTopPlayers",query = "select p.scoreCount, u.username from player p join p.user u")
+        @NamedQuery(name = "getTopPlayers",query = "select p.scoreCount, u.username from player p join p.user u order by p.scoreCount desc")
 })
 @Entity(name="user")
 public class UserProfile {

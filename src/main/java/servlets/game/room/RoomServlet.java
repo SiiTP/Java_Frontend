@@ -29,7 +29,7 @@ public class RoomServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String roomName = req.getParameter("roomName");
         String password = req.getParameter("password");
         LOGGER.info(new MarkerManager.Log4jMarker("REQUEST"),"data: " + roomName + ' ' + password);
@@ -60,7 +60,7 @@ public class RoomServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String roomName = req.getParameter("roomName");
         String password = req.getParameter("password");
         LOGGER.info(new MarkerManager.Log4jMarker("REQUEST"),"data: " + roomName + ' ' + password);
@@ -89,7 +89,7 @@ public class RoomServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONArray roomsJsonArray = gameServer.getRoomsListJSON();
         JSONObject object = new JSONObject();
         if(roomsJsonArray != null){
