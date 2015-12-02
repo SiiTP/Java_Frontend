@@ -8,11 +8,20 @@ define([
     MyCharacterModel
 ) {
     return CharacterView.extend({
-        model: new MyCharacterModel(),
+        model: null,
         events: {
             'mousemove': 'onMouseMove'
         },
-        onMouseMove: function (event) {
+        initialize: function(args) {
+            document.getElementById('page').appendChild(this.el);
+            this.canvas = this.el;
+            this.canvas.width = args.width;
+            this.canvas.height = args.height;
+            this.context = this.canvas.getContext('2d');
+            this.model = new MyCharacterModel();
+            //console.log("created player charater, cid : " + this.model.cid);
+        },
+        onMouseMove: function(event) {
             var x = event.pageX;
             var y = event.pageY;
             this.model.calculateAngle(x, y);
