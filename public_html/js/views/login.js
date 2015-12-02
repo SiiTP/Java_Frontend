@@ -34,7 +34,7 @@ define([
         JQ_cashing: function () {
             if (this.JQ_cacheInput == null) {
                 this.JQ_cacheInput = {
-                    'username': $(".js-login__input-field-username__input-line__input"),
+                    'username': this.$(".js-login__input-field-username__input-line__input"),
                     'password': $(".js-login__input-field-password__input-line__input")
                 };
             }

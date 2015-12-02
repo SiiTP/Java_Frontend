@@ -17,6 +17,8 @@ define([
             this.model.on('change', this.render.bind(this));
         },
         render: function () {
+            console.log("score render");
+            debugger;
             this.$el.html(this.template(this.model.toJSON()));
             this.$el.hide();
         },
@@ -25,7 +27,7 @@ define([
         },
         show: function () {
             this.$el.show();
-            this.model.fetch();
+            this.model.fetch(this.model.optionsFetch);
             this.trigger('show');
         },
         hide: function () {

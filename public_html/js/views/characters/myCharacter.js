@@ -6,8 +6,7 @@ define([
     Backbone,
     CharacterView,
     MyCharacterModel
-){
-
+) {
     return CharacterView.extend({
         model: new MyCharacterModel(),
         events: {

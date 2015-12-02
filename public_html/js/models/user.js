@@ -15,7 +15,7 @@ define([
             error: function(model, response, parse) {
                 console.log("");
             }
-}),
+        }),
         optionsDestroy: ({
             success: function(model, response, parse) {
                 model.uninitialize();

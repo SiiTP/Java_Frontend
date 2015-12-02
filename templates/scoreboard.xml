@@ -1,4 +1,6 @@
+
 <fest:template xmlns:fest="http://fest.mail.ru" context_name="scores">
+    <fest:value>scores</fest:value>
     <div class="scoreboard">
         <div class="header-text">Топ-10</div>
         <div class="table">
