@@ -96,18 +96,35 @@ define (['backbone'], function(Backbone) {
             }, this);
             this.set({'enemyPlayers': players});
             if (my != null) {
-                var item = new My({
-                    className: "character character_" + my.name,
-                    'width': 1000,
-                    'height': 700});
-                item.model.set({
-                    posX  : my.posX,
-                    posY  : my.posY,
-                    name  : my.name,
-                    angle : my.direction,
-                    score : my.score
-                });
-                this.set({'myPlayer': item});
+                if (this.get("myPlayer") != null) {
+                    console.log("redefining existing player");
+                    var myPlayer = this.get('myPlayer');
+                    myPlayer.initCanvas({
+                        className: "character character_" + my.name,
+                        'width': 1000,
+                        'height': 700});
+                    myPlayer.model.set({
+                        posX  : my.posX,
+                        posY  : my.posY,
+                        name  : my.name,
+                        angle : my.direction,
+                        score : my.score
+                    });
+                } else {
+                    console.log("creating usexisting player");
+                    var item = new My({
+                        className: "character character_" + my.name,
+                        'width': 1000,
+                        'height': 700});
+                    item.model.set({
+                        posX  : my.posX,
+                        posY  : my.posY,
+                        name  : my.name,
+                        angle : my.direction,
+                        score : my.score
+                    });
+                    this.set({'myPlayer': item});
+                }
             }
         },
         erasePlayers: function() {

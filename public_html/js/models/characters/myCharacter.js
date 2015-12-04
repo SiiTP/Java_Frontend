@@ -16,8 +16,7 @@ define([
                 angle += 180;
             }
             angle = (angle + 360) % 360;
-            this.set({'angle': angle});
-            //console.log("angle : " + angle);
+            this.set({"angle": angle});
         },
         setMouseCoordinate: function (x, y) {
             this.mouseX = x;
@@ -27,10 +26,9 @@ define([
             return Math.sqrt((this.get('posX') - x) * (this.get('posX') - x) + (this.get('posY') - y) * (this.get('posY') - y));
         },
         myMove: function (dt) {
-            //console.log("mouseX : " + this.mouseX + "; mouseY : " + this.mouseY);
+            //console.log("myMove mouseX : " + this.mouseX + "; mouseY : " + this.mouseY);
             //console.log("MYMOVE : X : " + this.posX + "; Y :  " + this.posY + "; Angle : " + this.angle);
             if (this.calculateDistanceToMouse(this.mouseX, this.mouseY) > this.get('radius')) {
-                this.calculateAngle(this.mouseX, this.mouseY);
                 this.move(dt);
             } else {
                 this.set({'angle': -1});
