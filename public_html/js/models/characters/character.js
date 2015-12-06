@@ -12,7 +12,8 @@ define([
             name: undefined,
             gameScore: 500,
             speed: 200,
-            angle: 0 //направление движения
+            angle: 0, //направление движения
+            visible: false
         },
         move: function (dt) {
             //console.log("MOVE : X : " + this.get('posX') + "; Y :  " + this.get('posY') + "; Angle : " + this.get('angle'));

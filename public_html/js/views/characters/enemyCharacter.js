@@ -19,6 +19,6 @@ define([
             this.initCanvas(args);
             this.model = new EnemyCharacterModel();
             //console.log("created enemy charater, cid : " + this.model.cid);
-        },
+        }
     });
 });
