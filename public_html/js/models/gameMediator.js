@@ -95,12 +95,17 @@ define (['backbone'], function(Backbone) {
         parsePlayers: function(answerPlayers) {
             var enemies = this.get('enemyPlayers');
             var myPlayer = this.get('myPlayer');
-            var amountEnemies = answerPlayers.length - 1;
 
             myPlayer.model.set({'visible': false});
+            var amountEnemies = answerPlayers.length - 1;
+            //очистка рисунка, на случай если хозяин канваса изменился
+            for(var i = 0; i < amountEnemies; i += 1) {
+                enemies[i].clear()
+            }
             for(var i = amountEnemies; i < enemies.length; i += 1) {
                 enemies[i].model.set({'visible': false})
             }
+
             var j = 0;
             for(var i = 0; i < answerPlayers.length; i += 1) {
                 if (this.get('user').get('username') != answerPlayers[i].name) {
@@ -180,6 +185,7 @@ define (['backbone'], function(Backbone) {
                     enemy.clear();
                 }
             });
+
             if (this.get('gameBegin')) {
                 requestAnimationFrame(this.loop.bind(this));
             }
