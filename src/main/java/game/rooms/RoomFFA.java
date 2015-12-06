@@ -39,7 +39,13 @@ public class RoomFFA extends RoomAbstractImpl {
 
     @Override
     public boolean isRoomReady() {
-        return users.size()>1;
+        boolean isReady;
+        if(getStartTime() == null){
+            isReady = users.size()>1;
+        }else{
+            isReady = true;
+        }
+        return isReady;
     }
     public int maxScore(){
         int max = -1;

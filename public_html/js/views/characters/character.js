@@ -10,13 +10,13 @@ define([
         borderColor: '#002',
         context: null,
         canvas: null,
-        //initialize: function(args) {
-        //    document.getElementById('page').appendChild(this.el);
-        //    this.canvas = this.el;
-        //    this.canvas.width = args.width;
-        //    this.canvas.height = args.height;
-        //    this.context = this.canvas.getContext('2d');
-        //},
+        initCanvas: function(args) {
+            document.getElementById('page').appendChild(this.el);
+            this.canvas = this.el;
+            this.canvas.width = args.width;
+            this.canvas.height = args.height;
+            this.context = this.canvas.getContext('2d');
+        },
         draw: function() {
             this.clear();
             var posX = this.model.get('posX');
@@ -61,6 +61,8 @@ define([
             var s = this.model.get('speed');
             //this.context.fillStyle = '#555';
             this.context.clearRect(x - r * 2, y - r * 2, 6 * r + 80, 6 * r);
+            //this.context.clearRect(0, 0, 1000, 700);
+
         },
         show: function() {
             // TODO задать константы для размеров

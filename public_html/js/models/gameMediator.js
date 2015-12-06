@@ -39,8 +39,31 @@ define (['backbone'], function(Backbone) {
 
                 if (answer.status == 200) {
                     //console.log("___@ game in proccess");
-
-                    this.erasePlayers();
+                    if (true) { // TODO условие answer.limitPlayers
+                        var EnemyPlayerView = this.get('EnemyCharacter');
+                        var enemyPlayers = this.get('enemyPlayers');
+                        if (enemyPlayers.length == 0) {
+                            for(var i = 0; i < 9; i += 1) { // TODO i < limitPlayers
+                                var player = new EnemyPlayerView({
+                                    className: "character character_enemy_" + i,
+                                    'width': 1000,
+                                    'height': 700
+                                });
+                                enemyPlayers.push(player);
+                            }
+                        }
+                        var myPlayer = this.get('myPlayer');
+                        var MyPlayerView = this.get('MyCharacter');
+                        if (myPlayer == null) {
+                            myPlayer = new MyPlayerView({
+                                className: "character character_my",
+                                'width': 1000,
+                                'height': 700
+                            });
+                            this.set({'myPlayer': myPlayer});
+                        }
+                    }
+                    //this.erasePlayers();
                     this.parsePlayers(answer.players);
                     if (!this.get('gameBegin')) {
                         this.startGame();
@@ -70,44 +93,43 @@ define (['backbone'], function(Backbone) {
             this.get('socket').send(JSON.stringify(data));
         },
         parsePlayers: function(answerPlayers) {
-            var players = [];
-            var Enemy = this.get('EnemyCharacter');
-            var My = this.get('MyCharacter');
-            var my = null;
-            _.each(answerPlayers, function(player) {
-                if (this.get('user').get('username') != player.name) {
-                    var item = new Enemy({
-                        className: "character character_" + player.name,
-                        'width': 1000,
-                        'height': 700
+            var enemies = this.get('enemyPlayers');
+            var myPlayer = this.get('myPlayer');
+
+            myPlayer.model.set({'visible': false});
+            var amountEnemies = answerPlayers.length - 1;
+            //очистка рисунка, на случай если хозяин канваса изменился
+            for(var i = 0; i < amountEnemies; i += 1) {
+                enemies[i].clear()
+            }
+            for(var i = amountEnemies; i < enemies.length; i += 1) {
+                enemies[i].model.set({'visible': false})
+            }
+
+            var j = 0;
+            for(var i = 0; i < answerPlayers.length; i += 1) {
+                if (this.get('user').get('username') != answerPlayers[i].name) {
+                    enemies[j].model.set({
+                        posX  : answerPlayers[i].posX,
+                        posY  : answerPlayers[i].posY,
+                        name  : answerPlayers[i].name,
+                        angle : answerPlayers[i].direction,
+                        score : answerPlayers[i].score,
+                        visible : true
                     });
-                    item.model.set({
-                        posX  : player.posX,
-                        posY  : player.posY,
-                        name  : player.name,
-                        angle : player.direction,
-                        score : player.score
-                    });
-                    players.push(item);
+                    //console.log("setted enemy (" + enemies[j].model.get('name') + ") pos in array : " + j);
+                    j += 1;
                 } else {
-                    //нужно чтобы наш игрок был самым верхним слоем, добавим в конце
-                    my = player;
+                    myPlayer.model.set({
+                        posX  : answerPlayers[i].posX,
+                        posY  : answerPlayers[i].posY,
+                        name  : answerPlayers[i].name,
+                        angle : answerPlayers[i].direction,
+                        score : answerPlayers[i].score,
+                        visible : true
+                    });
+                    //console.log("setted my player (" + myPlayer.model.get('name') + ")");
                 }
-            }, this);
-            this.set({'enemyPlayers': players});
-            if (my != null) {
-                var item = new My({
-                    className: "character character_" + my.name,
-                    'width': 1000,
-                    'height': 700});
-                item.model.set({
-                    posX  : my.posX,
-                    posY  : my.posY,
-                    name  : my.name,
-                    angle : my.direction,
-                    score : my.score
-                });
-                this.set({'myPlayer': item});
             }
         },
         erasePlayers: function() {
@@ -149,17 +171,27 @@ define (['backbone'], function(Backbone) {
         },
         loop: function() {
             if (this.get('myPlayer') != null) {
-                this.get('myPlayer').model.myMove(0.02);
-                this.get('myPlayer').draw();
+                if (this.get('myPlayer').model.get('visible')) {
+                    this.get('myPlayer').model.myMove(0.02);
+                    this.get('myPlayer').draw();
+                } else {
+                    this.get('myPlayer').clear();
+                }
             }
             _.each(this.get('enemyPlayers'), function(enemy) {
-                enemy.draw();
+                if (enemy.model.get('visible')) {
+                    enemy.draw();
+                } else {
+                    enemy.clear();
+                }
             });
+
             if (this.get('gameBegin')) {
                 requestAnimationFrame(this.loop.bind(this));
             }
         },
         joinToRoom: function() {
+
             this.initializeSocket();
         },
         mouseMove: function(args) {

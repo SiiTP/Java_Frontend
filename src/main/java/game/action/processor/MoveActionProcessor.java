@@ -42,6 +42,7 @@ public class MoveActionProcessor implements ActionProcessor {
                 }else {
                     responseMessage.put("players", room.getJsonRoomPlayers());
                     responseMessage.put("status", responseResources.getOk());
+                    responseMessage.put("limitPlayers", room.getPlayersLimit());
                 }
             }
         }else{

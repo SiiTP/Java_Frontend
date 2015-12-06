@@ -13,19 +13,19 @@ define([
             'mousemove': 'onMouseMove'
         },
         initialize: function(args) {
-            document.getElementById('page').appendChild(this.el);
-            this.canvas = this.el;
-            this.canvas.width = args.width;
-            this.canvas.height = args.height;
-            this.context = this.canvas.getContext('2d');
+            //document.getElementById('page').appendChild(this.el);
+            //this.canvas = this.el;
+            //this.canvas.width = args.width;
+            //this.canvas.height = args.height;
+            //this.context = this.canvas.getContext('2d');
+            this.initCanvas(args);
             this.model = new MyCharacterModel();
-            //console.log("created player charater, cid : " + this.model.cid);
         },
         onMouseMove: function(event) {
             var x = event.pageX;
             var y = event.pageY;
-            this.model.calculateAngle(x, y);
             this.model.setMouseCoordinate(x, y);
+            this.model.calculateAngle(x, y);
         }
     });
 });
