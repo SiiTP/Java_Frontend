@@ -54,6 +54,7 @@ define([
         constants      : constants,
         field          : fieldView
     });
+    gameMediator.initialize();
     var Router = Backbone.Router.extend({
         routes: {
             'scoreboard': 'scoreboardAction',
