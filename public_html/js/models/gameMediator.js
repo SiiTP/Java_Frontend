@@ -63,7 +63,6 @@ define (['backbone'], function(Backbone) {
                             this.set({'myPlayer': myPlayer});
                         }
                     }
-                    //this.erasePlayers();
                     this.parsePlayers(answer.players);
                     if (!this.get('gameBegin')) {
                         this.startGame();
@@ -95,12 +94,17 @@ define (['backbone'], function(Backbone) {
         parsePlayers: function(answerPlayers) {
             var enemies = this.get('enemyPlayers');
             var myPlayer = this.get('myPlayer');
-            var amountEnemies = answerPlayers.length - 1;
 
             myPlayer.model.set({'visible': false});
+            var amountEnemies = answerPlayers.length - 1;
+            //очистка рисунка, на случай если хозяин канваса изменился
+            for(var i = 0; i < amountEnemies; i += 1) {
+                enemies[i].clear()
+            }
             for(var i = amountEnemies; i < enemies.length; i += 1) {
                 enemies[i].model.set({'visible': false})
             }
+
             var j = 0;
             for(var i = 0; i < answerPlayers.length; i += 1) {
                 if (this.get('user').get('username') != answerPlayers[i].name) {
@@ -112,7 +116,6 @@ define (['backbone'], function(Backbone) {
                         score : answerPlayers[i].score,
                         visible : true
                     });
-                    //console.log("setted enemy (" + enemies[j].model.get('name') + ") pos in array : " + j);
                     j += 1;
                 } else {
                     myPlayer.model.set({
@@ -123,45 +126,10 @@ define (['backbone'], function(Backbone) {
                         score : answerPlayers[i].score,
                         visible : true
                     });
-                    //console.log("setted my player (" + myPlayer.model.get('name') + ")");
                 }
             }
         },
-        erasePlayers: function() {
-            if (this.get('myPlayer') != null) {
-                this.get('myPlayer').$el.remove();
-            }
-            if (this.get('enemyPlayers') != []) {
-                _.each(this.get('enemyPlayers'), function(player) {
-                    player.$el.remove();
-                });
-            }
-            this.set({'enemyPlayers': []});
-            this.set({'myPlayer': null});
-        },
         startGame: function() {
-            /*console.log("enemies : ");
-             console.log(enemies);
-             character.model.setName(auth_user.getName());
-             var time1 = Date.now();
-             var time2 = Date.now() + 10000;
-             var previous = Date.now();
-             var dt;
-             character.show();*/
-            /*function loop() {
-             var now = Date.now();
-             //if (now > time1 && now < time2) {
-             //    model.sendMessage();
-             //    time1 += 5000;
-             //    time2 += 5000;
-             //}
-             dt = (now - previous)/1000;
-             console.log("dt : " + dt);
-             character.model.myMove(dt);
-             character.draw();
-             previous = now;
-             requestAnimationFrame(loop);
-             }*/
             requestAnimationFrame(this.loop.bind(this));
         },
         loop: function() {
@@ -180,6 +148,7 @@ define (['backbone'], function(Backbone) {
                     enemy.clear();
                 }
             });
+
             if (this.get('gameBegin')) {
                 requestAnimationFrame(this.loop.bind(this));
             }
@@ -200,7 +169,6 @@ define (['backbone'], function(Backbone) {
             if (this.get('socket')) {
                 this.get('socket').close();
             }
-            this.erasePlayers();
         }
     });
 });

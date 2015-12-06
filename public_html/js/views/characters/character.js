@@ -61,6 +61,8 @@ define([
             var s = this.model.get('speed');
             //this.context.fillStyle = '#555';
             this.context.clearRect(x - r * 2, y - r * 2, 6 * r + 80, 6 * r);
+            //this.context.clearRect(0, 0, 1000, 700);
+
         },
         show: function() {
             // TODO задать константы для размеров

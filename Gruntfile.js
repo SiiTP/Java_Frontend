@@ -12,7 +12,6 @@ module.exports = function (grunt) {
             }
         },
         fest: {
-
             templates: {
                 files: [{
                     expand: true,
