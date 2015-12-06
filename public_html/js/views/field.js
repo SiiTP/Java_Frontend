@@ -30,7 +30,7 @@ define([
                 this.canvas.width  = 0;
                 this.canvas.height = 0;
             }
-            this.trigger('exit');
+            //this.trigger('exit');
             this.$el.hide();
         },
         onMouseMove: function(event) {

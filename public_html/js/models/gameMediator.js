@@ -14,6 +14,9 @@ define (['backbone'], function(Backbone) {
         this.gameBegin= false;
         this.waitingInterval= null;
 
+        this.now  = null;
+        this.prev = null;
+
         this.initialize = function() {
             console.log("mediator initialized");
             this.field.on('show', this.joinToRoom.bind(this));
@@ -139,12 +142,18 @@ define (['backbone'], function(Backbone) {
             }
         };
         this.startGame = function() {
-            requestAnimationFrame(this.loop.bind(this));
+            var now = Date.now();
+            var previousMy = now - 20;
+            var previousEnemies = now - 20;
+            requestAnimationFrame(this.loop.bind(this, previousMy, previousEnemies));
         };
-        this.loop = function() {
+        this.loop = function(previousMy, previousEnemies) {
             if (this.myPlayer != null) {
                 if (this.myPlayer.model.get('visible')) {
-                    this.myPlayer.model.myMove(0.02);
+                    now = Date.now();
+                    var dt = (now - previousMy) / 1000;
+                    this.myPlayer.model.myMove(dt);
+                    previousMy = now;
                     this.myPlayer.draw();
                 } else {
                     this.myPlayer.clear();
@@ -153,13 +162,17 @@ define (['backbone'], function(Backbone) {
             _.each(this.enemyPlayers, function(enemy) {
                 if (enemy.model.get('visible')) {
                     enemy.draw();
+                    var now = Date.now();
+                    var dt = (now - previousEnemies)/1000;
+                    enemy.model.move(dt);
+                    previousEnemies = now;
                 } else {
                     enemy.clear();
                 }
             });
 
             if (this.gameBegin) {
-                requestAnimationFrame(this.loop.bind(this));
+                requestAnimationFrame(this.loop.bind(this, previousMy, previousEnemies));
             }
         };
         this.joinToRoom = function() {
