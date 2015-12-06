@@ -11,7 +11,6 @@ define(['backbone'], function(Backbone) {
                     url: url,
                     data: data
                 }).done(function(obj) {
-                    //TODO не 200 от
                     console.log("---> SERVER ANSWER : " + obj);
                     var answer = JSON.parse(obj);
                     //TODO непродуманность АПИ

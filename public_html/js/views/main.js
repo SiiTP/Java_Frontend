@@ -12,7 +12,7 @@ define([
         JQmsg: undefined,
         events: {
             "click .game-btn-container__button": "onClick",
-            "click .logout__button": "onClick",
+            "click .logout__button": "onClick"
         },
         initialize: function () {
             this.model.on('change', this.checkChanges.bind(this));
@@ -27,6 +27,7 @@ define([
             }
         },
         render: function () {
+            console.log("main render");
             this.$el.html(this.template(this.model.toJSON()));
         },
         show: function () {
