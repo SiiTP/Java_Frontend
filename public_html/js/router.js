@@ -11,7 +11,7 @@ define([
     'models/user',
     'collections/scores',
     'models/rooms',
-    'models/gameMediator',
+    'gameMediator',
     'views/characters/myCharacter',
     'views/characters/enemyCharacter',
     'constants'

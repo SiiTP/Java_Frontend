@@ -19,7 +19,6 @@ define([
             this.model.on('error', function() {
                 console.log("ERROR");
             }.bind(this));
-            this.render();
         },
         checkChanges: function () {
             if (this.model.hasChanged('logged') || this.model.hasChanged('score')) {

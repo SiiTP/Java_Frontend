@@ -33,7 +33,7 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: 'public_html/scss',
+                    cwd: 'scss',
                     src: ['*.scss'],
                     dest: 'public_html/css',
                     ext: '.css'
@@ -49,7 +49,7 @@ module.exports = function (grunt) {
                 }
             },
             sass: {
-                files: ['public_html/scss/*.scss'],
+                files: ['scss/*.scss'],
                 tasks: ['sass'],
                 options: {
                     atBegin: true

@@ -14,9 +14,6 @@ define (['backbone'], function(Backbone) {
         this.gameBegin= false;
         this.waitingInterval= null;
 
-        this.now  = null;
-        this.prev = null;
-
         this.initialize = function() {
             console.log("mediator initialized");
             this.field.on('show', this.joinToRoom.bind(this));
