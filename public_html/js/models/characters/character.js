@@ -17,9 +17,7 @@ define([
         },
         move: function (dt) {
             //console.log("MOVE : X : " + this.get('posX') + "; Y :  " + this.get('posY') + "; Angle : " + this.get('angle'));
-            //console.log("X : " + Math.cos(this.angle*(Math.PI/180)));
-            //console.log("Y : " + -Math.sin(this.angle*(Math.PI/180)));
-            //console.log(this.get('angle'));
+
             var dl = this.get('speed') * dt;
             //при отсутствии направления персонаж не двигается
             if (this.get('angle') >= 0) {

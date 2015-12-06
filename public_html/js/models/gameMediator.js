@@ -38,7 +38,7 @@ define (['backbone'], function(Backbone) {
                 }
 
                 if (answer.status == 200) {
-                    if (true) { // TODO условие answer.limitPlayers
+                    if(true) { // TODO условие answer.limitPlayers
                         this.creatingCanvases();
                     }
 
@@ -92,10 +92,18 @@ define (['backbone'], function(Backbone) {
                 this.myPlayer = myPlayer;
             }
         };
+        this.deletingCanvases = function() {
+            console.log("deleting canvases");
+            if (this.myPlayer && this.myPlayer) {
+                this.myPlayer.deleteCanvas();
+            }
+            _.each(this.enemyPlayers, function(player) {
+                player.deleteCanvas();
+            });
+        };
         this.parsePlayers = function(answerPlayers) {
             var enemies = this.enemyPlayers;
             var myPlayer = this.myPlayer;
-
             myPlayer.model.set({'visible': false});
             var amountEnemies = answerPlayers.length - 1;
             //очистка рисунка, на случай если хозяин канваса изменился
@@ -155,7 +163,6 @@ define (['backbone'], function(Backbone) {
             }
         };
         this.joinToRoom = function() {
-
             this.initializeSocket();
         };
         this.mouseMove = function(args) {
@@ -170,6 +177,9 @@ define (['backbone'], function(Backbone) {
             if (this.socket) {
                 this.socket.close();
             }
+            this.deletingCanvases();
+            this.myPlayer = null;
+            this.enemyPlayers = [];
         }
     }
 });
