@@ -26,6 +26,7 @@ public abstract class RoomAbstractImpl implements Room  {
         this.password = roomPassword;
     }
 
+    @Override
     public int getPlayersLimit() {
         return playersLimit;
     }
