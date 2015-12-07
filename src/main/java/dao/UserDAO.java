@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.jetbrains.annotations.Nullable;
 import persistance.PlayerDataSet;
-import persistance.ProjectDB;
+import service.ProjectDB;
 
 /**
  * Created by ivan on 20.11.15.

@@ -10,7 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import persistance.ProjectDB;
+import service.ProjectDB;
 import persistance.UserProfile;
 import resource.ResourceFactory;
 import resource.ServletResources;

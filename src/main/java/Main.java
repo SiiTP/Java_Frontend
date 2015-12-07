@@ -9,7 +9,7 @@ import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
-import persistance.ProjectDB;
+import service.ProjectDB;
 import service.account.AccountService;
 import servlets.admins.AdminServlet;
 import servlets.authorization.*;

@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import persistance.PlayerDataSet;
-import persistance.ProjectDB;
+import service.ProjectDB;
 import persistance.UserProfile;
 
 import static org.junit.Assert.*;

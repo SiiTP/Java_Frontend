@@ -6,7 +6,7 @@ import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import persistance.ProjectDB;
+import service.ProjectDB;
 import persistance.RoomDataSet;
 import persistance.UserProfile;
 import service.account.AccountService;
