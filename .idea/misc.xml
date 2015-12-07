@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="EntryPointsManager">
+    <entry_points version="2.0">
+      <entry_point TYPE="class" FQNAME="servlets.joingame.CreateGameTest" />
+      <entry_point TYPE="class" FQNAME="service.AccountServiceTest" />
+      <entry_point TYPE="method" FQNAME="servlets.admins.AdminServletTest void testDoGetClear()" />
+      <entry_point TYPE="method" FQNAME="servlets.admins.AdminServletTest void testDoGetRegistered()" />
+      <entry_point TYPE="method" FQNAME="servlets.admins.AdminServletTest void testDoGetLogged()" />
+      <entry_point TYPE="method" FQNAME="servlets.admins.AdminServletTest void testDoGetStop()" />
+      <entry_point TYPE="method" FQNAME="servlets.admins.AdminServletTest void testDoGet()" />
+      <entry_point TYPE="method" FQNAME="servlets.admins.AdminServletTest void setup()" />
+      <entry_point TYPE="class" FQNAME="servlets.admins.AdminServletTest" />
+      <entry_point TYPE="class" FQNAME="service.GameProfileTest" />
+      <entry_point TYPE="class" FQNAME="game.serverlevels.GameServerTest" />
+      <entry_point TYPE="class" FQNAME="servlets.game.GetRoomListServletTest" />
+      <entry_point TYPE="class" FQNAME="servlets.joingame.JoinGameTest" />
+      <entry_point TYPE="class" FQNAME="servlets.authorization.LogOutTest" />
+      <entry_point TYPE="class" FQNAME="servlets.authorization.LoginInfoTest" />
+      <entry_point TYPE="class" FQNAME="service.sockets.MainWebSocketTest" />
+      <entry_point TYPE="class" FQNAME="game.gameaction.MoveActionStrategyTest" />
+      <entry_point TYPE="method" FQNAME="test.RemoteEndpointStub RemoteEndpointStub()" />
+      <entry_point TYPE="class" FQNAME="test.RemoteEndpointStub" />
+      <entry_point TYPE="class" FQNAME="game.rooms.RoomFFATest" />
+      <entry_point TYPE="class" FQNAME="servlets.authorization.SignInTest" />
+      <entry_point TYPE="class" FQNAME="servlets.authorization.SignUpTest" />
+    </entry_points>
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
