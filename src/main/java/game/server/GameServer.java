@@ -149,6 +149,7 @@ public class GameServer {
                 accountService.updatePlayerInfo(profile);
                 GameProfile gameProfile = profile.getGameProfile();
                 gameProfile.resetSetting();
+                gameProfile.resetScore();
                 logger.info("player " + profile.getUsername() + " kicked from the room " + room.getRoomName());
                 if(room.getPlayersCount()==0){
                     roomService.finishRoom(room.getRoomName());

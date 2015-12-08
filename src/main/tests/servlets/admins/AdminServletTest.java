@@ -1,7 +1,7 @@
 package servlets.admins;
 
 import game.server.GameServer;
-import persistance.ProjectDB;
+import service.ProjectDB;
 import persistance.UserProfile;
 import org.eclipse.jetty.server.Server;
 import org.junit.Before;

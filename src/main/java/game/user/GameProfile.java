@@ -109,5 +109,8 @@ public class GameProfile {
         y = random.nextInt(gameResources.getGameFieldHeight());
         isKilled = false;
     }
+    public void resetScore(){
+        score = 0;
+    }
 
 }

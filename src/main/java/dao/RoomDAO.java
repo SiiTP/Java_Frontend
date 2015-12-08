@@ -3,7 +3,7 @@ package dao;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import persistance.ProjectDB;
+import service.ProjectDB;
 import persistance.RoomDataSet;
 
 import java.util.List;

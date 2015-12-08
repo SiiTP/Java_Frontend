@@ -4,7 +4,7 @@ import dao.RoomDAO;
 import game.rooms.Room;
 import persistance.UserProfile;
 import org.hibernate.Session;
-import persistance.ProjectDB;
+import service.ProjectDB;
 import persistance.RoomDataSet;
 
 import java.util.*;
