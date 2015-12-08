@@ -56,6 +56,7 @@ define([
             }
         },
         clear: function() {
+<<<<<<< HEAD
             //посреди игрового цикла может обнулиться
             if (this.context != null) {
                 this.context.beginPath();
@@ -72,6 +73,17 @@ define([
             }
             this.canvas = null;
             this.context = null;
+=======
+            this.context.beginPath();
+            var x = this.model.get('posX');
+            var y = this.model.get('posY');
+            var r = this.model.get('radius');
+            var s = this.model.get('speed');
+            //this.context.fillStyle = '#555';
+            this.context.clearRect(x - r * 2, y - r * 2, 6 * r + 80, 6 * r);
+            //this.context.clearRect(0, 0, 1000, 700);
+
+>>>>>>> ff7317cb8f6eb25a7167b3207d2c6e8fb728fcd8
         },
         show: function() {
             // TODO задать константы для размеров

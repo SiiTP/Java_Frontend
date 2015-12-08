@@ -1,5 +1,3 @@
-//TODO viewManager
-//без js ошибок
 define (['backbone'], function(Backbone) {
     return function GameMediator(args) {
         this.user = args.user;
