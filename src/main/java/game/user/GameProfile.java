@@ -17,6 +17,7 @@ public class GameProfile {
     private double direction;
     private boolean isKilled;
     private Instant respawnTime;
+    private long collisionTimeStamp;
     public GameProfile() {
             resetSetting();
     }
@@ -113,4 +114,11 @@ public class GameProfile {
         score = 0;
     }
 
+    public long getCollisionTimeStamp() {
+        return collisionTimeStamp;
+    }
+
+    public void setCollisionTimeStamp(long collisionTimeStamp) {
+        this.collisionTimeStamp = collisionTimeStamp;
+    }
 }

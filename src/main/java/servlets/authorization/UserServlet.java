@@ -22,6 +22,8 @@ import java.io.PrintWriter;
 public class UserServlet extends HttpServlet{
     private final AccountService accountService;
     private static final Logger LOGGER = LogManager.getLogger("ReqResp");
+    private static int id = 0;
+    private int ids = id++;
     public UserServlet(AccountService accountService) {
         this.accountService = accountService;
     }
@@ -106,6 +108,7 @@ public class UserServlet extends HttpServlet{
                     }
                 }
             }
+            System.out.println(ids);
             return responseJSON;
         }
         return null;

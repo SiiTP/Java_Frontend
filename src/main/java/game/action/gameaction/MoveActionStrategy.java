@@ -4,14 +4,22 @@ import game.rooms.Room;
 import game.rooms.RoomFFA;
 import game.server.GameServer;
 import game.user.GameProfile;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.MarkerManager;
 import persistance.UserProfile;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 import resource.GameResources;
+import resource.PlayerState;
 import resource.ResourceFactory;
+import service.account.AccountService;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Random;
+
+import static org.mockito.Mockito.mock;
 
 /**
  * Created by ivan on 25.10.15.
@@ -23,9 +31,12 @@ public class MoveActionStrategy implements GameActionStrategy {
     private final int speed;
     private final int radius;
     private final int defaultDontMoveValue;
+    private final PlayerState states;
+    private static final Logger LOGGER = LogManager.getLogger(MoveActionStrategy.class);
     public MoveActionStrategy(GameServer gameServer) {
         this.gameServer = gameServer;
         GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
+        states = (PlayerState) ResourceFactory.getResource("data/states");
         defaultDontMoveValue = gameResources.getDefaultStopDirectionValue();
         width = gameResources.getGameFieldWidth();
         height = gameResources.getGameFieldHeight();
@@ -42,7 +53,8 @@ public class MoveActionStrategy implements GameActionStrategy {
                 if (profile != null) {
                     GameProfile gameProfile = profile.getGameProfile();
                     double direction = getDrection(message);
-                    if (direction != defaultDontMoveValue) {
+                    int playerState = getState(message);
+                    if (direction != defaultDontMoveValue && playerState != states.getPlayerStopped()) {
                         double radian = Math.toRadians(direction);
                         double x = gameProfile.getX();
                         double y = gameProfile.getY();
@@ -71,6 +83,15 @@ public class MoveActionStrategy implements GameActionStrategy {
         }
         return direction;
     }
+    private int getState(JSONObject message){
+        int state = -1;
+        if(message.has("state")){
+            if(!message.isNull("state")){
+                state = message.getInt("state");
+            }
+        }
+        return state;
+    }
     public void checkForCollision(GameProfile gameProfile, @NotNull Room room){
         List<GameProfile> list = null;
         if (room instanceof RoomFFA) {
@@ -78,26 +99,44 @@ public class MoveActionStrategy implements GameActionStrategy {
             list = roomFFA.getGameProfiles();
         }
         if (list != null) {
-            list.stream().filter(enemy -> !enemy.equals(gameProfile)).forEach(enemy -> {
+            list.stream().filter(enemy -> !enemy.equals(gameProfile) && !enemy.isKilled()).forEach(enemy -> {
                 double xBetweenPlayers = enemy.getX() - gameProfile.getX();
                 double yBetweenPlayers = enemy.getY() - gameProfile.getY();
                 double myDirection = gameProfile.getDirection();
-                if (xBetweenPlayers * xBetweenPlayers + yBetweenPlayers * yBetweenPlayers <= 4 * radius * radius) {
-                    double myProection = Math.toDegrees(getDegree(gameProfile, myDirection, xBetweenPlayers, yBetweenPlayers));
-                    double enemyProection = Math.toDegrees(getDegree(enemy, enemy.getDirection(), -xBetweenPlayers, -yBetweenPlayers));
-                    if (!enemy.isKilled() && !gameProfile.isKilled()) {
-                        boolean iWin = isIwin(myProection, enemyProection);
-                        if (iWin) {
-                            enemy.setIsKilled(true);
-                            gameProfile.setScore(gameProfile.getScore() + 1);
-                        } else {
-                            gameProfile.setIsKilled(true);
-                            enemy.setScore(enemy.getScore() + 1);
+                if (xBetweenPlayers * xBetweenPlayers + yBetweenPlayers * yBetweenPlayers <= (4+0.5) * radius * radius) {
+                    if(isCollisionAllowed(enemy,gameProfile)) {
+                        enemy.setCollisionTimeStamp(System.currentTimeMillis());
+                        gameProfile.setCollisionTimeStamp(System.currentTimeMillis());
+                        double myProection = Math.toDegrees(getDegree(gameProfile, myDirection, xBetweenPlayers, yBetweenPlayers));
+                        double enemyProection = Math.toDegrees(getDegree(enemy, enemy.getDirection(), -xBetweenPlayers, -yBetweenPlayers));
+                        LOGGER.info(new MarkerManager.Log4jMarker("COLLISION"),"first score " + gameProfile.getScore() + ' ' + myDirection
+                                + " second " + enemy.getScore() + ' ' + enemyProection);
+                        if (!enemy.isKilled() && !gameProfile.isKilled()) {
+                            boolean iWin = isIwin(myProection, enemyProection);
+                            if (iWin) {
+                                enemy.setIsKilled(true);
+                                gameProfile.setScore(gameProfile.getScore() + 1);
+                                LOGGER.info(new MarkerManager.Log4jMarker("WIN"),"first");
+                            } else {
+                                gameProfile.setIsKilled(true);
+                                enemy.setScore(enemy.getScore() + 1);
+                                LOGGER.info(new MarkerManager.Log4jMarker("WIN"),"second");
+                            }
                         }
                     }
                 }
             });
         }
+    }
+    private boolean isCollisionAllowed(GameProfile firstProfile,GameProfile secondProfile){
+        boolean isAllowed = false;
+        long now = System.currentTimeMillis();
+        if(firstProfile.getCollisionTimeStamp() == 0 || secondProfile.getCollisionTimeStamp() == 0){
+            isAllowed = true;
+        }else if(now - firstProfile.getCollisionTimeStamp() > 250 || now - secondProfile.getCollisionTimeStamp() > 250 ){
+            isAllowed = true;
+        }
+        return isAllowed;
     }
     private boolean isIwin(double myProection, double enemyProection){
         boolean enemyKilled;
@@ -118,4 +157,23 @@ public class MoveActionStrategy implements GameActionStrategy {
         return Math.acos((vectorX * vector2X + vectorY * vector2Y) / (t1 * t2));
     }
 
+    /*public static void main(String[] args) {
+        GameProfile playerOne = new GameProfile();
+        GameProfile playerTwo = new GameProfile();
+        final double x1=100;
+        playerOne.setX(x1);
+        final double y1 = 100;
+        playerOne.setY(y1);
+        final double x2 = 150;
+        playerTwo.setX(x2);
+        final double y2 = 150;
+        playerTwo.setY(y2);
+        MoveActionStrategy actionStrategy = new MoveActionStrategy(mock(GameServer.class));
+        final double myDirection = 90;
+        final double enemyDirection = 180;
+
+        double playerOneDegree = Math.toDegrees(actionStrategy.getDegree(playerOne,myDirection,x2-x1,y2-y1));
+        double playerTwoDegree = Math.toDegrees(actionStrategy.getDegree(playerTwo,enemyDirection,-x2+x1,-y2+y1));
+        System.out.println("one: " + playerOneDegree + " two: " + playerTwoDegree);
+    }*/
 }

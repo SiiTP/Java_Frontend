@@ -1,4 +1,7 @@
 import game.server.GameServer;
+import messages.MessageSystem;
+import messages.socket.MessageFrontend;
+import messages.socket.MessageSwitch;
 import persistance.UserProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,10 +30,29 @@ public class Main {
             LOGGER.info("main begin");
             LOGGER.info("connect to production BD");
             ProjectDB.initBD();
+
             AccountService accountService = new AccountService();
             accountService.addUser(new UserProfile("admin","admin"));
             accountService.addUser(new UserProfile("adminn","adminn"));
             GameServer gameServer = new GameServer(accountService);
+
+            MessageSystem system = new MessageSystem();
+            MessageFrontend messageFrontend = new MessageFrontend(system);
+            MessageSwitch messageSwitch = new MessageSwitch(system,gameServer);
+            system.addService(messageFrontend);
+            system.addService(messageSwitch);
+            system.getAddressService().registerMessageFrontend(messageFrontend);
+            system.getAddressService().registerMessageSwitch(messageSwitch);
+
+            Thread thread = new Thread(messageFrontend);
+            thread.setDaemon(true);
+            thread.start();
+
+            Thread thread2 = new Thread(messageSwitch);
+            thread2.setDaemon(true);
+            thread2.start();
+
+
             Properties properties = new Properties();
             try(FileInputStream inputStream = new FileInputStream("src/main/resources/cfg/server.properties")){
                 properties.load(inputStream);
@@ -53,7 +75,7 @@ public class Main {
             context.addServlet(new ServletHolder(new AdminServlet(server, gameServer)), "/admin");
             context.addServlet(new ServletHolder(new RoomServlet(gameServer)), "/rooms");
             context.addServlet(new ServletHolder(new ScoreServlet(gameServer)), "/score");
-            context.addServlet(new ServletHolder(new MainSocketWebServlet(gameServer)), "/gameplay");
+            context.addServlet(new ServletHolder(new MainSocketWebServlet(gameServer,messageFrontend)), "/gameplay");
             ResourceHandler resourceHandler = new ResourceHandler();
             resourceHandler.setResourceBase("public_html");
             HandlerList list = new HandlerList();

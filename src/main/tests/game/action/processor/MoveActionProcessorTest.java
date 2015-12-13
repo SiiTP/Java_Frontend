@@ -4,6 +4,8 @@ import game.rooms.Room;
 import game.rooms.RoomFFA;
 import game.server.GameServer;
 import game.sockets.MainWebSocket;
+import messages.MessageSystem;
+import messages.socket.MessageFrontend;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,8 +39,9 @@ public class MoveActionProcessorTest {
         accountService = spy(new AccountService());
         gameServer = spy(new GameServer(accountService));
         actionProcessor = new MoveActionProcessor(gameServer);
-
-        socket = spy(new MainWebSocket(httpSession,gameServer));
+        MessageSystem system = new MessageSystem();
+        MessageFrontend frontend = new MessageFrontend(system);
+        socket = spy(new MainWebSocket(httpSession,gameServer,frontend));
         doReturn(httpSession).when(socket).getHttpSession();
 
         profile = new UserProfile("name","pass");
@@ -54,7 +57,7 @@ public class MoveActionProcessorTest {
         UserProfile p = new UserProfile("test","test");
         doReturn(p).when(room).getWinner();
 
-        JSONObject object = actionProcessor.processMessage(new JSONObject(),socket);
+        JSONObject object = actionProcessor.processMessage(new JSONObject(),socket.getHttpSession());
 
         assertEquals(object.optString("winner"), "test");
     }
@@ -65,7 +68,7 @@ public class MoveActionProcessorTest {
         doReturn(room).when(gameServer).getPlayerRoomBySession(anyString());
         doReturn(false).when(room).isFinished();
 
-        JSONObject object = actionProcessor.processMessage(new JSONObject(),socket);
+        JSONObject object = actionProcessor.processMessage(new JSONObject(),socket.getHttpSession());
 
         assertTrue(object.has("players"));
     }
@@ -73,7 +76,7 @@ public class MoveActionProcessorTest {
     public void testRoomNotReady() throws Exception {
         doReturn(false).when(gameServer).isGameReady(anyString());
 
-        JSONObject object = actionProcessor.processMessage(new JSONObject(),socket);
+        JSONObject object = actionProcessor.processMessage(new JSONObject(),socket.getHttpSession());
 
         assertEquals(object.optInt("status"), responseResources.getRoomIsNotReadyCode());
     }
