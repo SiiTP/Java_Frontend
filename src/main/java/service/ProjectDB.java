@@ -9,8 +9,12 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import persistance.PlayerDataSet;
+import persistance.RoomDataSet;
+import persistance.UserProfile;
 
 import java.util.Objects;
 
@@ -20,25 +24,47 @@ import java.util.Objects;
 public class ProjectDB {
     private static final Logger LOGGER = LogManager.getLogger(ProjectDB.class);
     private static SessionFactory s_sesssionFactory;
+    private static ServiceRegistry s_serviceRegistry;
     private static String s_currentBD;
-    public static void initBD(){
-        initBD("");
+
+    public void initBD(){
+        s_serviceRegistry = getRegistry();
+        createFactory();
     }
-    public static void initBD(String source){
-        if(s_sesssionFactory == null){
-            StandardServiceRegistry serviceRegistry;
-            if(source.isEmpty()) {
-                s_currentBD="production";
-                serviceRegistry = new StandardServiceRegistryBuilder().configure().build();
-            }else{
-                s_currentBD="test";
-                serviceRegistry = new StandardServiceRegistryBuilder().configure(source).build();
-            }
-            s_sesssionFactory = new MetadataSources(serviceRegistry).buildMetadata().buildSessionFactory();
-            setDefaultTable();
+    public void initBD(String sourceFile){
+        s_serviceRegistry = getRegistry(sourceFile);
+        createFactory();
+    }
+    public void initBD(String dbUser,String dbPass,String dbName){
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+        configuration.setProperty("connection.username",dbUser);
+        configuration.setProperty("connection.password",dbPass);
+        configuration.setProperty("connection.url", "jdbc:mysql://localhost:3306/"+dbName);
+        s_serviceRegistry = getRegistry(configuration);
+        createFactory();
+    }
+    public ServiceRegistry getRegistry(){
+        s_currentBD="production";
+        return new StandardServiceRegistryBuilder().configure().build();
+    }
+    public ServiceRegistry getRegistry(String source){
+        if(source.equals("hibernate-test.cfg.xml")){
+            s_currentBD="test";
         }
+        return new StandardServiceRegistryBuilder().configure(source).build();
     }
-    private static void setDefaultTable(){
+    public ServiceRegistry getRegistry(Configuration configuration){
+        return new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+    }
+
+    private void createFactory(){
+        s_sesssionFactory = new MetadataSources(s_serviceRegistry)
+                .addAnnotatedClass(UserProfile.class)
+                .addAnnotatedClass(PlayerDataSet.class)
+                .addAnnotatedClass(RoomDataSet.class)
+                .buildMetadata().buildSessionFactory();
+    }
+    public void dropAuth(){
         try(Session session = s_sesssionFactory.openSession()) {
             session.beginTransaction();
             Query query = session.createQuery("update user u set u.isAuthorized=0");
@@ -67,14 +93,14 @@ public class ProjectDB {
                 }
             }
         }else{
-            Marker marker = new MarkerManager.Log4jMarker("FAIL INIT");
+            Marker marker = new MarkerManager.Log4jMarker("FAILTRUNC");
             LOGGER.error(marker,"db failed");
         }
     }
 
     public static SessionFactory getSessionFactory(){
         if(s_sesssionFactory == null){
-            initBD();
+            throw new HibernateException("no DB init");
         }
         return s_sesssionFactory;
     }

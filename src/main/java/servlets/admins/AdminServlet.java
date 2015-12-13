@@ -65,7 +65,7 @@ public class AdminServlet extends HttpServlet {
         }
     }
 
-    private void shutDownServer(int shutdownCount){//TODO rework with properly test
+    private void shutDownServer(int shutdownCount){
         final int poolSize = 1;
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(poolSize);
         scheduler.schedule(() -> {

@@ -29,8 +29,25 @@ public class Main {
         public static void main(String[] args) throws Exception {
             LOGGER.info("main begin");
             LOGGER.info("connect to production BD");
-            ProjectDB.initBD();
-
+            ProjectDB db = new ProjectDB();
+            if(args.length == 4 || args.length == 3){
+                String user;
+                String pass;
+                String dbName;
+                if(args.length == 4){
+                    user = args[1];
+                    pass = args[2];
+                    dbName = args[3];
+                }else{
+                    user = args[0];
+                    pass = args[1];
+                    dbName = args[2];
+                }
+                db.initBD(user,pass,dbName);
+            }else {
+                db.initBD();
+            }
+            db.dropAuth();
             AccountService accountService = new AccountService();
             accountService.addUser(new UserProfile("admin","admin"));
             accountService.addUser(new UserProfile("adminn","adminn"));

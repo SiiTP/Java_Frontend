@@ -22,7 +22,7 @@ public class UserDAOTest {
     SessionFactory sessionFactory;
     @Before
     public void setUp() {
-        ProjectDB.initBD("hibernate-test.cfg.xml");
+        new ProjectDB().initBD("hibernate-test.cfg.xml");
         userDAO = new UserDAO();
         sessionFactory = ProjectDB.getSessionFactory();
     }
