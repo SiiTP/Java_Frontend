@@ -29,11 +29,11 @@ public class MessageFrontend implements Abonent,Runnable {
     public void run() {
         while (true){
             messageSystem.execForAbonent(this);
-            /*try{
-                Thread.sleep(50);
+            try{
+                Thread.sleep(25);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }*/
+            }
         }
     }
     public void addSocket(MainWebSocket socket){

@@ -47,7 +47,6 @@ public class Main {
             Thread thread = new Thread(messageFrontend);
             thread.setDaemon(true);
             thread.start();
-
             Thread thread2 = new Thread(messageSwitch);
             thread2.setDaemon(true);
             thread2.start();

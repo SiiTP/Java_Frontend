@@ -36,11 +36,11 @@ public class MessageSwitch implements Runnable, Abonent{
     public void run() {
         while(true){
             system.execForAbonent(this);
-           /* try {
-                Thread.sleep(50);
+            try {
+                Thread.sleep(25);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }*/
+            }
         }
     }
 }

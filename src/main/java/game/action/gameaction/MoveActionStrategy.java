@@ -103,14 +103,16 @@ public class MoveActionStrategy implements GameActionStrategy {
                 double xBetweenPlayers = enemy.getX() - gameProfile.getX();
                 double yBetweenPlayers = enemy.getY() - gameProfile.getY();
                 double myDirection = gameProfile.getDirection();
-                if (xBetweenPlayers * xBetweenPlayers + yBetweenPlayers * yBetweenPlayers <= (4+0.5) * radius * radius) {
+                if (xBetweenPlayers * xBetweenPlayers + yBetweenPlayers * yBetweenPlayers <= (4+2) * radius * radius) {
                     if(isCollisionAllowed(enemy,gameProfile)) {
                         enemy.setCollisionTimeStamp(System.currentTimeMillis());
                         gameProfile.setCollisionTimeStamp(System.currentTimeMillis());
-                        double myProection = Math.toDegrees(getDegree(gameProfile, myDirection, xBetweenPlayers, yBetweenPlayers));
-                        double enemyProection = Math.toDegrees(getDegree(enemy, enemy.getDirection(), -xBetweenPlayers, -yBetweenPlayers));
-                        LOGGER.info(new MarkerManager.Log4jMarker("COLLISION"),"first score " + gameProfile.getScore() + ' ' + myDirection
-                                + " second " + enemy.getScore() + ' ' + enemyProection);
+                        double myProection = Math.toDegrees(getDegree(gameProfile, myDirection, xBetweenPlayers, -yBetweenPlayers));
+                        double enemyProection = Math.toDegrees(getDegree(enemy, enemy.getDirection(), -xBetweenPlayers, yBetweenPlayers));
+                        LOGGER.info(new MarkerManager.Log4jMarker("COLLISION"),"first score " + gameProfile.getScore() + '\n' + myProection
+                                + ' ' + gameProfile.getDirection() + ' ' + gameProfile.getX() + ' ' + gameProfile.getY());
+                        LOGGER.info(new MarkerManager.Log4jMarker("COLLISION"),"second " + enemy.getScore() + '\n' + enemyProection + ' ' + enemy.getDirection() +
+                         ' ' + enemy.getX() + ' ' + enemy.getY());
                         if (!enemy.isKilled() && !gameProfile.isKilled()) {
                             boolean iWin = isIwin(myProection, enemyProection);
                             if (iWin) {
