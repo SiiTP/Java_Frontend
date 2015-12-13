@@ -27,7 +27,7 @@ define (function() {
                 this.beginningGameWaiting();
             }.bind(this);
             socket.onmessage = function(event) {
-                console.log("___> get message");
+                //console.log("___> get message");
                 //console.log(event.data);
                 var answer = JSON.parse(event.data);
 
@@ -87,10 +87,9 @@ define (function() {
             this.waitingInterval = setInterval(this.sendMessageWaiting.bind(this), 50);
         };
         this.sendMessageWaiting = function() {
-            console.log("message waiting");
             var data = {'direction': -1, 'isMoving': true};
             if (this.myPlayer != null) {
-                data = {'direction': this.myPlayer.model.get('angle'), 'isMoving': true};
+                data = {'direction': this.myPlayer.model.get('angle'), 'isMoving': this.myPlayer.model.get('isMoving')};
             }
             this.socket.send(JSON.stringify(data));
         };
