@@ -1,7 +1,7 @@
 
 .validation-info {
   box-sizing: border-box;
-  font-size: 12px;
+  font-size: $font-size_small;
   font-family: NunitoNormal;
   color: $color-default;
   &_correct {
@@ -11,9 +11,16 @@
     color: $color-error;
   }
 }
-.validation-info-common {
+.validation-info-common:not(:empty) {
   margin-top: 20px;
+  padding: 5px;
   font-size: 24px;
   text-shadow: #f00 0 0 1em;
   text-align: center;
+
+  border-radius: 5px;
+
+  color: $color-error;
+  box-shadow: $color-error 0 0 10px 3px,
+  inset $color-error 0 0 5px 1px;
 }

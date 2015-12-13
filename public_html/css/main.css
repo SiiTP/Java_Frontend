@@ -6,7 +6,9 @@
   src: url(Nunito/Nunito-Regular.ttf); }
 html, body {
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  width: 100%;
+  height: 100%; }
 
 canvas {
   position: absolute;
@@ -107,7 +109,7 @@ canvas {
 .header-text {
   display: block;
   font-size: 36px;
-  font-weight: bold;
+  font-weight: normal;
   text-align: center;
   margin: 0;
   text-shadow: #f5f5f5 0 0 1em;
@@ -266,27 +268,31 @@ canvas {
   .validation-info_correct {
     color: #0f0; }
   .validation-info_error {
-    color: #f00; }
+    color: #ff1600; }
 
-.validation-info-common {
+.validation-info-common:not(:empty) {
   margin-top: 20px;
+  padding: 5px;
   font-size: 24px;
   text-shadow: #f00 0 0 1em;
-  text-align: center; }
+  text-align: center;
+  border-radius: 5px;
+  color: #ff1600;
+  box-shadow: #ff1600 0 0 10px 3px, inset #ff1600 0 0 5px 1px; }
 
 .login {
   margin: auto;
-  width: 40%;
-  min-width: 375px;
-  max-width: 500px;
+  width: 70%;
+  min-width: 360px;
+  max-width: 640px;
   padding-bottom: 10px; }
   .login__buttons-container {
     margin-top: 10px; }
     .login__buttons-container__button {
-      width: 40%; }
+      width: 38%; }
     .login__buttons-container__registration-link {
       display: inline-block;
-      width: 58%;
+      width: 60%;
       margin-left: 2%;
       text-align: right;
       box-sizing: border-box;
@@ -304,9 +310,9 @@ canvas {
 .registration {
   color: #003;
   margin: auto;
-  min-width: 310px;
-  max-width: 600px;
-  width: 50%; }
+  min-width: 360px;
+  max-width: 640px;
+  width: 70%; }
   .registration__button {
     width: 100%;
     margin-top: 10px; }
@@ -361,7 +367,7 @@ canvas {
 
 .rooms {
   width: 70%;
-  min-width: 715px;
+  min-width: 480px;
   max-width: 1000px;
   margin: auto; }
   .rooms__lines {
@@ -417,27 +423,24 @@ canvas {
         width: 23%;
         margin-left: 2%; }
   .rooms__noRooms {
-    margin: 30px 0 20px; }
+    margin: 10px 0 10px; }
+    .rooms__noRooms__message {
+      font-size: 20px;
+      color: #ff0;
+      text-shadow: #ff0 0 0 1em; }
   .rooms__create {
     white-space: nowrap;
     margin: 10px 0 0; }
     .rooms__create__header {
-      margin-bottom: 20px; }
+      margin: 30px 0 20px; }
     .rooms__create__input-line {
-      width: 41%;
+      width: 75%;
       display: inline-block;
       font-family: UbuntuItalic; }
-      .rooms__create__input-line__username {
-        width: 43%; }
-      .rooms__create__input-line__password {
-        width: 41%;
-        margin-left: 2%; }
     .rooms__create__button {
-      width: 14%;
+      width: 23%;
       display: inline-block;
       margin-left: 2%; }
-    .rooms__create__message {
-      margin: 0; }
 
 .field {
   margin: 0 0 0 10px;

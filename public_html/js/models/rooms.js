@@ -17,7 +17,6 @@ define([
         }),
         optionsJoin: ({
             success: function(model, response, parse) {
-                console.log("update onGame");
                 model.trigger('onGame');
             }
         }),
