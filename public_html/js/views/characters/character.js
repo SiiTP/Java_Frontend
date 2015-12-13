@@ -63,7 +63,7 @@ define([
                 var y = this.model.get('posY');
                 var r = this.model.get('radius');
                 var s = this.model.get('speed');
-                this.context.clearRect(x - r * 2, y - r * 2, 6 * r + 80, 6 * r);
+                this.context.clearRect(x - r * 2 -10, y - r * 2 - 10, 6 * r + 100, 6 * r + 20);
             }
         },
         deleteCanvas: function() {

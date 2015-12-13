@@ -1,4 +1,6 @@
-define (['backbone'], function(Backbone) {
+//TODO viewManager
+//без js ошибок
+define (function() {
     return function GameMediator(args) {
         this.user = args.user;
         this.MyCharacter = args.MyCharacter;
@@ -12,8 +14,11 @@ define (['backbone'], function(Backbone) {
         this.gameBegin= false;
         this.waitingInterval= null;
 
+        this.now  = null;
+        this.prev = null;
+
         this.initialize = function() {
-            console.log("mediator initialized");
+            console.log("mediator initialized!!!");
             this.field.on('show', this.joinToRoom.bind(this));
             this.field.on('clicked', this.sendMessageWaiting.bind(this));
             this.field.on('mouseMove', this.mouseMove.bind(this));
@@ -26,20 +31,41 @@ define (['backbone'], function(Backbone) {
                 this.beginningGameWaiting();
             }.bind(this);
             socket.onmessage = function(event) {
-                //console.log("___> get message");
-                //console.log(event.data);
+                console.log("___> get message");
+                console.log(event.data);
                 var answer = JSON.parse(event.data);
 
                 if (answer.status == 301) {
                     console.log("___@ waiting answer");
-                    this.gameBegin = false
+                    this.gameBegin = false;
                 }
 
                 if (answer.status == 200) {
-                    if(true) { // TODO условие answer.limitPlayers
-                        this.creatingCanvases();
+                    if (true) { // TODO условие answer.limitPlayers
+                        var EnemyPlayerView = this.EnemyCharacter;
+                        var enemyPlayers = this.enemyPlayers;
+                        if (enemyPlayers.length == 0) {
+                            for(var i = 0; i < 9; i += 1) { // TODO i < limitPlayers
+                                var player = new EnemyPlayerView({
+                                    className: "character character_enemy_" + i,
+                                    'width': 1000,
+                                    'height': 700
+                                });
+                                enemyPlayers.push(player);
+                            }
+                        }
+                        var myPlayer = this.myPlayer;
+                        var MyPlayerView = this.MyCharacter;
+                        if (myPlayer == null) {
+                            myPlayer = new MyPlayerView({
+                                className: "character character_my",
+                                'width': 1000,
+                                'height': 700
+                            });
+                            this.myPlayer = myPlayer;
+                        }
                     }
-
+                    //this.erasePlayers();
                     this.parsePlayers(answer.players);
                     if (!this.gameBegin) {
                         this.startGame();
@@ -49,13 +75,13 @@ define (['backbone'], function(Backbone) {
 
                 if (answer.status == 228) {
                     console.log("___@ winner is : " + answer.winner);
-                    this.gameBegin = false
+                    this.gameBegin = false;
                 }
             }.bind(this);
             socket.onclose = function(event) {
                 console.log("____ close socket");
             };
-            this.socket = socket
+            this.socket = socket;
         };
         this.beginningGameWaiting = function() {
             this.waitingInterval = setInterval(this.sendMessageWaiting.bind(this), 50);
@@ -67,41 +93,10 @@ define (['backbone'], function(Backbone) {
             }
             this.socket.send(JSON.stringify(data));
         };
-        this.creatingCanvases = function () {
-            var EnemyPlayerView = this.EnemyCharacter;
-            var enemyPlayers = this.enemyPlayers;
-            if (enemyPlayers.length == 0) {
-                for (var i = 0; i < 9; i += 1) { // TODO i < limitPlayers
-                    var player = new EnemyPlayerView({
-                        className: "character character_enemy_" + i,
-                        'width': 1000,
-                        'height': 700
-                    });
-                    enemyPlayers.push(player);
-                }
-            }
-            var MyPlayerView = this.MyCharacter;
-            if (this.myPlayer == null) {
-                var myPlayer = new MyPlayerView({
-                    className: "character character_my",
-                    'width': 1000,
-                    'height': 700
-                });
-                this.myPlayer = myPlayer;
-            }
-        };
-        this.deletingCanvases = function() {
-            console.log("deleting canvases");
-            if (this.myPlayer && this.myPlayer) {
-                this.myPlayer.deleteCanvas();
-            }
-            _.each(this.enemyPlayers, function(player) {
-                player.deleteCanvas();
-            });
-        };
         this.parsePlayers = function(answerPlayers) {
             var enemies = this.enemyPlayers;
             var myPlayer = this.myPlayer;
+
             myPlayer.model.set({'visible': false});
             var amountEnemies = answerPlayers.length - 1;
             //очистка рисунка, на случай если хозяин канваса изменился
@@ -123,6 +118,7 @@ define (['backbone'], function(Backbone) {
                         score : answerPlayers[i].score,
                         visible : true
                     });
+                    //console.log("setted enemy (" + enemies[j].model.get('name') + ") pos in array : " + j);
                     j += 1;
                 } else {
                     myPlayer.model.set({
@@ -133,8 +129,21 @@ define (['backbone'], function(Backbone) {
                         score : answerPlayers[i].score,
                         visible : true
                     });
+                    //console.log("setted my player (" + myPlayer.model.get('name') + ")");
                 }
             }
+        };
+        this.erasePlayers = function() {
+            if (this.myPlayer != null) {
+                this.myPlayer.$el.remove();
+            }
+            if (this.enemyPlayers != []) {
+                _.each(this.enemyPlayers, function(player) {
+                    player.$el.remove();
+                });
+            }
+            this.enemyPlayers = [];
+            this.myPlayer = null;
         };
         this.startGame = function() {
             var now = Date.now();
@@ -165,12 +174,12 @@ define (['backbone'], function(Backbone) {
                     enemy.clear();
                 }
             });
-
             if (this.gameBegin) {
                 requestAnimationFrame(this.loop.bind(this, previousMy, previousEnemies));
             }
         };
         this.joinToRoom = function() {
+
             this.initializeSocket();
         };
         this.mouseMove = function(args) {
@@ -185,9 +194,7 @@ define (['backbone'], function(Backbone) {
             if (this.socket) {
                 this.socket.close();
             }
-            this.deletingCanvases();
-            this.myPlayer = null;
-            this.enemyPlayers = [];
+            this.erasePlayers();
         }
     }
 });
