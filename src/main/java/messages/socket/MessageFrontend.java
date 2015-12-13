@@ -37,7 +37,7 @@ public class MessageFrontend implements Abonent,Runnable {
         }
     }
     public void addSocket(MainWebSocket socket){
-        sockets.put(socket.getHttpSession(),socket);
+        sockets.put(socket.getHttpSession(), socket);
     }
     public void sendMessageForward(JSONObject data,String session){
         MoveMessage moveMessage = new MoveMessage(address,messageSystem.getAddressService().getMessageSwitchAddress(),data,session);
@@ -46,7 +46,9 @@ public class MessageFrontend implements Abonent,Runnable {
     public void sendMessageToSocket(MessageJSON message){
         if(message instanceof MoveMessageBack){
             MainWebSocket socket = sockets.get(((MoveMessageBack) message).getSession());
-            socket.sendMessageBack(message.getMessageData());
+            if(socket != null) {
+                socket.sendMessageBack(message.getMessageData());
+            }
         }
     }
     public void deleteSocket(String session){
