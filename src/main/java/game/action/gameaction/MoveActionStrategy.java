@@ -80,9 +80,9 @@ public class MoveActionStrategy implements GameActionStrategy {
     }
     private boolean isMoving(JSONObject message){
         boolean moving = true;
-        if(message.has("moving")){
-            if(!message.isNull("moving")){
-                moving = message.getBoolean("moving");
+        if(message.has("isMoving")){
+            if(!message.isNull("isMoving")){
+                moving = message.getBoolean("isMoving");
             }
         }
         return moving;
