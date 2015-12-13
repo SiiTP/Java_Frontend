@@ -112,7 +112,7 @@ public class MoveActionStrategyTest {
         GameProfile enemy = getTestGameProfileForRoom(ffa,125,125,180);
         GameProfile me = getTestGameProfileForRoom(ffa,100,100,35);
 
-        moveActionStrategy.checkForCollision(me, ffa);
+        moveActionStrategy.checkCollision(me, ffa);
 
         assertTrue("enemy was not killed", enemy.isKilled());
         assertFalse("me should not be killed", me.isKilled());
@@ -120,7 +120,7 @@ public class MoveActionStrategyTest {
         enemy.setIsKilled(false);
         enemy.setDirection(225);
 
-        moveActionStrategy.checkForCollision(me, ffa);
+        moveActionStrategy.checkCollision(me, ffa);
         boolean directAttack = me.isKilled() || enemy.isKilled();
         assertTrue("someone must be killed", directAttack);
     }
@@ -131,7 +131,7 @@ public class MoveActionStrategyTest {
         GameProfile enemy = getTestGameProfileForRoom(ffa,125,125,225);
         GameProfile me = getTestGameProfileForRoom(ffa,100,100,35);
 
-        moveActionStrategy.checkForCollision(me, ffa);
+        moveActionStrategy.checkCollision(me, ffa);
         boolean directAttack = me.isKilled() || enemy.isKilled();
         assertTrue("someone must be killed",directAttack);
     }

@@ -5,9 +5,9 @@ package resource;
  */
 @SuppressWarnings("unused")
 public class PlayerState implements Resource{
-    private int playerStopped;
+    private boolean playerStopped;
 
-    public int getPlayerStopped() {
+    public boolean getPlayerStopped() {
         return playerStopped;
     }
 }

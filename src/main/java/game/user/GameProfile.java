@@ -16,6 +16,7 @@ public class GameProfile {
     private double y;
     private double direction;
     private boolean isKilled;
+    private boolean isMoving;
     private Instant respawnTime;
     private long collisionTimeStamp;
     public GameProfile() {
@@ -27,8 +28,18 @@ public class GameProfile {
         object.put("posX",x);
         object.put("posY",y);
         object.put("score",score);
+        object.put("isKilled",isKilled);
+        object.put("isMoving", isMoving);
         object.put("direction",direction);
         return object;
+    }
+
+    public boolean isMoving() {
+        return isMoving;
+    }
+
+    public void setIsMoving(boolean isStopped) {
+        this.isMoving = isStopped;
     }
 
     public int getScore() {
