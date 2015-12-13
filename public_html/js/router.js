@@ -47,7 +47,6 @@ define([
     manager.add(registrationView);
     manager.add(roomsView);
     manager.add(fieldView);
-    console.log("azaaz");
     var gameMediator = new GameMediator({
         user           : user,
         MyCharacter    : MyCharacter,

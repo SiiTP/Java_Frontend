@@ -13,12 +13,10 @@ define (function() {
         this.socket = null;
         this.gameBegin= false;
         this.waitingInterval= null;
-
-        this.now  = null;
-        this.prev = null;
+        this.limitPlayers = 0;
 
         this.initialize = function() {
-            console.log("mediator initialized!!!");
+            console.log("mediator initialized");
             this.field.on('show', this.joinToRoom.bind(this));
             this.field.on('clicked', this.sendMessageWaiting.bind(this));
             this.field.on('mouseMove', this.mouseMove.bind(this));
@@ -26,13 +24,14 @@ define (function() {
         };
         this.initializeSocket = function() {
             var socket = new WebSocket("ws://localhost:8000/gameplay");//todo localhost в константы
+            console.log("after socket creating");
             socket.onopen = function(event) {
                 console.log("____ open socket");
                 this.beginningGameWaiting();
             }.bind(this);
             socket.onmessage = function(event) {
                 console.log("___> get message");
-                console.log(event.data);
+                //console.log(event.data);
                 var answer = JSON.parse(event.data);
 
                 if (answer.status == 301) {
@@ -41,11 +40,14 @@ define (function() {
                 }
 
                 if (answer.status == 200) {
-                    if (true) { // TODO условие answer.limitPlayers
+                    if (answer.limitPlayers) {
+                        this.limitPlayers = answer.limitPlayers;
+
                         var EnemyPlayerView = this.EnemyCharacter;
                         var enemyPlayers = this.enemyPlayers;
+
                         if (enemyPlayers.length == 0) {
-                            for(var i = 0; i < 9; i += 1) { // TODO i < limitPlayers
+                            for(var i = 0; i < this.limitPlayers - 1; i += 1) {
                                 var player = new EnemyPlayerView({
                                     className: "character character_enemy_" + i,
                                     'width': 1000,
@@ -54,8 +56,10 @@ define (function() {
                                 enemyPlayers.push(player);
                             }
                         }
+
                         var myPlayer = this.myPlayer;
                         var MyPlayerView = this.MyCharacter;
+
                         if (myPlayer == null) {
                             myPlayer = new MyPlayerView({
                                 className: "character character_my",
@@ -65,7 +69,6 @@ define (function() {
                             this.myPlayer = myPlayer;
                         }
                     }
-                    //this.erasePlayers();
                     this.parsePlayers(answer.players);
                     if (!this.gameBegin) {
                         this.startGame();
@@ -87,9 +90,11 @@ define (function() {
             this.waitingInterval = setInterval(this.sendMessageWaiting.bind(this), 50);
         };
         this.sendMessageWaiting = function() {
+            console.log("message waiting");
+
             var data = {'direction': -1};
             if (this.myPlayer != null) {
-                data = {'direction': this.myPlayer.model.get('angle')};
+                data = {'direction': this.myPlayer.model.get('angle'), 'isMoving': 0};
             }
             this.socket.send(JSON.stringify(data));
         };
