@@ -110,7 +110,7 @@ public class RoomFFA extends RoomAbstractImpl {
     public JSONArray getJsonRoomPlayers() {
 
         JSONArray array = new JSONArray();
-        users.stream().filter(profile -> !profile.getGameProfile().isKilled()).forEach(profile -> array.put(profile.getJson()));
+        users.stream().forEach(profile -> array.put(profile.getJson()));
         return array;
     }
 
