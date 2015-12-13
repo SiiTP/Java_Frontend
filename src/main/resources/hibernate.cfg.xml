@@ -35,7 +35,9 @@
         </property>
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hbm2ddl.auto">update</property>
-
+        <mapping class="persistance.PlayerDataSet"/>
+        <mapping class="persistance.RoomDataSet"/>
+        <mapping class="persistance.UserProfile"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>
