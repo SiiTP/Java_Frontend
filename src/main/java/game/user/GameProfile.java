@@ -19,6 +19,7 @@ public class GameProfile {
     private boolean isMoving;
     private Instant respawnTime;
     private long collisionTimeStamp;
+    private Instant dt;
     public GameProfile() {
             resetSetting();
     }
@@ -74,17 +75,16 @@ public class GameProfile {
         this.direction = direction;
     }
 
-    /*public double getDeltaTime() {
+    public double getDeltaTime() {
         final int toSeconds = ((GameResources)ResourceFactory.getResource("data/game.json")).getToSeconds();
         if(dt==null){
             dt = Instant.now();
         }
         Instant temp = Instant.now();
         Instant diff = temp.minusMillis(dt.toEpochMilli());
-        dt = Instant.now();
-
+        dt = temp;
         return (diff.toEpochMilli()+0.0)/toSeconds;
-    }*/
+    }
 
     public boolean isKilled() {
         if(respawnTime != null){

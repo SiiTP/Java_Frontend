@@ -50,15 +50,15 @@ public class MoveActionStrategy implements GameActionStrategy {
                 UserProfile profile = gameServer.getPlayerBySession(httpSession);
                 if (profile != null) {
                     GameProfile gameProfile = profile.getGameProfile();
-                    
+                    double dt = gameProfile.getDeltaTime();
                     double direction = getDrection(message);
                     gameProfile.setIsMoving(isMoving(message));
                     if (direction != defaultDontMoveValue && gameProfile.isMoving()) {
                         double radian = Math.toRadians(direction);
                         double x = gameProfile.getX();
                         double y = gameProfile.getY();
-                        double newX = x + Math.cos(radian) * speed;
-                        double newY = y - Math.sin(radian) * speed;
+                        double newX = x + Math.cos(radian) * speed * dt;
+                        double newY = y - Math.sin(radian) * speed * dt;
                         if(newX < width && newY < height){
                             if(newX > 0 && newY > 0) {
                                 gameProfile.setX((int)newX);

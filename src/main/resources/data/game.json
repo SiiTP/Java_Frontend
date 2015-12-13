@@ -6,7 +6,7 @@
   "defaultStopDirectionValue":-1,
   "maxRoomPlayingTimeInSec":1200,
   "defaultWinScore":25,
-  "defaultSpeed":8,
+  "defaultSpeed":200,
   "defaultPlayerRadius":20,
   "millsToSeconds":1000,
   "class":"resource.GameResources"
