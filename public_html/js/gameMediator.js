@@ -1,5 +1,3 @@
-//TODO viewManager
-//без js ошибок
 define (function() {
     return function GameMediator(args) {
         this.user = args.user;
@@ -18,7 +16,6 @@ define (function() {
         this.initialize = function() {
             console.log("mediator initialized");
             this.field.on('show', this.joinToRoom.bind(this));
-            this.field.on('clicked', this.sendMessageWaiting.bind(this));
             this.field.on('mouseMove', this.mouseMove.bind(this));
             this.field.on('exit', this.exit.bind(this));
         };
@@ -50,8 +47,8 @@ define (function() {
                             for(var i = 0; i < this.limitPlayers - 1; i += 1) {
                                 var player = new EnemyPlayerView({
                                     className: "character character_enemy_" + i,
-                                    'width': 1000,
-                                    'height': 700
+                                    'width': this.constants.get('FIELD_WIDTH'),
+                                    'height': this.constants.get('FIELD_HEIGHT')
                                 });
                                 enemyPlayers.push(player);
                             }
@@ -63,8 +60,8 @@ define (function() {
                         if (myPlayer == null) {
                             myPlayer = new MyPlayerView({
                                 className: "character character_my",
-                                'width': 1000,
-                                'height': 700
+                                'width': this.constants.get("FIELD_WIDTH"),
+                                'height': this.constants.get('FIELD_HEIGHT')
                             });
                             this.myPlayer = myPlayer;
                         }
@@ -91,8 +88,7 @@ define (function() {
         };
         this.sendMessageWaiting = function() {
             console.log("message waiting");
-
-            var data = {'direction': -1};
+            var data = {'direction': -1, 'isMoving': 0};
             if (this.myPlayer != null) {
                 data = {'direction': this.myPlayer.model.get('angle'), 'isMoving': 0};
             }
@@ -184,7 +180,6 @@ define (function() {
             }
         };
         this.joinToRoom = function() {
-
             this.initializeSocket();
         };
         this.mouseMove = function(args) {

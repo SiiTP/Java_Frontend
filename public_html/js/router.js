@@ -39,7 +39,8 @@ define([
     var logoutView =       new LogoutView       ({model: user});
     var scoreboardView =   new ScoreboardView   ({model: scores});
     var roomsView =        new RoomsView        ({model: rooms});
-    var fieldView =        new FieldView        ();
+    console.log(constants.get('FIELD_WIDTH'));
+    var fieldView =        new FieldView        ({width: constants.get('FIELD_WIDTH'), height: constants.get('FIELD_HEIGHT')});
     manager.add(mainView);
     manager.add(scoreboardView);
     manager.add(loginView);

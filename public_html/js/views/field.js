@@ -13,17 +13,15 @@ define([
         context: null,
         events: {
             "click .field__button-exit": 'onExit',
-            "click .field": 'onClick',
             "mousemove .field": 'onMouseMove'
         },
         show: function () {
             this.$el.show();
             this.trigger('show');
             this.canvas = $('.field')[0];
-            this.canvas.width  = 1000;
-            this.canvas.height = 700;
+            this.canvas.width  = this.options.width;
+            this.canvas.height = this.options.height;
             this.context = this.canvas.getContext('2d');
-            // тут можно нарисовать бекграунд
         },
         hide: function () {
             if (this.canvas) {
@@ -35,9 +33,6 @@ define([
         },
         onMouseMove: function(event) {
             this.trigger('mouseMove', {'x' : event.pageX, 'y' : event.pageY});
-        },
-        onClick: function() {
-            this.trigger('clicked');
         },
         onExit: function() {
             this.trigger('exit');
