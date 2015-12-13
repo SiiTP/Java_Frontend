@@ -14,6 +14,16 @@ public class GameResources implements Resource {
     private int defaultPlayerRadius;
     private int millsToSeconds;
     private int defaultStopDirectionValue;
+    private int defaultServiceSleep;
+    private int collisionDelta;
+
+    public int getDefaultServiceSleep() {
+        return defaultServiceSleep;
+    }
+
+    public int getCollisionDelta() {
+        return collisionDelta;
+    }
 
     public int getDefaultStopDirectionValue() {
         return defaultStopDirectionValue;

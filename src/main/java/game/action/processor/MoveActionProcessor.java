@@ -4,7 +4,6 @@ import game.action.gameaction.GameActionStrategy;
 import game.action.gameaction.MoveActionStrategy;
 import game.rooms.Room;
 import game.server.GameServer;
-import game.sockets.MainWebSocket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
@@ -24,9 +23,9 @@ public class MoveActionProcessor implements ActionProcessor {
         responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
         strategy = new MoveActionStrategy(server);
     }
+
     @Override
-    public JSONObject processMessage(JSONObject message,MainWebSocket socket) {
-        String httpSession = socket.getHttpSession();
+    public JSONObject processMessage(JSONObject message,String httpSession) {
         boolean isOkGame = gameServer.isGameReady(httpSession);
         JSONObject responseMessage = new JSONObject();
         if(isOkGame) {

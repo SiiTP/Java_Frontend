@@ -16,7 +16,10 @@ public class GameProfile {
     private double y;
     private double direction;
     private boolean isKilled;
+    private boolean isMoving;
     private Instant respawnTime;
+    private long collisionTimeStamp;
+    private Instant dt;
     public GameProfile() {
             resetSetting();
     }
@@ -26,8 +29,18 @@ public class GameProfile {
         object.put("posX",x);
         object.put("posY",y);
         object.put("score",score);
+        object.put("isKilled",isKilled);
+        object.put("isMoving", isMoving);
         object.put("direction",direction);
         return object;
+    }
+
+    public boolean isMoving() {
+        return isMoving;
+    }
+
+    public void setIsMoving(boolean isStopped) {
+        this.isMoving = isStopped;
     }
 
     public int getScore() {
@@ -62,17 +75,16 @@ public class GameProfile {
         this.direction = direction;
     }
 
-    /*public double getDeltaTime() {
+    public double getDeltaTime() {
         final int toSeconds = ((GameResources)ResourceFactory.getResource("data/game.json")).getToSeconds();
         if(dt==null){
             dt = Instant.now();
         }
         Instant temp = Instant.now();
         Instant diff = temp.minusMillis(dt.toEpochMilli());
-        dt = Instant.now();
-
+        dt = temp;
         return (diff.toEpochMilli()+0.0)/toSeconds;
-    }*/
+    }
 
     public boolean isKilled() {
         if(respawnTime != null){
@@ -113,4 +125,11 @@ public class GameProfile {
         score = 0;
     }
 
+    public long getCollisionTimeStamp() {
+        return collisionTimeStamp;
+    }
+
+    public void setCollisionTimeStamp(long collisionTimeStamp) {
+        this.collisionTimeStamp = collisionTimeStamp;
+    }
 }

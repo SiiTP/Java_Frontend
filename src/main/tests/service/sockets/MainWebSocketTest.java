@@ -2,6 +2,8 @@ package service.sockets;
 
 import game.server.GameServer;
 import game.sockets.MainWebSocket;
+import messages.MessageSystem;
+import messages.socket.MessageFrontend;
 import org.junit.Before;
 import org.junit.Test;
 import persistance.UserProfile;
@@ -29,7 +31,9 @@ public class MainWebSocketTest {
         httpSession = "session";
         accountService = spy(new AccountService());
         gameServer = spy(new GameServer(accountService));
-        webSocket = spy(new MainWebSocket(httpSession, gameServer));
+        MessageSystem system = new MessageSystem();
+        MessageFrontend frontend = new MessageFrontend(system);
+        webSocket = spy(new MainWebSocket(httpSession, gameServer,frontend));
 
 
 

@@ -22,7 +22,7 @@ public class RoomDAOTest {
     SessionFactory sessionFactory;
     @Before
     public void setUp() {
-        ProjectDB.initBD("hibernate-test.cfg.xml");
+        new ProjectDB().initBD("hibernate-test.cfg.xml");
         roomDAO = new RoomDAO();
         sessionFactory = ProjectDB.getSessionFactory();
     }

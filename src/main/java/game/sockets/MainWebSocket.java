@@ -1,8 +1,7 @@
 package game.sockets;
 
-import game.action.processor.ActionProcessor;
-import game.action.processor.MoveActionProcessor;
 import game.server.GameServer;
+import messages.socket.MessageFrontend;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.websocket.api.StatusCode;
@@ -16,14 +15,17 @@ import java.io.IOException;
 /**
  * Created by ivan on 24.10.15.
  */
-public class MainWebSocket extends WebSocketAdapter {
+public class MainWebSocket extends WebSocketAdapter{
+    private final MessageFrontend messageFrontend;//todo add constructor
     private final GameServer gameServer;
     private final String httpSession;
-    private ActionProcessor actionProcessor;
+    //private ActionProcessor actionProcessor;
     private static final Logger LOGGER = LogManager.getLogger(MainWebSocket.class);
-    public MainWebSocket(String httpSession,GameServer gameServer) {
+    public MainWebSocket(String httpSession,GameServer gameServer,MessageFrontend frontend) {
         this.gameServer = gameServer;
         this.httpSession = httpSession;
+        this.messageFrontend = frontend;
+        frontend.addSocket(this);
     }
     public String getHttpSession(){
         return httpSession;
@@ -36,6 +38,7 @@ public class MainWebSocket extends WebSocketAdapter {
             LOGGER.warn("socket closed with code " + statusCode + " for reason " + reason);
         }
         gameServer.kickPlayer(httpSession);
+        messageFrontend.deleteSocket(httpSession);
         super.onWebSocketClose(statusCode, reason);
     }
 
@@ -52,23 +55,36 @@ public class MainWebSocket extends WebSocketAdapter {
             isOkPlayer = gameServer.isCorrectPlayerInGame(httpSession);
         }
         if(isOkPlayer){
-            processPlayerMessage(data);
+            messageFrontend.sendMessageForward(data, httpSession);
         }
     }
 
-    public void processPlayerMessage(JSONObject message) {
+    /*public void processPlayerMessage(JSONObject message) {
         JSONObject response = null;
         if(!message.has("type")){
             if(!(actionProcessor instanceof MoveActionProcessor)) {
                 actionProcessor = new MoveActionProcessor(gameServer);
             }
-            response = actionProcessor.processMessage(message,this);
+            response = actionProcessor.processMessage(message,httpSession);
         }
         try {
             if(response != null) {
                 getRemote().sendString(response.toString());
             }else{
                 LOGGER.error("wrong message from " + httpSession + " message:" + message);
+            }
+        } catch (IOException e) {
+            LOGGER.error("cant send message back, user session " + httpSession);
+            e.printStackTrace();
+        }
+
+    }*/
+    public void sendMessageBack(JSONObject response){
+        try {
+            if(response != null) {
+                getRemote().sendString(response.toString());
+            }else{
+                LOGGER.error("wrong message from " + httpSession);
             }
         } catch (IOException e) {
             LOGGER.error("cant send message back, user session " + httpSession);
