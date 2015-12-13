@@ -2,18 +2,18 @@ $reg-link-hover: #00f;
 
 .login {
   margin: auto;
-  width: 40%;
-  min-width: 375px;
-  max-width: 500px;
+  width: 70%;
+  min-width: 360px;
+  max-width: 640px;
   padding-bottom: 10px;
   &__buttons-container {
     margin-top: 10px;
     &__button {
-      width: 40%;
+      width: 38%;
     }
     &__registration-link {
       display: inline-block;
-      width: 58%;
+      width: 60%;
       margin-left: 2%;
       text-align: right;
       box-sizing: border-box;

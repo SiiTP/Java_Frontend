@@ -10,7 +10,7 @@ define([
             posY: undefined,
             radius: 20,
             name: undefined,
-            gameScore: 500,
+            gameScore: 0,
             speed: 200,
             angle: 0, //направление движения
             visible: false

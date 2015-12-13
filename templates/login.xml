@@ -22,7 +22,7 @@
                 <div class="line js-login__input-field-password__line"> </div>
             </div>
             <div class="login__buttons-container">
-                <button type="submit" class="button login__buttons-container__button">Авторизоваться</button>
+                <button type="submit" class="button login__buttons-container__button">Войти</button>
                 <a class="login__buttons-container__registration-link" href="#registration">зарегистрироваться</a>
             </div>
         </form>
