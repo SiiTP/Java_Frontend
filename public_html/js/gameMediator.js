@@ -88,9 +88,9 @@ define (function() {
         };
         this.sendMessageWaiting = function() {
             console.log("message waiting");
-            var data = {'direction': -1, 'isMoving': 0};
+            var data = {'direction': -1, 'isMoving': true};
             if (this.myPlayer != null) {
-                data = {'direction': this.myPlayer.model.get('angle'), 'isMoving': 0};
+                data = {'direction': this.myPlayer.model.get('angle'), 'isMoving': true};
             }
             this.socket.send(JSON.stringify(data));
         };
