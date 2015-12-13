@@ -4,6 +4,8 @@ import game.sockets.MainWebSocket;
 import messages.*;
 import messages.transmitter.MoveMessageBack;
 import org.json.JSONObject;
+import resource.GameResources;
+import resource.ResourceFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,12 +14,14 @@ import java.util.Map;
  * Created by ivan on 13.12.15.
  */
 public class MessageFrontend implements Abonent,Runnable {
-    private Address address = new Address();
-    private Map<String,MainWebSocket> sockets = new HashMap<>();
-    private MessageSystem messageSystem;
-
+    private final Address address = new Address();
+    private final Map<String,MainWebSocket> sockets = new HashMap<>();
+    private final MessageSystem messageSystem;
+    private final int sleepTime;
     public MessageFrontend(MessageSystem messageSystem) {
         this.messageSystem = messageSystem;
+        GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
+        sleepTime = gameResources.getDefaultServiceSleep();
     }
 
     @Override
@@ -25,12 +29,13 @@ public class MessageFrontend implements Abonent,Runnable {
         return address;
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     @Override
     public void run() {
         while (true){
             messageSystem.execForAbonent(this);
             try{
-                Thread.sleep(25);
+                Thread.sleep(sleepTime);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

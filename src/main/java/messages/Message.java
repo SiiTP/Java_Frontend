@@ -4,8 +4,8 @@ package messages;
  * Created by ivan on 12.12.15.
  */
 public abstract class Message {
-    private Address from;
-    private Address to;
+    private final Address from;
+    private final Address to;
 
     public Message(Address from, Address to) {
         this.from = from;

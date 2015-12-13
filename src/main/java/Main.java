@@ -41,7 +41,6 @@ public class Main {
             MessageSwitch messageSwitch = new MessageSwitch(system,gameServer);
             system.addService(messageFrontend);
             system.addService(messageSwitch);
-            system.getAddressService().registerMessageFrontend(messageFrontend);
             system.getAddressService().registerMessageSwitch(messageSwitch);
 
             Thread thread = new Thread(messageFrontend);

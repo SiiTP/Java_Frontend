@@ -2,7 +2,6 @@ package messages.socket;
 
 import messages.Abonent;
 import messages.Address;
-import messages.Message;
 import messages.MessageJSON;
 import org.json.JSONObject;
 
@@ -10,7 +9,7 @@ import org.json.JSONObject;
  * Created by ivan on 12.12.15.
  */
 public class MoveMessage extends MessageJSON {
-    private String session;
+    private final String session;
 
     public MoveMessage(Address from, Address to, JSONObject messageData, String session) {
         super(from, to, messageData);
@@ -25,7 +24,7 @@ public class MoveMessage extends MessageJSON {
     @Override
     public void exec(Abonent abonent) {
         if(abonent instanceof MessageSwitch){
-            ((MessageSwitch) abonent).MoveMessage(this);
+            ((MessageSwitch) abonent).moveMessage(this);
         }
     }
 }

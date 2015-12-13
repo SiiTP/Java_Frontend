@@ -7,17 +7,14 @@ import game.user.GameProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.MarkerManager;
-import persistance.UserProfile;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
+import persistance.UserProfile;
 import resource.GameResources;
-import resource.PlayerState;
 import resource.ResourceFactory;
 
 import java.util.List;
 import java.util.Random;
-
-import static org.mockito.Mockito.mock;
 
 /**
  * Created by ivan on 25.10.15.
@@ -29,12 +26,12 @@ public class MoveActionStrategy implements GameActionStrategy {
     private final int speed;
     private final int radius;
     private final int defaultDontMoveValue;
-    private final PlayerState states;
+    private final int collisionDelta;
     private static final Logger LOGGER = LogManager.getLogger(MoveActionStrategy.class);
     public MoveActionStrategy(GameServer gameServer) {
         this.gameServer = gameServer;
         GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
-        states = (PlayerState) ResourceFactory.getResource("data/states");
+        collisionDelta = gameResources.getCollisionDelta();
         defaultDontMoveValue = gameResources.getDefaultStopDirectionValue();
         width = gameResources.getGameFieldWidth();
         height = gameResources.getGameFieldHeight();
@@ -133,7 +130,7 @@ public class MoveActionStrategy implements GameActionStrategy {
         long now = System.currentTimeMillis();
         if(firstProfile.getCollisionTimeStamp() == 0 || secondProfile.getCollisionTimeStamp() == 0){
             isAllowed = true;
-        }else if(now - firstProfile.getCollisionTimeStamp() > 250 || now - secondProfile.getCollisionTimeStamp() > 250 ){
+        }else if(now - firstProfile.getCollisionTimeStamp() > collisionDelta || now - secondProfile.getCollisionTimeStamp() > collisionDelta ){
             isAllowed = true;
         }
         return isAllowed;

@@ -8,20 +8,25 @@ import messages.Address;
 import messages.MessageSystem;
 import messages.transmitter.MoveMessageBack;
 import org.json.JSONObject;
+import resource.GameResources;
+import resource.ResourceFactory;
 
 /**
  * Created by ivan on 12.12.15.
  */
 public class MessageSwitch implements Runnable, Abonent{
-    private Address address;
-    private MessageSystem system;
-    private GameServer server;
+    private final Address address;
+    private final MessageSystem system;
+    private final GameServer server;
+    private final int serviceSleep;
     public MessageSwitch(MessageSystem system, GameServer server) {
         this.system = system;
         this.server = server;
         address = new Address();
+        GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
+        serviceSleep = gameResources.getDefaultServiceSleep();
     }
-    public void MoveMessage(MoveMessage message){
+    public void moveMessage(MoveMessage message){
         ActionProcessor processor = new MoveActionProcessor(server);
         JSONObject response = processor.processMessage(message.getMessageData(), message.getSession());
         MoveMessageBack backMessage = new MoveMessageBack(message.getTo(),message.getFrom(),response,message.getSession());
@@ -32,12 +37,13 @@ public class MessageSwitch implements Runnable, Abonent{
         return address;
     }
 
+    @SuppressWarnings("InfiniteLoopStatement")
     @Override
     public void run() {
         while(true){
             system.execForAbonent(this);
             try {
-                Thread.sleep(25);
+                Thread.sleep(serviceSleep);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

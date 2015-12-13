@@ -4,14 +4,11 @@ import game.action.gameaction.GameActionStrategy;
 import game.action.gameaction.MoveActionStrategy;
 import game.rooms.Room;
 import game.server.GameServer;
-import game.sockets.MainWebSocket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import resource.ResourceFactory;
 import resource.ResponseResources;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by ivan on 30.11.15.

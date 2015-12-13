@@ -5,15 +5,13 @@ import service.AddressService;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Created by ivan on 12.12.15.
  */
 public class MessageSystem {
-    private AddressService addressService = new AddressService();
-    private Map<Address,ConcurrentLinkedQueue<Message>> messages = new HashMap<>();
+    private final AddressService addressService = new AddressService();
+    private final Map<Address,ConcurrentLinkedQueue<Message>> messages = new HashMap<>();
 
     public void addService(Abonent abonent){
         messages.put(abonent.getAddress(), new ConcurrentLinkedQueue<>());

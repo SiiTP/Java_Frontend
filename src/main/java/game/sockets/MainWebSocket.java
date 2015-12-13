@@ -16,7 +16,7 @@ import java.io.IOException;
  * Created by ivan on 24.10.15.
  */
 public class MainWebSocket extends WebSocketAdapter{
-    private MessageFrontend messageFrontend;//todo add constructor
+    private final MessageFrontend messageFrontend;//todo add constructor
     private final GameServer gameServer;
     private final String httpSession;
     //private ActionProcessor actionProcessor;
@@ -55,7 +55,7 @@ public class MainWebSocket extends WebSocketAdapter{
             isOkPlayer = gameServer.isCorrectPlayerInGame(httpSession);
         }
         if(isOkPlayer){
-            messageFrontend.sendMessageForward(data,httpSession);
+            messageFrontend.sendMessageForward(data, httpSession);
         }
     }
 
@@ -84,7 +84,7 @@ public class MainWebSocket extends WebSocketAdapter{
             if(response != null) {
                 getRemote().sendString(response.toString());
             }else{
-                LOGGER.error("wrong message from " + httpSession + " message:" + response);
+                LOGGER.error("wrong message from " + httpSession);
             }
         } catch (IOException e) {
             LOGGER.error("cant send message back, user session " + httpSession);

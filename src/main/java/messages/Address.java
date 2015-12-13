@@ -14,6 +14,14 @@ public class Address {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof Address){
+            return hashCode() == obj.hashCode();
+        }
+        return super.equals(obj);
+    }
+
+    @Override
     public int hashCode() {
         return id;
     }

@@ -1,9 +1,7 @@
 package messages.transmitter;
 
-import game.sockets.MainWebSocket;
 import messages.Abonent;
 import messages.Address;
-import messages.Message;
 import messages.MessageJSON;
 import messages.socket.MessageFrontend;
 import org.json.JSONObject;
@@ -12,7 +10,7 @@ import org.json.JSONObject;
  * Created by ivan on 12.12.15.
  */
 public class MoveMessageBack extends MessageJSON {
-    private String session;
+    private final String session;
 
     public MoveMessageBack(Address from, Address to, JSONObject messageData, String session) {
         super(from, to, messageData);
