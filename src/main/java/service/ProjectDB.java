@@ -36,10 +36,14 @@ public class ProjectDB {
         createFactory();
     }
     public void initBD(String dbUser,String dbPass,String dbName){
-        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
-        configuration.setProperty("connection.username",dbUser);
-        configuration.setProperty("connection.password",dbPass);
-        configuration.setProperty("connection.url", "jdbc:mysql://localhost:3306/"+dbName);
+        Configuration configuration = new Configuration();//.configure("hibernate.cfg.xml");
+        configuration.setProperty("hibernate.connection.username",dbUser);
+        configuration.setProperty("hibernate.dialect","org.hibernate.dialect.MySQLDialect");
+        configuration.setProperty("connection.driver_class","com.mysql.jdbc.Driver");
+        configuration.setProperty("hibernate.current_session_context_class","thread");
+        configuration.setProperty("hbm2ddl.auto","update");
+        configuration.setProperty("hibernate.connection.password",dbPass);
+        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/"+dbName);
         s_serviceRegistry = getRegistry(configuration);
         createFactory();
     }
