@@ -76,7 +76,7 @@ public class Main {
                     LOGGER.fatal("wrong prop file",exc);
             }
             int port = Integer.parseInt(properties.getProperty("server.PORT"));
-            if (args.length == 1) {
+            if (args.length == 1 || args.length==4) {
                 String portString = args[0];
                 port = Integer.parseInt(portString);
                 if(port <= 0){
