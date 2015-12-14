@@ -7,8 +7,8 @@
 html, body {
   margin: 0;
   padding: 0;
-  width: 100%;
-  height: 100%; }
+  max-width: 2000px;
+  max-height: 2000px; }
 
 canvas {
   position: absolute;
@@ -16,8 +16,8 @@ canvas {
   left: 10px; }
 
 #page {
-  background: #001;
   height: 2000px;
+  background: #001;
   color: #f5f5f5;
   font-family: UbuntuItalic;
   font-size: 20px;
@@ -283,7 +283,7 @@ canvas {
 .login {
   margin: auto;
   width: 70%;
-  min-width: 360px;
+  min-width: 300px;
   max-width: 640px;
   padding-bottom: 10px; }
   .login__buttons-container {
@@ -310,7 +310,7 @@ canvas {
 .registration {
   color: #003;
   margin: auto;
-  min-width: 360px;
+  min-width: 300px;
   max-width: 640px;
   width: 70%; }
   .registration__button {
