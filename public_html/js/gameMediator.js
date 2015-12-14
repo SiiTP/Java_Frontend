@@ -9,8 +9,8 @@ define (function() {
         this.myPlayer = null;
         this.enemyPlayers = [];
         this.socket = null;
-        this.gameBegin= false;
-        this.waitingInterval= null;
+        this.gameBegin = false;
+        this.waitingInterval = null;
         this.limitPlayers = 0;
 
         this.initialize = function() {
@@ -37,13 +37,13 @@ define (function() {
                 }
 
                 if (answer.status == 200) {
+                    //console.log("___@ game proccess answer");
                     if (answer.limitPlayers) {
                         this.limitPlayers = answer.limitPlayers;
 
-                        var EnemyPlayerView = this.EnemyCharacter;
                         var enemyPlayers = this.enemyPlayers;
-
                         if (enemyPlayers.length == 0) {
+                            var EnemyPlayerView = this.EnemyCharacter;
                             for(var i = 0; i < this.limitPlayers - 1; i += 1) {
                                 var player = new EnemyPlayerView({
                                     className: "character character_enemy_" + i,
@@ -55,9 +55,8 @@ define (function() {
                         }
 
                         var myPlayer = this.myPlayer;
-                        var MyPlayerView = this.MyCharacter;
-
                         if (myPlayer == null) {
+                            var MyPlayerView = this.MyCharacter;
                             myPlayer = new MyPlayerView({
                                 className: "character character_my",
                                 'width': this.constants.get("FIELD_WIDTH"),
@@ -87,7 +86,6 @@ define (function() {
             this.waitingInterval = setInterval(this.sendMessageWaiting.bind(this), 50);
         };
         this.sendMessageWaiting = function() {
-            console.log("send message");
             var data = {'direction': -1, 'isMoving': true};
             if (this.myPlayer != null) {
                 data = {'direction': this.myPlayer.model.get('angle'), 'isMoving': this.myPlayer.model.get('isMoving')};
@@ -117,7 +115,7 @@ define (function() {
                         name  : answerPlayers[i].name,
                         angle : answerPlayers[i].direction,
                         score : answerPlayers[i].score,
-                        visible : answerPlayers[i].isKilled
+                        visible : !answerPlayers[i].isKilled
                     });
                     //console.log("setted enemy (" + enemies[j].model.get('name') + ") pos in array : " + j);
                     j += 1;
@@ -128,9 +126,9 @@ define (function() {
                         name  : answerPlayers[i].name,
                         angle : answerPlayers[i].direction,
                         score : answerPlayers[i].score,
-                        visible : answerPlayers[i].isKilled
+                        visible : !answerPlayers[i].isKilled
                     });
-                    //console.log("setted my player (" + myPlayer.model.get('name') + ")");
+                    //console.log("setted my player (" + this.myPlayer.model.get('visible') + ")");
                 }
             }
         };
