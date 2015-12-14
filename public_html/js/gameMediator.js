@@ -87,6 +87,7 @@ define (function() {
             this.waitingInterval = setInterval(this.sendMessageWaiting.bind(this), 50);
         };
         this.sendMessageWaiting = function() {
+            console.log("send message");
             var data = {'direction': -1, 'isMoving': true};
             if (this.myPlayer != null) {
                 data = {'direction': this.myPlayer.model.get('angle'), 'isMoving': this.myPlayer.model.get('isMoving')};
@@ -116,7 +117,7 @@ define (function() {
                         name  : answerPlayers[i].name,
                         angle : answerPlayers[i].direction,
                         score : answerPlayers[i].score,
-                        visible : true
+                        visible : answerPlayers[i].isKilled
                     });
                     //console.log("setted enemy (" + enemies[j].model.get('name') + ") pos in array : " + j);
                     j += 1;
@@ -127,7 +128,7 @@ define (function() {
                         name  : answerPlayers[i].name,
                         angle : answerPlayers[i].direction,
                         score : answerPlayers[i].score,
-                        visible : true
+                        visible : answerPlayers[i].isKilled
                     });
                     //console.log("setted my player (" + myPlayer.model.get('name') + ")");
                 }
