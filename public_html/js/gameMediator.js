@@ -83,7 +83,7 @@ define (function() {
             this.socket = socket;
         };
         this.beginningGameWaiting = function() {
-            this.waitingInterval = setInterval(this.sendMessageWaiting.bind(this), 50);
+            this.waitingInterval = setInterval(this.sendMessageWaiting.bind(this), this.constants.get('INTERVAL_SHORT'));
         };
         this.sendMessageWaiting = function() {
             var data = {'direction': -1, 'isMoving': true};
