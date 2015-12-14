@@ -51,7 +51,7 @@ public class MessageFrontend implements Abonent,Runnable {
     public void sendMessageToSocket(MessageJSON message){
         if(message instanceof MoveMessageBack){
             MainWebSocket socket = sockets.get(((MoveMessageBack) message).getSession());
-            if(socket != null) {
+            if(socket != null && socket.isConnected()) {
                 socket.sendMessageBack(message.getMessageData());
             }
         }
