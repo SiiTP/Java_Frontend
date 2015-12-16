@@ -11,6 +11,37 @@ module.exports = function (grunt) {
                 command: 'java -jar server.jar 8000 root ivan balls'
             }
         },
+        requirejs: {
+            build: {
+                options: {
+                    almond: true,
+                    baseUrl: "public_html/js",
+                    mainConfigFile: "public_html/js/main.js",
+                    name: "main",
+                    optimize: "none",
+                    out: "public_html/js/build/main.js"
+                }
+            }
+        },
+        concat: {
+            build: {
+                separator: ';\n',
+                src: [
+                    'public_html/js/lib/almond.js',
+                    'public_html/js/build/main.js'
+                ],
+                dest: 'public_html/js/build/build.js'
+            }
+        },
+        uglify: {
+            build: {
+                files: {
+                    'public_html/js/build/build.min.js':
+                        ['public_html/js/build/build.js']
+                }
+            }
+        },
+
         fest: {
             templates: {
                 files: [{
@@ -31,6 +62,9 @@ module.exports = function (grunt) {
         },
         sass: {
             dist: {
+                options: {
+                    style: "compressed"
+                },
                 files: [{
                     expand: true,
                     cwd: 'scss',
@@ -49,6 +83,7 @@ module.exports = function (grunt) {
                 }
             },
             sass: {
+
                 files: ['scss/*.scss'],
                 tasks: ['sass'],
                 options: {
@@ -76,10 +111,20 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-concurrent');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-fest');
     grunt.registerTask('default', ['concurrent']);
+    grunt.registerTask(
+        'build',
+        [
+            'fest', 'requirejs:build',
+            'concat:build', 'uglify:build', 'sass'
+        ]
+    );
 
 };
 

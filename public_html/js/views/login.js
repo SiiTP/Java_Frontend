@@ -35,19 +35,19 @@ define([
             if (this.JQ_cacheInput == null) {
                 this.JQ_cacheInput = {
                     'username': this.$(".js-login__input-field-username__input-line__input"),
-                    'password': $(".js-login__input-field-password__input-line__input")
+                    'password': this.$(".js-login__input-field-password__input-line__input")
                 };
             }
             if (this.JQ_cacheText == null) {
                 this.JQ_cacheText = {
-                    'username': $(".js-login__input-field-username__validation-info"),
-                    'password': $(".js-login__input-field-password__validation-info")
+                    'username': this.$(".js-login__input-field-username__validation-info"),
+                    'password': this.$(".js-login__input-field-password__validation-info")
                 };
             }
             if (this.JQ_cacheLine == null) {
                 this.JQ_cacheLine = {
-                    'username': $(".js-login__input-field-username__line"),
-                    'password': $(".js-login__input-field-password__line")
+                    'username': this.$(".js-login__input-field-username__line"),
+                    'password': this.$(".js-login__input-field-password__line")
                 };
             }
         },
@@ -79,7 +79,7 @@ define([
         },
         validateUsername: function (event) {
             this.JQ_cashing();
-            $(".validation-info-common").text("");
+            this.$(".validation-info-common").text("");
             this.model.set({'username': $(event.currentTarget).val()}, {validate: true});
             var errors = this.model.validationError;
             if (!errors) {
@@ -97,7 +97,7 @@ define([
         },
         validatePassword: function (event) {
             this.JQ_cashing();
-            $(".validation-info-common").text("");
+            this.$(".validation-info-common").text("");
             this.model.set({'password': $(event.currentTarget).val()}, {validate: true});
             var errors = this.model.validationError;
             if (!errors) {
@@ -128,7 +128,7 @@ define([
                 this.storage.setItem("password", this.model.get("password"));
                 this.model.save(null, this.model.optionsLog);
             } else {
-                $(".login__validation-info-common").text("Не все поля заданы корректно.");
+                this.$(".login__validation-info-common").text("Не все поля заданы корректно.");
                 this.focusOnErrorField();
             }
         },

@@ -4,7 +4,6 @@ define([
     'views/main',
     'views/field',
     'views/login',
-    'views/logout',
     'views/rooms',
     'views/registration',
     'views/scoreboard',
@@ -21,7 +20,6 @@ define([
     MainView,
     FieldView,
     LoginView,
-    LogoutView,
     RoomsView,
     RegistrationView,
     ScoreboardView,
@@ -36,15 +34,12 @@ define([
     var mainView =         new MainView         ({model: user});
     var registrationView = new RegistrationView ({model: user});
     var loginView =        new LoginView        ({model: user});
-    var logoutView =       new LogoutView       ({model: user});
     var scoreboardView =   new ScoreboardView   ({model: scores});
     var roomsView =        new RoomsView        ({model: rooms});
-    console.log(constants.get('FIELD_WIDTH'));
     var fieldView =        new FieldView        ({width: constants.get('FIELD_WIDTH'), height: constants.get('FIELD_HEIGHT')});
     manager.add(mainView);
     manager.add(scoreboardView);
     manager.add(loginView);
-    manager.add(logoutView);
     manager.add(registrationView);
     manager.add(roomsView);
     manager.add(fieldView);

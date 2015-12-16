@@ -7,8 +7,12 @@ define(['backbone'], function(Backbone) {
                 //__________________________
                 // OFFSETS BEFORE CANVAS_____
                 X_OFFSET_TO_CANVAS: 20,
-                Y_OFFSET_TO_CANVAS: 30
+                Y_OFFSET_TO_CANVAS: 30,
                 //__________________________
+                //INTERVALS_________________
+                INTERVAL_SHORT: 50,
+                //__________________________
+                SOCKET_ADDRESS: "ws://localhost:8000/gameplay"
             }
         });
     return new Constants();

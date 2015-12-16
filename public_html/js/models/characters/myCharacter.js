@@ -28,10 +28,11 @@ define([
         myMove: function (dt) {
             //console.log("myMove mouseX : " + this.mouseX + "; mouseY : " + this.mouseY);
             //console.log("MYMOVE : X : " + this.posX + "; Y :  " + this.posY + "; Angle : " + this.angle);
+            this.set({'isMoving': true});
             if (this.calculateDistanceToMouse(this.mouseX, this.mouseY) > this.get('radius')) {
                 this.move(dt);
             } else {
-                this.set({'angle': -1});
+                this.set({'isMoving': false});
             }
         }
     });

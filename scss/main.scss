@@ -26,8 +26,8 @@ $font-size_xxlarge: 48px;
 html, body {
   margin: 0;
   padding: 0;
-  width: 100%;
-  height: 100%;
+  max-width: 2000px;
+  max-height: 2000px;
 }
 canvas {
   position:absolute;
@@ -35,8 +35,8 @@ canvas {
   left: 10px;
 }
 #page {
-  background: $color-background;
   height: 2000px;
+  background: $color-background;
   color: $color-font-base;
   font-family: UbuntuItalic;
   font-size: $font-size_medium;

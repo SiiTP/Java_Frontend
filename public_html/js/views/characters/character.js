@@ -72,20 +72,18 @@ define([
             }
             this.canvas = null;
             this.context = null;
-        },
-        show: function() {
-            // TODO задать константы для размеров
-            debugger;
-            console.log("character show");
-            this.el.width = this.options.width;
-            this.el.height = this.options.height;
-            this.$el.show();
-        },
-        hide: function() {
-            console.log("character hide");
-            this.el.width = 0;
-            this.el.height = 0;
-            this.$el.hide();
         }
+        //show: function() {
+        //    console.log("character show");
+        //    this.el.width = this.options.width;
+        //    this.el.height = this.options.height;
+        //    this.$el.show();
+        //},
+        //hide: function() {
+        //    console.log("character hide");
+        //    this.el.width = 0;
+        //    this.el.height = 0;
+        //    this.$el.hide();
+        //}
     });
 });

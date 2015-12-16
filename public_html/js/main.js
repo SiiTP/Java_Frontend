@@ -17,11 +17,10 @@ require.config({
     }
 });
 
-define(['backbone', 'sync', 'router','constants'], function(
+define(['backbone', 'sync', 'router'], function(
     Backbone,
     sync,
-    router,
-    constants
+    router
 ){
     Backbone.history.start();
 });

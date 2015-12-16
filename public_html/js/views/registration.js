@@ -31,16 +31,16 @@ define([
             }
             if (this.JQ_cacheText == null) {
                 this.JQ_cacheText = {
-                    'username': $(".registration__input-field-username__validation-info"),
-                    'password': $(".registration__input-field-password__validation-info"),
-                    'confirm': $(".registration__input-field-confirm__validation-info")
+                    'username': this.$(".registration__input-field-username__validation-info"),
+                    'password': this.$(".registration__input-field-password__validation-info"),
+                    'confirm': this.$(".registration__input-field-confirm__validation-info")
                 };
             }
             if (this.JQ_cacheLine == null) {
                 this.JQ_cacheLine = {
-                    'username': $(".registration__input-field-username__line"),
-                    'password': $(".registration__input-field-password__line"),
-                    'confirm': $(".registration__input-field-confirm__line")
+                    'username': this.$(".registration__input-field-username__line"),
+                    'password': this.$(".registration__input-field-password__line"),
+                    'confirm' : this.$(".registration__input-field-confirm__line")
                 };
             }
         },

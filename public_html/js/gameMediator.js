@@ -9,8 +9,8 @@ define (function() {
         this.myPlayer = null;
         this.enemyPlayers = [];
         this.socket = null;
-        this.gameBegin= false;
-        this.waitingInterval= null;
+        this.gameBegin = false;
+        this.waitingInterval = null;
         this.limitPlayers = 0;
 
         this.initialize = function() {
@@ -20,14 +20,14 @@ define (function() {
             this.field.on('exit', this.exit.bind(this));
         };
         this.initializeSocket = function() {
-            var socket = new WebSocket("ws://localhost:8000/gameplay");//todo localhost в константы
+            var socket = new WebSocket(this.constants.get("SOCKET_ADDRESS"));
             console.log("after socket creating");
             socket.onopen = function(event) {
                 console.log("____ open socket");
                 this.beginningGameWaiting();
             }.bind(this);
             socket.onmessage = function(event) {
-                console.log("___> get message");
+                //console.log("___> get message");
                 //console.log(event.data);
                 var answer = JSON.parse(event.data);
 
@@ -37,13 +37,13 @@ define (function() {
                 }
 
                 if (answer.status == 200) {
+                    //console.log("___@ game proccess answer");
                     if (answer.limitPlayers) {
                         this.limitPlayers = answer.limitPlayers;
 
-                        var EnemyPlayerView = this.EnemyCharacter;
                         var enemyPlayers = this.enemyPlayers;
-
                         if (enemyPlayers.length == 0) {
+                            var EnemyPlayerView = this.EnemyCharacter;
                             for(var i = 0; i < this.limitPlayers - 1; i += 1) {
                                 var player = new EnemyPlayerView({
                                     className: "character character_enemy_" + i,
@@ -55,9 +55,8 @@ define (function() {
                         }
 
                         var myPlayer = this.myPlayer;
-                        var MyPlayerView = this.MyCharacter;
-
                         if (myPlayer == null) {
+                            var MyPlayerView = this.MyCharacter;
                             myPlayer = new MyPlayerView({
                                 className: "character character_my",
                                 'width': this.constants.get("FIELD_WIDTH"),
@@ -75,6 +74,7 @@ define (function() {
 
                 if (answer.status == 228) {
                     console.log("___@ winner is : " + answer.winner);
+                    this.field.trigger('win', answer.winner);
                     this.gameBegin = false;
                 }
             }.bind(this);
@@ -84,13 +84,12 @@ define (function() {
             this.socket = socket;
         };
         this.beginningGameWaiting = function() {
-            this.waitingInterval = setInterval(this.sendMessageWaiting.bind(this), 50);
+            this.waitingInterval = setInterval(this.sendMessageWaiting.bind(this), this.constants.get('INTERVAL_SHORT'));
         };
         this.sendMessageWaiting = function() {
-            console.log("message waiting");
             var data = {'direction': -1, 'isMoving': true};
             if (this.myPlayer != null) {
-                data = {'direction': this.myPlayer.model.get('angle'), 'isMoving': true};
+                data = {'direction': this.myPlayer.model.get('angle'), 'isMoving': this.myPlayer.model.get('isMoving')};
             }
             this.socket.send(JSON.stringify(data));
         };
@@ -117,7 +116,7 @@ define (function() {
                         name  : answerPlayers[i].name,
                         angle : answerPlayers[i].direction,
                         score : answerPlayers[i].score,
-                        visible : true
+                        visible : !answerPlayers[i].isKilled
                     });
                     //console.log("setted enemy (" + enemies[j].model.get('name') + ") pos in array : " + j);
                     j += 1;
@@ -128,9 +127,9 @@ define (function() {
                         name  : answerPlayers[i].name,
                         angle : answerPlayers[i].direction,
                         score : answerPlayers[i].score,
-                        visible : true
+                        visible : !answerPlayers[i].isKilled
                     });
-                    //console.log("setted my player (" + myPlayer.model.get('name') + ")");
+                    //console.log("setted my player (" + this.myPlayer.model.get('visible') + ")");
                 }
             }
         };
