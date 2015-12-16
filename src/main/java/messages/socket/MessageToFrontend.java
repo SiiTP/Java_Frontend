@@ -3,7 +3,6 @@ package messages.socket;
 import messages.Abonent;
 import messages.Address;
 import messages.Message;
-import messages.mechanics.MessageMechanics;
 import org.json.JSONObject;
 
 /**

@@ -1,8 +1,6 @@
 package messages.socket;
 
 import messages.Address;
-import messages.MessageJSON;
-import messages.mechanics.MessageMechanics;
 import messages.socket.MessageFrontend;
 import org.json.JSONObject;
 

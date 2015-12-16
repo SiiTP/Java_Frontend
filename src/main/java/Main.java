@@ -3,7 +3,6 @@ import messages.MessageSystem;
 import messages.socket.MessageFrontend;
 import messages.mechanics.MessageMechanics;
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;
-import org.eclipse.jetty.servlet.DefaultServlet;
 import persistance.UserProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +21,6 @@ import servlets.game.MainSocketWebServlet;
 import servlets.game.ScoreServlet;
 import servlets.game.room.RoomServlet;
 
-import javax.servlet.ServletConfig;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
