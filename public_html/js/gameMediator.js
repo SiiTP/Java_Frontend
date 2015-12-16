@@ -20,7 +20,7 @@ define (function() {
             this.field.on('exit', this.exit.bind(this));
         };
         this.initializeSocket = function() {
-            var socket = new WebSocket("ws://localhost:8000/gameplay");//todo localhost в константы
+            var socket = new WebSocket(this.constants.get("SOCKET_ADDRESS"));
             console.log("after socket creating");
             socket.onopen = function(event) {
                 console.log("____ open socket");
@@ -74,6 +74,7 @@ define (function() {
 
                 if (answer.status == 228) {
                     console.log("___@ winner is : " + answer.winner);
+                    this.field.trigger('win', answer.winner);
                     this.gameBegin = false;
                 }
             }.bind(this);

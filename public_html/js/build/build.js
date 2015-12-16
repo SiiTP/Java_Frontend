@@ -629,8 +629,9 @@ define('views/field',[
         },
         show: function () {
             this.$el.show();
+            this.on('win', this.onWin);
             this.trigger('show');
-            this.canvas = $('.field')[0];
+            this.canvas = this.$('.field')[0];
             this.canvas.width  = this.options.width;
             this.canvas.height = this.options.height;
             this.context = this.canvas.getContext('2d');
@@ -642,6 +643,10 @@ define('views/field',[
             }
             //this.trigger('exit');
             this.$el.hide();
+        },
+        onWin: function(winner) {
+            // TODO Вывод победителя
+            debugger;
         },
         onMouseMove: function(event) {
             this.trigger('mouseMove', {'x' : event.pageX, 'y' : event.pageY});
@@ -694,19 +699,19 @@ define('views/login',[
             if (this.JQ_cacheInput == null) {
                 this.JQ_cacheInput = {
                     'username': this.$(".js-login__input-field-username__input-line__input"),
-                    'password': $(".js-login__input-field-password__input-line__input")
+                    'password': this.$(".js-login__input-field-password__input-line__input")
                 };
             }
             if (this.JQ_cacheText == null) {
                 this.JQ_cacheText = {
-                    'username': $(".js-login__input-field-username__validation-info"),
-                    'password': $(".js-login__input-field-password__validation-info")
+                    'username': this.$(".js-login__input-field-username__validation-info"),
+                    'password': this.$(".js-login__input-field-password__validation-info")
                 };
             }
             if (this.JQ_cacheLine == null) {
                 this.JQ_cacheLine = {
-                    'username': $(".js-login__input-field-username__line"),
-                    'password': $(".js-login__input-field-password__line")
+                    'username': this.$(".js-login__input-field-username__line"),
+                    'password': this.$(".js-login__input-field-password__line")
                 };
             }
         },
@@ -738,7 +743,7 @@ define('views/login',[
         },
         validateUsername: function (event) {
             this.JQ_cashing();
-            $(".validation-info-common").text("");
+            this.$(".validation-info-common").text("");
             this.model.set({'username': $(event.currentTarget).val()}, {validate: true});
             var errors = this.model.validationError;
             if (!errors) {
@@ -756,7 +761,7 @@ define('views/login',[
         },
         validatePassword: function (event) {
             this.JQ_cashing();
-            $(".validation-info-common").text("");
+            this.$(".validation-info-common").text("");
             this.model.set({'password': $(event.currentTarget).val()}, {validate: true});
             var errors = this.model.validationError;
             if (!errors) {
@@ -787,7 +792,7 @@ define('views/login',[
                 this.storage.setItem("password", this.model.get("password"));
                 this.model.save(null, this.model.optionsLog);
             } else {
-                $(".login__validation-info-common").text("Не все поля заданы корректно.");
+                this.$(".login__validation-info-common").text("Не все поля заданы корректно.");
                 this.focusOnErrorField();
             }
         },
@@ -824,36 +829,6 @@ define('views/login',[
             this.$el.hide();
         }
     });
-});
-define('tmpl/logout',[],function () { return function (__fest_context){"use strict";var __fest_self=this,__fest_buf="",__fest_chunks=[],__fest_chunk,__fest_attrs=[],__fest_select,__fest_if,__fest_iterator,__fest_to,__fest_fn,__fest_html="",__fest_blocks={},__fest_params,__fest_element,__fest_debug_file="",__fest_debug_line="",__fest_debug_block="",__fest_htmlchars=/[&<>"]/g,__fest_htmlchars_test=/[&<>"]/,__fest_short_tags = {"area":true,"base":true,"br":true,"col":true,"command":true,"embed":true,"hr":true,"img":true,"input":true,"keygen":true,"link":true,"meta":true,"param":true,"source":true,"wbr":true},__fest_element_stack = [],__fest_htmlhash={"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"},__fest_jschars=/[\\'"\/\n\r\t\b\f<>]/g,__fest_jschars_test=/[\\'"\/\n\r\t\b\f<>]/,__fest_jshash={"\"":"\\\"","\\":"\\\\","/":"\\/","\n":"\\n","\r":"\\r","\t":"\\t","\b":"\\b","\f":"\\f","'":"\\'","<":"\\u003C",">":"\\u003E"},___fest_log_error;if(typeof __fest_error === "undefined"){___fest_log_error = (typeof console !== "undefined" && console.error) ? function(){return Function.prototype.apply.call(console.error, console, arguments)} : function(){};}else{___fest_log_error=__fest_error};function __fest_log_error(msg){___fest_log_error(msg+"\nin block \""+__fest_debug_block+"\" at line: "+__fest_debug_line+"\nfile: "+__fest_debug_file)}function __fest_replaceHTML(chr){return __fest_htmlhash[chr]}function __fest_replaceJS(chr){return __fest_jshash[chr]}function __fest_extend(dest, src){for(var i in src)if(src.hasOwnProperty(i))dest[i]=src[i];}function __fest_param(fn){fn.param=true;return fn}function __fest_call(fn, params,cp){if(cp)for(var i in params)if(typeof params[i]=="function"&&params[i].param)params[i]=params[i]();return fn.call(__fest_self,params)}function __fest_escapeJS(s){if (typeof s==="string") {if (__fest_jschars_test.test(s))return s.replace(__fest_jschars,__fest_replaceJS);} else if (typeof s==="undefined")return "";return s;}function __fest_escapeHTML(s){if (typeof s==="string") {if (__fest_htmlchars_test.test(s))return s.replace(__fest_htmlchars,__fest_replaceHTML);} else if (typeof s==="undefined")return "";return s;}var data=__fest_context;__fest_buf+=("<div class=\"logout\"><div class=\"logout__info\">Вы вошли, как: <span>");try{__fest_buf+=(__fest_escapeHTML(data.name))}catch(e){__fest_log_error(e.message + "2");}__fest_buf+=("</span></div>; <div class=\"logout__info\">Ваш счет : <span>");try{__fest_buf+=(__fest_escapeHTML(data.score))}catch(e){__fest_log_error(e.message + "5");}__fest_buf+=("</span></div><br/><button type=\"button\" class=\"button button_logout\" data-href=\"#logout\">Logout</button></div>");__fest_to=__fest_chunks.length;if (__fest_to) {__fest_iterator = 0;for (;__fest_iterator<__fest_to;__fest_iterator++) {__fest_chunk=__fest_chunks[__fest_iterator];if (typeof __fest_chunk==="string") {__fest_html+=__fest_chunk;} else {__fest_fn=__fest_blocks[__fest_chunk.name];if (__fest_fn) __fest_html+=__fest_call(__fest_fn,__fest_chunk.params,__fest_chunk.cp);}}return __fest_html+__fest_buf;} else {return __fest_buf;}} ; });
-define('views/logout',[
-    'backbone',
-    'tmpl/logout'
-], function(
-    Backbone,
-    tmpl
-){
-
-    var View = Backbone.View.extend({
-        template: tmpl,
-        model: null,
-        events: {
-            "click .button_logout" : "onSubmit"
-        },
-        show: function () {
-            this.$el.show();
-        },
-        hide: function () {
-            this.$el.hide();
-
-        },
-        onSubmit: function() {
-            console.log("logout-view logout click event");
-            this.model.destroy();
-        }
-    });
-
-    return View;
 });
 define('tmpl/rooms',[],function () { return function (__fest_context){"use strict";var __fest_self=this,__fest_buf="",__fest_chunks=[],__fest_chunk,__fest_attrs=[],__fest_select,__fest_if,__fest_iterator,__fest_to,__fest_fn,__fest_html="",__fest_blocks={},__fest_params,__fest_element,__fest_debug_file="",__fest_debug_line="",__fest_debug_block="",__fest_htmlchars=/[&<>"]/g,__fest_htmlchars_test=/[&<>"]/,__fest_short_tags = {"area":true,"base":true,"br":true,"col":true,"command":true,"embed":true,"hr":true,"img":true,"input":true,"keygen":true,"link":true,"meta":true,"param":true,"source":true,"wbr":true},__fest_element_stack = [],__fest_htmlhash={"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"},__fest_jschars=/[\\'"\/\n\r\t\b\f<>]/g,__fest_jschars_test=/[\\'"\/\n\r\t\b\f<>]/,__fest_jshash={"\"":"\\\"","\\":"\\\\","/":"\\/","\n":"\\n","\r":"\\r","\t":"\\t","\b":"\\b","\f":"\\f","'":"\\'","<":"\\u003C",">":"\\u003E"},___fest_log_error;if(typeof __fest_error === "undefined"){___fest_log_error = (typeof console !== "undefined" && console.error) ? function(){return Function.prototype.apply.call(console.error, console, arguments)} : function(){};}else{___fest_log_error=__fest_error};function __fest_log_error(msg){___fest_log_error(msg+"\nin block \""+__fest_debug_block+"\" at line: "+__fest_debug_line+"\nfile: "+__fest_debug_file)}function __fest_replaceHTML(chr){return __fest_htmlhash[chr]}function __fest_replaceJS(chr){return __fest_jshash[chr]}function __fest_extend(dest, src){for(var i in src)if(src.hasOwnProperty(i))dest[i]=src[i];}function __fest_param(fn){fn.param=true;return fn}function __fest_call(fn, params,cp){if(cp)for(var i in params)if(typeof params[i]=="function"&&params[i].param)params[i]=params[i]();return fn.call(__fest_self,params)}function __fest_escapeJS(s){if (typeof s==="string") {if (__fest_jschars_test.test(s))return s.replace(__fest_jschars,__fest_replaceJS);} else if (typeof s==="undefined")return "";return s;}function __fest_escapeHTML(s){if (typeof s==="string") {if (__fest_htmlchars_test.test(s))return s.replace(__fest_htmlchars,__fest_replaceHTML);} else if (typeof s==="undefined")return "";return s;}var data=__fest_context;__fest_buf+=("<div class=\"rooms\"><div class=\"rooms__header\"><div class=\"header-text\">Список комнат</div></div><div class=\"line line_blue\"></div>");try{__fest_if=data.rooms.length > 0}catch(e){__fest_if=false;__fest_log_error(e.message);}if(__fest_if){__fest_buf+=("<div class=\"rooms__lines\"><div class=\"rooms__lines__header\"><div class=\"rooms__lines__header__index\">№</div><div class=\"rooms__lines__header__name\">Название</div><div class=\"rooms__lines__header__players\">Сейчас</div><div class=\"rooms__lines__header__maxPlayers\">Лимит</div></div>");var i,item,__fest_iterator0;try{__fest_iterator0=data.rooms || {};}catch(e){__fest_iterator={};__fest_log_error(e.message);}for(i in __fest_iterator0){item=__fest_iterator0[i];__fest_buf+=("<div class=\"rooms__lines__line\"><div class=\"rooms__lines__line__index\">");try{__fest_buf+=(__fest_escapeHTML(i))}catch(e){__fest_log_error(e.message + "17");}__fest_buf+=("</div><div class=\"rooms__lines__line__name\">");try{__fest_buf+=(__fest_escapeHTML(item.name))}catch(e){__fest_log_error(e.message + "18");}__fest_buf+=("</div><div class=\"rooms__lines__line__players\">");try{__fest_buf+=(__fest_escapeHTML(item.players))}catch(e){__fest_log_error(e.message + "19");}__fest_buf+=("</div><div class=\"rooms__lines__line__maxPlayers\">");try{__fest_buf+=(__fest_escapeHTML(item.maxPlayers))}catch(e){__fest_log_error(e.message + "20");}__fest_buf+=("</div>");try{__fest_attrs[0]=__fest_escapeHTML(item.name)}catch(e){__fest_attrs[0]=""; __fest_log_error(e.message);}__fest_buf+=("<button class=\"button rooms__lines__line__button\" data-roomid=\"" + __fest_attrs[0] + "\">Connect!</button></div>");}__fest_buf+=("</div>");}else{__fest_buf+=("<div class=\"rooms__noRooms\"><div class=\"header-text rooms__noRooms__message\">Созданных комнат нет</div></div>");}__fest_buf+=("<button class=\"button button_long smallMargTop js-button-refresh\">Обновить</button><div class=\"line line_blue\"></div><div class=\"rooms__create\"><div class=\"header-text rooms__create__header\">Создание новой комнаты</div><form method=\"post\"><div class=\"input-line rooms__create__input-line\"><label for=\"roomName\" class=\"input-line__header rooms__create__input-line__header\">Название</label><input class=\"input-line__input\" type=\"text\" name=\"roomName\" id=\"roomName\"/></div><button class=\"button rooms__create__button\">Создать!</button></form></div><div class=\"line line_blue\"></div><button class=\"button button_long smallMargTop js-button-onMain\" data-href=\"#\">На главную</button><div class=\"validation-info validation-info-common validation-info_error rooms__create__message\"></div></div>");__fest_to=__fest_chunks.length;if (__fest_to) {__fest_iterator = 0;for (;__fest_iterator<__fest_to;__fest_iterator++) {__fest_chunk=__fest_chunks[__fest_iterator];if (typeof __fest_chunk==="string") {__fest_html+=__fest_chunk;} else {__fest_fn=__fest_blocks[__fest_chunk.name];if (__fest_fn) __fest_html+=__fest_call(__fest_fn,__fest_chunk.params,__fest_chunk.cp);}}return __fest_html+__fest_buf;} else {return __fest_buf;}} ; });
 define('views/rooms',[
@@ -962,16 +937,16 @@ define('views/registration',[
             }
             if (this.JQ_cacheText == null) {
                 this.JQ_cacheText = {
-                    'username': $(".registration__input-field-username__validation-info"),
-                    'password': $(".registration__input-field-password__validation-info"),
-                    'confirm': $(".registration__input-field-confirm__validation-info")
+                    'username': this.$(".registration__input-field-username__validation-info"),
+                    'password': this.$(".registration__input-field-password__validation-info"),
+                    'confirm': this.$(".registration__input-field-confirm__validation-info")
                 };
             }
             if (this.JQ_cacheLine == null) {
                 this.JQ_cacheLine = {
-                    'username': $(".registration__input-field-username__line"),
-                    'password': $(".registration__input-field-password__line"),
-                    'confirm': $(".registration__input-field-confirm__line")
+                    'username': this.$(".registration__input-field-username__line"),
+                    'password': this.$(".registration__input-field-password__line"),
+                    'confirm' : this.$(".registration__input-field-confirm__line")
                 };
             }
         },
@@ -1396,7 +1371,7 @@ define ('gameMediator',[],function() {
             this.field.on('exit', this.exit.bind(this));
         };
         this.initializeSocket = function() {
-            var socket = new WebSocket("ws://localhost:8000/gameplay");//todo localhost в константы
+            var socket = new WebSocket(this.constants.get("SOCKET_ADDRESS"));
             console.log("after socket creating");
             socket.onopen = function(event) {
                 console.log("____ open socket");
@@ -1450,6 +1425,7 @@ define ('gameMediator',[],function() {
 
                 if (answer.status == 228) {
                     console.log("___@ winner is : " + answer.winner);
+                    this.field.trigger('win', answer.winner);
                     this.gameBegin = false;
                 }
             }.bind(this);
@@ -1647,21 +1623,19 @@ define('views/characters/character',[
             }
             this.canvas = null;
             this.context = null;
-        },
-        show: function() {
-            // TODO задать константы для размеров
-            debugger;
-            console.log("character show");
-            this.el.width = this.options.width;
-            this.el.height = this.options.height;
-            this.$el.show();
-        },
-        hide: function() {
-            console.log("character hide");
-            this.el.width = 0;
-            this.el.height = 0;
-            this.$el.hide();
         }
+        //show: function() {
+        //    console.log("character show");
+        //    this.el.width = this.options.width;
+        //    this.el.height = this.options.height;
+        //    this.$el.show();
+        //},
+        //hide: function() {
+        //    console.log("character hide");
+        //    this.el.width = 0;
+        //    this.el.height = 0;
+        //    this.$el.hide();
+        //}
     });
 });
 define('models/characters/character',[
@@ -1807,8 +1781,9 @@ define('constants',['backbone'], function(Backbone) {
                 Y_OFFSET_TO_CANVAS: 30,
                 //__________________________
                 //INTERVALS_________________
-                INTERVAL_SHORT: 50
+                INTERVAL_SHORT: 50,
                 //__________________________
+                SOCKET_ADDRESS: "ws://localhost:8000/gameplay"
             }
         });
     return new Constants();
@@ -1819,7 +1794,6 @@ define('router',[
     'views/main',
     'views/field',
     'views/login',
-    'views/logout',
     'views/rooms',
     'views/registration',
     'views/scoreboard',
@@ -1836,7 +1810,6 @@ define('router',[
     MainView,
     FieldView,
     LoginView,
-    LogoutView,
     RoomsView,
     RegistrationView,
     ScoreboardView,
@@ -1851,14 +1824,12 @@ define('router',[
     var mainView =         new MainView         ({model: user});
     var registrationView = new RegistrationView ({model: user});
     var loginView =        new LoginView        ({model: user});
-    var logoutView =       new LogoutView       ({model: user});
     var scoreboardView =   new ScoreboardView   ({model: scores});
     var roomsView =        new RoomsView        ({model: rooms});
     var fieldView =        new FieldView        ({width: constants.get('FIELD_WIDTH'), height: constants.get('FIELD_HEIGHT')});
     manager.add(mainView);
     manager.add(scoreboardView);
     manager.add(loginView);
-    manager.add(logoutView);
     manager.add(registrationView);
     manager.add(roomsView);
     manager.add(fieldView);

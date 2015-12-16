@@ -17,8 +17,9 @@ define([
         },
         show: function () {
             this.$el.show();
+            this.on('win', this.onWin);
             this.trigger('show');
-            this.canvas = $('.field')[0];
+            this.canvas = this.$('.field')[0];
             this.canvas.width  = this.options.width;
             this.canvas.height = this.options.height;
             this.context = this.canvas.getContext('2d');
@@ -30,6 +31,10 @@ define([
             }
             //this.trigger('exit');
             this.$el.hide();
+        },
+        onWin: function(winner) {
+            // TODO Вывод победителя
+            debugger;
         },
         onMouseMove: function(event) {
             this.trigger('mouseMove', {'x' : event.pageX, 'y' : event.pageY});

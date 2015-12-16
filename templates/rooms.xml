@@ -19,7 +19,6 @@
                             <div class="rooms__lines__line__name"><fest:value>item.name</fest:value></div>
                             <div class="rooms__lines__line__players"><fest:value>item.players</fest:value></div>
                             <div class="rooms__lines__line__maxPlayers"><fest:value>item.maxPlayers</fest:value></div>
-                            <!-- TODO вместо имени подставлять роомИД в данные-->
                             <button class="button rooms__lines__line__button" data-roomid="{item.name}">Connect!</button>
                         </div>
                     </fest:each>
