@@ -2,7 +2,7 @@ package messages.socket;
 
 import game.sockets.MainWebSocket;
 import messages.*;
-import messages.transmitter.MoveMessageBack;
+import messages.mechanics.MoveMessage;
 import org.json.JSONObject;
 import resource.GameResources;
 import resource.ResourceFactory;
@@ -48,13 +48,11 @@ public class MessageFrontend implements Abonent,Runnable {
         MoveMessage moveMessage = new MoveMessage(address,messageSystem.getAddressService().getMessageSwitchAddress(),data,session);
         messageSystem.sendMessage(moveMessage);
     }
-    public void sendMessageToSocket(MessageJSON message){
-        if(message instanceof MoveMessageBack){
+    public void sendMessageToSocket(MessageToFrontend message){
             MainWebSocket socket = sockets.get(((MoveMessageBack) message).getSession());
             if(socket != null && socket.isConnected()) {
                 socket.sendMessageBack(message.getMessageData());
             }
-        }
     }
     public void deleteSocket(String session){
         sockets.remove(session);

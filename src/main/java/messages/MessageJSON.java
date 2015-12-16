@@ -1,5 +1,6 @@
 package messages;
 
+import messages.mechanics.MessageMechanics;
 import org.json.JSONObject;
 
 /**
@@ -16,4 +17,12 @@ public abstract class MessageJSON extends Message {
     public JSONObject getMessageData() {
         return messageData;
     }
+
+    @Override
+    public void exec(Abonent abonent) {
+        if( abonent instanceof MessageMechanics){
+            exec((MessageMechanics)abonent);
+        }
+    }
+    public abstract void exec(MessageMechanics mechanics);
 }
