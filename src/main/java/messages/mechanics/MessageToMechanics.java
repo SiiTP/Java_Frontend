@@ -1,15 +1,17 @@
-package messages;
+package messages.mechanics;
 
-import messages.mechanics.MessageMechanics;
+import messages.Abonent;
+import messages.Address;
+import messages.Message;
 import org.json.JSONObject;
 
 /**
  * Created by ivan on 13.12.15.
  */
-public abstract class MessageJSON extends Message {
+public abstract class MessageToMechanics extends Message {
     private final JSONObject messageData;
 
-    public MessageJSON(Address from, Address to, JSONObject messageData) {
+    public MessageToMechanics(Address from, Address to, JSONObject messageData) {
         super(from, to);
         this.messageData = messageData;
     }

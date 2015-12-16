@@ -1,7 +1,8 @@
 import game.server.GameServer;
 import messages.MessageSystem;
 import messages.socket.MessageFrontend;
-import messages.socket.MessageSwitch;
+import messages.mechanics.MessageMechanics;
+import org.eclipse.jetty.servlet.DefaultServlet;
 import persistance.UserProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,6 +21,7 @@ import servlets.game.MainSocketWebServlet;
 import servlets.game.ScoreServlet;
 import servlets.game.room.RoomServlet;
 
+import javax.servlet.ServletConfig;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -55,15 +57,15 @@ public class Main {
 
             MessageSystem system = new MessageSystem();
             MessageFrontend messageFrontend = new MessageFrontend(system);
-            MessageSwitch messageSwitch = new MessageSwitch(system,gameServer);
+            MessageMechanics messageMechanics = new MessageMechanics(system,gameServer);
             system.addService(messageFrontend);
-            system.addService(messageSwitch);
-            system.getAddressService().registerMessageSwitch(messageSwitch);
+            system.addService(messageMechanics);
+            system.getAddressService().registerMessageSwitch(messageMechanics);
 
             Thread thread = new Thread(messageFrontend);
             thread.setDaemon(true);
             thread.start();
-            Thread thread2 = new Thread(messageSwitch);
+            Thread thread2 = new Thread(messageMechanics);
             thread2.setDaemon(true);
             thread2.start();
 
@@ -86,12 +88,15 @@ public class Main {
             }
             Server server = new Server(port);
             ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+
+
             context.addServlet(new ServletHolder(new UserServlet(accountService)),"/user");
             context.addServlet(new ServletHolder(new AdminServlet(server, gameServer)), "/admin");
             context.addServlet(new ServletHolder(new RoomServlet(gameServer)), "/rooms");
             context.addServlet(new ServletHolder(new ScoreServlet(gameServer)), "/score");
             context.addServlet(new ServletHolder(new MainSocketWebServlet(gameServer,messageFrontend)), "/gameplay");
             ResourceHandler resourceHandler = new ResourceHandler();
+            resourceHandler.setEtags(true);
             resourceHandler.setResourceBase("public_html");
             HandlerList list = new HandlerList();
             list.setHandlers(new Handler[]{resourceHandler, context});

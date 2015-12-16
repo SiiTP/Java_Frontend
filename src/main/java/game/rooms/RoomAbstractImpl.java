@@ -45,6 +45,7 @@ public abstract class RoomAbstractImpl implements Room  {
     public boolean isRoomHasPass() {
         return password != null;
     }
+    @SuppressWarnings("SameParameterValue")
     public void setPlayersLimit(int playersLimit){
         this.playersLimit = playersLimit;
     }

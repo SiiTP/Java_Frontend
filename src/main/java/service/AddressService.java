@@ -1,7 +1,7 @@
 package service;
 
 import messages.Address;
-import messages.socket.MessageSwitch;
+import messages.mechanics.MessageMechanics;
 
 /**
  * Created by ivan on 12.12.15.
@@ -12,7 +12,7 @@ public class AddressService{
     public Address getMessageSwitchAddress() {
         return messageSwitch;
     }
-    public void registerMessageSwitch(MessageSwitch mSwitch){
+    public void registerMessageSwitch(MessageMechanics mSwitch){
         this.messageSwitch = mSwitch.getAddress();
     }
 }

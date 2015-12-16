@@ -1,4 +1,4 @@
-package messages.socket;
+package messages.mechanics;
 
 import game.action.processor.ActionProcessor;
 import game.action.processor.MoveActionProcessor;
@@ -6,7 +6,7 @@ import game.server.GameServer;
 import messages.Abonent;
 import messages.Address;
 import messages.MessageSystem;
-import messages.transmitter.MoveMessageBack;
+import messages.socket.MoveMessageBack;
 import org.json.JSONObject;
 import resource.GameResources;
 import resource.ResourceFactory;
@@ -14,12 +14,12 @@ import resource.ResourceFactory;
 /**
  * Created by ivan on 12.12.15.
  */
-public class MessageSwitch implements Runnable, Abonent{
+public class MessageMechanics implements Runnable, Abonent{
     private final Address address;
     private final MessageSystem system;
     private final GameServer server;
     private final int serviceSleep;
-    public MessageSwitch(MessageSystem system, GameServer server) {
+    public MessageMechanics(MessageSystem system, GameServer server) {
         this.system = system;
         this.server = server;
         address = new Address();

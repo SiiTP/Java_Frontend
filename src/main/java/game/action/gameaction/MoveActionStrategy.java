@@ -50,7 +50,7 @@ public class MoveActionStrategy implements GameActionStrategy {
                     double dt = gameProfile.getDeltaTime();
                     double direction = getDrection(message);
                     gameProfile.setIsMoving(isMoving(message));
-                    if (direction != defaultDontMoveValue && gameProfile.isMoving()) {
+                    if (gameProfile.isMoving()) {
                         double radian = Math.toRadians(direction);
                         double x = gameProfile.getX();
                         double y = gameProfile.getY();

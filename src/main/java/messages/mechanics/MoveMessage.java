@@ -1,14 +1,14 @@
-package messages.socket;
+package messages.mechanics;
 
-import messages.Abonent;
 import messages.Address;
 import messages.MessageJSON;
+import messages.mechanics.MessageMechanics;
 import org.json.JSONObject;
 
 /**
  * Created by ivan on 12.12.15.
  */
-public class MoveMessage extends MessageJSON {
+public class MoveMessage extends MessageToMechanics {
     private final String session;
 
     public MoveMessage(Address from, Address to, JSONObject messageData, String session) {
@@ -22,9 +22,7 @@ public class MoveMessage extends MessageJSON {
     }
 
     @Override
-    public void exec(Abonent abonent) {
-        if(abonent instanceof MessageSwitch){
-            ((MessageSwitch) abonent).moveMessage(this);
-        }
+    public void exec(MessageMechanics mechanics) {
+            mechanics.moveMessage(this);
     }
 }
