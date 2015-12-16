@@ -9,14 +9,28 @@
     ">
     <title>BeamBalls</title>
     <link href="css/main.css" rel="stylesheet"/>
+    <style>
+        .preloader {
+            margin: 0 auto;
+            width: 500px;
+            white-space: nowrap;
+        }
+        .preloader__text {
+            position: relative;
+            top: -25px;
+            display: inline-block;
+            color: #ff0;
+        }
+    </style>
 </head><body>
     <div id="page"></div>
-    <!--<script data-main="js/main" src="js/lib/require-min.js"></script>-->
+    <script src="js/preloader.js"></script>
+    <!--<script data-main="js/main" src="js/lib/require-min.js" defer></script>-->
     <script src="js/build/build.min.js"></script>
     <script>
         require(['main'], function(){
-            console.log('hello');
+            console.log('resources downloaded');
         });
     </script>
-    <!--<script src="//localhost:35729/livereload.js"></script>-->
+    <script src="//localhost:35729/livereload.js"></script>
 </body></html>

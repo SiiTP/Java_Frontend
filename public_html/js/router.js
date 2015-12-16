@@ -31,6 +31,7 @@ define([
     EnemyCharacter,
     constants
 ) {
+    debugger;
     var mainView =         new MainView         ({model: user});
     var registrationView = new RegistrationView ({model: user});
     var loginView =        new LoginView        ({model: user});
