@@ -2,6 +2,7 @@ import game.server.GameServer;
 import messages.MessageSystem;
 import messages.socket.MessageFrontend;
 import messages.mechanics.MessageMechanics;
+import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import persistance.UserProfile;
 import org.apache.logging.log4j.LogManager;
@@ -90,16 +91,20 @@ public class Main {
             ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
 
-            context.addServlet(new ServletHolder(new UserServlet(accountService)),"/user");
+            context.addServlet(new ServletHolder(new UserServlet(accountService)), "/user");
             context.addServlet(new ServletHolder(new AdminServlet(server, gameServer)), "/admin");
             context.addServlet(new ServletHolder(new RoomServlet(gameServer)), "/rooms");
             context.addServlet(new ServletHolder(new ScoreServlet(gameServer)), "/score");
-            context.addServlet(new ServletHolder(new MainSocketWebServlet(gameServer,messageFrontend)), "/gameplay");
+            context.addServlet(new ServletHolder(new MainSocketWebServlet(gameServer, messageFrontend)), "/gameplay");
             ResourceHandler resourceHandler = new ResourceHandler();
             resourceHandler.setEtags(true);
+
+            GzipHandler gzipHandler = new GzipHandler();
+            gzipHandler.setIncludedMimeTypes("text/plain,text/css,application/json,application/javascript,text/xml,application/xml,application/xml+rss,text/javascript");
+            gzipHandler.setHandler(resourceHandler);
             resourceHandler.setResourceBase("public_html");
             HandlerList list = new HandlerList();
-            list.setHandlers(new Handler[]{resourceHandler, context});
+            list.setHandlers(new Handler[]{gzipHandler,resourceHandler, context});
 
             server.setHandler(list);
             server.start();
