@@ -17,6 +17,7 @@ import service.ProjectDB;
 import service.account.AccountService;
 import servlets.admins.AdminServlet;
 import servlets.authorization.*;
+import servlets.game.JoystickSocketServlet;
 import servlets.game.MainSocketWebServlet;
 import servlets.game.ScoreServlet;
 import servlets.game.room.RoomServlet;
@@ -68,7 +69,6 @@ public class Main {
             thread2.setDaemon(true);
             thread2.start();
 
-
             Properties properties = new Properties();
             try(FileInputStream inputStream = new FileInputStream("src/main/resources/cfg/server.properties")){
                 properties.load(inputStream);
@@ -88,12 +88,13 @@ public class Main {
             Server server = new Server(port);
             ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
-
             context.addServlet(new ServletHolder(new UserServlet(accountService)), "/user");
             context.addServlet(new ServletHolder(new AdminServlet(server, gameServer)), "/admin");
             context.addServlet(new ServletHolder(new RoomServlet(gameServer)), "/rooms");
             context.addServlet(new ServletHolder(new ScoreServlet(gameServer)), "/score");
             context.addServlet(new ServletHolder(new MainSocketWebServlet(gameServer, messageFrontend)), "/gameplay");
+            context.addServlet(new ServletHolder(new JoystickSocketServlet(messageFrontend)), "/gameplay/mobile");
+
             ResourceHandler resourceHandler = new ResourceHandler();
             resourceHandler.setEtags(true);
 

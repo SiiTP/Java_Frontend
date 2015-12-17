@@ -1,28 +1,25 @@
 package servlets.game;
 
 import game.server.GameServer;
-import game.sockets.creators.MainWebSocketCreator;
+import game.sockets.creators.JoystickSocketCreator;
 import messages.socket.MessageFrontend;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import resource.ResourceFactory;
 import resource.ServletResources;
 
-import javax.servlet.annotation.WebServlet;
-
 /**
- * Created by ivan on 24.10.15.
+ * Created by ivan on 17.12.15.
  */
-@WebServlet
-public class MainSocketWebServlet extends AbstractGameSocketServlet {
+public class JoystickSocketServlet extends AbstractGameSocketServlet {
 
-    public MainSocketWebServlet(GameServer gameServer, MessageFrontend frontend) {
-        super(gameServer, frontend);
+    public JoystickSocketServlet(MessageFrontend frontend) {
+        super(null, frontend);
     }
 
     @Override
     public void configure(WebSocketServletFactory webSocketServletFactory) {
         webSocketServletFactory.getPolicy().setIdleTimeout(getIdleTime());
-        webSocketServletFactory.setCreator(new MainWebSocketCreator(getGameServer(),getFrontend()));
+        webSocketServletFactory.setCreator(new JoystickSocketCreator(getFrontend()));
     }
 }

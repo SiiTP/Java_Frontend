@@ -10,17 +10,14 @@ import org.eclipse.jetty.websocket.servlet.WebSocketCreator;
 /**
  * Created by ivan on 24.10.15.
  */
-public class MainWebSocketCreator implements WebSocketCreator {
-    private final GameServer gameServer;
-    private final MessageFrontend frontend;
-    public MainWebSocketCreator(GameServer gameServer,MessageFrontend frontend) {
-        this.gameServer = gameServer;
-        this.frontend = frontend;
+public class MainWebSocketCreator extends AbstractGameSocketCreator {
+    public MainWebSocketCreator(GameServer gameServer, MessageFrontend frontend) {
+        super(gameServer, frontend);
     }
 
     @Override
     public Object createWebSocket(ServletUpgradeRequest servletUpgradeRequest, ServletUpgradeResponse servletUpgradeResponse) {
         String httpSession = servletUpgradeRequest.getSession().getId();
-        return new MainWebSocket(httpSession, gameServer,frontend);
+        return new MainWebSocket(httpSession, getGameServer(),getFrontend());
     }
 }
