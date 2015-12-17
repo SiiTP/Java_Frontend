@@ -1,5 +1,6 @@
 package messages.socket;
 
+import game.sockets.JoystickSocket;
 import game.sockets.MainWebSocket;
 import messages.*;
 import messages.mechanics.MoveMessage;
@@ -16,6 +17,7 @@ import java.util.Map;
 public class MessageFrontend implements Abonent,Runnable {
     private final Address address = new Address();
     private final Map<String,MainWebSocket> sockets = new HashMap<>();
+    private final Map<String,JoystickSocket> joystickMap = new HashMap<>();
     private final MessageSystem messageSystem;
     private final int sleepTime;
     public MessageFrontend(MessageSystem messageSystem) {
@@ -44,9 +46,24 @@ public class MessageFrontend implements Abonent,Runnable {
     public void addSocket(MainWebSocket socket){
         sockets.put(socket.getHttpSession(), socket);
     }
-    public void sendMessageForward(JSONObject data,String session){
-        MoveMessage moveMessage = new MoveMessage(address,messageSystem.getAddressService().getMessageSwitchAddress(),data,session);
+    public void sendBrowserMoveMessageForward(JSONObject data, String session){
+        if(!isJoystickExist(session)) {
+            sendMoveMessage(data,session);
+        }
+    }
+    public void sendMoveMessage(JSONObject data,String session){
+        MoveMessage moveMessage = new MoveMessage(address, messageSystem.getAddressService().getMessageSwitchAddress(), data, session);
         messageSystem.sendMessage(moveMessage);
+    }
+
+    public boolean isJoystickExist(String httpSession){
+        return joystickMap.containsKey(httpSession);
+    }
+    public void addJoySocket(JoystickSocket socket){
+        joystickMap.put(socket.getHttpSession(),socket);
+    }
+    public void deleteJoySocket(String httpSession){
+        joystickMap.remove(httpSession);
     }
     public void sendMessageToSocket(MessageToFrontend message){
             MainWebSocket socket = sockets.get(((MoveMessageBack) message).getSession());
