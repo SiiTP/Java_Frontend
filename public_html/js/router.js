@@ -15,8 +15,7 @@ define([
     'joystickTransport',
     'views/characters/myCharacter',
     'views/characters/enemyCharacter',
-    'constants',
-    'getCookie'
+    'constants'
 ], function (
     Backbone,
     manager,
@@ -34,8 +33,7 @@ define([
     JoystickTransport,
     MyCharacter,
     EnemyCharacter,
-    constants,
-    getCookie
+    constants
 ) {
     var mainView =         new MainView         ({model: user});
     var registrationView = new RegistrationView ({model: user});

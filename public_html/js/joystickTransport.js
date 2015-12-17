@@ -26,7 +26,7 @@ define(['views/joystick'],function(joystick) {
             console.log("socket angle : " + this.angle);
         };
         this.setQueryInterval = function() {
-            this.queryInterval = setInterval(this.sendMessage.bind(this), this.constants.get('INTERVAL_SHORT') - 10);
+            this.queryInterval = setInterval(this.sendMessage.bind(this), this.constants.get('INTERVAL_SHORT'));
         };
         this.sendMessage = function() {
             var data = JSON.stringify({"direction": this.angle, "isMoving": true, "session": this.session});

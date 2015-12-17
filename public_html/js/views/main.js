@@ -56,7 +56,7 @@ define([
         qrcode: function() {
             var sess = getCookie("JSESSIONID");
            new QRCode(document.getElementsByClassName("container-main__qrcode")[0], {
-                text: "http://localhost:8000/gameplay/mobile/" + sess,
+                text: "http://localhost:8000/#mobile/" + sess,
                 width: 256,
                 height: 256,
                 colorDark : "#ffffff",
