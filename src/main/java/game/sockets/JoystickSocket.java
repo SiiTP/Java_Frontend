@@ -1,10 +1,8 @@
 package game.sockets;
 
-import game.server.GameServer;
 import messages.socket.MessageFrontend;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,27 +13,40 @@ import org.json.JSONTokener;
  */
 public class JoystickSocket extends WebSocketAdapter {
     private MessageFrontend frontend;
+    private String httpSession;
     private static final Logger LOGGER = LogManager.getLogger(JoystickSocket.class);
     public JoystickSocket(MessageFrontend frontend) {
         this.frontend = frontend;
     }
 
+    public String getHttpSession() {
+        return httpSession;
+    }
+
     @Override
     public void onWebSocketText(String message) {
-        JSONObject data = null;
         try {
-            data= new JSONObject(new JSONTokener(message));
+            JSONObject data = new JSONObject(new JSONTokener(message));
+            if(httpSession == null  && data.has("session")){
+                if(!data.isNull("session")){
+                    httpSession = data.getString("session");
+                }
+                if(!frontend.isJoystickExist(httpSession)) {
+                    frontend.addJoySocket(this);
+                }
+            }
+            if(httpSession != null) {
+                frontend.sendMoveMessage(data, httpSession);
+            }
         }catch (JSONException exc){
             LOGGER.error("bad json message " + message, exc);
         }
-        String session = null;
-        if(data != null && data.has("session")){
-            if(!data.isNull("session")){
-                session = data.getString("session");
-            }
-            if(session != null) {
-                frontend.sendMessageForward(data, session);
-            }
-        }
+
+    }
+
+    @Override
+    public void onWebSocketClose(int statusCode, String reason) {
+        frontend.deleteJoySocket(httpSession);
+        super.onWebSocketClose(statusCode, reason);
     }
 }

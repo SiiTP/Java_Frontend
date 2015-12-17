@@ -4,10 +4,8 @@ import game.server.GameServer;
 import messages.socket.MessageFrontend;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
-import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -56,7 +54,7 @@ public class MainWebSocket extends WebSocketAdapter{
             isOkPlayer = gameServer.isCorrectPlayerInGame(httpSession);
         }
         if(isOkPlayer){
-            messageFrontend.sendMessageForward(data, httpSession);
+            messageFrontend.sendBrowserMoveMessageForward(data, httpSession);
         }
     }
     public void sendMessageBack(JSONObject response){
