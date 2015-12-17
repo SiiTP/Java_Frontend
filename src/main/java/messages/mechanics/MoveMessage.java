@@ -1,7 +1,6 @@
 package messages.mechanics;
 
 import messages.Address;
-import messages.MessageJSON;
 import messages.mechanics.MessageMechanics;
 import org.json.JSONObject;
 

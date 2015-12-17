@@ -4,8 +4,10 @@ import game.server.GameServer;
 import messages.socket.MessageFrontend;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -19,7 +21,6 @@ public class MainWebSocket extends WebSocketAdapter{
     private final MessageFrontend messageFrontend;//todo add constructor
     private final GameServer gameServer;
     private final String httpSession;
-    //private ActionProcessor actionProcessor;
     private static final Logger LOGGER = LogManager.getLogger(MainWebSocket.class);
     public MainWebSocket(String httpSession,GameServer gameServer,MessageFrontend frontend) {
         this.gameServer = gameServer;
@@ -58,27 +59,6 @@ public class MainWebSocket extends WebSocketAdapter{
             messageFrontend.sendMessageForward(data, httpSession);
         }
     }
-
-    /*public void processPlayerMessage(JSONObject message) {
-        JSONObject response = null;
-        if(!message.has("type")){
-            if(!(actionProcessor instanceof MoveActionProcessor)) {
-                actionProcessor = new MoveActionProcessor(gameServer);
-            }
-            response = actionProcessor.processMessage(message,httpSession);
-        }
-        try {
-            if(response != null) {
-                getRemote().sendString(response.toString());
-            }else{
-                LOGGER.error("wrong message from " + httpSession + " message:" + message);
-            }
-        } catch (IOException e) {
-            LOGGER.error("cant send message back, user session " + httpSession);
-            e.printStackTrace();
-        }
-
-    }*/
     public void sendMessageBack(JSONObject response){
         try {
             if(response != null) {

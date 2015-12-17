@@ -31,7 +31,7 @@ public class ProjectDB {
         s_serviceRegistry = getRegistry();
         createFactory();
     }
-    @SuppressWarnings("SameParameterValue")
+
     public void initBD(String sourceFile){
         s_serviceRegistry = getRegistry(sourceFile);
         createFactory();
