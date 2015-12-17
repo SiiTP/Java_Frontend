@@ -703,6 +703,42 @@ define('views/scoreboard',[
     });
     return View;
 });
+define('tmpl/joystick',[],function () { return function (__fest_context){"use strict";var __fest_self=this,__fest_buf="",__fest_chunks=[],__fest_chunk,__fest_attrs=[],__fest_select,__fest_if,__fest_iterator,__fest_to,__fest_fn,__fest_html="",__fest_blocks={},__fest_params,__fest_element,__fest_debug_file="",__fest_debug_line="",__fest_debug_block="",__fest_htmlchars=/[&<>"]/g,__fest_htmlchars_test=/[&<>"]/,__fest_short_tags = {"area":true,"base":true,"br":true,"col":true,"command":true,"embed":true,"hr":true,"img":true,"input":true,"keygen":true,"link":true,"meta":true,"param":true,"source":true,"wbr":true},__fest_element_stack = [],__fest_htmlhash={"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"},__fest_jschars=/[\\'"\/\n\r\t\b\f<>]/g,__fest_jschars_test=/[\\'"\/\n\r\t\b\f<>]/,__fest_jshash={"\"":"\\\"","\\":"\\\\","/":"\\/","\n":"\\n","\r":"\\r","\t":"\\t","\b":"\\b","\f":"\\f","'":"\\'","<":"\\u003C",">":"\\u003E"},___fest_log_error;if(typeof __fest_error === "undefined"){___fest_log_error = (typeof console !== "undefined" && console.error) ? function(){return Function.prototype.apply.call(console.error, console, arguments)} : function(){};}else{___fest_log_error=__fest_error};function __fest_log_error(msg){___fest_log_error(msg+"\nin block \""+__fest_debug_block+"\" at line: "+__fest_debug_line+"\nfile: "+__fest_debug_file)}function __fest_replaceHTML(chr){return __fest_htmlhash[chr]}function __fest_replaceJS(chr){return __fest_jshash[chr]}function __fest_extend(dest, src){for(var i in src)if(src.hasOwnProperty(i))dest[i]=src[i];}function __fest_param(fn){fn.param=true;return fn}function __fest_call(fn, params,cp){if(cp)for(var i in params)if(typeof params[i]=="function"&&params[i].param)params[i]=params[i]();return fn.call(__fest_self,params)}function __fest_escapeJS(s){if (typeof s==="string") {if (__fest_jschars_test.test(s))return s.replace(__fest_jschars,__fest_replaceJS);} else if (typeof s==="undefined")return "";return s;}function __fest_escapeHTML(s){if (typeof s==="string") {if (__fest_htmlchars_test.test(s))return s.replace(__fest_htmlchars,__fest_replaceHTML);} else if (typeof s==="undefined")return "";return s;}__fest_buf+=("JOYSTICK<canvas class=\"joystick\"></canvas><br/>");__fest_to=__fest_chunks.length;if (__fest_to) {__fest_iterator = 0;for (;__fest_iterator<__fest_to;__fest_iterator++) {__fest_chunk=__fest_chunks[__fest_iterator];if (typeof __fest_chunk==="string") {__fest_html+=__fest_chunk;} else {__fest_fn=__fest_blocks[__fest_chunk.name];if (__fest_fn) __fest_html+=__fest_call(__fest_fn,__fest_chunk.params,__fest_chunk.cp);}}return __fest_html+__fest_buf;} else {return __fest_buf;}} ; });
+define('views/joystick',[
+    'backbone',
+    'tmpl/joystick'
+], function(
+    Backbone,
+    tmpl
+){
+
+    var View = Backbone.View.extend({
+        tagName: 'div',
+        template: tmpl,
+        canvas: null,
+        context: null,
+
+        show: function () {
+            this.$el.show();
+            this.on('win', this.onWin);
+            this.trigger('show');
+            this.canvas = this.$('.joystick')[0];
+            this.canvas.width  = 300;
+            this.canvas.height = 300;
+            this.context = this.canvas.getContext('2d');
+            this.context.fillRect(10, 10, 300, 300);
+        },
+        hide: function () {
+            if (this.canvas) {
+                this.canvas.width  = 0;
+                this.canvas.height = 0;
+            }
+            //this.trigger('exit');
+            this.$el.hide();
+        }
+    });
+    return View;
+});
 define('models/user',[
     'backbone'
 ], function(
@@ -1018,7 +1054,7 @@ define ('gameMediator',[],function() {
             this.waitingInterval = setInterval(this.sendMessageWaiting.bind(this), this.constants.get('INTERVAL_SHORT'));
         };
         this.sendMessageWaiting = function() {
-            var data = {'direction': -1, 'isMoving': true};
+            var data = {'direction': -1, 'isMoving': false};
             if (this.myPlayer != null) {
                 data = {'direction': this.myPlayer.model.get('angle'), 'isMoving': this.myPlayer.model.get('isMoving')};
             }
@@ -1238,21 +1274,44 @@ define('models/characters/character',[
         },
         move: function (dt) {
             //console.log("MOVE : X : " + this.get('posX') + "; Y :  " + this.get('posY') + "; Angle : " + this.get('angle'));
-
             if (this.get('isMoving') == true) {
                 var dl = this.get('speed') * dt;
-                this.set({'posX': this.get('posX') + Math.cos(this.get('angle') * (Math.PI / 180)) * dl});
-                this.set({'posY': this.get('posY') - Math.sin(this.get('angle') * (Math.PI / 180)) * dl});
+                var posX = this.get('posX') + Math.cos(this.get('angle') * (Math.PI / 180)) * dl;
+                var posY = this.get('posY') - Math.sin(this.get('angle') * (Math.PI / 180)) * dl;
+                this.set({'posX': posX});
+                this.set({'posY': posY});
+
             }
         }
     });
 });
+define('constants',['backbone'], function(Backbone) {
+        var Constants = Backbone.Model.extend({
+            defaults: {
+                //GAME FIELD SIZES__________
+                FIELD_WIDTH: 1000,
+                FIELD_HEIGHT: 700,
+                //__________________________
+                // OFFSETS BEFORE CANVAS_____
+                X_OFFSET_TO_CANVAS: 20,
+                Y_OFFSET_TO_CANVAS: 20,
+                //__________________________
+                //INTERVALS_________________
+                INTERVAL_SHORT: 50,
+                //__________________________
+                SOCKET_ADDRESS: "ws://localhost:8000/gameplay"
+            }
+        });
+    return new Constants();
+    });
 define('models/characters/myCharacter',[
     'backbone',
-    'models/characters/character'
+    'models/characters/character',
+    'constants'
 ], function(
     Backbone,
-    CharacterModel
+    CharacterModel,
+    constants
 ){
 
     return CharacterModel.extend({
@@ -1268,17 +1327,18 @@ define('models/characters/myCharacter',[
             this.set({"angle": angle});
         },
         setMouseCoordinate: function (x, y) {
-            this.mouseX = x;
-            this.mouseY = y;
+            this.mouseX = x - constants.get("X_OFFSET_TO_CANVAS");
+            this.mouseY = y - constants.get("Y_OFFSET_TO_CANVAS");
         },
         calculateDistanceToMouse: function (x, y) {
             return Math.sqrt((this.get('posX') - x) * (this.get('posX') - x) + (this.get('posY') - y) * (this.get('posY') - y));
         },
         myMove: function (dt) {
-            //console.log("myMove mouseX : " + this.mouseX + "; mouseY : " + this.mouseY);
+            //console.log("myMove mouseX : " + this.mouseX + "; mouseY : " + this.mouseY + "  offsetX : " + this.offsetX + "; offsetY : " + this.offsetY);
             //console.log("MYMOVE : X : " + this.posX + "; Y :  " + this.posY + "; Angle : " + this.angle);
             this.set({'isMoving': true});
             if (this.calculateDistanceToMouse(this.mouseX, this.mouseY) > this.get('radius')) {
+                this.calculateAngle(this.mouseX, this.mouseY);
                 this.move(dt);
             } else {
                 this.set({'isMoving': false});
@@ -1301,11 +1361,6 @@ define('views/characters/myCharacter',[
             'mousemove': 'onMouseMove'
         },
         initialize: function(args) {
-            //document.getElementById('page').appendChild(this.el);
-            //this.canvas = this.el;
-            //this.canvas.width = args.width;
-            //this.canvas.height = args.height;
-            //this.context = this.canvas.getContext('2d');
             this.initCanvas(args);
             this.model = new MyCharacterModel();
         },
@@ -1349,25 +1404,6 @@ define('views/characters/enemyCharacter',[
         }
     });
 });
-define('constants',['backbone'], function(Backbone) {
-        var Constants = Backbone.Model.extend({
-            defaults: {
-                //GAME FIELD SIZES__________
-                FIELD_WIDTH: 1000,
-                FIELD_HEIGHT: 700,
-                //__________________________
-                // OFFSETS BEFORE CANVAS_____
-                X_OFFSET_TO_CANVAS: 20,
-                Y_OFFSET_TO_CANVAS: 30,
-                //__________________________
-                //INTERVALS_________________
-                INTERVAL_SHORT: 50,
-                //__________________________
-                SOCKET_ADDRESS: "ws://localhost:8000/gameplay"
-            }
-        });
-    return new Constants();
-    });
 define('router',[
     'backbone',
     'views/viewManager',
@@ -1377,6 +1413,7 @@ define('router',[
     'views/rooms',
     'views/registration',
     'views/scoreboard',
+    'views/joystick',
     'models/user',
     'collections/scores',
     'models/rooms',
@@ -1393,6 +1430,7 @@ define('router',[
     RoomsView,
     RegistrationView,
     ScoreboardView,
+    JoystickView,
     user,
     scores,
     rooms,
@@ -1405,6 +1443,7 @@ define('router',[
     var registrationView = new RegistrationView ({model: user});
     var loginView =        new LoginView        ({model: user});
     var scoreboardView =   new ScoreboardView   ({model: scores});
+    var joystickView =     new JoystickView     ();
     var roomsView =        new RoomsView        ({model: rooms});
     var fieldView =        new FieldView        ({width: constants.get('FIELD_WIDTH'), height: constants.get('FIELD_HEIGHT')});
     manager.add(mainView);
@@ -1413,6 +1452,7 @@ define('router',[
     manager.add(registrationView);
     manager.add(roomsView);
     manager.add(fieldView);
+    manager.add(joystickView);
     var gameMediator = new GameMediator({
         user           : user,
         MyCharacter    : MyCharacter,
@@ -1428,6 +1468,7 @@ define('router',[
             'rooms': 'roomsAction',
             'login': 'loginAction',
             'registration': 'registrationAction',
+            'mobile/:username': 'joystickAction',
             '': 'mainAction'
         },
         mainAction: function () {
@@ -1447,17 +1488,32 @@ define('router',[
         },
         registrationAction: function () {
             registrationView.show();
+        },
+        joystickAction: function (username) {
+            console.log("in joystickAction of " + username);
+            joystickView.show();
         }
     });
     return new Router();
 });
+/*! modernizr 3.2.0 (Custom Build) | MIT *
+ * http://modernizr.com/download/?-devicemotion_deviceorientation-touchevents-hasevent-setclasses !*/
+!function(e,n,t){function o(e){var n=u.className,t=Modernizr._config.classPrefix||"";if(p&&(n=n.baseVal),Modernizr._config.enableJSClass){var o=new RegExp("(^|\\s)"+t+"no-js(\\s|$)");n=n.replace(o,"$1"+t+"js$2")}Modernizr._config.enableClasses&&(n+=" "+t+e.join(" "+t),p?u.className.baseVal=n:u.className=n)}function i(e,n){return typeof e===n}function s(){var e,n,t,o,s,a,r;for(var l in d)if(d.hasOwnProperty(l)){if(e=[],n=d[l],n.name&&(e.push(n.name.toLowerCase()),n.options&&n.options.aliases&&n.options.aliases.length))for(t=0;t<n.options.aliases.length;t++)e.push(n.options.aliases[t].toLowerCase());for(o=i(n.fn,"function")?n.fn():n.fn,s=0;s<e.length;s++)a=e[s],r=a.split("."),1===r.length?Modernizr[r[0]]=o:(!Modernizr[r[0]]||Modernizr[r[0]]instanceof Boolean||(Modernizr[r[0]]=new Boolean(Modernizr[r[0]])),Modernizr[r[0]][r[1]]=o),f.push((o?"":"no-")+r.join("-"))}}function a(){return"function"!=typeof n.createElement?n.createElement(arguments[0]):p?n.createElementNS.call(n,"http://www.w3.org/2000/svg",arguments[0]):n.createElement.apply(n,arguments)}function r(){var e=n.body;return e||(e=a(p?"svg":"body"),e.fake=!0),e}function l(e,t,o,i){var s,l,f,d,c="modernizr",p=a("div"),v=r();if(parseInt(o,10))for(;o--;)f=a("div"),f.id=i?i[o]:c+(o+1),p.appendChild(f);return s=a("style"),s.type="text/css",s.id="s"+c,(v.fake?v:p).appendChild(s),v.appendChild(p),s.styleSheet?s.styleSheet.cssText=e:s.appendChild(n.createTextNode(e)),p.id=c,v.fake&&(v.style.background="",v.style.overflow="hidden",d=u.style.overflow,u.style.overflow="hidden",u.appendChild(v)),l=t(p,e),v.fake?(v.parentNode.removeChild(v),u.style.overflow=d,u.offsetHeight):p.parentNode.removeChild(p),!!l}var f=[],d=[],c={_version:"3.2.0",_config:{classPrefix:"",enableClasses:!0,enableJSClass:!0,usePrefixes:!0},_q:[],on:function(e,n){var t=this;setTimeout(function(){n(t[e])},0)},addTest:function(e,n,t){d.push({name:e,fn:n,options:t})},addAsyncTest:function(e){d.push({name:null,fn:e})}},Modernizr=function(){};Modernizr.prototype=c,Modernizr=new Modernizr,Modernizr.addTest("devicemotion","DeviceMotionEvent"in e),Modernizr.addTest("deviceorientation","DeviceOrientationEvent"in e);var u=n.documentElement,p="svg"===u.nodeName.toLowerCase(),v=function(){function e(e,n){var i;return e?(n&&"string"!=typeof n||(n=a(n||"div")),e="on"+e,i=e in n,!i&&o&&(n.setAttribute||(n=a("div")),n.setAttribute(e,""),i="function"==typeof n[e],n[e]!==t&&(n[e]=t),n.removeAttribute(e)),i):!1}var o=!("onblur"in n.documentElement);return e}();c.hasEvent=v;var m=c._config.usePrefixes?" -webkit- -moz- -o- -ms- ".split(" "):[];c._prefixes=m;var h=c.testStyles=l;Modernizr.addTest("touchevents",function(){var t;if("ontouchstart"in e||e.DocumentTouch&&n instanceof DocumentTouch)t=!0;else{var o=["@media (",m.join("touch-enabled),("),"heartz",")","{#modernizr{top:9px;position:absolute}}"].join("");h(o,function(e){t=9===e.offsetTop})}return t}),s(),o(f),delete c.addTest,delete c.addAsyncTest;for(var g=0;g<Modernizr._q.length;g++)Modernizr._q[g]();e.Modernizr=Modernizr}(window,document);
+define("modernizr", (function (global) {
+    return function () {
+        var ret, fn;
+        return ret || global.Modernizr;
+    };
+}(this)));
+
 require.config({
     urlArgs: "_=" + (new Date()).getTime(),
     baseUrl: "js",
     paths: {
         jquery: "lib/jquery-1.11.3.min",
         underscore: "lib/underscore-min",
-        backbone: "lib/backbone-min"
+        backbone: "lib/backbone-min",
+        modernizr: "lib/modernizr-custom"
     },
     shim: {
         'backbone': {
@@ -1466,15 +1522,20 @@ require.config({
         },
         'underscore': {
             exports: '_'
+        },
+        'modernizr': {
+            exports: 'Modernizr'
         }
     }
 });
 
-define('main',['backbone', 'sync', 'router'], function(
+define('main',['backbone', 'sync', 'router', 'modernizr'], function(
     Backbone,
     sync,
     router
 ){
+    debugger;
+    console.log(Modernizr);
     Backbone.history.start();
 });
 

@@ -7,10 +7,12 @@ define([
     'views/rooms',
     'views/registration',
     'views/scoreboard',
+    'views/joystick',
     'models/user',
     'collections/scores',
     'models/rooms',
     'gameMediator',
+    'joystickTransport',
     'views/characters/myCharacter',
     'views/characters/enemyCharacter',
     'constants'
@@ -23,15 +25,16 @@ define([
     RoomsView,
     RegistrationView,
     ScoreboardView,
+    joystickView,
     user,
     scores,
     rooms,
     GameMediator,
+    JoystickTransport,
     MyCharacter,
     EnemyCharacter,
     constants
 ) {
-    debugger;
     var mainView =         new MainView         ({model: user});
     var registrationView = new RegistrationView ({model: user});
     var loginView =        new LoginView        ({model: user});
@@ -44,6 +47,7 @@ define([
     manager.add(registrationView);
     manager.add(roomsView);
     manager.add(fieldView);
+    manager.add(joystickView);
     var gameMediator = new GameMediator({
         user           : user,
         MyCharacter    : MyCharacter,
@@ -52,6 +56,8 @@ define([
         field          : fieldView
     });
     gameMediator.initialize();
+
+
     var Router = Backbone.Router.extend({
         routes: {
             'scoreboard': 'scoreboardAction',
@@ -59,6 +65,7 @@ define([
             'rooms': 'roomsAction',
             'login': 'loginAction',
             'registration': 'registrationAction',
+            'mobile/:username': 'joystickAction',
             '': 'mainAction'
         },
         mainAction: function () {
@@ -78,6 +85,14 @@ define([
         },
         registrationAction: function () {
             registrationView.show();
+        },
+        joystickAction: function (username) {
+            console.log("in joystickAction of " + username);
+            var joystickTransport = new JoystickTransport({
+                address        : "mobile/" + username
+            });
+            joystickTransport.initialize();
+            joystickView.show();
         }
     });
     return new Router();
