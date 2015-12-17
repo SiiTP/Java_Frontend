@@ -15,7 +15,8 @@ define([
     'joystickTransport',
     'views/characters/myCharacter',
     'views/characters/enemyCharacter',
-    'constants'
+    'constants',
+    'getCookie'
 ], function (
     Backbone,
     manager,
@@ -33,7 +34,8 @@ define([
     JoystickTransport,
     MyCharacter,
     EnemyCharacter,
-    constants
+    constants,
+    getCookie
 ) {
     var mainView =         new MainView         ({model: user});
     var registrationView = new RegistrationView ({model: user});
@@ -65,7 +67,7 @@ define([
             'rooms': 'roomsAction',
             'login': 'loginAction',
             'registration': 'registrationAction',
-            'mobile/:username': 'joystickAction',
+            'mobile/:session': 'joystickAction',
             '': 'mainAction'
         },
         mainAction: function () {
@@ -86,10 +88,12 @@ define([
         registrationAction: function () {
             registrationView.show();
         },
-        joystickAction: function (username) {
-            console.log("in joystickAction of " + username);
+        joystickAction: function (session) {
+            console.log("in joystickAction of session : " + session);
             var joystickTransport = new JoystickTransport({
-                address        : "mobile/" + username
+                address : "gameplay/mobile",
+                session : session,
+                constants: constants
             });
             joystickTransport.initialize();
             joystickView.show();

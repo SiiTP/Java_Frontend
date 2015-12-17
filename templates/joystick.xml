@@ -3,6 +3,6 @@
     <div class="joystick">
         <canvas class="joystick__canvas"> </canvas> <br/>
         <canvas class="joystick__canvas-cursor"> </canvas> <br/>
-        <div class="joystick__message"> asdd</div>
+        <div class="joystick__message"> </div>
     </div>
 </fest:template>

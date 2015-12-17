@@ -53,8 +53,8 @@
                     </fest:otherwise>
                 </fest:choose>
             </div>
-            <div class="menu__msg-game"> </div>
         </div>
         <div class="line line_blue"> </div>
+        <div class="container-main__qrcode"> </div>
     </div>
 </fest:template>

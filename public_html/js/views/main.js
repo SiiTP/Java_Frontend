@@ -1,10 +1,12 @@
 // главное меню игры
 define([
     'backbone',
-    'tmpl/main'
+    'tmpl/main',
+    'getCookie'
 ], function(
     Backbone,
-    tmpl
+    tmpl,
+    getCookie
 ){
     return Backbone.View.extend({
         tagName: 'div',
@@ -23,6 +25,9 @@ define([
         checkChanges: function () {
             if (this.model.hasChanged('logged') || this.model.hasChanged('score')) {
                 this.render();
+                if (this.model.get('logged')) {
+                    this.qrcode();
+                }
             }
         },
         render: function () {
@@ -47,6 +52,18 @@ define([
                     location.href = href;
                 }
             }
+        },
+        qrcode: function() {
+            var sess = getCookie("JSESSIONID");
+           new QRCode(document.getElementsByClassName("container-main__qrcode")[0], {
+                text: "http://localhost:8000/gameplay/mobile/" + sess,
+                width: 256,
+                height: 256,
+                colorDark : "#ffffff",
+                colorLight : "#000000",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+            //new QRCode(document.getElementsByClassName("container-main__qrcode")[0], "http://localhost:8000/gameplay/mobile/qfdsfgsfhgdf");
         }
     });
 });

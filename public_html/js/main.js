@@ -5,7 +5,8 @@ require.config({
         jquery: "lib/jquery-1.11.3.min",
         underscore: "lib/underscore-min",
         backbone: "lib/backbone-min",
-        modernizr: "lib/modernizr-custom"
+        modernizr: "lib/modernizr-custom",
+        qrcode: "lib/qrcode"
     },
     shim: {
         'backbone': {
@@ -17,15 +18,19 @@ require.config({
         },
         'modernizr': {
             exports: 'Modernizr'
+        },
+        'qrcode': {
+            exports: 'QRCode'
         }
     }
 });
 
-define(['backbone', 'sync', 'router', 'modernizr'], function(
+define(['backbone', 'sync', 'router', 'modernizr', 'qrcode'], function(
     Backbone,
     sync,
-    router
+    router,
+    m,
+    qr
 ){
-    console.log(Modernizr);
     Backbone.history.start();
 });

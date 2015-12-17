@@ -24,6 +24,7 @@ define([
         },
         initialize: function () {
             this.rightDevice = modernizr.devicemotion && modernizr.deviceorientation && modernizr.touchevents;
+
         },
         show: function () {
             this.$el.show();
@@ -99,7 +100,7 @@ define([
             }
             angle = (angle + 360) % 360;
             console.log(angle);
-            this.trigger("setAngle");
+            this.trigger("setAngle", {"angle": angle});
         }
     });
     return new View();
