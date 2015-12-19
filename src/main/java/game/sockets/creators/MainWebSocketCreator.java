@@ -17,7 +17,12 @@ public class MainWebSocketCreator extends AbstractGameSocketCreator {
 
     @Override
     public Object createWebSocket(ServletUpgradeRequest servletUpgradeRequest, ServletUpgradeResponse servletUpgradeResponse) {
-        String httpSession = servletUpgradeRequest.getSession().getId();
+        String httpSession;
+        if(servletUpgradeRequest.getSession() != null) {
+            httpSession =servletUpgradeRequest.getSession().getId();
+        }else {
+            httpSession = servletUpgradeRequest.getHttpServletRequest().getHeader("dummySession");
+        }
         return new MainWebSocket(httpSession, getGameServer(),getFrontend());
     }
 }
