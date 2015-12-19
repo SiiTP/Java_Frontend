@@ -1,0 +1,8 @@
+<fest:template xmlns:fest="http://fest.mail.ru">
+    JOYSTICK
+    <div class="joystick">
+        <canvas class="joystick__canvas"> </canvas> <br/>
+        <canvas class="joystick__canvas-cursor"> </canvas> <br/>
+        <div class="joystick__message"> </div>
+    </div>
+</fest:template>

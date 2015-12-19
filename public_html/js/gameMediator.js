@@ -87,7 +87,7 @@ define (function() {
             this.waitingInterval = setInterval(this.sendMessageWaiting.bind(this), this.constants.get('INTERVAL_SHORT'));
         };
         this.sendMessageWaiting = function() {
-            var data = {'direction': -1, 'isMoving': true};
+            var data = {'direction': -1, 'isMoving': false};
             if (this.myPlayer != null) {
                 data = {'direction': this.myPlayer.model.get('angle'), 'isMoving': this.myPlayer.model.get('isMoving')};
             }

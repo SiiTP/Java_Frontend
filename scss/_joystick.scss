@@ -1,0 +1,17 @@
+.joystick {
+  overflow: hidden;
+  &__canvas {
+    position: absolute;
+    top: 10px;
+    left: 0;
+  }
+  &__canvas-cursor {
+    position: absolute;
+    top: 10px;
+    left: 0;
+  }
+  &__message {
+    //position: absolute;
+    //top: 230px;
+  }
+}

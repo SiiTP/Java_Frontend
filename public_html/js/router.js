@@ -7,10 +7,12 @@ define([
     'views/rooms',
     'views/registration',
     'views/scoreboard',
+    'views/joystick',
     'models/user',
     'collections/scores',
     'models/rooms',
     'gameMediator',
+    'joystickTransport',
     'views/characters/myCharacter',
     'views/characters/enemyCharacter',
     'constants'
@@ -23,10 +25,12 @@ define([
     RoomsView,
     RegistrationView,
     ScoreboardView,
+    joystickView,
     user,
     scores,
     rooms,
     GameMediator,
+    JoystickTransport,
     MyCharacter,
     EnemyCharacter,
     constants
@@ -43,6 +47,7 @@ define([
     manager.add(registrationView);
     manager.add(roomsView);
     manager.add(fieldView);
+    manager.add(joystickView);
     var gameMediator = new GameMediator({
         user           : user,
         MyCharacter    : MyCharacter,
@@ -51,6 +56,8 @@ define([
         field          : fieldView
     });
     gameMediator.initialize();
+
+
     var Router = Backbone.Router.extend({
         routes: {
             'scoreboard': 'scoreboardAction',
@@ -58,6 +65,7 @@ define([
             'rooms': 'roomsAction',
             'login': 'loginAction',
             'registration': 'registrationAction',
+            'mobile/:session': 'joystickAction',
             '': 'mainAction'
         },
         mainAction: function () {
@@ -77,6 +85,16 @@ define([
         },
         registrationAction: function () {
             registrationView.show();
+        },
+        joystickAction: function (session) {
+            console.log("in joystickAction of session : " + session);
+            var joystickTransport = new JoystickTransport({
+                address : "gameplay/mobile",
+                session : session,
+                constants: constants
+            });
+            joystickTransport.initialize();
+            joystickView.show();
         }
     });
     return new Router();
