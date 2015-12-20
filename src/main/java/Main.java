@@ -74,7 +74,7 @@ public class Main {
             services.add(messageFrontend);
             services.add(messageMechanics);
             services.add(messageMechanics2);
-            ExecutorService service = Executors.newFixedThreadPool(4, r -> {
+            ExecutorService service = Executors.newFixedThreadPool(services.size(), r -> {
                 Thread t = Executors.defaultThreadFactory().newThread(r);
                 t.setDaemon(true);
                 return t;
