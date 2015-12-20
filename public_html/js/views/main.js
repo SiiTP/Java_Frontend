@@ -2,11 +2,13 @@
 define([
     'backbone',
     'tmpl/main',
-    'getCookie'
+    'getCookie',
+    'constants'
 ], function(
     Backbone,
     tmpl,
-    getCookie
+    getCookie,
+    constants
 ){
     return Backbone.View.extend({
         tagName: 'div',
@@ -55,8 +57,8 @@ define([
         },
         qrcode: function() {
             var sess = getCookie("JSESSIONID");
-           new QRCode(document.getElementsByClassName("container-main__qrcode")[0], {
-                text: "http://localhost:8000/#mobile/" + sess,
+            new QRCode(document.getElementsByClassName("container-main__qrcode")[0], {
+                text: constants.get("HOST") + "/#mobile/" + sess,
                 width: 256,
                 height: 256,
                 colorDark : "#ffffff",
