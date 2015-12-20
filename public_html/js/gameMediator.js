@@ -11,14 +11,15 @@ define (function() {
         this.socket = null;
         this.gameBegin = false;
         this.waitingInterval = null;
+        this.clearBugsInterval = null;
         this.limitPlayers = 0;
 
         this.initialize = function() {
             console.log("mediator initialized");
             this.field.on('show', this.joinToRoom.bind(this));
-            this.field.on('mouseMove', this.mouseMove.bind(this));
             this.field.on('exit', this.exit.bind(this));
         };
+
         this.initializeSocket = function() {
             var socket = new WebSocket(this.constants.get("SOCKET_ADDRESS"));
             console.log("after socket creating");
@@ -38,33 +39,7 @@ define (function() {
 
                 if (answer.status == 200) {
                     //console.log("___@ game proccess answer");
-                    if (answer.limitPlayers) {
-                        this.limitPlayers = answer.limitPlayers;
-
-                        var enemyPlayers = this.enemyPlayers;
-                        if (enemyPlayers.length == 0) {
-                            var EnemyPlayerView = this.EnemyCharacter;
-                            for(var i = 0; i < this.limitPlayers - 1; i += 1) {
-                                var player = new EnemyPlayerView({
-                                    className: "character character_enemy_" + i,
-                                    'width': this.constants.get('FIELD_WIDTH'),
-                                    'height': this.constants.get('FIELD_HEIGHT')
-                                });
-                                enemyPlayers.push(player);
-                            }
-                        }
-
-                        var myPlayer = this.myPlayer;
-                        if (myPlayer == null) {
-                            var MyPlayerView = this.MyCharacter;
-                            myPlayer = new MyPlayerView({
-                                className: "character character_my",
-                                'width': this.constants.get("FIELD_WIDTH"),
-                                'height': this.constants.get('FIELD_HEIGHT')
-                            });
-                            this.myPlayer = myPlayer;
-                        }
-                    }
+                    this.createPlayers(answer);
                     this.parsePlayers(answer.players);
                     if (!this.gameBegin) {
                         this.startGame();
@@ -83,9 +58,11 @@ define (function() {
             };
             this.socket = socket;
         };
+
         this.beginningGameWaiting = function() {
             this.waitingInterval = setInterval(this.sendMessageWaiting.bind(this), this.constants.get('INTERVAL_SHORT'));
         };
+
         this.sendMessageWaiting = function() {
             var data = {'direction': -1, 'isMoving': false};
             if (this.myPlayer != null) {
@@ -93,6 +70,42 @@ define (function() {
             }
             this.socket.send(JSON.stringify(data));
         };
+
+        this.createPlayers = function(answer) {
+            if (answer.limitPlayers) {
+                this.limitPlayers = answer.limitPlayers;
+
+                var enemyPlayers = this.enemyPlayers;
+                if (enemyPlayers.length == 0) {
+                    var EnemyPlayerView = this.EnemyCharacter;
+                    for (var i = 0; i < this.limitPlayers - 1; i += 1) {
+                        var player = new EnemyPlayerView({
+                            className: "character character_enemy_" + i,
+                            'width': this.constants.get('FIELD_WIDTH'),
+                            'height': this.constants.get('FIELD_HEIGHT')
+                        });
+                        enemyPlayers.push(player);
+                    }
+                }
+
+                var myPlayer = this.myPlayer;
+                if (myPlayer == null) {
+                    var MyPlayerView = this.MyCharacter;
+                    myPlayer = new MyPlayerView({
+                        className: "character character_my",
+                        'width': this.constants.get("FIELD_WIDTH"),
+                        'height': this.constants.get('FIELD_HEIGHT')
+                    });
+                    this.myPlayer = myPlayer;
+                    this.myPlayer.on('mouseMove', this.mouseMove.bind(this));
+                }
+            }
+            if (this.clearBugsInterval == null) {
+                var intervalLarge = this.constants.get('INTERVAL_LARGE');
+                this.clearBugsInterval = setInterval(this.clearBugs.bind(this), intervalLarge);
+            }
+        };
+
         this.parsePlayers = function(answerPlayers) {
             var enemies = this.enemyPlayers;
             var myPlayer = this.myPlayer;
@@ -116,6 +129,7 @@ define (function() {
                         name  : answerPlayers[i].name,
                         angle : answerPlayers[i].direction,
                         score : answerPlayers[i].score,
+                        isMoving : answerPlayers[i].isMoving,
                         visible : !answerPlayers[i].isKilled
                     });
                     //console.log("setted enemy (" + enemies[j].model.get('name') + ") pos in array : " + j);
@@ -127,12 +141,14 @@ define (function() {
                         name  : answerPlayers[i].name,
                         angle : answerPlayers[i].direction,
                         score : answerPlayers[i].score,
+                        isMoving : answerPlayers[i].isMoving,
                         visible : !answerPlayers[i].isKilled
                     });
                     //console.log("setted my player (" + this.myPlayer.model.get('visible') + ")");
                 }
             }
         };
+
         this.erasePlayers = function() {
             if (this.myPlayer != null) {
                 this.myPlayer.$el.remove();
@@ -145,12 +161,19 @@ define (function() {
             this.enemyPlayers = [];
             this.myPlayer = null;
         };
+
+        this.clearBugs = function() {
+            console.log("clearing bugs");
+            this.myPlayer.clearAll(this.constants.get('FIELD_WIDTH'), this.constants.get('FIELD_HEIGHT'));
+        };
+
         this.startGame = function() {
             var now = Date.now();
             var previousMy = now - 20;
             var previousEnemies = now - 20;
             requestAnimationFrame(this.loop.bind(this, previousMy, previousEnemies));
         };
+
         this.loop = function(previousMy, previousEnemies) {
             if (this.myPlayer != null) {
                 if (this.myPlayer.model.get('visible')) {
@@ -178,17 +201,20 @@ define (function() {
                 requestAnimationFrame(this.loop.bind(this, previousMy, previousEnemies));
             }
         };
+
         this.joinToRoom = function() {
             this.initializeSocket();
         };
+
         this.mouseMove = function(args) {
             if (this.myPlayer != null) {
-                this.myPlayer.model.setMouseCoordinate(args.x, args.y);
+                this.myPlayer.model.set({'isMoving': true});
             }
         };
         this.exit = function() {
             console.log("exit from game");
             clearInterval(this.waitingInterval);
+            clearInterval(this.clearBugsInterval);
             this.gameBegin = false;
             if (this.socket) {
                 this.socket.close();

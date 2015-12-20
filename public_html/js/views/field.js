@@ -12,8 +12,7 @@ define([
         canvas: null,
         context: null,
         events: {
-            "click .field__button-exit": 'onExit',
-            "mousemove .field": 'onMouseMove'
+            "click .field__button-exit": 'onExit'
         },
         show: function () {
             this.$el.show();
@@ -34,10 +33,7 @@ define([
         },
         onWin: function(winner) {
             // TODO Вывод победителя
-            debugger;
-        },
-        onMouseMove: function(event) {
-            this.trigger('mouseMove', {'x' : event.pageX, 'y' : event.pageY});
+            //debugger;
         },
         onExit: function() {
             this.trigger('exit');

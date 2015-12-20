@@ -21,6 +21,7 @@ define([
             var y = event.pageY;
             this.model.setMouseCoordinate(x, y);
             this.model.calculateAngle(x, y);
+            this.trigger("mouseMove")
         }
     });
 });

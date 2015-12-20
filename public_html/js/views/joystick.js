@@ -20,11 +20,13 @@ define([
         radiusCursor: 20,
         rightDevice: false,
         events: {
-            "touchmove .joystick__canvas-cursor": "touch"
+            "touchmove .joystick__canvas-cursor": "onTouchMove",
+            "touchstart .joystick__canvas-cursor": "onTouchStart",
+            "touchend .joystick__canvas-cursor": "onTouchEnd",
+            "touchcancel .joystick__canvas-cursor": "onTouchCancel"
         },
         initialize: function () {
             this.rightDevice = modernizr.devicemotion && modernizr.deviceorientation && modernizr.touchevents;
-
         },
         show: function () {
             this.$el.show();
@@ -51,6 +53,8 @@ define([
             if (this.canvas) {
                 this.canvas.width  = 0;
                 this.canvas.height = 0;
+            }
+            if (this.canvasCursor) {
                 this.canvasCursor.width = 0;
                 this.canvasCursor.height = 0;
             }
@@ -63,7 +67,7 @@ define([
             this.context.arc(this.radius, this.radius, this.radius, 0, Math.PI * 2, true);
             this.context.fill();
         },
-        touch: function(event) {
+        onTouchMove: function(event) {
             event.preventDefault();
             var x = event.originalEvent.touches[0].clientX;
             var y = event.originalEvent.touches[0].clientY;
@@ -78,6 +82,18 @@ define([
                 this.clearCursor();
             }
 
+        },
+        onTouchStart: function() {
+            console.log("touchstart");
+            this.trigger("startMove");
+        },
+        onTouchEnd: function() {
+            console.log("touchend");
+            this.trigger("stopMove");
+        },
+        onTouchCancel: function() {
+            console.log("touchcancel");
+            this.trigger("stopMove");
         },
         drawCursor: function(x, y) {
             this.clearCursor();

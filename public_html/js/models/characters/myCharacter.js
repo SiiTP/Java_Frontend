@@ -23,16 +23,17 @@ define([
         setMouseCoordinate: function (x, y) {
             this.mouseX = x - constants.get("X_OFFSET_TO_CANVAS");
             this.mouseY = y - constants.get("Y_OFFSET_TO_CANVAS");
+            //console.log("setted mouseX : " + this.mouseX + "; mouseY : " + this.mouseY + "  offsetX : ");
+
         },
         calculateDistanceToMouse: function (x, y) {
             return Math.sqrt((this.get('posX') - x) * (this.get('posX') - x) + (this.get('posY') - y) * (this.get('posY') - y));
         },
         myMove: function (dt) {
-            //console.log("myMove mouseX : " + this.mouseX + "; mouseY : " + this.mouseY + "  offsetX : " + this.offsetX + "; offsetY : " + this.offsetY);
             //console.log("MYMOVE : X : " + this.posX + "; Y :  " + this.posY + "; Angle : " + this.angle);
-            this.set({'isMoving': true});
+            //this.set({'isMoving': true});
             if (this.calculateDistanceToMouse(this.mouseX, this.mouseY) > this.get('radius')) {
-                this.calculateAngle(this.mouseX, this.mouseY);
+                //this.calculateAngle(this.mouseX, this.mouseY);
                 this.move(dt);
             } else {
                 this.set({'isMoving': false});

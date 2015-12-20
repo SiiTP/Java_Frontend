@@ -628,7 +628,7 @@ define('views/main',[
         qrcode: function() {
             var sess = getCookie("JSESSIONID");
            new QRCode(document.getElementsByClassName("container-main__qrcode")[0], {
-                text: "http://localhost:8000/gameplay/mobile/" + sess,
+                text: "http://localhost:8000/#mobile/" + sess,
                 width: 256,
                 height: 256,
                 colorDark : "#ffffff",
@@ -1725,12 +1725,10 @@ define('joystickTransport',['views/joystick'],function(joystick) {
             console.log("socket angle : " + this.angle);
         };
         this.setQueryInterval = function() {
-            this.queryInterval = setInterval(this.sendMessage.bind(this), this.constants.get('INTERVAL_SHORT') - 10);
+            this.queryInterval = setInterval(this.sendMessage.bind(this), this.constants.get('INTERVAL_SHORT'));
         };
         this.sendMessage = function() {
             var data = JSON.stringify({"direction": this.angle, "isMoving": true, "session": this.session});
-            console.log("SENDED : ");
-            console.log(data);
             this.socket.send(data);
         }
 
@@ -1992,8 +1990,7 @@ define('router',[
     'joystickTransport',
     'views/characters/myCharacter',
     'views/characters/enemyCharacter',
-    'constants',
-    'getCookie'
+    'constants'
 ], function (
     Backbone,
     manager,
@@ -2011,8 +2008,7 @@ define('router',[
     JoystickTransport,
     MyCharacter,
     EnemyCharacter,
-    constants,
-    getCookie
+    constants
 ) {
     var mainView =         new MainView         ({model: user});
     var registrationView = new RegistrationView ({model: user});

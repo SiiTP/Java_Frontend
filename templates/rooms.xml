@@ -19,7 +19,7 @@
                             <div class="rooms__lines__line__name"><fest:value>item.name</fest:value></div>
                             <div class="rooms__lines__line__players"><fest:value>item.players</fest:value></div>
                             <div class="rooms__lines__line__maxPlayers"><fest:value>item.maxPlayers</fest:value></div>
-                            <button class="button rooms__lines__line__button" data-roomid="{item.name}">Connect!</button>
+                            <button class="button rooms__lines__line__button" data-roomid="{item.name}">Зайти!</button>
                         </div>
                     </fest:each>
                 </div>

@@ -6,7 +6,7 @@ define([
 
     return Backbone.View.extend({
         tagName: 'canvas',
-        color: '#ff0',
+        color: '#f90',
         borderColor: '#002',
         context: null,
         canvas: null,
@@ -55,6 +55,7 @@ define([
                 //________________________
             }
         },
+
         clear: function() {
             //посреди игрового цикла может обнулиться
             if (this.context != null) {
@@ -66,6 +67,11 @@ define([
                 this.context.clearRect(x - r * 2 - 10, y - r * 2 - 10, 6 * r + 100, 6 * r + 20);
             }
         },
+
+        clearAll: function(fieldWidth, fieldHeight) {
+            this.context.clearRect(0, 0, fieldWidth, fieldHeight);
+        },
+
         deleteCanvas: function() {
             if (this.el.parentNode != null) {
                 document.getElementById("page").removeChild(this.el);
