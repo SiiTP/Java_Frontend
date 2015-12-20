@@ -21,7 +21,7 @@ define (function() {
         };
 
         this.initializeSocket = function() {
-            var socket = new WebSocket(this.constants.get("SOCKET_ADDRESS"));
+            var socket = new WebSocket(this.constants.get("SOCKET_HOST") + this.constants.get("SOCKET_ADDRESS"));
             console.log("after socket creating");
             socket.onopen = function(event) {
                 console.log("____ open socket");

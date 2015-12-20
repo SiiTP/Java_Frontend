@@ -13,7 +13,9 @@ define(['backbone'], function(Backbone) {
                 INTERVAL_SHORT: 50,
                 INTERVAL_LARGE: 3000,
                 //__________________________
-                SOCKET_ADDRESS: "ws://localhost:8000/gameplay"
+                HOST: "localhost:8000",
+                SOCKET_HOST: "ws://localhost:8000",
+                SOCKET_ADDRESS: "/gameplay"
             }
         });
     return new Constants();

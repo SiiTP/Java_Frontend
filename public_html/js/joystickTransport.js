@@ -13,7 +13,7 @@ define(['views/joystick'],function(joystick) {
             joystick.on("setAngle", this.onSetAngle.bind(this));
             joystick.on("stopMove", this.onStop.bind(this));
             joystick.on("startMove", this.onStart.bind(this));
-            this.socket = new WebSocket("ws://localhost:8000/" + this.address);
+            this.socket = new WebSocket(this.constants.get("SOCKET_HOST") + "/" + this.address);
             this.socket.onopen = function(event) {
                 console.log("____ open socket");
                 this.setQueryInterval();
