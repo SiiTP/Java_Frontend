@@ -2,9 +2,11 @@ package game.server;
 
 import game.rooms.Room;
 import game.rooms.RoomFFA;
+import org.junit.After;
 import persistance.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
+import service.ProjectDB;
 import service.account.AccountService;
 
 import java.util.HashMap;
@@ -23,6 +25,7 @@ public class GameServerTest {
     private GameServer gameServer;
     @Before
     public void setUp() {
+        new ProjectDB().initBD("hibernate-test.cfg.xml");
         service = mock(AccountService.class);
         rooms = spy(new HashMap<>());
         gameServer = new GameServer(service);
@@ -181,5 +184,8 @@ public class GameServerTest {
 
         assertTrue(gameServer.isGameReady(anyString()));
     }
-
+    @After
+    public void clear(){
+        ProjectDB.truncateTables();
+    }
 }

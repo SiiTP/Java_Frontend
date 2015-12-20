@@ -4,7 +4,6 @@ import game.server.GameServer;
 import messages.socket.MessageFrontend;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.jetty.websocket.api.RemoteEndpoint;
 import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
 import org.eclipse.jetty.websocket.api.WebSocketException;
@@ -61,7 +60,7 @@ public class MainWebSocket extends WebSocketAdapter{
     }
     public void sendMessageBack(JSONObject response){
         try {
-            if(response != null && isConnected() && getSession().isOpen()) {
+            if(response != null && isConnected() ) {
                 getRemote().sendString(response.toString());
             }else{
                 LOGGER.error("wrong message from " + httpSession);

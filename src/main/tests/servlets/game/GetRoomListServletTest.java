@@ -1,6 +1,7 @@
 package servlets.game;
 
 import game.server.GameServer;
+import org.junit.After;
 import persistance.UserProfile;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import resource.ResourceFactory;
 import resource.ResponseResources;
+import service.ProjectDB;
 import service.account.AccountService;
 import servlets.game.room.RoomServlet;
 
@@ -36,6 +38,7 @@ public class GetRoomListServletTest {
     private AccountService accountService;
     @Before
     public void setUp() throws IOException {
+        new ProjectDB().initBD("hibernate-test.cfg.xml");
         responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
         accountService = spy(new AccountService());
         gameServer = spy(new GameServer(accountService));
@@ -67,6 +70,10 @@ public class GetRoomListServletTest {
         JSONObject object = new JSONObject(stringWriter.toString());
         int i = object.optInt("status");
         assertEquals(i, responseResources.getZeroPlayingRoomsNow());
+    }
+    @After
+    public void clear(){
+        ProjectDB.truncateTables();
     }
 
 }

@@ -1,8 +1,10 @@
 package servlets.authorization;
 
 import org.jetbrains.annotations.Nullable;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import service.ProjectDB;
 import service.account.AccountService;
 
 import javax.servlet.ServletException;
@@ -28,6 +30,7 @@ public class SignUpTest {
     private UserServlet signUp;
     @Before
     public void setUp() throws IOException {
+        new ProjectDB().initBD("hibernate-test.cfg.xml");
         service = spy(new AccountService());
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
@@ -62,7 +65,7 @@ public class SignUpTest {
         when(service.isAvailableName(anyString())).thenReturn(true);
         when(request.getParameter("username")).thenReturn("aaaa");
         when(request.getParameter("password")).thenReturn(passValue);
-        signUp.doPost(request,response);
+        signUp.doPost(request, response);
     }
     @Test
     public void testDoPostNullPass() throws ServletException, IOException {
@@ -75,5 +78,9 @@ public class SignUpTest {
         setCheckPassword("aaaa");
 
         assertTrue(stringWriter.toString().contains("true"));
+    }
+    @After
+    public void clear(){
+        ProjectDB.truncateTables();
     }
 }

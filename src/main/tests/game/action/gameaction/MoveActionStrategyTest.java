@@ -4,11 +4,13 @@ import game.rooms.Room;
 import game.rooms.RoomFFA;
 import game.server.GameServer;
 import game.user.GameProfile;
+import org.junit.After;
 import persistance.UserProfile;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
+import service.ProjectDB;
 import service.account.AccountService;
 
 import static org.junit.Assert.*;
@@ -24,6 +26,7 @@ public class MoveActionStrategyTest {
     private MoveActionStrategy moveActionStrategy;
     @Before
     public void setUp() {
+        new ProjectDB().initBD("hibernate-test.cfg.xml");
         httpSession = "session";
         AccountService accountService = spy(new AccountService());
         gameServer = spy(new GameServer(accountService));
@@ -114,8 +117,8 @@ public class MoveActionStrategyTest {
 
         moveActionStrategy.checkCollision(me, ffa);
 
-        assertTrue("enemy was not killed", enemy.isKilled());
-        assertFalse("me should not be killed", me.isKilled());
+        assertFalse("enemy was not killed", enemy.isKilled());
+        assertTrue("me should not be killed", me.isKilled());
 
         enemy.setIsKilled(false);
         enemy.setDirection(225);
@@ -143,5 +146,9 @@ public class MoveActionStrategyTest {
         profile.setY(y);
         profile.setDirection(direction);
         return profile;
+    }
+    @After
+    public void clear(){
+        ProjectDB.truncateTables();
     }
 }

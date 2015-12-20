@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 
 public class Main {
         private static final Logger LOGGER = LogManager.getLogger(Main.class);

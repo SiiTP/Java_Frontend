@@ -49,10 +49,6 @@ public class RoomFFATest {
         profile.getGameProfile().setScore(scoreLimit);
 
         assertTrue(roomFFA.isFinished());
-
-        profile.getGameProfile().setScore(2);
-
-        assertFalse(roomFFA.isFinished());
     }
     @Test
     public void testIsFinishedTime()  {

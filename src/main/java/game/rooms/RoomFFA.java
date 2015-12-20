@@ -20,6 +20,7 @@ public class RoomFFA extends RoomAbstractImpl {
     private final List<UserProfile> users = new ArrayList<>();
     private UserProfile winner;
     private boolean isFinished = false;
+    @Override
     public boolean isFull(){
         return users.size() == getPlayersLimit();
     }
@@ -120,7 +121,4 @@ public class RoomFFA extends RoomAbstractImpl {
     @Override
     public int getPlayersCount() {return users.size();}
 
-    public void setWinner(UserProfile winner) {
-        this.winner = winner;
-    }
 }

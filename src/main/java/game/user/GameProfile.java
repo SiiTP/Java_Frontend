@@ -17,7 +17,7 @@ public class GameProfile {
     private double y;
     private double direction;
     private boolean isKilled;
-    private AtomicBoolean isMoving;
+    private final AtomicBoolean isMoving;
     private Instant respawnTime;
     private long collisionTimeStamp;
     private Instant dt;

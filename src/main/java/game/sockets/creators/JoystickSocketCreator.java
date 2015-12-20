@@ -1,6 +1,5 @@
 package game.sockets.creators;
 
-import game.server.GameServer;
 import game.sockets.JoystickSocket;
 import messages.socket.MessageFrontend;
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeRequest;
@@ -11,7 +10,7 @@ import org.eclipse.jetty.websocket.servlet.ServletUpgradeResponse;
  */
 public class JoystickSocketCreator extends AbstractGameSocketCreator {
     public JoystickSocketCreator(MessageFrontend frontend) {
-        super(null, frontend);
+        super(frontend);
     }
 
     @Override

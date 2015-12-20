@@ -8,8 +8,6 @@ import org.json.JSONObject;
 import resource.GameResources;
 import resource.ResourceFactory;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 

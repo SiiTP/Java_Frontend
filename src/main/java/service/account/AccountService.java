@@ -15,8 +15,6 @@ import persistance.UserProfile;
 import resource.ResourceFactory;
 import resource.ServletResources;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
