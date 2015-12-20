@@ -6,6 +6,7 @@ import resource.ResourceFactory;
 
 import java.time.Instant;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by ivan on 25.10.15.
@@ -15,13 +16,15 @@ public class GameProfile {
     private double x;
     private double y;
     private double direction;
-    private boolean isKilled;
-    private boolean isMoving;
+    private AtomicBoolean isKilled;
+    private AtomicBoolean isMoving;
     private Instant respawnTime;
     private long collisionTimeStamp;
     private Instant dt;
     public GameProfile() {
-            resetSetting();
+        isKilled = new AtomicBoolean(false);
+        isMoving = new AtomicBoolean(true);
+        resetSetting();
     }
 
     public JSONObject getJSON(){
@@ -29,18 +32,18 @@ public class GameProfile {
         object.put("posX",x);
         object.put("posY",y);
         object.put("score",score);
-        object.put("isKilled",isKilled);
-        object.put("isMoving", isMoving);
+        object.put("isKilled",isKilled.get());
+        object.put("isMoving", isMoving.get());
         object.put("direction",direction);
         return object;
     }
 
     public boolean isMoving() {
-        return isMoving;
+        return isMoving.get();
     }
 
     public void setIsMoving(boolean isStopped) {
-        this.isMoving = isStopped;
+        this.isMoving.set(isStopped);
     }
 
     public int getScore() {
@@ -51,27 +54,27 @@ public class GameProfile {
         this.score = score;
     }
 
-    public double getX() {
+    public synchronized double getX() {
         return x;
     }
 
-    public void setX(double x) {
+    public synchronized void setX(double x) {
         this.x = x;
     }
 
-    public double getY() {
+    public synchronized double getY() {
         return y;
     }
 
-    public void setY(double y) {
+    public synchronized void setY(double y) {
         this.y = y;
     }
 
-    public double getDirection() {
+    public synchronized double getDirection() {
         return direction;
     }
 
-    public void setDirection(double direction) {
+    public synchronized void setDirection(double direction) {
         this.direction = direction;
     }
 
@@ -89,16 +92,16 @@ public class GameProfile {
     public boolean isKilled() {
         if(respawnTime != null){
             if(Instant.now().isAfter(respawnTime)){
-                isKilled = false;
+                isKilled.set(false);
                 respawnTime = null;
                 resetSetting();
             }
         }
-        return isKilled;
+        return isKilled.get();
     }
 
     public void setIsKilled(boolean isKilled) {
-        this.isKilled = isKilled;
+        this.isKilled.set(isKilled);
         this.respawnTime = Instant.now().plusSeconds(5);
     }
 
@@ -119,7 +122,7 @@ public class GameProfile {
         GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
         x = random.nextInt(gameResources.getGameFieldWidth());
         y = random.nextInt(gameResources.getGameFieldHeight());
-        isKilled = false;
+        isKilled.set(false);
     }
     public void resetScore(){
         score = 0;

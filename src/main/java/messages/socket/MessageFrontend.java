@@ -10,14 +10,16 @@ import resource.ResourceFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Created by ivan on 13.12.15.
  */
 public class MessageFrontend implements Abonent,Runnable {
     private final Address address = new Address();
-    private final Map<String,MainWebSocket> sockets = new HashMap<>();
-    private final Map<String,JoystickSocket> joystickMap = new HashMap<>();
+    private final ConcurrentMap<String,MainWebSocket> sockets = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String,JoystickSocket> joystickMap = new ConcurrentHashMap<>();
     private final MessageSystem messageSystem;
     private final int sleepTime;
     public MessageFrontend(MessageSystem messageSystem) {
