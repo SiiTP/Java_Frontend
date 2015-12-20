@@ -63,7 +63,9 @@ public class RoomFFA extends RoomAbstractImpl {
     public boolean isFinished() {
         if(!isFinished && getFinishTime() != null) {
             UserProfile currentWinner = currentWinner();
-            isFinished = currentWinner.getGameProfile().getScore() == getScoreLimit() || Instant.now().isAfter(getFinishTime());
+            if(currentWinner != null) {
+                isFinished = currentWinner.getGameProfile().getScore() == getScoreLimit() || Instant.now().isAfter(getFinishTime());
+            }
         }
         return isFinished;
     }
