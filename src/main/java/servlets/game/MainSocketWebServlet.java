@@ -12,14 +12,15 @@ import javax.servlet.annotation.WebServlet;
  */
 @WebServlet
 public class MainSocketWebServlet extends AbstractGameSocketServlet {
-
+    private GameServer gameServer;
     public MainSocketWebServlet(GameServer gameServer, MessageFrontend frontend) {
-        super(gameServer, frontend);
+        super(frontend);
+        this.gameServer = gameServer;
     }
 
     @Override
     public void configure(WebSocketServletFactory webSocketServletFactory) {
         webSocketServletFactory.getPolicy().setIdleTimeout(getIdleTime());
-        webSocketServletFactory.setCreator(new MainWebSocketCreator(getGameServer(),getFrontend()));
+        webSocketServletFactory.setCreator(new MainWebSocketCreator(gameServer,getFrontend()));
     }
 }
