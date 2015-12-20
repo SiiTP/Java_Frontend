@@ -80,6 +80,9 @@ public class GameServer {
         }
         return isReady;
     }
+    public boolean isFullRoom(String roomName){
+        return roomService.getRoomByName(roomName).isFull();
+    }
     public void setRooms(Map<String, Room> rooms) {
         roomService.setRooms(rooms);
     }
