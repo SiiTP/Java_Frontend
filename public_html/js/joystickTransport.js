@@ -3,11 +3,16 @@ define(['views/joystick'],function(joystick) {
         this.address   = args.address;
         this.session   = args.session;
         this.constants = args.constants;
+
         this.angle = 1;
         this.socket = null;
         this.queryInterval = null;
+        this.isMoving = false;
+
         this.initialize = function() {
             joystick.on("setAngle", this.onSetAngle.bind(this));
+            joystick.on("stopMove", this.onStop.bind(this));
+            joystick.on("startMove", this.onStart.bind(this));
             this.socket = new WebSocket("ws://localhost:8000/" + this.address);
             this.socket.onopen = function(event) {
                 console.log("____ open socket");
@@ -21,18 +26,31 @@ define(['views/joystick'],function(joystick) {
                 console.log("____ close socket");
             };
         };
+
         this.onSetAngle = function(data) {
             this.angle = data.angle;
-            console.log("socket angle : " + this.angle);
         };
+
+        this.onStop = function() {
+            this.isMoving = false;
+        };
+
+        this.onStart = function() {
+            this.isMoving = true;
+        };
+
         this.setQueryInterval = function() {
             this.queryInterval = setInterval(this.sendMessage.bind(this), this.constants.get('INTERVAL_SHORT'));
         };
+
         this.sendMessage = function() {
-            var data = JSON.stringify({"direction": this.angle, "isMoving": true, "session": this.session});
-            console.log("SENDED : ");
-            console.log(data);
+            var data = JSON.stringify({"direction": this.angle, "isMoving": this.isMoving, "session": this.session});
             this.socket.send(data);
+        };
+
+        this.exit = function() {
+            clearInterval(this.queryInterval);
+            this.socket.close();
         }
 
     }

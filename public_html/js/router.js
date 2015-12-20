@@ -1,3 +1,7 @@
+//БЭМ
+//<p
+//options sync
+//2 index
 define([
     'backbone',
     'views/viewManager',
@@ -87,13 +91,12 @@ define([
             registrationView.show();
         },
         joystickAction: function (session) {
-            console.log("in joystickAction of session : " + session);
             var joystickTransport = new JoystickTransport({
                 address : "gameplay/mobile",
                 session : session,
                 constants: constants
             });
-            joystickTransport.initialize();
+            joystickTransport.initialize(); //TODO убрать в конструктор
             joystickView.show();
         }
     });
