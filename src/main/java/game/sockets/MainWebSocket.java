@@ -59,7 +59,7 @@ public class MainWebSocket extends WebSocketAdapter{
     }
     public void sendMessageBack(JSONObject response){
         try {
-            if(response != null) {
+            if(response != null && isConnected()) {
                 getRemote().sendString(response.toString());
             }else{
                 LOGGER.error("wrong message from " + httpSession);
