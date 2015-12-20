@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
  */
 public class RoomFFA extends RoomAbstractImpl {
     private final List<UserProfile> users = new ArrayList<>();
+    private UserProfile winner;
+    private boolean isFinished = false;
     public boolean isFull(){
         return users.size() == getPlayersLimit();
     }
@@ -41,21 +43,27 @@ public class RoomFFA extends RoomAbstractImpl {
     public boolean isRoomReady() {
         return getStartTime() != null || users.size() > 1;
     }
-    public int maxScore(){
-        int max = -1;
-        for(UserProfile user:users){
-            GameProfile gameProfile = user.getGameProfile();
-            if(gameProfile.getScore()>max){
-                max = gameProfile.getScore();
+    @SuppressWarnings("ConstantConditions")
+    public UserProfile currentWinner(){
+        if(winner== null || winner.getGameProfile().getScore() != getScoreLimit()) {
+            int max = -1;
+            UserProfile resultProfile = null;
+            for (UserProfile user : users) {
+                GameProfile gameProfile = user.getGameProfile();
+                if (gameProfile.getScore() > max) {
+                    max = gameProfile.getScore();
+                    resultProfile = user;
+                }
             }
+            winner = resultProfile;
         }
-        return max;
+        return winner;
     }
     @Override
     public boolean isFinished() {
-        boolean isFinished = false;
-        if(getFinishTime()!=null) {
-            isFinished = Instant.now().isAfter(getFinishTime()) || maxScore() == getScoreLimit();
+        if(!isFinished && getFinishTime() != null) {
+            UserProfile currentWinner = currentWinner();
+            isFinished = currentWinner.getGameProfile().getScore() == getScoreLimit() || Instant.now().isAfter(getFinishTime());
         }
         return isFinished;
     }
@@ -67,13 +75,6 @@ public class RoomFFA extends RoomAbstractImpl {
     @Override
     @Nullable
     public UserProfile getWinner(){
-        int max = maxScore();
-        UserProfile winner = null;
-        for(UserProfile user : users){
-            if (user.getGameProfile().getScore() == max) {
-                winner = user;
-            }
-        }
         return winner;
     }
     @Override
@@ -117,4 +118,7 @@ public class RoomFFA extends RoomAbstractImpl {
     @Override
     public int getPlayersCount() {return users.size();}
 
+    public void setWinner(UserProfile winner) {
+        this.winner = winner;
+    }
 }

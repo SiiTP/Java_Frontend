@@ -45,7 +45,7 @@ public class RoomDataSet {
             }
             startTime = LocalDateTime.ofInstant(roomStartTime, ZoneId.of("Europe/Moscow"));
             Instant roomFinistTime = roomAbstract.getFinishTime();
-            if(roomFinistTime == null){
+            if(roomFinistTime == null || roomAbstract.isFinished()){
                 roomFinistTime = Instant.now();
             }
             finishTime = LocalDateTime.ofInstant(roomFinistTime, ZoneId.of("Europe/Moscow"));
