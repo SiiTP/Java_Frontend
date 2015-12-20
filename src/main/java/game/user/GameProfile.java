@@ -16,13 +16,12 @@ public class GameProfile {
     private double x;
     private double y;
     private double direction;
-    private AtomicBoolean isKilled;
+    private boolean isKilled;
     private AtomicBoolean isMoving;
     private Instant respawnTime;
     private long collisionTimeStamp;
     private Instant dt;
     public GameProfile() {
-        isKilled = new AtomicBoolean(false);
         isMoving = new AtomicBoolean(true);
         resetSetting();
     }
@@ -32,7 +31,7 @@ public class GameProfile {
         object.put("posX",x);
         object.put("posY",y);
         object.put("score",score);
-        object.put("isKilled",isKilled.get());
+        object.put("isKilled",isKilled);
         object.put("isMoving", isMoving.get());
         object.put("direction",direction);
         return object;
@@ -89,19 +88,19 @@ public class GameProfile {
         return (diff.toEpochMilli()+0.0)/toSeconds;
     }
 
-    public boolean isKilled() {
+    public synchronized boolean isKilled() {
         if(respawnTime != null){
             if(Instant.now().isAfter(respawnTime)){
-                isKilled.set(false);
+                isKilled = false;
                 respawnTime = null;
                 resetSetting();
             }
         }
-        return isKilled.get();
+        return isKilled;
     }
 
-    public void setIsKilled(boolean isKilled) {
-        this.isKilled.set(isKilled);
+    public synchronized void setIsKilled(boolean isKilled) {
+        this.isKilled = isKilled;
         this.respawnTime = Instant.now().plusSeconds(5);
     }
 
@@ -122,7 +121,7 @@ public class GameProfile {
         GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
         x = random.nextInt(gameResources.getGameFieldWidth());
         y = random.nextInt(gameResources.getGameFieldHeight());
-        isKilled.set(false);
+        isKilled = false;
     }
     public void resetScore(){
         score = 0;
