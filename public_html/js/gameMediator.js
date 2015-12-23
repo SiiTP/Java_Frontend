@@ -33,6 +33,7 @@ define (function() {
 
                 if (answer.status == 301) {
                     console.log("___@ waiting answer");
+                    this.field.trigger('waiting');
                     this.gameBegin = false;
                 }
 
@@ -41,6 +42,7 @@ define (function() {
                     this.createPlayers(answer);
                     this.parsePlayers(answer.players);
                     if (!this.gameBegin) {
+                        this.field.trigger('gameProccess');
                         this.startGame();
                     }
                     this.gameBegin = true;
