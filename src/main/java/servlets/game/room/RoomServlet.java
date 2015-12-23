@@ -24,7 +24,7 @@ public class RoomServlet extends HttpServlet {
     private final ResponseResources responseResources;
     private static final Logger LOGGER = LogManager.getLogger("ReqResp");
     public RoomServlet(GameServer gameServer) {
-        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
+        responseResources =(ResponseResources) ResourceFactory.getResource("src/main/resources/data/responseCodes.json");
         this.gameServer = gameServer;
     }
 
@@ -34,8 +34,9 @@ public class RoomServlet extends HttpServlet {
         String password = req.getParameter("password");
         LOGGER.info(new MarkerManager.Log4jMarker("REQUEST"),"data: " + roomName + ' ' + password);
         String session = req.getSession().getId();
+        JSONObject responseJSON = new JSONObject();
         if(roomName != null && !roomName.isEmpty()) {
-            JSONObject responseJSON = new JSONObject();
+
             if (!gameServer.checkIfRoomExist(roomName)) {
                 responseJSON.put("status", responseResources.getRoomAlreadyExist());
                 responseJSON.put("message", "Room with name " + roomName + " already exist");
@@ -55,8 +56,12 @@ public class RoomServlet extends HttpServlet {
                     responseJSON.put("message", "you are not authorized");
                 }
             }
-            resp.getWriter().println(responseJSON.toString());
+
+        }else{
+            responseJSON.put("status", responseResources.getNoRoomName());
+            responseJSON.put("message", "you should provide room name");
         }
+        resp.getWriter().println(responseJSON.toString());
     }
 
     @Override

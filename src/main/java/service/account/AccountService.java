@@ -45,7 +45,7 @@ public class AccountService{
     }
 
     public boolean isDataWrong(String username, String password){
-        ServletResources servletResources =(ServletResources) ResourceFactory.getResource("data/servlet.json");
+        ServletResources servletResources =(ServletResources) ResourceFactory.getResource("src/main/resources/data/servlet.json");
         String regex = servletResources.getPasswordRegexPattern();
         int passwordLength = servletResources.getMinPasswordLength();
         return !(username.matches(regex) && password.matches(regex) && password.length()>=passwordLength);

@@ -10,6 +10,7 @@ import resource.ResourceFactory;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by ivan on 13.12.15.
@@ -22,7 +23,7 @@ public class MessageFrontend implements Abonent,Runnable {
     private final int sleepTime;
     public MessageFrontend(MessageSystem messageSystem) {
         this.messageSystem = messageSystem;
-        GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
+        GameResources gameResources =(GameResources) ResourceFactory.getResource(System.getProperty("user.dir")+"/config/game.json");
         sleepTime = gameResources.getDefaultServiceSleep();
     }
 
@@ -43,8 +44,11 @@ public class MessageFrontend implements Abonent,Runnable {
             }
         }
     }
+
     public void addSocket(MainWebSocket socket){
-        sockets.put(socket.getHttpSession(), socket);
+        if(socket.getHttpSession()!=null) {
+            sockets.put(socket.getHttpSession(), socket);
+        }
     }
     public void sendBrowserMoveMessageForward(JSONObject data, String session){
         if(!isJoystickExist(session)) {

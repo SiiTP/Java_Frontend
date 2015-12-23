@@ -21,7 +21,7 @@ public class RoomFFATest {
     @Before
     public void setup(){
         roomFFA = new RoomFFA("room");
-        GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
+        GameResources gameResources =(GameResources) ResourceFactory.getResource(System.getProperty("user.dir")+"/config/game.json");
         scoreLimit = gameResources.getDefaultWinScore();
     }
     @Test

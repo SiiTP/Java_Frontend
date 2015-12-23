@@ -39,7 +39,7 @@ public class GetRoomListServletTest {
     @Before
     public void setUp() throws IOException {
         new ProjectDB().initBD("hibernate-test.cfg.xml");
-        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
+        responseResources =(ResponseResources) ResourceFactory.getResource("src/main/resources/data/responseCodes.json");
         accountService = spy(new AccountService());
         gameServer = spy(new GameServer(accountService));
         request = mock(HttpServletRequest.class);

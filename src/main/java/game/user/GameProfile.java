@@ -78,7 +78,7 @@ public class GameProfile {
     }
 
     public double getDeltaTime() {
-        final int toSeconds = ((GameResources)ResourceFactory.getResource("data/game.json")).getToSeconds();
+        final int toSeconds = ((GameResources)ResourceFactory.getResource(System.getProperty("user.dir")+"/config/game.json")).getToSeconds();
         if(dt==null){
             dt = Instant.now();
         }
@@ -118,7 +118,7 @@ public class GameProfile {
     }
     public void resetSetting(){
         Random random = new Random(System.currentTimeMillis());
-        GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
+        GameResources gameResources =(GameResources) ResourceFactory.getResource(System.getProperty("user.dir")+"/config/game.json");
         x = random.nextInt(gameResources.getGameFieldWidth());
         y = random.nextInt(gameResources.getGameFieldHeight());
         isKilled = false;

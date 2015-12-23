@@ -95,7 +95,7 @@ public class RoomFFA extends RoomAbstractImpl {
     }
     private void setGamePlayInterval(){
             Instant startTime = Instant.now();
-            GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
+            GameResources gameResources =(GameResources) ResourceFactory.getResource(System.getProperty("user.dir")+"/config/game.json");
             final int maxRoomTime = gameResources.getMaxRoomPlayingTimeInSec();
             Instant finishTime = startTime.plusSeconds(maxRoomTime);
             setStartTime(startTime);

@@ -36,7 +36,7 @@ public class MoveActionProcessorTest {
     @Before
     public void setup() {
         new ProjectDB().initBD("hibernate-test.cfg.xml");
-        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
+        responseResources =(ResponseResources) ResourceFactory.getResource("src/main/resources/data/responseCodes.json");
 
         httpSession = "session";
         accountService = spy(new AccountService());

@@ -35,7 +35,7 @@ public class CreateGameTest {
 
     @Before
     public void setUp() throws IOException {
-        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
+        responseResources =(ResponseResources) ResourceFactory.getResource("src/main/resources/data/responseCodes.json");
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         HttpSession session = mock(HttpSession.class);

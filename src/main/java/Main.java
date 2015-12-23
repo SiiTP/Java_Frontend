@@ -3,6 +3,7 @@ import messages.MessageSystem;
 import messages.socket.MessageFrontend;
 import messages.mechanics.MessageMechanics;
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import persistance.UserProfile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,6 +34,7 @@ public class Main {
         private static final Logger LOGGER = LogManager.getLogger(Main.class);
         @SuppressWarnings("OverlyBroadThrowsClause")
         public static void main(String[] args) throws Exception {
+            System.out.println(System.getProperty("user.dir"));
             LOGGER.info("main begin");
             LOGGER.info("connect to production BD");
             ProjectDB db = new ProjectDB();

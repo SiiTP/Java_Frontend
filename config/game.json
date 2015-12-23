@@ -1,5 +1,4 @@
 {
-
   "maxPlayers":10,
   "collisionDelta":250,
   "defaultServiceSleep":25,

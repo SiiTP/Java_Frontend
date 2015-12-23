@@ -10,10 +10,15 @@ public final class ResourceFactory {
     private static Map<String,Resource> s_cachedResources;
     private ResourceFactory() {}
     public static Resource getResource(String resourceSource){
+        ResourceLoader loader = new ResourceLoader();
         if(s_cachedResources == null){
-            s_cachedResources = new HashMap<>();
-            new ResourceLoader().loadResources(s_cachedResources);
+            s_cachedResources = loader.loadResources(resourceSource);
         }
-        return s_cachedResources.get("src/main/resources/"+resourceSource);
+        Resource resource = s_cachedResources.get(resourceSource);
+        if(resource == null){
+            s_cachedResources = loader.loadResources(resourceSource);
+            resource = s_cachedResources.get(resourceSource);
+        }
+        return resource;
     }
 }

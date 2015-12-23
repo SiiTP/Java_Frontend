@@ -19,9 +19,9 @@ import static reflection.ObjectConstruct.setFields;
  */
 public class ResourceLoader {
     private static final Logger LOGGER = LogManager.getLogger(ResourceLoader.class);
-    public void loadResources(Map<String,Resource> map) {
-
-        ArrayList<JSONObject> configObjects = loadJsonConfig();
+    public Map<String,Resource> loadResources(String source) {
+        Map<String,Resource> map = new HashMap<>();
+        ArrayList<JSONObject> configObjects = loadJsonConfig(source);
         if(configObjects != null) {
             for (JSONObject configFile : configObjects) {
                 Object object = constructFromName(configFile.getString("class"));
@@ -43,9 +43,9 @@ public class ResourceLoader {
                 map.put(filename, (Resource) object);
             }
         }
+        return map;
     }
-    private Queue<File> getConfigFiles(){
-        String source = "src/main/resources/data";
+    private Queue<File> getConfigFiles(String source){
         LOGGER.info("start scan files from " + source);
         File file = new File(source);
         Queue<File> files = new LinkedList<>();
@@ -67,15 +67,17 @@ public class ResourceLoader {
                 }
             }
         }else{
-            LOGGER.error("no files in " + source);
+            if(!file.isDirectory()){
+                files.offer(file);
+            }
         }
         LOGGER.info("loaded " + files.size() + " files");
         return files;
     }
-    private ArrayList<JSONObject> loadJsonConfig() {
+    private ArrayList<JSONObject> loadJsonConfig(String source) {
 
         ArrayList<JSONObject> configList = new ArrayList<>();
-        for(File f:getConfigFiles()) {
+        for(File f:getConfigFiles(source)) {
             StringBuilder builder = new StringBuilder();
             try(BufferedReader reader = new BufferedReader(new FileReader(f))) {
                 String app;

@@ -11,6 +11,8 @@ import org.json.JSONObject;
 import resource.GameResources;
 import resource.ResourceFactory;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * Created by ivan on 12.12.15.
  */
@@ -23,15 +25,17 @@ public class MessageMechanics implements Runnable, Abonent{
         this.system = system;
         this.server = server;
         address = new Address();
-        GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
+        GameResources gameResources =(GameResources) ResourceFactory.getResource(System.getProperty("user.dir")+"/config/game.json");
         serviceSleep = gameResources.getDefaultServiceSleep();
     }
+
     public void moveMessage(MoveMessage message){
         ActionProcessor processor = new MoveActionProcessor(server);
         JSONObject response = processor.processMessage(message.getMessageData(), message.getSession());
         MoveMessageBack backMessage = new MoveMessageBack(message.getTo(),message.getFrom(),response,message.getSession());
         system.sendMessage(backMessage);
     }
+
     @Override
     public Address getAddress() {
         return address;

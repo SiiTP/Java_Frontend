@@ -20,7 +20,7 @@ public class MoveActionProcessor implements ActionProcessor {
     private final GameActionStrategy strategy;
     public MoveActionProcessor(GameServer server) {
         this.gameServer = server;
-        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
+        responseResources =(ResponseResources) ResourceFactory.getResource("src/main/resources/data/responseCodes.json");
         strategy = new MoveActionStrategy(server);
     }
 

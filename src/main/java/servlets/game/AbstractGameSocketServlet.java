@@ -13,7 +13,7 @@ public abstract class AbstractGameSocketServlet extends WebSocketServlet {
     private final MessageFrontend frontend;
     public AbstractGameSocketServlet(MessageFrontend frontend) {
         this.frontend = frontend;
-        ServletResources servletResources =(ServletResources) ResourceFactory.getResource("data/servlet.json");
+        ServletResources servletResources =(ServletResources) ResourceFactory.getResource("src/main/resources/data/servlet.json");
         idleTime = servletResources.getWebSocketIdleTimeMillisec();
     }
 

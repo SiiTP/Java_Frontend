@@ -22,7 +22,7 @@ public class ScoreServlet extends HttpServlet {
     private final ResponseResources responseResources;
     public ScoreServlet(GameServer server) {
         this.server = server;
-        responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
+        responseResources =(ResponseResources) ResourceFactory.getResource("src/main/resources/data/responseCodes.json");
     }
 
     @Override

@@ -9,5 +9,6 @@
   "notAuthorized":304,
   "roomIsFull":305,
   "noSuchRoom":306,
-  "wrongUsernameOrPassword":307
+  "wrongUsernameOrPassword":307,
+  "noRoomName":308
 }

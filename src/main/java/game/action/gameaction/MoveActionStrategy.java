@@ -30,7 +30,7 @@ public class MoveActionStrategy implements GameActionStrategy {
     private static final Logger LOGGER = LogManager.getLogger(MoveActionStrategy.class);
     public MoveActionStrategy(GameServer gameServer) {
         this.gameServer = gameServer;
-        GameResources gameResources =(GameResources) ResourceFactory.getResource("data/game.json");
+        GameResources gameResources =(GameResources) ResourceFactory.getResource(System.getProperty("user.dir")+"/config/game.json");
         collisionDelta = gameResources.getCollisionDelta();
         defaultDontMoveValue = gameResources.getDefaultStopDirectionValue();
         width = gameResources.getGameFieldWidth();
