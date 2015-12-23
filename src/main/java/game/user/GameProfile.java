@@ -16,13 +16,14 @@ public class GameProfile {
     private double x;
     private double y;
     private double direction;
-    private boolean isKilled;
+    private AtomicBoolean isKilled;
     private final AtomicBoolean isMoving;
     private Instant respawnTime;
     private long collisionTimeStamp;
     private Instant dt;
     public GameProfile() {
         isMoving = new AtomicBoolean(true);
+        isKilled = new AtomicBoolean(false);
         resetSetting();
     }
 
@@ -31,9 +32,9 @@ public class GameProfile {
         object.put("posX",x);
         object.put("posY",y);
         object.put("score",score);
-        object.put("isKilled",isKilled);
+        object.put("isKilled",isKilled.get());
         object.put("isMoving", isMoving.get());
-        object.put("direction",direction);
+        object.put("direction", direction);
         return object;
     }
 
@@ -87,20 +88,21 @@ public class GameProfile {
         dt = temp;
         return (diff.toEpochMilli()+0.0)/toSeconds;
     }
-
-    public synchronized boolean isKilled() {
+    public synchronized void checkIsKilled(){
         if(respawnTime != null){
             if(Instant.now().isAfter(respawnTime)){
-                isKilled = false;
+                isKilled.set(false);
                 respawnTime = null;
                 resetSetting();
             }
         }
-        return isKilled;
+    }
+    public boolean isKilled() {
+        return isKilled.get();
     }
 
     public synchronized void setIsKilled(boolean isKilled) {
-        this.isKilled = isKilled;
+        this.isKilled.set(isKilled);
         this.respawnTime = Instant.now().plusSeconds(5);
     }
 
@@ -121,7 +123,7 @@ public class GameProfile {
         GameResources gameResources =(GameResources) ResourceFactory.getResource(System.getProperty("user.dir")+"/config/game.json");
         x = random.nextInt(gameResources.getGameFieldWidth());
         y = random.nextInt(gameResources.getGameFieldHeight());
-        isKilled = false;
+        isKilled.set(false);
     }
     public void resetScore(){
         score = 0;

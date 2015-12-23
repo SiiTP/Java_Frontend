@@ -64,6 +64,7 @@ public class MoveActionStrategy implements GameActionStrategy {
                         }
                         checkCollision(gameProfile, room);
                     }
+                    gameProfile.checkIsKilled();
                     gameProfile.setDirection(direction);
                 }
             }
