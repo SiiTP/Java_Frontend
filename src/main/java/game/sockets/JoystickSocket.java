@@ -12,7 +12,7 @@ import org.json.JSONTokener;
  * Created by ivan on 17.12.15.
  */
 public class JoystickSocket extends WebSocketAdapter {
-    private MessageFrontend frontend;
+    private final MessageFrontend frontend;
     private String httpSession;
     private static final Logger LOGGER = LogManager.getLogger(JoystickSocket.class);
     public JoystickSocket(MessageFrontend frontend) {

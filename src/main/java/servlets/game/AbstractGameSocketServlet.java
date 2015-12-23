@@ -1,9 +1,7 @@
 package servlets.game;
 
-import game.server.GameServer;
 import messages.socket.MessageFrontend;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
-import org.jetbrains.annotations.Nullable;
 import resource.ResourceFactory;
 import resource.ServletResources;
 
@@ -12,10 +10,8 @@ import resource.ServletResources;
  */
 public abstract class AbstractGameSocketServlet extends WebSocketServlet {
     private final int idleTime;
-    private final GameServer gameServer;
     private final MessageFrontend frontend;
-    public AbstractGameSocketServlet(@Nullable GameServer gameServer, MessageFrontend frontend) {
-        this.gameServer = gameServer;
+    public AbstractGameSocketServlet(MessageFrontend frontend) {
         this.frontend = frontend;
         ServletResources servletResources =(ServletResources) ResourceFactory.getResource("data/servlet.json");
         idleTime = servletResources.getWebSocketIdleTimeMillisec();
@@ -25,9 +21,6 @@ public abstract class AbstractGameSocketServlet extends WebSocketServlet {
         return idleTime;
     }
 
-    public GameServer getGameServer() {
-        return gameServer;
-    }
 
     public MessageFrontend getFrontend() {
         return frontend;

@@ -3,10 +3,7 @@ package servlets.game;
 import game.server.GameServer;
 import game.sockets.creators.MainWebSocketCreator;
 import messages.socket.MessageFrontend;
-import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
-import resource.ResourceFactory;
-import resource.ServletResources;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -15,14 +12,15 @@ import javax.servlet.annotation.WebServlet;
  */
 @WebServlet
 public class MainSocketWebServlet extends AbstractGameSocketServlet {
-
+    private GameServer gameServer;
     public MainSocketWebServlet(GameServer gameServer, MessageFrontend frontend) {
-        super(gameServer, frontend);
+        super(frontend);
+        this.gameServer = gameServer;
     }
 
     @Override
     public void configure(WebSocketServletFactory webSocketServletFactory) {
         webSocketServletFactory.getPolicy().setIdleTimeout(getIdleTime());
-        webSocketServletFactory.setCreator(new MainWebSocketCreator(getGameServer(),getFrontend()));
+        webSocketServletFactory.setCreator(new MainWebSocketCreator(gameServer,getFrontend()));
     }
 }

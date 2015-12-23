@@ -7,11 +7,13 @@ import game.sockets.MainWebSocket;
 import messages.MessageSystem;
 import messages.socket.MessageFrontend;
 import org.json.JSONObject;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import persistance.UserProfile;
 import resource.ResourceFactory;
 import resource.ResponseResources;
+import service.ProjectDB;
 import service.account.AccountService;
 
 import static org.junit.Assert.*;
@@ -33,6 +35,7 @@ public class MoveActionProcessorTest {
     MainWebSocket socket;
     @Before
     public void setup() {
+        new ProjectDB().initBD("hibernate-test.cfg.xml");
         responseResources =(ResponseResources) ResourceFactory.getResource("data/responseCodes.json");
 
         httpSession = "session";
@@ -80,5 +83,8 @@ public class MoveActionProcessorTest {
 
         assertEquals(object.optInt("status"), responseResources.getRoomIsNotReadyCode());
     }
-
+    @After
+    public void clear(){
+        ProjectDB.truncateTables();
+    }
 }

@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.WebSocketAdapter;
+import org.eclipse.jetty.websocket.api.WebSocketException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -59,7 +60,7 @@ public class MainWebSocket extends WebSocketAdapter{
     }
     public void sendMessageBack(JSONObject response){
         try {
-            if(response != null) {
+            if(response != null && isConnected() ) {
                 getRemote().sendString(response.toString());
             }else{
                 LOGGER.error("wrong message from " + httpSession);
@@ -67,7 +68,10 @@ public class MainWebSocket extends WebSocketAdapter{
         } catch (IOException e) {
             LOGGER.error("cant send message back, user session " + httpSession);
             e.printStackTrace();
-        }
+        }catch (WebSocketException exc){
+            exc.printStackTrace();
+            System.out.println("session isOpen: " + getSession().isOpen() + ' ' + " isConnected: " + isConnected());
 
+        }
     }
 }

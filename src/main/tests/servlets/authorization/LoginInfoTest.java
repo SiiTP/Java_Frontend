@@ -1,8 +1,10 @@
 package servlets.authorization;
 
+import org.junit.After;
 import persistance.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
+import service.ProjectDB;
 import service.account.AccountService;
 
 import javax.servlet.ServletException;
@@ -28,6 +30,7 @@ public class LoginInfoTest {
     private UserServlet logInfo;
     @Before
     public void setUp() throws IOException {
+        new ProjectDB().initBD("hibernate-test.cfg.xml");
         service = spy(new AccountService());
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
@@ -66,5 +69,9 @@ public class LoginInfoTest {
         logInfo.doGet(request, response);
 
         assertTrue(stringWriter.toString().contains("false"));
+    }
+    @After
+    public void clear(){
+        ProjectDB.truncateTables();
     }
 }

@@ -104,10 +104,10 @@ public class MoveActionStrategy implements GameActionStrategy {
                         gameProfile.setCollisionTimeStamp(System.currentTimeMillis());
                         double myProection = Math.toDegrees(getDegree(gameProfile, myDirection, xBetweenPlayers, -yBetweenPlayers));
                         double enemyProection = Math.toDegrees(getDegree(enemy, enemy.getDirection(), -xBetweenPlayers, yBetweenPlayers));
-                        LOGGER.info(new MarkerManager.Log4jMarker("COLLISION"),"first score " + gameProfile.getScore() + "\n\t" + myProection
+                        /*LOGGER.info(new MarkerManager.Log4jMarker("COLLISION"),"first score " + gameProfile.getScore() + "\n\t" + myProection
                                 + ' ' + gameProfile.getDirection() + ' ' + gameProfile.getX() + ' ' + gameProfile.getY());
                         LOGGER.info(new MarkerManager.Log4jMarker("COLLISION"),"second " + enemy.getScore() + "\n\t" + enemyProection + ' ' + enemy.getDirection() +
-                         ' ' + enemy.getX() + ' ' + enemy.getY());
+                         ' ' + enemy.getX() + ' ' + enemy.getY());*/
                         if (!enemy.isKilled() && !gameProfile.isKilled()) {
                             boolean iWin = isIwin(myProection, enemyProection);
                             if (iWin) {
@@ -153,24 +153,4 @@ public class MoveActionStrategy implements GameActionStrategy {
         double t2 = Math.sqrt(vector2X * vector2X + vector2Y * vector2Y);
         return Math.acos((vectorX * vector2X + vectorY * vector2Y) / (t1 * t2));
     }
-
-    /*public static void main(String[] args) {
-        GameProfile playerOne = new GameProfile();
-        GameProfile playerTwo = new GameProfile();
-        final double x1=100;
-        playerOne.setX(x1);
-        final double y1 = 100;
-        playerOne.setY(y1);
-        final double x2 = 150;
-        playerTwo.setX(x2);
-        final double y2 = 150;
-        playerTwo.setY(y2);
-        MoveActionStrategy actionStrategy = new MoveActionStrategy(mock(GameServer.class));
-        final double myDirection = 90;
-        final double enemyDirection = 180;
-
-        double playerOneDegree = Math.toDegrees(actionStrategy.getDegree(playerOne,myDirection,x2-x1,y2-y1));
-        double playerTwoDegree = Math.toDegrees(actionStrategy.getDegree(playerTwo,enemyDirection,-x2+x1,-y2+y1));
-        System.out.println("one: " + playerOneDegree + " two: " + playerTwoDegree);
-    }*/
 }

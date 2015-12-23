@@ -21,4 +21,5 @@ public interface Room {
     boolean isRoomReady();
     boolean isRoomHasPass();
     boolean isFinished();
+    boolean isFull();
 }

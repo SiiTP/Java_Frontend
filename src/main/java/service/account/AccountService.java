@@ -15,8 +15,8 @@ import persistance.UserProfile;
 import resource.ResourceFactory;
 import resource.ServletResources;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Created by ivan on 21.09.15.
@@ -25,7 +25,7 @@ import java.util.Map;
 public class AccountService{
     private final UserDAO userDAO;
     @NotNull
-    private final Map<String,UserProfile> sessions = new HashMap<>();
+    private final ConcurrentMap<String,UserProfile> sessions = new ConcurrentHashMap<>();
 
     private final Logger logger = LogManager.getLogger(AccountService.class);
 

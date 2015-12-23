@@ -24,7 +24,11 @@ import servlets.game.room.RoomServlet;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class Main {
         private static final Logger LOGGER = LogManager.getLogger(Main.class);
         @SuppressWarnings("OverlyBroadThrowsClause")
@@ -58,17 +62,23 @@ public class Main {
             MessageSystem system = new MessageSystem();
             MessageFrontend messageFrontend = new MessageFrontend(system);
             MessageMechanics messageMechanics = new MessageMechanics(system,gameServer);
+            MessageMechanics messageMechanics2 = new MessageMechanics(system,gameServer);
             system.addService(messageFrontend);
             system.addService(messageMechanics);
+            system.addService(messageMechanics2);
             system.getAddressService().registerMessageSwitch(messageMechanics);
+            system.getAddressService().registerMessageSwitch(messageMechanics2);
 
-            Thread thread = new Thread(messageFrontend);
-            thread.setDaemon(true);
-            thread.start();
-            Thread thread2 = new Thread(messageMechanics);
-            thread2.setDaemon(true);
-            thread2.start();
-
+            ArrayList<Runnable> services = new ArrayList<>();
+            services.add(messageFrontend);
+            services.add(messageMechanics);
+            services.add(messageMechanics2);
+            ExecutorService service = Executors.newFixedThreadPool(services.size(), r -> {
+                Thread t = Executors.defaultThreadFactory().newThread(r);
+                t.setDaemon(true);
+                return t;
+            });
+            services.stream().forEach(service::execute);
             Properties properties = new Properties();
             try(FileInputStream inputStream = new FileInputStream("src/main/resources/cfg/server.properties")){
                 properties.load(inputStream);

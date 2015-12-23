@@ -1,8 +1,10 @@
 package servlets.authorization;
 
+import org.junit.After;
 import persistance.UserProfile;
 import org.junit.Before;
 import org.junit.Test;
+import service.ProjectDB;
 import service.account.AccountService;
 
 import javax.servlet.ServletException;
@@ -28,6 +30,7 @@ public class SignInTest {
     private UserServlet signIn;
     @Before
     public void setUp() throws IOException {
+        new ProjectDB().initBD("hibernate-test.cfg.xml");
         service = spy(new AccountService());
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
@@ -53,7 +56,7 @@ public class SignInTest {
     }
     @Test
     public void testDoPostSignInLoginSuccess() throws ServletException, IOException {
-        when(service.getUserBySession(anyString())).thenReturn(new UserProfile("abc","abc"));
+        when(service.getUserBySession(anyString())).thenReturn(new UserProfile("abc", "abc"));
         checkSignIn(true);
     }
     @Test
@@ -67,5 +70,9 @@ public class SignInTest {
         when(request.getParameter("password")).thenReturn("aaaa");
         signIn.doPost(request,response);
         assertTrue(stringWriter.toString().contains(Boolean.toString(auth)));
+    }
+    @After
+    public void clear(){
+        ProjectDB.truncateTables();
     }
 }
