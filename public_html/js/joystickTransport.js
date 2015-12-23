@@ -10,7 +10,7 @@ define(['views/joystick'],function(joystick) {
         this.isMoving = false;
 
         this.initialize = function() {
-            joystick.on("setAngleByMouse", this.onSetAngle.bind(this));
+            joystick.on("setAngle", this.onSetAngle.bind(this));
             joystick.on("stopMove", this.onStop.bind(this));
             joystick.on("startMove", this.onStart.bind(this));
             this.socket = new WebSocket(this.constants.get("SOCKET_HOST") + "/" + this.address);
@@ -45,6 +45,7 @@ define(['views/joystick'],function(joystick) {
 
         this.sendMessage = function() {
             //console.log("____send");
+            //console.log("angle : " + this.angle + " isMoving : " + this.isMoving);
             var data = JSON.stringify({"direction": this.angle, "isMoving": this.isMoving, "session": this.session});
             this.socket.send(data);
         };

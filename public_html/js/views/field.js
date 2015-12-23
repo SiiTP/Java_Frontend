@@ -28,7 +28,7 @@ define([
                 this.canvas.width  = 0;
                 this.canvas.height = 0;
             }
-            //this.trigger('exit');
+            this.trigger('exit');
             this.$el.hide();
         },
         onWin: function(winner) {
@@ -36,7 +36,7 @@ define([
             //debugger;
         },
         onExit: function() {
-            this.trigger('exit');
+            //this.trigger('exit');
             location.href = "#rooms";
         }
     });
