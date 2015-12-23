@@ -44,7 +44,7 @@ public class ProjectDB {
         configuration.setProperty("hibernate.current_session_context_class","thread");
         configuration.setProperty("hbm2ddl.auto","update");
         configuration.setProperty("hibernate.connection.password",dbPass);
-        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/"+dbName);
+        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://localhost:3306/"+dbName + "?characterEncoding=UTF-8");
         s_serviceRegistry = getRegistry(configuration);
         createFactory();
     }
