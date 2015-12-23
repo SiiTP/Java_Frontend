@@ -4,12 +4,11 @@
         <canvas class="joystick__canvas"> </canvas>
         <canvas class="joystick__canvas-cursor"> </canvas>
         <div class="joystick__info">
-            INFO
             <div class="joystick__info__message">
-                INFO_MESSAGE
+                angle : 0
             </div>
             <div class="joystick__info__hyroscope">
-                <span class="joystick__info__hyroscope__title">Управление гироскопом</span>
+                <span class="joystick__info__hyroscope__title">ГИРОСКОП</span>
                 <input class="js-hyroscope-checkbox" type="checkbox"/>
             </div>
         </div>

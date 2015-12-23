@@ -46,11 +46,15 @@ define([
                 } else {
                     this.orientation = "landscape";
                 }
+
+                this.on("setAngle", this.onSetAngle);
+
                 this.defineMinScale();
             }
 
 
         },
+
         show: function () {
             this.$el.show();
             this.trigger('show');
@@ -77,14 +81,51 @@ define([
                 this.minScale = window.screen.height;
             }
             this.radius = this.minScale / 2 - 22;
-            console.log("minScale : " + this.minScale);
         },
 
         draw: function () {
             this.context.beginPath();
-            this.context.fillStyle = "#f90";
-            this.context.arc(this.radius, this.radius, this.radius, 0, Math.PI * 2, true);
+
+            //тень____________________
+            this.context.shadowBlur = 10;
+            this.context.shadowColor = "#0f0";
+            //________________________
+
+            this.context.fillStyle = "#ff5";
+            this.context.arc(this.radius, this.radius, this.radius - 10, 0, Math.PI * 2, true);
             this.context.fill();
+
+            this.context.strokeStyle = "#0f0";
+            this.context.strokeWidth = 5;
+            this.context.arc(this.radius, this.radius, this.radius - 10, 0, Math.PI * 2, true);
+            this.context.stroke();
+
+
+        },
+
+        drawCursor: function(angle) {
+            var r = this.radius;
+            var x = r + (r - 10) * Math.cos(angle * Math.PI / 180);
+            var y = r - (r - 10) * Math.sin(angle * Math.PI / 180);
+            this.clearCursor();
+            this.contextCursor.beginPath();
+            this.contextCursor.moveTo(r, r);
+            this.contextCursor.lineTo(x, y);
+            this.contextCursor.lineWidth = 2;
+            this.contextCursor.strokeStyle = "#005";
+            this.contextCursor.stroke();
+
+            this.contextCursor.beginPath();
+            this.contextCursor.moveTo(r, r);
+            this.contextCursor.lineTo(2 * r, r);
+            this.contextCursor.lineWidth = 3;
+            this.contextCursor.strokeStyle = "#002";
+            this.contextCursor.stroke();
+
+            this.contextCursor.beginPath();
+            this.contextCursor.fillStyle = "#0f0";
+            this.contextCursor.arc(x, y, 10, 0, Math.PI / 180, true);
+            this.contextCursor.fill();
         },
 
         render: function () {
@@ -107,9 +148,7 @@ define([
                 this.JQ_container = this.$(".joystick__info");
                 if (this.orientation == "landscape") {
                     this.JQ_container.css("left", this.minScale + "px");
-                    //this.JQ_container.css("top", 0 + "px");
                 } else {
-                    //this.JQ_container.css("left", 0 + "px");
                     this.JQ_container.css("top", this.minScale + "px");
                 }
             } else {
@@ -127,21 +166,18 @@ define([
             this.render();
         },
 
-
-
         onTouchMove: function(event) {
             event.preventDefault();
-            var x = event.originalEvent.touches[0].clientX;
-            var y = event.originalEvent.touches[0].clientY;
-            //console.log("X : " + x + "Y : " + y);
-            var r = this.radius;
-            var r_c = this.radiusCursor;
-            var length = Math.sqrt((x-r)*(x-r) + (y-r)*(y-r));
-            if (length < r - r_c) { // если курсор в джойстике
-                this.drawCursor(x, y);
-                this.setAngle(x, y);
-            } else {
-                this.clearCursor();
+            if (!this.JQ_hyroscopeCheckbox) {
+                var x = event.originalEvent.touches[0].clientX;
+                var y = event.originalEvent.touches[0].clientY;
+                var r = this.radius;
+                var length = Math.sqrt((x-r)*(x-r) + (y-r)*(y-r));
+                if (length < r) { // если курсор в джойстике
+                    this.setAngleByMouse(x, y);
+                } else {
+                    this.clearCursor();
+                }
             }
 
         },
@@ -164,33 +200,37 @@ define([
         },
 
         onHyroscopeEvent: function (event) {
-            //console.log("A : " + Math.sin(event.alpha * Math.PI / 180));
-            var angleY = -Math.sin(event.beta * Math.PI / 180);
-            var angleX = Math.sin(event.gamma * Math.PI / 180);
-            var angle = Math.atan(angleY/angleX) * 180 / Math.PI;
-            if (event.gamma < 0) {
-                angle += 180;
-            }
-            if (angle < 0) {
-                angle += 360;
-            }
-            //console.log("B : " + angleY);
-            console.log("angle : " + angle);
-        },
+            if (this.JQ_hyroscopeCheckbox) {
+                var angleY = -Math.sin(event.beta * Math.PI / 180);
+                var angleX = Math.sin(event.gamma * Math.PI / 180);
+                var angle  = Math.atan(angleY/angleX) * 180 / Math.PI;
+                if (event.gamma < 0) {
+                    angle += 180;
+                }
+                if (angle < 0) {
+                    angle += 360;
+                }
 
-        drawCursor: function(x, y) {
-            this.clearCursor();
-            this.contextCursor.beginPath();
-            this.contextCursor.fillStyle = "#ff0";
-            this.contextCursor.arc(x, y, this.radiusCursor, 0, Math.PI * 2, true);
-            this.contextCursor.fill();
+                // при маленьких углах наклона останавливаться
+                if (Math.abs(angleX) < 0.1 && Math.abs(angleY) < 0.1) {
+                    this.trigger("stopMove")
+                } else {
+                    this.trigger("startMove")
+                }
+                //console.log("angle : " + angle);
+                if (isNaN(angle)) {
+                    angle = 0;
+                }
+                this.trigger("setAngle", {"angle": angle})
+            }
         },
 
         clearCursor: function() {
             this.contextCursor.beginPath();
             this.contextCursor.clearRect(0, 0, this.minScale, this.minScale);
         },
-        setAngle: function(x, y) {
+
+        setAngleByMouse: function(x, y) {
             var centerX = this.radius;
             var centerY = this.radius;
             var angle = Math.atan((centerY - y) / (x - centerX));
@@ -200,6 +240,11 @@ define([
             }
             angle = (angle + 360) % 360;
             this.trigger("setAngle", {"angle": angle});
+        },
+
+        onSetAngle: function(event) {
+            this.drawCursor(event.angle);
+            this.JQ_msg.text("angle : " + parseFloat(event.angle).toFixed(2));
         }
     });
     return new View();

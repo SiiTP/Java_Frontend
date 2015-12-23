@@ -19,11 +19,13 @@
     @media screen and (orientation: landscape) {
       top: 0 !important;
     }
-    border: 2px solid #fff;
     margin-top: 10px;
     margin-left: 10px;
     &__message {
-
+      font-size: $font-size_medium;
+    }
+    &__hyroscope {
+      font-size: $font-size_medium;
     }
   }
 }
