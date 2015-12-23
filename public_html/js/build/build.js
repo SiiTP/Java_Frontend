@@ -1239,7 +1239,7 @@ define('views/joystick',[
             var length = Math.sqrt((x-r)*(x-r) + (y-r)*(y-r));
             if (length < r - r_c) { // если курсор в джойстике
                 this.drawCursor(x, y);
-                this.setAngle(x, y);
+                this.setAngleByMouse(x, y);
             } else {
                 this.clearCursor();
             }
@@ -1256,7 +1256,7 @@ define('views/joystick',[
             this.contextCursor.beginPath();
             this.contextCursor.clearRect(0, 0, 300, 300);
         },
-        setAngle: function(x, y) {
+        setAngleByMouse: function(x, y) {
             var centerX = this.radius;
             var centerY = this.radius;
             var angle = Math.atan((centerY - y) / (x - centerX));
@@ -1266,7 +1266,7 @@ define('views/joystick',[
             }
             angle = (angle + 360) % 360;
             console.log(angle);
-            this.trigger("setAngle", {"angle": angle});
+            this.trigger("setAngleByMouse", {"angle": angle});
         }
     });
     return new View();
@@ -1706,7 +1706,7 @@ define('joystickTransport',['views/joystick'],function(joystick) {
         this.socket = null;
         this.queryInterval = null;
         this.initialize = function() {
-            joystick.on("setAngle", this.onSetAngle.bind(this));
+            joystick.on("setAngleByMouse", this.onSetAngle.bind(this));
             this.socket = new WebSocket("ws://localhost:8000/" + this.address);
             this.socket.onopen = function(event) {
                 console.log("____ open socket");

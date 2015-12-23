@@ -3,15 +3,29 @@
   &__canvas {
     position: absolute;
     top: 10px;
-    left: 0;
+    left: 10px;
   }
   &__canvas-cursor {
     position: absolute;
     top: 10px;
-    left: 0;
+    left: 10px;
   }
-  &__message {
-    //position: absolute;
-    //top: 230px;
+
+  &__info {
+    position: absolute;
+    @media screen and (orientation: portrait) {
+      left: 0 !important;
+    }
+    @media screen and (orientation: landscape) {
+      top: 0 !important;
+    }
+    margin-top: 10px;
+    margin-left: 10px;
+    &__message {
+      font-size: $font-size_medium;
+    }
+    &__hyroscope {
+      font-size: $font-size_medium;
+    }
   }
 }

@@ -1,7 +1,16 @@
-<fest:template xmlns:fest="http://fest.mail.ru">
+<fest:template xmlns:fest="http://fest.mail.ru" context_name="data">
+    <!--{{data.myData}}-->
     <div class="joystick">
-        <canvas class="joystick__canvas"> </canvas> <br/>
-        <canvas class="joystick__canvas-cursor"> </canvas> <br/>
-        <div class="joystick__message"> </div>
+        <canvas class="joystick__canvas"> </canvas>
+        <canvas class="joystick__canvas-cursor"> </canvas>
+        <div class="joystick__info">
+            <div class="joystick__info__message">
+                angle : 0
+            </div>
+            <div class="joystick__info__hyroscope">
+                <span class="joystick__info__hyroscope__title">ГИРОСКОП</span>
+                <input class="js-hyroscope-checkbox" type="checkbox"/>
+            </div>
+        </div>
     </div>
 </fest:template>

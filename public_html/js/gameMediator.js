@@ -22,7 +22,6 @@ define (function() {
 
         this.initializeSocket = function() {
             var socket = new WebSocket(this.constants.get("SOCKET_HOST") + this.constants.get("SOCKET_ADDRESS"));
-            console.log("after socket creating");
             socket.onopen = function(event) {
                 console.log("____ open socket");
                 this.beginningGameWaiting();
@@ -38,7 +37,7 @@ define (function() {
                 }
 
                 if (answer.status == 200) {
-                    //console.log("___@ game proccess answer");
+                    console.log("___@ game proccess answer");
                     this.createPlayers(answer);
                     this.parsePlayers(answer.players);
                     if (!this.gameBegin) {
@@ -165,6 +164,9 @@ define (function() {
         this.clearBugs = function() {
             console.log("clearing bugs");
             this.myPlayer.clearAll(this.constants.get('FIELD_WIDTH'), this.constants.get('FIELD_HEIGHT'));
+            //_.each(this.enemyPlayers, function(enemy) {
+            //    enemy.clearAll(this.constants.get('FIELD_WIDTH'), this.constants.get('FIELD_HEIGHT'));
+            //}, this);
         };
 
         this.startGame = function() {
