@@ -1,7 +1,8 @@
 {
   "class":"resource.ServletResources",
   "minPasswordLength":4,
-  "passwordRegexPattern":"^[a-zA-Z]+$",
+  "passwordRegexPattern":"^[a-zA-Z0-9_]+$",
+  "usernameRegexPattern":"^[a-zA-Z]+$",
   "webSocketIdleTimeMillisec":60000000
 
 }

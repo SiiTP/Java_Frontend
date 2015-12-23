@@ -10,10 +10,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import service.ProjectDB;
 import persistance.UserProfile;
 import resource.ResourceFactory;
 import resource.ServletResources;
+import service.ProjectDB;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -46,9 +46,11 @@ public class AccountService{
 
     public boolean isDataWrong(String username, String password){
         ServletResources servletResources =(ServletResources) ResourceFactory.getResource("src/main/resources/data/servlet.json");
-        String regex = servletResources.getPasswordRegexPattern();
+        String passwordRegex = servletResources.getPasswordRegexPattern();
+        String usernameRegex = servletResources.getUsernameRegexPattern();
         int passwordLength = servletResources.getMinPasswordLength();
-        return !(username.matches(regex) && password.matches(regex) && password.length()>=passwordLength);
+        boolean isCorrectLength = password.length()>=passwordLength && username.length()>=passwordLength;
+        return !(username.matches(usernameRegex) && password.matches(passwordRegex) && isCorrectLength);
     }
     public boolean authtorize(@Nullable String username,@Nullable String password,@NotNull String session){
         UserProfile profile = getUser(username);

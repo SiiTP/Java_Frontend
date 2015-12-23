@@ -31,7 +31,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main {
-        private static final Logger LOGGER = LogManager.getLogger(Main.class);
+        private static final Logger LOGGER = LogManager.getLogger();
         @SuppressWarnings("OverlyBroadThrowsClause")
         public static void main(String[] args) throws Exception {
             System.out.println(System.getProperty("user.dir"));
@@ -109,7 +109,6 @@ public class Main {
 
             ResourceHandler resourceHandler = new ResourceHandler();
             resourceHandler.setEtags(true);
-
             GzipHandler gzipHandler = new GzipHandler();
             gzipHandler.setIncludedMimeTypes("text/plain,text/css,application/json,application/javascript,text/xml,application/xml,application/xml+rss,text/javascript");
             gzipHandler.setHandler(resourceHandler);

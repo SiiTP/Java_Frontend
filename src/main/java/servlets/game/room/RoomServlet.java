@@ -100,6 +100,7 @@ public class RoomServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html;charset=utf-8");
         JSONArray roomsJsonArray = gameServer.getRoomsListJSON();
         JSONObject object = new JSONObject();
         if(roomsJsonArray != null){
