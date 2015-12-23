@@ -12,7 +12,7 @@ define([
         canvas: null,
         context: null,
         events: {
-            "click .field__button-exit": 'onExit'
+            "click .field-container__button-exit": 'onExit'
         },
         show: function () {
             this.$el.show();

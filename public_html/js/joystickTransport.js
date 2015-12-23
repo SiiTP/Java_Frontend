@@ -44,11 +44,13 @@ define(['views/joystick'],function(joystick) {
         };
 
         this.sendMessage = function() {
+            console.log("____send");
             var data = JSON.stringify({"direction": this.angle, "isMoving": this.isMoving, "session": this.session});
             this.socket.send(data);
         };
 
         this.exit = function() {
+            console.log("joystick transport exit");
             clearInterval(this.queryInterval);
             this.socket.close();
         }

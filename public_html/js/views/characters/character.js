@@ -64,7 +64,7 @@ define([
                 var y = this.model.get('posY');
                 var r = this.model.get('radius');
                 var s = this.model.get('speed');
-                this.context.clearRect(x - r * 2 - 10, y - r * 2 - 10, 6 * r + 100, 6 * r + 20);
+                this.context.clearRect(x - r * 2 - 20, y - r * 2 - 30, 6 * r + 100, 6 * r + 30);
             }
         },
 
@@ -79,17 +79,5 @@ define([
             this.canvas = null;
             this.context = null;
         }
-        //show: function() {
-        //    console.log("character show");
-        //    this.el.width = this.options.width;
-        //    this.el.height = this.options.height;
-        //    this.$el.show();
-        //},
-        //hide: function() {
-        //    console.log("character hide");
-        //    this.el.width = 0;
-        //    this.el.height = 0;
-        //    this.$el.hide();
-        //}
     });
 });
