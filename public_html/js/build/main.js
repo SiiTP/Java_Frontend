@@ -150,15 +150,39 @@ define('getCookie',[],function() {
     }
 });
 
+define('constants',['backbone'], function(Backbone) {
+        var Constants = Backbone.Model.extend({
+            defaults: {
+                //GAME FIELD SIZES__________
+                FIELD_WIDTH: 1000,
+                FIELD_HEIGHT: 700,
+                //__________________________
+                // OFFSETS BEFORE CANVAS_____
+                X_OFFSET_TO_CANVAS: 10,
+                Y_OFFSET_TO_CANVAS: 20,
+                //__________________________
+                //INTERVALS_________________
+                INTERVAL_SHORT: 50,
+                INTERVAL_LARGE: 3000,
+                //__________________________
+                HOST: "localhost:8000",
+                SOCKET_HOST: "ws://localhost:8000",
+                SOCKET_ADDRESS: "/gameplay"
+            }
+        });
+    return new Constants();
+    });
 // главное меню игры
 define('views/main',[
     'backbone',
     'tmpl/main',
-    'getCookie'
+    'getCookie',
+    'constants'
 ], function(
     Backbone,
     tmpl,
-    getCookie
+    getCookie,
+    constants
 ){
     return Backbone.View.extend({
         tagName: 'div',
@@ -207,8 +231,8 @@ define('views/main',[
         },
         qrcode: function() {
             var sess = getCookie("JSESSIONID");
-           new QRCode(document.getElementsByClassName("container-main__qrcode")[0], {
-                text: "http://localhost:8000/#mobile/" + sess,
+            new QRCode(document.getElementsByClassName("container-main__qrcode")[0], {
+                text: constants.get("HOST") + "/#mobile/" + sess,
                 width: 256,
                 height: 256,
                 colorDark : "#ffffff",
@@ -219,7 +243,7 @@ define('views/main',[
         }
     });
 });
-define('tmpl/game',[],function () { return function (__fest_context){"use strict";var __fest_self=this,__fest_buf="",__fest_chunks=[],__fest_chunk,__fest_attrs=[],__fest_select,__fest_if,__fest_iterator,__fest_to,__fest_fn,__fest_html="",__fest_blocks={},__fest_params,__fest_element,__fest_debug_file="",__fest_debug_line="",__fest_debug_block="",__fest_htmlchars=/[&<>"]/g,__fest_htmlchars_test=/[&<>"]/,__fest_short_tags = {"area":true,"base":true,"br":true,"col":true,"command":true,"embed":true,"hr":true,"img":true,"input":true,"keygen":true,"link":true,"meta":true,"param":true,"source":true,"wbr":true},__fest_element_stack = [],__fest_htmlhash={"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"},__fest_jschars=/[\\'"\/\n\r\t\b\f<>]/g,__fest_jschars_test=/[\\'"\/\n\r\t\b\f<>]/,__fest_jshash={"\"":"\\\"","\\":"\\\\","/":"\\/","\n":"\\n","\r":"\\r","\t":"\\t","\b":"\\b","\f":"\\f","'":"\\'","<":"\\u003C",">":"\\u003E"},___fest_log_error;if(typeof __fest_error === "undefined"){___fest_log_error = (typeof console !== "undefined" && console.error) ? function(){return Function.prototype.apply.call(console.error, console, arguments)} : function(){};}else{___fest_log_error=__fest_error};function __fest_log_error(msg){___fest_log_error(msg+"\nin block \""+__fest_debug_block+"\" at line: "+__fest_debug_line+"\nfile: "+__fest_debug_file)}function __fest_replaceHTML(chr){return __fest_htmlhash[chr]}function __fest_replaceJS(chr){return __fest_jshash[chr]}function __fest_extend(dest, src){for(var i in src)if(src.hasOwnProperty(i))dest[i]=src[i];}function __fest_param(fn){fn.param=true;return fn}function __fest_call(fn, params,cp){if(cp)for(var i in params)if(typeof params[i]=="function"&&params[i].param)params[i]=params[i]();return fn.call(__fest_self,params)}function __fest_escapeJS(s){if (typeof s==="string") {if (__fest_jschars_test.test(s))return s.replace(__fest_jschars,__fest_replaceJS);} else if (typeof s==="undefined")return "";return s;}function __fest_escapeHTML(s){if (typeof s==="string") {if (__fest_htmlchars_test.test(s))return s.replace(__fest_htmlchars,__fest_replaceHTML);} else if (typeof s==="undefined")return "";return s;}__fest_buf+=("<canvas class=\"field\"></canvas><br/><button class=\"button field__button-exit\">Exit</button>");__fest_to=__fest_chunks.length;if (__fest_to) {__fest_iterator = 0;for (;__fest_iterator<__fest_to;__fest_iterator++) {__fest_chunk=__fest_chunks[__fest_iterator];if (typeof __fest_chunk==="string") {__fest_html+=__fest_chunk;} else {__fest_fn=__fest_blocks[__fest_chunk.name];if (__fest_fn) __fest_html+=__fest_call(__fest_fn,__fest_chunk.params,__fest_chunk.cp);}}return __fest_html+__fest_buf;} else {return __fest_buf;}} ; });
+define('tmpl/game',[],function () { return function (__fest_context){"use strict";var __fest_self=this,__fest_buf="",__fest_chunks=[],__fest_chunk,__fest_attrs=[],__fest_select,__fest_if,__fest_iterator,__fest_to,__fest_fn,__fest_html="",__fest_blocks={},__fest_params,__fest_element,__fest_debug_file="",__fest_debug_line="",__fest_debug_block="",__fest_htmlchars=/[&<>"]/g,__fest_htmlchars_test=/[&<>"]/,__fest_short_tags = {"area":true,"base":true,"br":true,"col":true,"command":true,"embed":true,"hr":true,"img":true,"input":true,"keygen":true,"link":true,"meta":true,"param":true,"source":true,"wbr":true},__fest_element_stack = [],__fest_htmlhash={"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"},__fest_jschars=/[\\'"\/\n\r\t\b\f<>]/g,__fest_jschars_test=/[\\'"\/\n\r\t\b\f<>]/,__fest_jshash={"\"":"\\\"","\\":"\\\\","/":"\\/","\n":"\\n","\r":"\\r","\t":"\\t","\b":"\\b","\f":"\\f","'":"\\'","<":"\\u003C",">":"\\u003E"},___fest_log_error;if(typeof __fest_error === "undefined"){___fest_log_error = (typeof console !== "undefined" && console.error) ? function(){return Function.prototype.apply.call(console.error, console, arguments)} : function(){};}else{___fest_log_error=__fest_error};function __fest_log_error(msg){___fest_log_error(msg+"\nin block \""+__fest_debug_block+"\" at line: "+__fest_debug_line+"\nfile: "+__fest_debug_file)}function __fest_replaceHTML(chr){return __fest_htmlhash[chr]}function __fest_replaceJS(chr){return __fest_jshash[chr]}function __fest_extend(dest, src){for(var i in src)if(src.hasOwnProperty(i))dest[i]=src[i];}function __fest_param(fn){fn.param=true;return fn}function __fest_call(fn, params,cp){if(cp)for(var i in params)if(typeof params[i]=="function"&&params[i].param)params[i]=params[i]();return fn.call(__fest_self,params)}function __fest_escapeJS(s){if (typeof s==="string") {if (__fest_jschars_test.test(s))return s.replace(__fest_jschars,__fest_replaceJS);} else if (typeof s==="undefined")return "";return s;}function __fest_escapeHTML(s){if (typeof s==="string") {if (__fest_htmlchars_test.test(s))return s.replace(__fest_htmlchars,__fest_replaceHTML);} else if (typeof s==="undefined")return "";return s;}__fest_buf+=("<div class=\"field-container\"><canvas class=\"field\"></canvas><button class=\"button field-container__button-exit\">Выход</button></div>");__fest_to=__fest_chunks.length;if (__fest_to) {__fest_iterator = 0;for (;__fest_iterator<__fest_to;__fest_iterator++) {__fest_chunk=__fest_chunks[__fest_iterator];if (typeof __fest_chunk==="string") {__fest_html+=__fest_chunk;} else {__fest_fn=__fest_blocks[__fest_chunk.name];if (__fest_fn) __fest_html+=__fest_call(__fest_fn,__fest_chunk.params,__fest_chunk.cp);}}return __fest_html+__fest_buf;} else {return __fest_buf;}} ; });
 define('views/field',[
     'backbone',
     'tmpl/game'
@@ -233,38 +257,80 @@ define('views/field',[
         template: tmpl,
         canvas: null,
         context: null,
+
+        gameStage: 0, //0-нет, 1-ожидание, 2-игра, 3-победитель
+
         events: {
-            "click .field__button-exit": 'onExit',
-            "mousemove .field": 'onMouseMove'
+            "click .field-container__button-exit": 'onExit'
         },
         show: function () {
             this.$el.show();
+
             this.on('win', this.onWin);
+            this.on('waiting', this.onWaiting);
+            this.on('gameProccess', this.onGameProccess);
+
             this.trigger('show');
+
             this.canvas = this.$('.field')[0];
             this.canvas.width  = this.options.width;
             this.canvas.height = this.options.height;
             this.context = this.canvas.getContext('2d');
         },
+
         hide: function () {
             if (this.canvas) {
                 this.canvas.width  = 0;
                 this.canvas.height = 0;
             }
-            //this.trigger('exit');
+            this.gameStage = 0;
+            this.trigger('exit');
             this.$el.hide();
         },
-        onWin: function(winner) {
-            // TODO Вывод победителя
-            debugger;
+
+        drawMessage: function(message) {
+            this.context.beginPath();
+            this.context.shadowBlur = 32;
+            this.context.shadowColor = '#f5f5f5';
+            this.context.fillStyle = '#f5f5f5';
+            this.context.font = 'normal 32px NunitoNormal';
+            this.context.fillText(message, 20, 40);
         },
-        onMouseMove: function(event) {
-            this.trigger('mouseMove', {'x' : event.pageX, 'y' : event.pageY});
+
+        clearField: function() {
+            this.context.clearRect(0, 0, this.options.width, this.options.height);
+        },
+
+        onWaiting: function() {
+            if (this.gameStage != 1) {
+                this.clearField();
+                this.drawMessage("Подождите второго игрока, пожалуйста");
+                this.gameStage = 1;
+            }
+        },
+
+        onGameProccess: function() {
+            if (this.gameStage != 2) {
+                this.clearField();
+                //this.drawMessage("Игра началась");
+                this.gameStage = 2;
+            }
+        },
+
+        onWin: function(winner) {
+            if (this.gameStage != 3) {
+                this.clearField();
+                this.drawMessage("Победитель игры : " + winner);
+                this.gameStage = 3;
+            }
+            // TODO Вывод победителя
+            //debugger;
         },
         onExit: function() {
-            this.trigger('exit');
+            //this.trigger('exit');
             location.href = "#rooms";
         }
+
     });
     return View;
 });
@@ -440,7 +506,7 @@ define('views/login',[
         }
     });
 });
-define('tmpl/rooms',[],function () { return function (__fest_context){"use strict";var __fest_self=this,__fest_buf="",__fest_chunks=[],__fest_chunk,__fest_attrs=[],__fest_select,__fest_if,__fest_iterator,__fest_to,__fest_fn,__fest_html="",__fest_blocks={},__fest_params,__fest_element,__fest_debug_file="",__fest_debug_line="",__fest_debug_block="",__fest_htmlchars=/[&<>"]/g,__fest_htmlchars_test=/[&<>"]/,__fest_short_tags = {"area":true,"base":true,"br":true,"col":true,"command":true,"embed":true,"hr":true,"img":true,"input":true,"keygen":true,"link":true,"meta":true,"param":true,"source":true,"wbr":true},__fest_element_stack = [],__fest_htmlhash={"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"},__fest_jschars=/[\\'"\/\n\r\t\b\f<>]/g,__fest_jschars_test=/[\\'"\/\n\r\t\b\f<>]/,__fest_jshash={"\"":"\\\"","\\":"\\\\","/":"\\/","\n":"\\n","\r":"\\r","\t":"\\t","\b":"\\b","\f":"\\f","'":"\\'","<":"\\u003C",">":"\\u003E"},___fest_log_error;if(typeof __fest_error === "undefined"){___fest_log_error = (typeof console !== "undefined" && console.error) ? function(){return Function.prototype.apply.call(console.error, console, arguments)} : function(){};}else{___fest_log_error=__fest_error};function __fest_log_error(msg){___fest_log_error(msg+"\nin block \""+__fest_debug_block+"\" at line: "+__fest_debug_line+"\nfile: "+__fest_debug_file)}function __fest_replaceHTML(chr){return __fest_htmlhash[chr]}function __fest_replaceJS(chr){return __fest_jshash[chr]}function __fest_extend(dest, src){for(var i in src)if(src.hasOwnProperty(i))dest[i]=src[i];}function __fest_param(fn){fn.param=true;return fn}function __fest_call(fn, params,cp){if(cp)for(var i in params)if(typeof params[i]=="function"&&params[i].param)params[i]=params[i]();return fn.call(__fest_self,params)}function __fest_escapeJS(s){if (typeof s==="string") {if (__fest_jschars_test.test(s))return s.replace(__fest_jschars,__fest_replaceJS);} else if (typeof s==="undefined")return "";return s;}function __fest_escapeHTML(s){if (typeof s==="string") {if (__fest_htmlchars_test.test(s))return s.replace(__fest_htmlchars,__fest_replaceHTML);} else if (typeof s==="undefined")return "";return s;}var data=__fest_context;__fest_buf+=("<div class=\"rooms\"><div class=\"rooms__header\"><div class=\"header-text\">Список комнат</div></div><div class=\"line line_blue\"></div>");try{__fest_if=data.rooms.length > 0}catch(e){__fest_if=false;__fest_log_error(e.message);}if(__fest_if){__fest_buf+=("<div class=\"rooms__lines\"><div class=\"rooms__lines__header\"><div class=\"rooms__lines__header__index\">№</div><div class=\"rooms__lines__header__name\">Название</div><div class=\"rooms__lines__header__players\">Сейчас</div><div class=\"rooms__lines__header__maxPlayers\">Лимит</div></div>");var i,item,__fest_iterator0;try{__fest_iterator0=data.rooms || {};}catch(e){__fest_iterator={};__fest_log_error(e.message);}for(i in __fest_iterator0){item=__fest_iterator0[i];__fest_buf+=("<div class=\"rooms__lines__line\"><div class=\"rooms__lines__line__index\">");try{__fest_buf+=(__fest_escapeHTML(i))}catch(e){__fest_log_error(e.message + "17");}__fest_buf+=("</div><div class=\"rooms__lines__line__name\">");try{__fest_buf+=(__fest_escapeHTML(item.name))}catch(e){__fest_log_error(e.message + "18");}__fest_buf+=("</div><div class=\"rooms__lines__line__players\">");try{__fest_buf+=(__fest_escapeHTML(item.players))}catch(e){__fest_log_error(e.message + "19");}__fest_buf+=("</div><div class=\"rooms__lines__line__maxPlayers\">");try{__fest_buf+=(__fest_escapeHTML(item.maxPlayers))}catch(e){__fest_log_error(e.message + "20");}__fest_buf+=("</div>");try{__fest_attrs[0]=__fest_escapeHTML(item.name)}catch(e){__fest_attrs[0]=""; __fest_log_error(e.message);}__fest_buf+=("<button class=\"button rooms__lines__line__button\" data-roomid=\"" + __fest_attrs[0] + "\">Connect!</button></div>");}__fest_buf+=("</div>");}else{__fest_buf+=("<div class=\"rooms__noRooms\"><div class=\"header-text rooms__noRooms__message\">Созданных комнат нет</div></div>");}__fest_buf+=("<button class=\"button button_long smallMargTop js-button-refresh\">Обновить</button><div class=\"line line_blue\"></div><div class=\"rooms__create\"><div class=\"header-text rooms__create__header\">Создание новой комнаты</div><form method=\"post\"><div class=\"input-line rooms__create__input-line\"><label for=\"roomName\" class=\"input-line__header rooms__create__input-line__header\">Название</label><input class=\"input-line__input\" type=\"text\" name=\"roomName\" id=\"roomName\"/></div><button class=\"button rooms__create__button\">Создать!</button></form></div><div class=\"line line_blue\"></div><button class=\"button button_long smallMargTop js-button-onMain\" data-href=\"#\">На главную</button><div class=\"validation-info validation-info-common validation-info_error rooms__create__message\"></div></div>");__fest_to=__fest_chunks.length;if (__fest_to) {__fest_iterator = 0;for (;__fest_iterator<__fest_to;__fest_iterator++) {__fest_chunk=__fest_chunks[__fest_iterator];if (typeof __fest_chunk==="string") {__fest_html+=__fest_chunk;} else {__fest_fn=__fest_blocks[__fest_chunk.name];if (__fest_fn) __fest_html+=__fest_call(__fest_fn,__fest_chunk.params,__fest_chunk.cp);}}return __fest_html+__fest_buf;} else {return __fest_buf;}} ; });
+define('tmpl/rooms',[],function () { return function (__fest_context){"use strict";var __fest_self=this,__fest_buf="",__fest_chunks=[],__fest_chunk,__fest_attrs=[],__fest_select,__fest_if,__fest_iterator,__fest_to,__fest_fn,__fest_html="",__fest_blocks={},__fest_params,__fest_element,__fest_debug_file="",__fest_debug_line="",__fest_debug_block="",__fest_htmlchars=/[&<>"]/g,__fest_htmlchars_test=/[&<>"]/,__fest_short_tags = {"area":true,"base":true,"br":true,"col":true,"command":true,"embed":true,"hr":true,"img":true,"input":true,"keygen":true,"link":true,"meta":true,"param":true,"source":true,"wbr":true},__fest_element_stack = [],__fest_htmlhash={"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"},__fest_jschars=/[\\'"\/\n\r\t\b\f<>]/g,__fest_jschars_test=/[\\'"\/\n\r\t\b\f<>]/,__fest_jshash={"\"":"\\\"","\\":"\\\\","/":"\\/","\n":"\\n","\r":"\\r","\t":"\\t","\b":"\\b","\f":"\\f","'":"\\'","<":"\\u003C",">":"\\u003E"},___fest_log_error;if(typeof __fest_error === "undefined"){___fest_log_error = (typeof console !== "undefined" && console.error) ? function(){return Function.prototype.apply.call(console.error, console, arguments)} : function(){};}else{___fest_log_error=__fest_error};function __fest_log_error(msg){___fest_log_error(msg+"\nin block \""+__fest_debug_block+"\" at line: "+__fest_debug_line+"\nfile: "+__fest_debug_file)}function __fest_replaceHTML(chr){return __fest_htmlhash[chr]}function __fest_replaceJS(chr){return __fest_jshash[chr]}function __fest_extend(dest, src){for(var i in src)if(src.hasOwnProperty(i))dest[i]=src[i];}function __fest_param(fn){fn.param=true;return fn}function __fest_call(fn, params,cp){if(cp)for(var i in params)if(typeof params[i]=="function"&&params[i].param)params[i]=params[i]();return fn.call(__fest_self,params)}function __fest_escapeJS(s){if (typeof s==="string") {if (__fest_jschars_test.test(s))return s.replace(__fest_jschars,__fest_replaceJS);} else if (typeof s==="undefined")return "";return s;}function __fest_escapeHTML(s){if (typeof s==="string") {if (__fest_htmlchars_test.test(s))return s.replace(__fest_htmlchars,__fest_replaceHTML);} else if (typeof s==="undefined")return "";return s;}var data=__fest_context;__fest_buf+=("<div class=\"rooms\"><div class=\"rooms__header\"><div class=\"header-text\">Список комнат</div></div><div class=\"line line_blue\"></div>");try{__fest_if=data.rooms.length > 0}catch(e){__fest_if=false;__fest_log_error(e.message);}if(__fest_if){__fest_buf+=("<div class=\"rooms__lines\"><div class=\"rooms__lines__header\"><div class=\"rooms__lines__header__index\">№</div><div class=\"rooms__lines__header__name\">Название</div><div class=\"rooms__lines__header__players\">Сейчас</div><div class=\"rooms__lines__header__maxPlayers\">Лимит</div></div>");var i,item,__fest_iterator0;try{__fest_iterator0=data.rooms || {};}catch(e){__fest_iterator={};__fest_log_error(e.message);}for(i in __fest_iterator0){item=__fest_iterator0[i];__fest_buf+=("<div class=\"rooms__lines__line\"><div class=\"rooms__lines__line__index\">");try{__fest_buf+=(__fest_escapeHTML(i))}catch(e){__fest_log_error(e.message + "17");}__fest_buf+=("</div><div class=\"rooms__lines__line__name\">");try{__fest_buf+=(__fest_escapeHTML(item.name))}catch(e){__fest_log_error(e.message + "18");}__fest_buf+=("</div><div class=\"rooms__lines__line__players\">");try{__fest_buf+=(__fest_escapeHTML(item.players))}catch(e){__fest_log_error(e.message + "19");}__fest_buf+=("</div><div class=\"rooms__lines__line__maxPlayers\">");try{__fest_buf+=(__fest_escapeHTML(item.maxPlayers))}catch(e){__fest_log_error(e.message + "20");}__fest_buf+=("</div>");try{__fest_attrs[0]=__fest_escapeHTML(item.name)}catch(e){__fest_attrs[0]=""; __fest_log_error(e.message);}__fest_buf+=("<button class=\"button rooms__lines__line__button\" data-roomid=\"" + __fest_attrs[0] + "\">Зайти!</button></div>");}__fest_buf+=("</div>");}else{__fest_buf+=("<div class=\"rooms__noRooms\"><div class=\"header-text rooms__noRooms__message\">Созданных комнат нет</div></div>");}__fest_buf+=("<button class=\"button button_long smallMargTop js-button-refresh\">Обновить</button><div class=\"line line_blue\"></div><div class=\"rooms__create\"><div class=\"header-text rooms__create__header\">Создание новой комнаты</div><form method=\"post\"><div class=\"input-line rooms__create__input-line\"><label for=\"roomName\" class=\"input-line__header rooms__create__input-line__header\">Название</label><input class=\"input-line__input\" type=\"text\" name=\"roomName\" id=\"roomName\"/></div><button class=\"button rooms__create__button\">Создать!</button></form></div><div class=\"line line_blue\"></div><button class=\"button button_long smallMargTop js-button-onMain\" data-href=\"#\">На главную</button><div class=\"validation-info validation-info-common validation-info_error rooms__create__message\"></div></div>");__fest_to=__fest_chunks.length;if (__fest_to) {__fest_iterator = 0;for (;__fest_iterator<__fest_to;__fest_iterator++) {__fest_chunk=__fest_chunks[__fest_iterator];if (typeof __fest_chunk==="string") {__fest_html+=__fest_chunk;} else {__fest_fn=__fest_blocks[__fest_chunk.name];if (__fest_fn) __fest_html+=__fest_call(__fest_fn,__fest_chunk.params,__fest_chunk.cp);}}return __fest_html+__fest_buf;} else {return __fest_buf;}} ; });
 define('views/rooms',[
     'backbone',
     'tmpl/rooms'
@@ -743,7 +809,7 @@ define("modernizr", (function (global) {
     };
 }(this)));
 
-define('tmpl/joystick',[],function () { return function (__fest_context){"use strict";var __fest_self=this,__fest_buf="",__fest_chunks=[],__fest_chunk,__fest_attrs=[],__fest_select,__fest_if,__fest_iterator,__fest_to,__fest_fn,__fest_html="",__fest_blocks={},__fest_params,__fest_element,__fest_debug_file="",__fest_debug_line="",__fest_debug_block="",__fest_htmlchars=/[&<>"]/g,__fest_htmlchars_test=/[&<>"]/,__fest_short_tags = {"area":true,"base":true,"br":true,"col":true,"command":true,"embed":true,"hr":true,"img":true,"input":true,"keygen":true,"link":true,"meta":true,"param":true,"source":true,"wbr":true},__fest_element_stack = [],__fest_htmlhash={"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"},__fest_jschars=/[\\'"\/\n\r\t\b\f<>]/g,__fest_jschars_test=/[\\'"\/\n\r\t\b\f<>]/,__fest_jshash={"\"":"\\\"","\\":"\\\\","/":"\\/","\n":"\\n","\r":"\\r","\t":"\\t","\b":"\\b","\f":"\\f","'":"\\'","<":"\\u003C",">":"\\u003E"},___fest_log_error;if(typeof __fest_error === "undefined"){___fest_log_error = (typeof console !== "undefined" && console.error) ? function(){return Function.prototype.apply.call(console.error, console, arguments)} : function(){};}else{___fest_log_error=__fest_error};function __fest_log_error(msg){___fest_log_error(msg+"\nin block \""+__fest_debug_block+"\" at line: "+__fest_debug_line+"\nfile: "+__fest_debug_file)}function __fest_replaceHTML(chr){return __fest_htmlhash[chr]}function __fest_replaceJS(chr){return __fest_jshash[chr]}function __fest_extend(dest, src){for(var i in src)if(src.hasOwnProperty(i))dest[i]=src[i];}function __fest_param(fn){fn.param=true;return fn}function __fest_call(fn, params,cp){if(cp)for(var i in params)if(typeof params[i]=="function"&&params[i].param)params[i]=params[i]();return fn.call(__fest_self,params)}function __fest_escapeJS(s){if (typeof s==="string") {if (__fest_jschars_test.test(s))return s.replace(__fest_jschars,__fest_replaceJS);} else if (typeof s==="undefined")return "";return s;}function __fest_escapeHTML(s){if (typeof s==="string") {if (__fest_htmlchars_test.test(s))return s.replace(__fest_htmlchars,__fest_replaceHTML);} else if (typeof s==="undefined")return "";return s;}__fest_buf+=("JOYSTICK<div class=\"joystick\"><canvas class=\"joystick__canvas\"></canvas><br/><canvas class=\"joystick__canvas-cursor\"></canvas><br/><div class=\"joystick__message\"></div></div>");__fest_to=__fest_chunks.length;if (__fest_to) {__fest_iterator = 0;for (;__fest_iterator<__fest_to;__fest_iterator++) {__fest_chunk=__fest_chunks[__fest_iterator];if (typeof __fest_chunk==="string") {__fest_html+=__fest_chunk;} else {__fest_fn=__fest_blocks[__fest_chunk.name];if (__fest_fn) __fest_html+=__fest_call(__fest_fn,__fest_chunk.params,__fest_chunk.cp);}}return __fest_html+__fest_buf;} else {return __fest_buf;}} ; });
+define('tmpl/joystick',[],function () { return function (__fest_context){"use strict";var __fest_self=this,__fest_buf="",__fest_chunks=[],__fest_chunk,__fest_attrs=[],__fest_select,__fest_if,__fest_iterator,__fest_to,__fest_fn,__fest_html="",__fest_blocks={},__fest_params,__fest_element,__fest_debug_file="",__fest_debug_line="",__fest_debug_block="",__fest_htmlchars=/[&<>"]/g,__fest_htmlchars_test=/[&<>"]/,__fest_short_tags = {"area":true,"base":true,"br":true,"col":true,"command":true,"embed":true,"hr":true,"img":true,"input":true,"keygen":true,"link":true,"meta":true,"param":true,"source":true,"wbr":true},__fest_element_stack = [],__fest_htmlhash={"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"},__fest_jschars=/[\\'"\/\n\r\t\b\f<>]/g,__fest_jschars_test=/[\\'"\/\n\r\t\b\f<>]/,__fest_jshash={"\"":"\\\"","\\":"\\\\","/":"\\/","\n":"\\n","\r":"\\r","\t":"\\t","\b":"\\b","\f":"\\f","'":"\\'","<":"\\u003C",">":"\\u003E"},___fest_log_error;if(typeof __fest_error === "undefined"){___fest_log_error = (typeof console !== "undefined" && console.error) ? function(){return Function.prototype.apply.call(console.error, console, arguments)} : function(){};}else{___fest_log_error=__fest_error};function __fest_log_error(msg){___fest_log_error(msg+"\nin block \""+__fest_debug_block+"\" at line: "+__fest_debug_line+"\nfile: "+__fest_debug_file)}function __fest_replaceHTML(chr){return __fest_htmlhash[chr]}function __fest_replaceJS(chr){return __fest_jshash[chr]}function __fest_extend(dest, src){for(var i in src)if(src.hasOwnProperty(i))dest[i]=src[i];}function __fest_param(fn){fn.param=true;return fn}function __fest_call(fn, params,cp){if(cp)for(var i in params)if(typeof params[i]=="function"&&params[i].param)params[i]=params[i]();return fn.call(__fest_self,params)}function __fest_escapeJS(s){if (typeof s==="string") {if (__fest_jschars_test.test(s))return s.replace(__fest_jschars,__fest_replaceJS);} else if (typeof s==="undefined")return "";return s;}function __fest_escapeHTML(s){if (typeof s==="string") {if (__fest_htmlchars_test.test(s))return s.replace(__fest_htmlchars,__fest_replaceHTML);} else if (typeof s==="undefined")return "";return s;}var data=__fest_context;__fest_buf+=("<div class=\"joystick\"><canvas class=\"joystick__canvas\"></canvas><canvas class=\"joystick__canvas-cursor\"></canvas><div class=\"joystick__info\"><div class=\"joystick__info__message\">angle : 0</div><div class=\"joystick__info__hyroscope\"><span class=\"joystick__info__hyroscope__title\">ГИРОСКОП</span><input class=\"js-hyroscope-checkbox\" type=\"checkbox\"/></div></div></div>");__fest_to=__fest_chunks.length;if (__fest_to) {__fest_iterator = 0;for (;__fest_iterator<__fest_to;__fest_iterator++) {__fest_chunk=__fest_chunks[__fest_iterator];if (typeof __fest_chunk==="string") {__fest_html+=__fest_chunk;} else {__fest_fn=__fest_blocks[__fest_chunk.name];if (__fest_fn) __fest_html+=__fest_call(__fest_fn,__fest_chunk.params,__fest_chunk.cp);}}return __fest_html+__fest_buf;} else {return __fest_buf;}} ; });
 define('views/joystick',[
     'backbone',
     'modernizr',
@@ -757,85 +823,225 @@ define('views/joystick',[
     var View = Backbone.View.extend({
         tagName: 'div',
         template: tmpl,
+
         canvas: null,
         canvasCursor: null,
         context: null,
         contextCursor: null,
+
         JQ_msg: null,
+        JQ_container: null,
+        JQ_hyroscopeCheckbox: false,
+
         radius: 100,
         radiusCursor: 20,
         rightDevice: false,
+        orientation: "portrait",
+        minScale: null,
         events: {
-            "touchmove .joystick__canvas-cursor": "touch"
+            "touchmove .joystick__canvas-cursor": "onTouchMove",
+            "touchstart .joystick__canvas-cursor": "onTouchStart",
+            "touchend .joystick__canvas-cursor": "onTouchEnd",
+            "touchcancel .joystick__canvas-cursor": "onTouchCancel",
+            "change .js-hyroscope-checkbox": "onHyroscopeCheckbox"
         },
+
         initialize: function () {
             this.rightDevice = modernizr.devicemotion && modernizr.deviceorientation && modernizr.touchevents;
 
+            if (this.rightDevice) {
+                window.addEventListener('deviceorientation', this.onHyroscopeEvent.bind(this));
+
+                window.screen.orientation.addEventListener("change", this.onOrientationChange.bind(this));
+                if (window.screen.orientation.angle % 180 === 0) {
+                    this.orientation = "portrait";
+                } else {
+                    this.orientation = "landscape";
+                }
+
+                this.on("setAngle", this.onSetAngle);
+
+                this.defineMinScale();
+            }
+
+
         },
+
         show: function () {
             this.$el.show();
             this.trigger('show');
-            if(this.rightDevice) {
-                this.canvasCursor = this.$('.joystick__canvas-cursor')[0];
-                this.canvasCursor.width  = 300;
-                this.canvasCursor.height = 300;
-                this.contextCursor = this.canvasCursor.getContext('2d');
-
-                this.canvas = this.$('.joystick__canvas')[0];
-                this.canvas.width  = 300;
-                this.canvas.height = 300;
-                this.context = this.canvas.getContext('2d');
-
-                this.JQ_msg = this.$(".joystick__message").css("position", "absolute");
-                this.JQ_msg = this.$(".joystick__message").css("top", "230px");
-                this.draw();
-            } else {
-                this.JQ_msg = this.$(".joystick__message").text("Неподходящее устройство");
-            }
+            this.render();
         },
+
         hide: function () {
+            console.log("joystick hide");
             if (this.canvas) {
                 this.canvas.width  = 0;
                 this.canvas.height = 0;
+            }
+            if (this.canvasCursor) {
                 this.canvasCursor.width = 0;
                 this.canvasCursor.height = 0;
             }
             this.$el.hide();
         },
-        draw: function () {
-            console.log("drawing joystick");
-            this.context.beginPath();
-            this.context.fillStyle = "#f90";
-            this.context.arc(this.radius, this.radius, this.radius, 0, Math.PI * 2, true);
-            this.context.fill();
-        },
-        touch: function(event) {
-            event.preventDefault();
-            var x = event.originalEvent.touches[0].clientX;
-            var y = event.originalEvent.touches[0].clientY;
-            //console.log("X : " + x + "Y : " + y);
-            var r = this.radius;
-            var r_c = this.radiusCursor;
-            var length = Math.sqrt((x-r)*(x-r) + (y-r)*(y-r));
-            if (length < r - r_c) { // если курсор в джойстике
-                this.drawCursor(x, y);
-                this.setAngleByMouse(x, y);
+
+        defineMinScale: function () {
+            if (window.screen.width < window.screen.height) {
+                this.minScale = window.screen.width;
             } else {
-                this.clearCursor();
+                this.minScale = window.screen.height;
+            }
+            this.radius = this.minScale / 2 - 22;
+        },
+
+        draw: function () {
+            this.context.beginPath();
+
+            //тень____________________
+            this.context.shadowBlur = 10;
+            this.context.shadowColor = "#0f0";
+            //________________________
+
+            this.context.fillStyle = "#ff5";
+            this.context.arc(this.radius, this.radius, this.radius - 10, 0, Math.PI * 2, true);
+            this.context.fill();
+
+            this.context.strokeStyle = "#0f0";
+            this.context.strokeWidth = 5;
+            this.context.arc(this.radius, this.radius, this.radius - 10, 0, Math.PI * 2, true);
+            this.context.stroke();
+
+
+        },
+
+        drawCursor: function(angle) {
+            var r = this.radius;
+            var x = r + (r - 10) * Math.cos(angle * Math.PI / 180);
+            var y = r - (r - 10) * Math.sin(angle * Math.PI / 180);
+            this.clearCursor();
+            this.contextCursor.beginPath();
+            this.contextCursor.moveTo(r, r);
+            this.contextCursor.lineTo(x, y);
+            this.contextCursor.lineWidth = 2;
+            this.contextCursor.strokeStyle = "#005";
+            this.contextCursor.stroke();
+
+            this.contextCursor.beginPath();
+            this.contextCursor.moveTo(r, r);
+            this.contextCursor.lineTo(2 * r, r);
+            this.contextCursor.lineWidth = 3;
+            this.contextCursor.strokeStyle = "#002";
+            this.contextCursor.stroke();
+
+            this.contextCursor.beginPath();
+            this.contextCursor.fillStyle = "#0f0";
+            this.contextCursor.arc(x, y, 10, 0, Math.PI / 180, true);
+            this.contextCursor.fill();
+        },
+
+        render: function () {
+            console.log("joystick render");
+            this.JQ_msg = this.$(".joystick__info__message");
+            if(this.rightDevice) {
+
+                this.canvasCursor = this.$('.joystick__canvas-cursor')[0];
+                this.canvasCursor.width  = this.minScale;
+                this.canvasCursor.height = this.minScale;
+                this.contextCursor = this.canvasCursor.getContext('2d');
+
+                this.canvas = this.$('.joystick__canvas')[0];
+                this.canvas.width  = this.minScale;
+                this.canvas.height = this.minScale;
+                this.context = this.canvas.getContext('2d');
+
+                this.draw();
+
+                this.JQ_container = this.$(".joystick__info");
+                if (this.orientation == "landscape") {
+                    this.JQ_container.css("left", this.minScale + "px");
+                } else {
+                    this.JQ_container.css("top", this.minScale + "px");
+                }
+            } else {
+                this.JQ_msg.text("Неподходящее устройство для джойстика");
+            }
+        },
+
+        onOrientationChange: function(event) {
+            if (event.target.angle % 180 === 0) {
+                this.orientation = "portrait";
+            } else {
+                this.orientation = "landscape";
+            }
+            console.log(this.orientation);
+            this.render();
+        },
+
+        onTouchMove: function(event) {
+            event.preventDefault();
+            if (!this.JQ_hyroscopeCheckbox) {
+                var x = event.originalEvent.touches[0].clientX;
+                var y = event.originalEvent.touches[0].clientY;
+                var r = this.radius;
+                var length = Math.sqrt((x-r)*(x-r) + (y-r)*(y-r));
+                if (length < r) { // если курсор в джойстике
+                    this.setAngleByMouse(x, y);
+                } else {
+                    this.clearCursor();
+                }
             }
 
         },
-        drawCursor: function(x, y) {
-            this.clearCursor();
-            this.contextCursor.beginPath();
-            this.contextCursor.fillStyle = "#ff0";
-            this.contextCursor.arc(x, y, this.radiusCursor, 0, Math.PI * 2, true);
-            this.contextCursor.fill();
+
+        onTouchStart: function() {
+            this.trigger("startMove");
         },
+
+        onTouchEnd: function() {
+            this.trigger("stopMove");
+        },
+
+        onTouchCancel: function() {
+            this.trigger("stopMove");
+        },
+
+        onHyroscopeCheckbox: function() {
+            this.JQ_hyroscopeCheckbox = !this.JQ_hyroscopeCheckbox;
+            console.log("on hyroscope : " + this.JQ_hyroscopeCheckbox);
+        },
+
+        onHyroscopeEvent: function (event) {
+            if (this.JQ_hyroscopeCheckbox) {
+                var angleY = -Math.sin(event.beta * Math.PI / 180);
+                var angleX = Math.sin(event.gamma * Math.PI / 180);
+                var angle  = Math.atan(angleY/angleX) * 180 / Math.PI;
+                if (event.gamma < 0) {
+                    angle += 180;
+                }
+                if (angle < 0) {
+                    angle += 360;
+                }
+
+                // при маленьких углах наклона останавливаться
+                if (Math.abs(angleX) < 0.1 && Math.abs(angleY) < 0.1) {
+                    this.trigger("stopMove")
+                } else {
+                    this.trigger("startMove")
+                }
+                //console.log("angle : " + angle);
+                if (isNaN(angle)) {
+                    angle = 0;
+                }
+                this.trigger("setAngle", {"angle": angle})
+            }
+        },
+
         clearCursor: function() {
             this.contextCursor.beginPath();
-            this.contextCursor.clearRect(0, 0, 300, 300);
+            this.contextCursor.clearRect(0, 0, this.minScale, this.minScale);
         },
+
         setAngleByMouse: function(x, y) {
             var centerX = this.radius;
             var centerY = this.radius;
@@ -845,8 +1051,12 @@ define('views/joystick',[
                 angle += 180;
             }
             angle = (angle + 360) % 360;
-            console.log(angle);
-            this.trigger("setAngleByMouse", {"angle": angle});
+            this.trigger("setAngle", {"angle": angle});
+        },
+
+        onSetAngle: function(event) {
+            this.drawCursor(event.angle);
+            this.JQ_msg.text("angle : " + parseFloat(event.angle).toFixed(2));
         }
     });
     return new View();
@@ -1090,17 +1300,17 @@ define ('gameMediator',[],function() {
         this.socket = null;
         this.gameBegin = false;
         this.waitingInterval = null;
+        this.clearBugsInterval = null;
         this.limitPlayers = 0;
 
         this.initialize = function() {
             console.log("mediator initialized");
             this.field.on('show', this.joinToRoom.bind(this));
-            this.field.on('mouseMove', this.mouseMove.bind(this));
             this.field.on('exit', this.exit.bind(this));
         };
+
         this.initializeSocket = function() {
-            var socket = new WebSocket(this.constants.get("SOCKET_ADDRESS"));
-            console.log("after socket creating");
+            var socket = new WebSocket(this.constants.get("SOCKET_HOST") + this.constants.get("SOCKET_ADDRESS"));
             socket.onopen = function(event) {
                 console.log("____ open socket");
                 this.beginningGameWaiting();
@@ -1111,67 +1321,85 @@ define ('gameMediator',[],function() {
                 var answer = JSON.parse(event.data);
 
                 if (answer.status == 301) {
-                    console.log("___@ waiting answer");
+                    //console.log("___@ waiting answer");
+                    this.field.trigger('waiting');
                     this.gameBegin = false;
                 }
 
                 if (answer.status == 200) {
-                    //console.log("___@ game proccess answer");
-                    if (answer.limitPlayers) {
-                        this.limitPlayers = answer.limitPlayers;
-
-                        var enemyPlayers = this.enemyPlayers;
-                        if (enemyPlayers.length == 0) {
-                            var EnemyPlayerView = this.EnemyCharacter;
-                            for(var i = 0; i < this.limitPlayers - 1; i += 1) {
-                                var player = new EnemyPlayerView({
-                                    className: "character character_enemy_" + i,
-                                    'width': this.constants.get('FIELD_WIDTH'),
-                                    'height': this.constants.get('FIELD_HEIGHT')
-                                });
-                                enemyPlayers.push(player);
-                            }
-                        }
-
-                        var myPlayer = this.myPlayer;
-                        if (myPlayer == null) {
-                            var MyPlayerView = this.MyCharacter;
-                            myPlayer = new MyPlayerView({
-                                className: "character character_my",
-                                'width': this.constants.get("FIELD_WIDTH"),
-                                'height': this.constants.get('FIELD_HEIGHT')
-                            });
-                            this.myPlayer = myPlayer;
-                        }
-                    }
+                    console.log("___@ game proccess answer");
+                    this.createPlayers(answer);
                     this.parsePlayers(answer.players);
+
                     if (!this.gameBegin) {
+                        this.field.trigger('gameProccess');
                         this.startGame();
                     }
                     this.gameBegin = true;
                 }
 
                 if (answer.status == 228) {
-                    console.log("___@ winner is : " + answer.winner);
+                    //console.log("___@ winner is : " + answer.winner);
                     this.field.trigger('win', answer.winner);
+                    setTimeout(function() {location.href = "#rooms"}, 5000);
                     this.gameBegin = false;
                 }
+
             }.bind(this);
             socket.onclose = function(event) {
                 console.log("____ close socket");
             };
             this.socket = socket;
         };
+
         this.beginningGameWaiting = function() {
             this.waitingInterval = setInterval(this.sendMessageWaiting.bind(this), this.constants.get('INTERVAL_SHORT'));
         };
+
         this.sendMessageWaiting = function() {
+            console.log("<___ send message");
             var data = {'direction': -1, 'isMoving': false};
             if (this.myPlayer != null) {
                 data = {'direction': this.myPlayer.model.get('angle'), 'isMoving': this.myPlayer.model.get('isMoving')};
             }
             this.socket.send(JSON.stringify(data));
         };
+
+        this.createPlayers = function(answer) {
+            if (answer.limitPlayers) {
+                this.limitPlayers = answer.limitPlayers;
+
+                var enemyPlayers = this.enemyPlayers;
+                if (enemyPlayers.length == 0) {
+                    var EnemyPlayerView = this.EnemyCharacter;
+                    for (var i = 0; i < this.limitPlayers - 1; i += 1) {
+                        var player = new EnemyPlayerView({
+                            className: "character character_enemy_" + i,
+                            'width': this.constants.get('FIELD_WIDTH'),
+                            'height': this.constants.get('FIELD_HEIGHT')
+                        });
+                        enemyPlayers.push(player);
+                    }
+                }
+
+                var myPlayer = this.myPlayer;
+                if (myPlayer == null) {
+                    var MyPlayerView = this.MyCharacter;
+                    myPlayer = new MyPlayerView({
+                        className: "character character_my",
+                        'width': this.constants.get("FIELD_WIDTH"),
+                        'height': this.constants.get('FIELD_HEIGHT')
+                    });
+                    this.myPlayer = myPlayer;
+                    this.myPlayer.on('mouseMove', this.mouseMove.bind(this));
+                }
+            }
+            if (this.clearBugsInterval == null) {
+                var intervalLarge = this.constants.get('INTERVAL_LARGE');
+                this.clearBugsInterval = setInterval(this.clearBugs.bind(this), intervalLarge);
+            }
+        };
+
         this.parsePlayers = function(answerPlayers) {
             var enemies = this.enemyPlayers;
             var myPlayer = this.myPlayer;
@@ -1195,6 +1423,7 @@ define ('gameMediator',[],function() {
                         name  : answerPlayers[i].name,
                         angle : answerPlayers[i].direction,
                         score : answerPlayers[i].score,
+                        isMoving : answerPlayers[i].isMoving,
                         visible : !answerPlayers[i].isKilled
                     });
                     //console.log("setted enemy (" + enemies[j].model.get('name') + ") pos in array : " + j);
@@ -1206,12 +1435,14 @@ define ('gameMediator',[],function() {
                         name  : answerPlayers[i].name,
                         angle : answerPlayers[i].direction,
                         score : answerPlayers[i].score,
+                        isMoving : answerPlayers[i].isMoving,
                         visible : !answerPlayers[i].isKilled
                     });
                     //console.log("setted my player (" + this.myPlayer.model.get('visible') + ")");
                 }
             }
         };
+
         this.erasePlayers = function() {
             if (this.myPlayer != null) {
                 this.myPlayer.$el.remove();
@@ -1224,12 +1455,22 @@ define ('gameMediator',[],function() {
             this.enemyPlayers = [];
             this.myPlayer = null;
         };
+
+        this.clearBugs = function() {
+            console.log("clearing bugs");
+            this.myPlayer.clearAll(this.constants.get('FIELD_WIDTH'), this.constants.get('FIELD_HEIGHT'));
+            //_.each(this.enemyPlayers, function(enemy) {
+            //    enemy.clearAll(this.constants.get('FIELD_WIDTH'), this.constants.get('FIELD_HEIGHT'));
+            //}, this);
+        };
+
         this.startGame = function() {
             var now = Date.now();
             var previousMy = now - 20;
             var previousEnemies = now - 20;
             requestAnimationFrame(this.loop.bind(this, previousMy, previousEnemies));
         };
+
         this.loop = function(previousMy, previousEnemies) {
             if (this.myPlayer != null) {
                 if (this.myPlayer.model.get('visible')) {
@@ -1257,17 +1498,23 @@ define ('gameMediator',[],function() {
                 requestAnimationFrame(this.loop.bind(this, previousMy, previousEnemies));
             }
         };
+
         this.joinToRoom = function() {
             this.initializeSocket();
         };
+
         this.mouseMove = function(args) {
             if (this.myPlayer != null) {
-                this.myPlayer.model.setMouseCoordinate(args.x, args.y);
+                this.myPlayer.model.set({'isMoving': true});
             }
         };
+
         this.exit = function() {
             console.log("exit from game");
             clearInterval(this.waitingInterval);
+            clearInterval(this.clearBugsInterval);
+            this.clearBugsInterval = null;
+            this.waitingInterval   = null;
             this.gameBegin = false;
             if (this.socket) {
                 this.socket.close();
@@ -1282,12 +1529,17 @@ define('joystickTransport',['views/joystick'],function(joystick) {
         this.address   = args.address;
         this.session   = args.session;
         this.constants = args.constants;
+
         this.angle = 1;
         this.socket = null;
         this.queryInterval = null;
+        this.isMoving = false;
+
         this.initialize = function() {
-            joystick.on("setAngleByMouse", this.onSetAngle.bind(this));
-            this.socket = new WebSocket("ws://localhost:8000/" + this.address);
+            joystick.on("setAngle", this.onSetAngle.bind(this));
+            joystick.on("stopMove", this.onStop.bind(this));
+            joystick.on("startMove", this.onStart.bind(this));
+            this.socket = new WebSocket(this.constants.get("SOCKET_HOST") + "/" + this.address);
             this.socket.onopen = function(event) {
                 console.log("____ open socket");
                 this.setQueryInterval();
@@ -1300,16 +1552,34 @@ define('joystickTransport',['views/joystick'],function(joystick) {
                 console.log("____ close socket");
             };
         };
+
         this.onSetAngle = function(data) {
             this.angle = data.angle;
-            console.log("socket angle : " + this.angle);
         };
+
+        this.onStop = function() {
+            this.isMoving = false;
+        };
+
+        this.onStart = function() {
+            this.isMoving = true;
+        };
+
         this.setQueryInterval = function() {
             this.queryInterval = setInterval(this.sendMessage.bind(this), this.constants.get('INTERVAL_SHORT'));
         };
+
         this.sendMessage = function() {
-            var data = JSON.stringify({"direction": this.angle, "isMoving": true, "session": this.session});
+            //console.log("____send");
+            //console.log("angle : " + this.angle + " isMoving : " + this.isMoving);
+            var data = JSON.stringify({"direction": this.angle, "isMoving": this.isMoving, "session": this.session});
             this.socket.send(data);
+        };
+
+        this.exit = function() {
+            console.log("joystick transport exit");
+            clearInterval(this.queryInterval);
+            this.socket.close();
         }
 
     }
@@ -1322,7 +1592,7 @@ define('views/characters/character',[
 
     return Backbone.View.extend({
         tagName: 'canvas',
-        color: '#ff0',
+        color: '#f90',
         borderColor: '#002',
         context: null,
         canvas: null,
@@ -1371,6 +1641,7 @@ define('views/characters/character',[
                 //________________________
             }
         },
+
         clear: function() {
             //посреди игрового цикла может обнулиться
             if (this.context != null) {
@@ -1379,9 +1650,14 @@ define('views/characters/character',[
                 var y = this.model.get('posY');
                 var r = this.model.get('radius');
                 var s = this.model.get('speed');
-                this.context.clearRect(x - r * 2 - 10, y - r * 2 - 10, 6 * r + 100, 6 * r + 20);
+                this.context.clearRect(x - r * 2 - 20, y - r * 2 - 30, 6 * r + 100, 6 * r + 30);
             }
         },
+
+        clearAll: function(fieldWidth, fieldHeight) {
+            this.context.clearRect(0, 0, fieldWidth, fieldHeight);
+        },
+
         deleteCanvas: function() {
             if (this.el.parentNode != null) {
                 document.getElementById("page").removeChild(this.el);
@@ -1389,18 +1665,6 @@ define('views/characters/character',[
             this.canvas = null;
             this.context = null;
         }
-        //show: function() {
-        //    console.log("character show");
-        //    this.el.width = this.options.width;
-        //    this.el.height = this.options.height;
-        //    this.$el.show();
-        //},
-        //hide: function() {
-        //    console.log("character hide");
-        //    this.el.width = 0;
-        //    this.el.height = 0;
-        //    this.$el.hide();
-        //}
     });
 });
 define('models/characters/character',[
@@ -1434,25 +1698,6 @@ define('models/characters/character',[
         }
     });
 });
-define('constants',['backbone'], function(Backbone) {
-        var Constants = Backbone.Model.extend({
-            defaults: {
-                //GAME FIELD SIZES__________
-                FIELD_WIDTH: 1000,
-                FIELD_HEIGHT: 700,
-                //__________________________
-                // OFFSETS BEFORE CANVAS_____
-                X_OFFSET_TO_CANVAS: 20,
-                Y_OFFSET_TO_CANVAS: 20,
-                //__________________________
-                //INTERVALS_________________
-                INTERVAL_SHORT: 50,
-                //__________________________
-                SOCKET_ADDRESS: "ws://localhost:8000/gameplay"
-            }
-        });
-    return new Constants();
-    });
 define('models/characters/myCharacter',[
     'backbone',
     'models/characters/character',
@@ -1478,16 +1723,17 @@ define('models/characters/myCharacter',[
         setMouseCoordinate: function (x, y) {
             this.mouseX = x - constants.get("X_OFFSET_TO_CANVAS");
             this.mouseY = y - constants.get("Y_OFFSET_TO_CANVAS");
+            //console.log("setted mouseX : " + this.mouseX + "; mouseY : " + this.mouseY + "  offsetX : ");
+
         },
         calculateDistanceToMouse: function (x, y) {
             return Math.sqrt((this.get('posX') - x) * (this.get('posX') - x) + (this.get('posY') - y) * (this.get('posY') - y));
         },
         myMove: function (dt) {
-            //console.log("myMove mouseX : " + this.mouseX + "; mouseY : " + this.mouseY + "  offsetX : " + this.offsetX + "; offsetY : " + this.offsetY);
             //console.log("MYMOVE : X : " + this.posX + "; Y :  " + this.posY + "; Angle : " + this.angle);
-            this.set({'isMoving': true});
+            //this.set({'isMoving': true});
             if (this.calculateDistanceToMouse(this.mouseX, this.mouseY) > this.get('radius')) {
-                this.calculateAngle(this.mouseX, this.mouseY);
+                //this.calculateAngle(this.mouseX, this.mouseY);
                 this.move(dt);
             } else {
                 this.set({'isMoving': false});
@@ -1518,6 +1764,7 @@ define('views/characters/myCharacter',[
             var y = event.pageY;
             this.model.setMouseCoordinate(x, y);
             this.model.calculateAngle(x, y);
+            this.trigger("mouseMove")
         }
     });
 });
@@ -1553,6 +1800,10 @@ define('views/characters/enemyCharacter',[
         }
     });
 });
+//БЭМ
+//<p
+//options sync
+//2 index
 define('router',[
     'backbone',
     'views/viewManager',
@@ -1642,13 +1893,12 @@ define('router',[
             registrationView.show();
         },
         joystickAction: function (session) {
-            console.log("in joystickAction of session : " + session);
             var joystickTransport = new JoystickTransport({
                 address : "gameplay/mobile",
                 session : session,
                 constants: constants
             });
-            joystickTransport.initialize();
+            joystickTransport.initialize(); //TODO убрать в конструктор
             joystickView.show();
         }
     });

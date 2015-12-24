@@ -36,7 +36,7 @@ module.exports = function (grunt) {
         uglify: {
             build: {
                 files: {
-                    'public_html/js/build/build.min.js':
+                    'public_html_production/js/build.min.js':
                         ['public_html/js/build/build.js']
                 }
             }
@@ -69,7 +69,7 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'scss',
                     src: ['*.scss'],
-                    dest: 'public_html/css',
+                    dest: 'public_html_production/css',
                     ext: '.css'
                 }]
             }

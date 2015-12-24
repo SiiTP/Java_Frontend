@@ -38,7 +38,7 @@ define (function() {
                 }
 
                 if (answer.status == 200) {
-                    //console.log("___@ game proccess answer");
+                    console.log("___@ game proccess answer");
                     this.createPlayers(answer);
                     this.parsePlayers(answer.players);
 
@@ -68,6 +68,7 @@ define (function() {
         };
 
         this.sendMessageWaiting = function() {
+            console.log("<___ send message");
             var data = {'direction': -1, 'isMoving': false};
             if (this.myPlayer != null) {
                 data = {'direction': this.myPlayer.model.get('angle'), 'isMoving': this.myPlayer.model.get('isMoving')};
@@ -218,10 +219,13 @@ define (function() {
                 this.myPlayer.model.set({'isMoving': true});
             }
         };
+
         this.exit = function() {
             console.log("exit from game");
             clearInterval(this.waitingInterval);
             clearInterval(this.clearBugsInterval);
+            this.clearBugsInterval = null;
+            this.waitingInterval   = null;
             this.gameBegin = false;
             if (this.socket) {
                 this.socket.close();
