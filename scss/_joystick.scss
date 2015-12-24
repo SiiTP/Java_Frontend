@@ -1,10 +1,12 @@
 .joystick {
   overflow: hidden;
+
   &__canvas {
     position: absolute;
     top: 10px;
     left: 10px;
   }
+
   &__canvas-cursor {
     position: absolute;
     top: 10px;
@@ -21,9 +23,11 @@
     }
     margin-top: 10px;
     margin-left: 10px;
+
     &__message {
       font-size: $font-size_medium;
     }
+
     &__hyroscope {
       font-size: $font-size_medium;
     }

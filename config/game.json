@@ -5,7 +5,7 @@
   "gameFieldWidth":975,
   "gameFieldHeight":675,
   "defaultStopDirectionValue":-1,
-  "maxRoomPlayingTimeInSec":1200,
+  "maxRoomPlayingTimeInSec":10,
   "defaultWinScore":25,
   "defaultSpeed":200,
   "defaultPlayerRadius":20,

@@ -41,8 +41,9 @@ define (function() {
                     console.log("___@ game proccess answer");
                     this.createPlayers(answer);
                     this.parsePlayers(answer.players);
+
                     if (!this.gameBegin) {
-                        this.field.trigger('gameProccess');
+                        //this.field.trigger('gameProccess');
                         this.startGame();
                     }
                     this.gameBegin = true;
@@ -51,8 +52,10 @@ define (function() {
                 if (answer.status == 228) {
                     console.log("___@ winner is : " + answer.winner);
                     this.field.trigger('win', answer.winner);
+                    setTimeout(function() {location.href = "#rooms"}, 3000);
                     this.gameBegin = false;
                 }
+
             }.bind(this);
             socket.onclose = function(event) {
                 console.log("____ close socket");

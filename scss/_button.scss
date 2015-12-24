@@ -10,13 +10,16 @@ $border: #00f;
   box-shadow: $color-background - #002 0 0 6px 4px,
         inset $color-background + #002 0 0 6px 4px;
   outline: none;
+
   &_long {
     width: 100%;
   }
+
   &:hover {
     box-shadow: #ff0 0 0 6px 4px,
     inset #004 0 0 6px 4px;
   }
+
   &:active {
     color: $color-font-base_inverse + #004;
   }

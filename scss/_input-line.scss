@@ -7,6 +7,7 @@ $input-shadow: #33f;
   box-sizing: border-box;
   margin-bottom: 1em;
   color: $color-default;
+
   &__header {
     display: inline-block;
     width: 35%;
@@ -15,6 +16,7 @@ $input-shadow: #33f;
     text-shadow: $color-font-base 0 0 1em;
     box-sizing: border-box;
   }
+
   &__input {
     width: 64%;
     margin-bottom: 0;

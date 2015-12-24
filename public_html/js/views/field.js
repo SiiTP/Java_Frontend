@@ -11,6 +11,8 @@ define([
         template: tmpl,
         canvas: null,
         context: null,
+
+        exitTimeout: false,
         events: {
             "click .field-container__button-exit": 'onExit'
         },

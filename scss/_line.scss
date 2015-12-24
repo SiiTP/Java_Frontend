@@ -8,17 +8,21 @@ $line-color-blue:    #03f;
   box-shadow: $color + #001 0  0 5px 2px;
   background: $color + #004;
 }
+
 .line {
   display: inline-block;
   width: 100%;
   height: 1px;
   @include line-colors($line-color-default);
+
   &_green {
     @include line-colors($line-color-green);
   }
+
   &_red {
     @include line-colors($line-color-red);
   }
+
   &_blue {
     @include line-colors($line-color-blue);
   }
@@ -30,15 +34,18 @@ $line-color-blue:    #03f;
   height: 100%;
   margin: 0 20px 0;
   @include line-colors($line-color-default);
+
   &_green {
     @include  line-colors($line-color-green)
   }
+
   &_headerSmall {
     height: 50px;
     margin: 0 13% 0;
     position: relative;
     top: 10px
   }
+
   &_tableRelPos {
     height: 1em;
     position: relative;

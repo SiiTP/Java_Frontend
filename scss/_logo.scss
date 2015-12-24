@@ -34,17 +34,20 @@ $bottom-color: #f00;
     display: flex;
     color: $color-font-extra;
     text-shadow: $color-font-extra + #002 0 0 1em;
+
     &__beam {
       text-align: right;
       width: 49%;
       font-size: $font-size_xxlarge;
     }
+
     &__balls {
       text-align: left;
       width: 49%;
 
       font-size: $font-size_xxlarge;
     }
+
     &__divider {
       display: inline-flex;
       width: 1px;

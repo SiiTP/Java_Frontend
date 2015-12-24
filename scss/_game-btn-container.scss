@@ -1,5 +1,5 @@
-$green:  #0f0; $green-difference: #003;
-$blue:   #0ff; $blue-difference: #300;
+$green:  #0f0; $green-difference:  #003;
+$blue:   #0ff; $blue-difference:   #300;
 $orange: #f90; $orange-difference: #011;
 $hovered: #ff0;
 $disabled: #555;
@@ -34,6 +34,7 @@ $radius-difference: 2;
   width: 33%;
   height: 100px;
   color: $color-font-base;
+
   &__button {
     display: block;
     width: 100px;
@@ -42,20 +43,25 @@ $radius-difference: 2;
     color: $color-font-base_inverse;
     border: #002 solid 2px;
     border-radius: 50%;
+
     &:active {
       background: $active + #002;
       box-shadow: inset $active 0 0 14px 9px,
       $active + #004 0 0 ($radius-hover-active*$radius-difference) $radius-hover-active;
     }
+
     &_game {
       @include game-btn($green, $green-difference)
     }
+
     &_scoreboard {
       @include game-btn($blue, $blue-difference)
     }
+
     &_log {
       @include game-btn($orange, $orange-difference)
     }
+
     &_disabled {
       @include game-btn-disabled($disabled)
     }

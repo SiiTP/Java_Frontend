@@ -4,16 +4,20 @@
   font-size: $font-size_small;
   font-family: NunitoNormal;
   color: $color-default;
+
   &_correct {
     color: $color-correct;
   }
+
   &_error {
     color: $color-error;
   }
 }
+
 .validation-info-common:not(:empty) {
   margin-top: 20px;
   padding: 5px;
+
   font-size: 24px;
   text-shadow: #f00 0 0 1em;
   text-align: center;
