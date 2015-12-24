@@ -32,27 +32,27 @@ define (function() {
                 var answer = JSON.parse(event.data);
 
                 if (answer.status == 301) {
-                    console.log("___@ waiting answer");
+                    //console.log("___@ waiting answer");
                     this.field.trigger('waiting');
                     this.gameBegin = false;
                 }
 
                 if (answer.status == 200) {
-                    console.log("___@ game proccess answer");
+                    //console.log("___@ game proccess answer");
                     this.createPlayers(answer);
                     this.parsePlayers(answer.players);
 
                     if (!this.gameBegin) {
-                        //this.field.trigger('gameProccess');
+                        this.field.trigger('gameProccess');
                         this.startGame();
                     }
                     this.gameBegin = true;
                 }
 
                 if (answer.status == 228) {
-                    console.log("___@ winner is : " + answer.winner);
+                    //console.log("___@ winner is : " + answer.winner);
                     this.field.trigger('win', answer.winner);
-                    setTimeout(function() {location.href = "#rooms"}, 3000);
+                    setTimeout(function() {location.href = "#rooms"}, 5000);
                     this.gameBegin = false;
                 }
 
