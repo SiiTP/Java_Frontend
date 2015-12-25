@@ -55,6 +55,7 @@ define([
                 this.context.font = 'normal 24px NunitoNormal';
                 this.context.fillText(score, posX + radius + 5, posY + 18);
                 //________________________
+
             }
         },
 
