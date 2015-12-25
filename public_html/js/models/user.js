@@ -10,6 +10,7 @@ define([
             success: function(model, response, parse) {
                 model.set({id:1});
                 model.set({'username': response.username});
+                model.set({'score': response.score});
                 model.set({'logged': true});
             },
             error: function(model, response, parse) {

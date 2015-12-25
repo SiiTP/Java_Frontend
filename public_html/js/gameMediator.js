@@ -15,7 +15,7 @@ define (function() {
         this.limitPlayers = 0;
 
         this.initialize = function() {
-            console.log("mediator initialized");
+            //console.log("mediator initialized");
             this.field.on('show', this.joinToRoom.bind(this));
             this.field.on('exit', this.exit.bind(this));
         };
@@ -221,7 +221,7 @@ define (function() {
         };
 
         this.exit = function() {
-            console.log("exit from game");
+            //console.log("exit from game");
             clearInterval(this.waitingInterval);
             clearInterval(this.clearBugsInterval);
             this.clearBugsInterval = null;
@@ -230,8 +230,11 @@ define (function() {
             if (this.socket) {
                 this.socket.close();
             }
+            if (this.user && this.myPlayer) {
+                this.user.set({"score" : this.user.get("score") + this.myPlayer.model.get("score")});
+            }
             this.erasePlayers();
-        }
+        };
 
         this.initialize();
     }

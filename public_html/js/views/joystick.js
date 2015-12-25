@@ -62,7 +62,7 @@ define([
         },
 
         hide: function () {
-            console.log("joystick hide");
+            //console.log("joystick hide");
             if (this.canvas) {
                 this.canvas.width  = 0;
                 this.canvas.height = 0;
@@ -129,7 +129,7 @@ define([
         },
 
         render: function () {
-            console.log("joystick render");
+            //console.log("joystick render");
             this.JQ_msg = this.$(".joystick__info__message");
             if(this.rightDevice) {
 
@@ -162,7 +162,7 @@ define([
             } else {
                 this.orientation = "landscape";
             }
-            console.log(this.orientation);
+            //console.log(this.orientation);
             this.render();
         },
 
@@ -196,7 +196,7 @@ define([
 
         onHyroscopeCheckbox: function() {
             this.JQ_hyroscopeCheckbox = !this.JQ_hyroscopeCheckbox;
-            console.log("on hyroscope : " + this.JQ_hyroscopeCheckbox);
+            //console.log("on hyroscope : " + this.JQ_hyroscopeCheckbox);
         },
 
         onHyroscopeEvent: function (event) {

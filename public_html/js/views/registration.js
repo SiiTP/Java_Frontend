@@ -79,7 +79,7 @@ define([
                 this.model.set({'validUsername': true});
                 this.JQ_cacheText['username'].removeClass("validation-info_error");
                 this.JQ_cacheText['username'].addClass("validation-info_correct");
-                this.JQ_cacheText['username'].text("Поле Username задано корректно");
+                this.JQ_cacheText['username'].text("Поле ЛОГИН задано корректно");
                 this.JQ_cacheLine['username'].removeClass("line_red");
                 this.JQ_cacheLine['username'].addClass("line_green");
             } else {
@@ -98,7 +98,7 @@ define([
                 this.model.set({'validPassword': true});
                 this.JQ_cacheText['password'].removeClass("validation-info_error");
                 this.JQ_cacheText['password'].addClass("validation-info_correct");
-                this.JQ_cacheText['password'].text("Поле Password задано корректно");
+                this.JQ_cacheText['password'].text("Поле ПАРОЛЬ задано корректно");
                 this.JQ_cacheLine['password'].removeClass("line_red");
                 this.JQ_cacheLine['password'].addClass("line_green");
             } else {
@@ -127,7 +127,7 @@ define([
             if (errors.length == 0) {
                 this.JQ_cacheText['confirm'].removeClass("validation-info_error");
                 this.JQ_cacheText['confirm'].addClass("validation-info_correct");
-                this.JQ_cacheText['confirm'].text("Поле Confirm задано корректно");
+                this.JQ_cacheText['confirm'].text("Поле ПОДТВЕРЖДЕНИЕ задано корректно");
                 this.JQ_cacheLine['confirm'].removeClass("line_red");
                 this.JQ_cacheLine['confirm'].addClass("line_green");
                 return true;

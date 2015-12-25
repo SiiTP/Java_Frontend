@@ -17,13 +17,15 @@ $reg-link-hover: #00f;
     &__registration-link {
       display: inline-block;
       width: 60%;
-      margin-left: 2%;
-      text-align: right;
       box-sizing: border-box;
-      font-size: 20px;
-      font-family: Exo2-normal;
-      color: $color-font-base;
-      text-shadow: $color-font-base 0 0 2em;
+      margin-left: 2%;
+
+      font-size: $font-size_large;
+      font-family: Exo2-bold;
+      text-align: right;
+
+      color: $color-font-extra;
+      text-shadow: $color-font-extra 0 0 2em;
 
       &:hover {
         color: $reg-link-hover;
@@ -31,7 +33,7 @@ $reg-link-hover: #00f;
       }
 
       &:active {
-        text-shadow: $color-font-base 0 0 2em;
+        text-shadow: $color-font-extra 0 0 2em;
         color: $color-font-base_inverse;
       }
     }

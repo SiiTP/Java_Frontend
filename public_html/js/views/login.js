@@ -86,7 +86,7 @@ define([
                 this.model.set({'validUsername': true});
                 this.JQ_cacheText['username'].removeClass("validation-info_error");
                 this.JQ_cacheText['username'].addClass("validation-info_correct");
-                this.JQ_cacheText['username'].text("Поле Username задано корректно");
+                this.JQ_cacheText['username'].text("Поле ЛОГИН задано корректно");
                 this.JQ_cacheLine['username'].removeClass("line_red");
                 this.JQ_cacheLine['username'].addClass("line_green");
             } else {

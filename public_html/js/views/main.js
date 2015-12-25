@@ -29,7 +29,7 @@ define([
             }
         },
         render: function () {
-            console.log("main render");
+            //console.log("main render");
             this.$el.html(this.template(this.model.toJSON()));
         },
 
