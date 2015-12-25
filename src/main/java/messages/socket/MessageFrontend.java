@@ -21,6 +21,7 @@ public class MessageFrontend implements Abonent,Runnable {
     private final ConcurrentMap<String,JoystickSocket> joystickMap = new ConcurrentHashMap<>();
     private final MessageSystem messageSystem;
     private final int sleepTime;
+
     public MessageFrontend(MessageSystem messageSystem) {
         this.messageSystem = messageSystem;
         GameResources gameResources =(GameResources) ResourceFactory.getResource(System.getProperty("user.dir")+"/config/game.json");
@@ -55,6 +56,7 @@ public class MessageFrontend implements Abonent,Runnable {
             sendMoveMessage(data,session);
         }
     }
+
     public void sendMoveMessage(JSONObject data,String session){
         MoveMessage moveMessage = new MoveMessage(address, messageSystem.getAddressService().getMessageSwitchAddress(), data, session);
         messageSystem.sendMessage(moveMessage);

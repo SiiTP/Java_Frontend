@@ -5,7 +5,9 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.MarkerManager;
 import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
+import persistance.PlayerDataSet;
 import persistance.UserProfile;
+import service.ProjectDB;
 import service.account.AccountService;
 
 import javax.servlet.ServletException;
@@ -31,14 +33,20 @@ public class UserServlet extends HttpServlet{
         HttpSession httpSession = req.getSession();
         PrintWriter writer = resp.getWriter();
         JSONObject responseJSON = new JSONObject();
-
         if (httpSession != null) {
             String session = httpSession.getId();
             LOGGER.info(new MarkerManager.Log4jMarker("REQUEST"),"user info data: " + session);
             boolean auth = accountService.isAuthorized(session);
             if (auth) {
                 UserProfile profile = accountService.getUserBySession(session);
+
                 if (profile != null) {
+                    PlayerDataSet dataSet = profile.getPlayerDataSet();
+                    long score = 0;
+                    if(dataSet != null){
+                        score = dataSet.getScoreCount();
+                        responseJSON.put("score",score);
+                    }
                     responseJSON.put("success", true);
                     responseJSON.put("username", profile.getUsername());
                     responseJSON.put("message", "You logged!");
