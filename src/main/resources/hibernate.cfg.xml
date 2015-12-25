@@ -19,7 +19,7 @@
             root
         </property>
         <property name="connection.password">
-            Йй1234
+            ivan
         </property>
          <property name="show_sql">
                true

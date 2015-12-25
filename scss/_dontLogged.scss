@@ -1,0 +1,19 @@
+.dontLogged {
+  position: relative;
+  @-moz-document url-prefix() {
+    top: -25px;
+  }
+  display: inline-block;
+  width: 48%;
+  box-sizing: border-box;
+  margin-left: 20px;
+
+  &__message {
+    font-family: Exo2-bold;
+    font-size: $font-size_large;
+    text-shadow: $color-font-base 0 0 1em;
+  }
+  &__button {
+
+  }
+}

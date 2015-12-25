@@ -7,7 +7,18 @@
   border-radius: 20px;
 
   &__qrcode {
-    margin-left: 200px;
+    margin-left: 10px;
+    &__title {
+      width: 256px;
+      white-space: normal;
+      text-align: center;
+      margin: 10px 0;
+      font-family: Exo2-bold;
+      font-size: $font-size_large;
+    }
+    &__code {
+
+    }
   }
 }
 

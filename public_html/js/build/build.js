@@ -556,15 +556,19 @@ define ('views/viewManager',['backbone'], function(Backbone) {
     return new View()
 });
 
-define('tmpl/main',[],function () { return function (__fest_context){"use strict";var __fest_self=this,__fest_buf="",__fest_chunks=[],__fest_chunk,__fest_attrs=[],__fest_select,__fest_if,__fest_iterator,__fest_to,__fest_fn,__fest_html="",__fest_blocks={},__fest_params,__fest_element,__fest_debug_file="",__fest_debug_line="",__fest_debug_block="",__fest_htmlchars=/[&<>"]/g,__fest_htmlchars_test=/[&<>"]/,__fest_short_tags = {"area":true,"base":true,"br":true,"col":true,"command":true,"embed":true,"hr":true,"img":true,"input":true,"keygen":true,"link":true,"meta":true,"param":true,"source":true,"wbr":true},__fest_element_stack = [],__fest_htmlhash={"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"},__fest_jschars=/[\\'"\/\n\r\t\b\f<>]/g,__fest_jschars_test=/[\\'"\/\n\r\t\b\f<>]/,__fest_jshash={"\"":"\\\"","\\":"\\\\","/":"\\/","\n":"\\n","\r":"\\r","\t":"\\t","\b":"\\b","\f":"\\f","'":"\\'","<":"\\u003C",">":"\\u003E"},___fest_log_error;if(typeof __fest_error === "undefined"){___fest_log_error = (typeof console !== "undefined" && console.error) ? function(){return Function.prototype.apply.call(console.error, console, arguments)} : function(){};}else{___fest_log_error=__fest_error};function __fest_log_error(msg){___fest_log_error(msg+"\nin block \""+__fest_debug_block+"\" at line: "+__fest_debug_line+"\nfile: "+__fest_debug_file)}function __fest_replaceHTML(chr){return __fest_htmlhash[chr]}function __fest_replaceJS(chr){return __fest_jshash[chr]}function __fest_extend(dest, src){for(var i in src)if(src.hasOwnProperty(i))dest[i]=src[i];}function __fest_param(fn){fn.param=true;return fn}function __fest_call(fn, params,cp){if(cp)for(var i in params)if(typeof params[i]=="function"&&params[i].param)params[i]=params[i]();return fn.call(__fest_self,params)}function __fest_escapeJS(s){if (typeof s==="string") {if (__fest_jschars_test.test(s))return s.replace(__fest_jschars,__fest_replaceJS);} else if (typeof s==="undefined")return "";return s;}function __fest_escapeHTML(s){if (typeof s==="string") {if (__fest_htmlchars_test.test(s))return s.replace(__fest_htmlchars,__fest_replaceHTML);} else if (typeof s==="undefined")return "";return s;}var data=__fest_context;__fest_blocks.LoggedBar=function(params){var __fest_buf="";__fest_buf+=("<div class=\"logout\"><div class=\"logout__info\">Вы вошли, как: <span>");try{__fest_buf+=(__fest_escapeHTML(data.username))}catch(e){__fest_log_error(e.message + "4");}__fest_buf+=("</span></div>; <div class=\"logout__info\">Ваш счет : <span>");try{__fest_buf+=(__fest_escapeHTML(data.score))}catch(e){__fest_log_error(e.message + "7");}__fest_buf+=("</span></div><br/><button type=\"button\" class=\"button button_long smallMargTop logout__button\" data-href=\"#logout\">Logout</button></div>");return __fest_buf;};__fest_buf+=("<div class=\"container-main\"><div class=\"header\"><div class=\"logo\"><div class=\"logo__top\"><div class=\"logo__top__line\"></div></div><div class=\"logo__center\"><span class=\"logo__center__beam\">Beam</span><span class=\"logo__center__divider\"></span><span class=\"logo__center__balls\">Balls</span></div><div class=\"logo__bottom\"><div class=\"logo__bottom__line\"></div></div></div>");try{__fest_if=data.logged}catch(e){__fest_if=false;__fest_log_error(e.message);}if(__fest_if){__fest_select="LoggedBar";__fest_params={};__fest_chunks.push(__fest_buf,{name:__fest_select,params:__fest_params,cp:false});__fest_buf="";}else{__fest_buf+=("<div class=\"dontLogged\">Вы не авторизованы</div>");}__fest_buf+=("</div><div class=\"line line_blue mediumMargTop\"></div><div class=\"menu\"><div class=\"game-btn-container\">");try{__fest_attrs[0]=__fest_escapeHTML(data.logged ? '' : 'game-btn-container__button_disabled')}catch(e){__fest_attrs[0]=""; __fest_log_error(e.message);}__fest_buf+=("<button class=\"button game-btn-container__button game-btn-container__button_game\n                " + __fest_attrs[0] + "\" data-href=\"#rooms\">Game</button></div><div class=\"game-btn-container\"><button class=\"button game-btn-container__button game-btn-container__button_scoreboard\" data-href=\"#scoreboard\">Scoreboard</button></div><div class=\"game-btn-container\">");try{__fest_if=data.logged}catch(e){__fest_if=false;__fest_log_error(e.message);}if(__fest_if){__fest_buf+=("<button class=\"button game-btn-container__button game-btn-container__button_log\" data-href=\"#logout\">Logout</button>");}else{__fest_buf+=("<button class=\"button game-btn-container__button game-btn-container__button_log\" data-href=\"#login\">Login</button>");}__fest_buf+=("</div></div><div class=\"line line_blue\"></div><div class=\"container-main__qrcode\"></div></div>");__fest_to=__fest_chunks.length;if (__fest_to) {__fest_iterator = 0;for (;__fest_iterator<__fest_to;__fest_iterator++) {__fest_chunk=__fest_chunks[__fest_iterator];if (typeof __fest_chunk==="string") {__fest_html+=__fest_chunk;} else {__fest_fn=__fest_blocks[__fest_chunk.name];if (__fest_fn) __fest_html+=__fest_call(__fest_fn,__fest_chunk.params,__fest_chunk.cp);}}return __fest_html+__fest_buf;} else {return __fest_buf;}} ; });
+define('tmpl/main',[],function () { return function (__fest_context){"use strict";var __fest_self=this,__fest_buf="",__fest_chunks=[],__fest_chunk,__fest_attrs=[],__fest_select,__fest_if,__fest_iterator,__fest_to,__fest_fn,__fest_html="",__fest_blocks={},__fest_params,__fest_element,__fest_debug_file="",__fest_debug_line="",__fest_debug_block="",__fest_htmlchars=/[&<>"]/g,__fest_htmlchars_test=/[&<>"]/,__fest_short_tags = {"area":true,"base":true,"br":true,"col":true,"command":true,"embed":true,"hr":true,"img":true,"input":true,"keygen":true,"link":true,"meta":true,"param":true,"source":true,"wbr":true},__fest_element_stack = [],__fest_htmlhash={"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"},__fest_jschars=/[\\'"\/\n\r\t\b\f<>]/g,__fest_jschars_test=/[\\'"\/\n\r\t\b\f<>]/,__fest_jshash={"\"":"\\\"","\\":"\\\\","/":"\\/","\n":"\\n","\r":"\\r","\t":"\\t","\b":"\\b","\f":"\\f","'":"\\'","<":"\\u003C",">":"\\u003E"},___fest_log_error;if(typeof __fest_error === "undefined"){___fest_log_error = (typeof console !== "undefined" && console.error) ? function(){return Function.prototype.apply.call(console.error, console, arguments)} : function(){};}else{___fest_log_error=__fest_error};function __fest_log_error(msg){___fest_log_error(msg+"\nin block \""+__fest_debug_block+"\" at line: "+__fest_debug_line+"\nfile: "+__fest_debug_file)}function __fest_replaceHTML(chr){return __fest_htmlhash[chr]}function __fest_replaceJS(chr){return __fest_jshash[chr]}function __fest_extend(dest, src){for(var i in src)if(src.hasOwnProperty(i))dest[i]=src[i];}function __fest_param(fn){fn.param=true;return fn}function __fest_call(fn, params,cp){if(cp)for(var i in params)if(typeof params[i]=="function"&&params[i].param)params[i]=params[i]();return fn.call(__fest_self,params)}function __fest_escapeJS(s){if (typeof s==="string") {if (__fest_jschars_test.test(s))return s.replace(__fest_jschars,__fest_replaceJS);} else if (typeof s==="undefined")return "";return s;}function __fest_escapeHTML(s){if (typeof s==="string") {if (__fest_htmlchars_test.test(s))return s.replace(__fest_htmlchars,__fest_replaceHTML);} else if (typeof s==="undefined")return "";return s;}var data=__fest_context;__fest_blocks.LoggedBar=function(params){var __fest_buf="";__fest_buf+=("<div class=\"logout\"><div class=\"logout__info\">Вы вошли, как: <span>");try{__fest_buf+=(__fest_escapeHTML(data.username))}catch(e){__fest_log_error(e.message + "4");}__fest_buf+=("</span></div>; <div class=\"logout__info\">Ваш счет : <span>");try{__fest_buf+=(__fest_escapeHTML(data.score))}catch(e){__fest_log_error(e.message + "7");}__fest_buf+=("</span></div><br/><button type=\"button\" class=\"button button_long smallMargTop logout__button\" data-href=\"#logout\">Выйти</button></div>");return __fest_buf;};__fest_buf+=("<div class=\"container-main\"><div class=\"header\"><div class=\"logo\"><div class=\"logo__top\"><div class=\"logo__top__line\"></div></div><div class=\"logo__center\"><span class=\"logo__center__beam\">Beam</span><span class=\"logo__center__divider\"></span><span class=\"logo__center__balls\">Balls</span></div><div class=\"logo__bottom\"><div class=\"logo__bottom__line\"></div></div></div>");try{__fest_if=data.logged}catch(e){__fest_if=false;__fest_log_error(e.message);}if(__fest_if){__fest_select="LoggedBar";__fest_params={};__fest_chunks.push(__fest_buf,{name:__fest_select,params:__fest_params,cp:false});__fest_buf="";}else{__fest_buf+=("<div class=\"dontLogged\"><div class=\"dontLogged__message\">Вы не авторизованы</div><div><button class=\"button button_long smallMargTop dontLogged__button\" data-href=\"#login\">Войти</button></div></div>");}__fest_buf+=("</div><div class=\"line line_blue mediumMargTop\"></div><div class=\"menu\"><div class=\"game-btn-container\">");try{__fest_attrs[0]=__fest_escapeHTML(data.logged ? '' : 'game-btn-container__button_disabled')}catch(e){__fest_attrs[0]=""; __fest_log_error(e.message);}__fest_buf+=("<button class=\"button game-btn-container__button game-btn-container__button_game\n                " + __fest_attrs[0] + "\" data-href=\"#rooms\">Игра</button></div><div class=\"game-btn-container\"><button class=\"button game-btn-container__button game-btn-container__button_scoreboard\" data-href=\"#scoreboard\">Топ-10</button></div><div class=\"game-btn-container\">");try{__fest_if=data.logged}catch(e){__fest_if=false;__fest_log_error(e.message);}if(__fest_if){__fest_buf+=("<button class=\"button game-btn-container__button game-btn-container__button_log\" data-href=\"#logout\">Выйти</button>");}else{__fest_buf+=("<button class=\"button game-btn-container__button game-btn-container__button_log\" data-href=\"#login\">Войти</button>");}__fest_buf+=("</div></div><div class=\"line line_blue\"></div><div class=\"container-main__qrcode\"></div></div>");__fest_to=__fest_chunks.length;if (__fest_to) {__fest_iterator = 0;for (;__fest_iterator<__fest_to;__fest_iterator++) {__fest_chunk=__fest_chunks[__fest_iterator];if (typeof __fest_chunk==="string") {__fest_html+=__fest_chunk;} else {__fest_fn=__fest_blocks[__fest_chunk.name];if (__fest_fn) __fest_html+=__fest_call(__fest_fn,__fest_chunk.params,__fest_chunk.cp);}}return __fest_html+__fest_buf;} else {return __fest_buf;}} ; });
 define('getCookie',[],function() {
     return function getCookie(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');
         for(var i=0; i<ca.length; i++) {
             var c = ca[i];
-            while (c.charAt(0)==' ') c = c.substring(1);
-            if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+            while (c.charAt(0)==' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
         }
         return "";
     }
@@ -610,7 +614,8 @@ define('views/main',[
         JQmsg: undefined,
         events: {
             "click .game-btn-container__button": "onClick",
-            "click .logout__button": "onClick"
+            "click .logout__button": "onClick",
+            "click .dontLogged__button": "onClick"
         },
         initialize: function () {
             this.model.on('change', this.checkChanges.bind(this));
@@ -1747,7 +1752,7 @@ define ('gameMediator',[],function() {
                 }
 
                 if (answer.status == 200) {
-                    console.log("___@ game proccess answer");
+                    //console.log("___@ game proccess answer");
                     this.createPlayers(answer);
                     this.parsePlayers(answer.players);
 
@@ -1777,7 +1782,7 @@ define ('gameMediator',[],function() {
         };
 
         this.sendMessageWaiting = function() {
-            console.log("<___ send message");
+            //console.log("<___ send message");
             var data = {'direction': -1, 'isMoving': false};
             if (this.myPlayer != null) {
                 data = {'direction': this.myPlayer.model.get('angle'), 'isMoving': this.myPlayer.model.get('isMoving')};
@@ -1941,6 +1946,8 @@ define ('gameMediator',[],function() {
             }
             this.erasePlayers();
         }
+
+        this.initialize();
     }
 });
 
@@ -2001,6 +2008,7 @@ define('joystickTransport',['views/joystick'],function(joystick) {
             clearInterval(this.queryInterval);
             this.socket.close();
         }
+        this.initialize();
 
     }
 });
@@ -2016,6 +2024,7 @@ define('views/characters/character',[
         borderColor: '#002',
         context: null,
         canvas: null,
+
         initCanvas: function(args) {
             document.getElementById('page').appendChild(this.el);
             this.canvas = this.el;
@@ -2023,6 +2032,7 @@ define('views/characters/character',[
             this.canvas.height = args.height;
             this.context = this.canvas.getContext('2d');
         },
+
         draw: function() {
             if (this.context != null) {
                 this.clear();
@@ -2267,6 +2277,7 @@ define('router',[
     var scoreboardView =   new ScoreboardView   ({model: scores});
     var roomsView =        new RoomsView        ({model: rooms});
     var fieldView =        new FieldView        ({width: constants.get('FIELD_WIDTH'), height: constants.get('FIELD_HEIGHT')});
+
     manager.add(mainView);
     manager.add(scoreboardView);
     manager.add(loginView);
@@ -2274,6 +2285,7 @@ define('router',[
     manager.add(roomsView);
     manager.add(fieldView);
     manager.add(joystickView);
+
     var gameMediator = new GameMediator({
         user           : user,
         MyCharacter    : MyCharacter,
@@ -2281,8 +2293,6 @@ define('router',[
         constants      : constants,
         field          : fieldView
     });
-    gameMediator.initialize();
-
 
     var Router = Backbone.Router.extend({
         routes: {
@@ -2318,7 +2328,6 @@ define('router',[
                 session : session,
                 constants: constants
             });
-            joystickTransport.initialize(); //TODO убрать в конструктор
             joystickView.show();
         }
     });

@@ -6,7 +6,7 @@
             ;
             <fest:space/>
             <div class="logout__info">Ваш счет :<fest:space/><span><fest:value>data.score</fest:value></span></div><br/>
-            <button type="button" class="button button_long smallMargTop logout__button" data-href="#logout">Logout</button>
+            <button type="button" class="button button_long smallMargTop logout__button" data-href="#logout">Выйти</button>
         </div>
     </fest:set>
 
@@ -30,31 +30,69 @@
                     <fest:get name="LoggedBar"/>
                 </fest:when>
                 <fest:otherwise>
-                    <div class="dontLogged">Вы не авторизованы</div>
+                    <div class="dontLogged">
+                        <div class="dontLogged__message">
+                            Вы не авторизованы
+                        </div>
+                        <div>
+                            <button class="button button_long smallMargTop dontLogged__button" data-href="#login">Войти</button>
+                        </div>
+                    </div>
                 </fest:otherwise>
             </fest:choose>
         </div>
         <div class="line line_blue mediumMargTop"> </div>
         <div class="menu">
+
             <div class="game-btn-container">
+                <div class="game-btn-container__title mediumMargBottom">
+                    Игра
+                </div>
+
                 <button class="button game-btn-container__button game-btn-container__button_game
-                {data.logged ? '' : 'game-btn-container__button_disabled'}" data-href="#rooms">Game</button>
+                {data.logged ? '' : 'game-btn-container__button_disabled'}" data-href="#rooms">
+                    <img class="game-btn-container__button__img game-btn-container__button__img_game" src="img/game_icon.png"/>
+                </button>
             </div>
+
             <div class="game-btn-container">
-                <button class="button game-btn-container__button game-btn-container__button_scoreboard" data-href="#scoreboard">Scoreboard</button>
+                <div class="game-btn-container__title mediumMargBottom">
+                    Топ-10
+                </div>
+
+                <button class="button game-btn-container__button game-btn-container__button_scoreboard" data-href="#scoreboard">
+                    <img class="game-btn-container__button__img" src="img/scoreboard_icon.png"/>
+                </button>
             </div>
+
             <div class="game-btn-container">
                 <fest:choose>
                     <fest:when test="data.logged">
-                        <button class="button game-btn-container__button game-btn-container__button_log" data-href="#logout">Logout</button>
+                        <div class="game-btn-container__title mediumMargBottom">
+                            Выйти
+                        </div>
+                        <button class="button game-btn-container__button game-btn-container__button_log" data-href="#logout">
+                            <img class="game-btn-container__button__img" src="img/logout_icon.png"/>
+                        </button>
                     </fest:when>
+
                     <fest:otherwise>
-                        <button class="button game-btn-container__button game-btn-container__button_log" data-href="#login">Login</button>
+                        <div class="game-btn-container__title mediumMargBottom">
+                            Войти
+                        </div>
+                        <button class="button game-btn-container__button game-btn-container__button_log" data-href="#login">
+                            <img src="img/login_icon.png" width="64px" height="64px"/>
+                        </button>
                     </fest:otherwise>
                 </fest:choose>
             </div>
         </div>
         <div class="line line_blue"> </div>
-        <div class="container-main__qrcode"> </div>
+        <div class="container-main__qrcode">
+            <fest:if test="data.logged">
+                <div class="container-main__qrcode__title">Подключение джойстика</div>
+            </fest:if>
+            <div class="container-main__qrcode__code"> </div>
+        </div>
     </div>
 </fest:template>

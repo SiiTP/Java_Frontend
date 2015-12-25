@@ -34,6 +34,15 @@ $radius-difference: 2;
   width: 33%;
   height: 100px;
   color: $color-font-base;
+  font-family: Exo2-bold;
+
+  &__title {
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: $font-size_large;
+  }
 
   &__button {
     display: block;
@@ -44,6 +53,15 @@ $radius-difference: 2;
     border: #002 solid 2px;
     border-radius: 50%;
 
+    &__img {
+      width: 64px;
+      height: 64px;
+
+      &_game {
+        margin-left: 10px;
+      }
+    }
+
     &:active {
       background: $active + #002;
       box-shadow: inset $active 0 0 14px 9px,
@@ -51,19 +69,19 @@ $radius-difference: 2;
     }
 
     &_game {
-      @include game-btn($green, $green-difference)
+      @include game-btn($green, $green-difference);
     }
 
     &_scoreboard {
-      @include game-btn($blue, $blue-difference)
+      @include game-btn($blue, $blue-difference);
     }
 
     &_log {
-      @include game-btn($orange, $orange-difference)
+      @include game-btn($orange, $orange-difference);
     }
 
     &_disabled {
-      @include game-btn-disabled($disabled)
+      @include game-btn-disabled($disabled);
     }
   }
 }

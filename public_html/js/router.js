@@ -62,8 +62,6 @@ define([
         field          : fieldView
     });
 
-    gameMediator.initialize();
-
     var Router = Backbone.Router.extend({
         routes: {
             'scoreboard': 'scoreboardAction',
@@ -98,7 +96,6 @@ define([
                 session : session,
                 constants: constants
             });
-            joystickTransport.initialize(); //TODO убрать в конструктор
             joystickView.show();
         }
     });

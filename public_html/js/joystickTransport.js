@@ -55,6 +55,7 @@ define(['views/joystick'],function(joystick) {
             clearInterval(this.queryInterval);
             this.socket.close();
         }
+        this.initialize();
 
     }
 });

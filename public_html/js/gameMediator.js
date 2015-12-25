@@ -232,5 +232,7 @@ define (function() {
             }
             this.erasePlayers();
         }
+
+        this.initialize();
     }
 });

@@ -112,7 +112,7 @@ public class Main {
             GzipHandler gzipHandler = new GzipHandler();
             gzipHandler.setIncludedMimeTypes("text/plain,text/css,application/json,application/javascript,text/xml,application/xml,application/xml+rss,text/javascript");
             gzipHandler.setHandler(resourceHandler);
-            resourceHandler.setResourceBase("public_html");
+            resourceHandler.setResourceBase("public_html_production");
             HandlerList list = new HandlerList();
             list.setHandlers(new Handler[]{gzipHandler,resourceHandler, context});
 

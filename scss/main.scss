@@ -1,12 +1,12 @@
 @font-face {
-  font-family: UbuntuItalic;
+  font-family: Exo2-normal;
   //noinspection CssUnknownTarget
-  src: url(Ubuntu/Ubuntu-Italic.ttf);
+  src: url(Exo_2/Exo2-Regular.ttf);
 }
 @font-face {
-  font-family: NunitoNormal;
+  font-family: Exo2-bold;
   //noinspection CssUnknownTarget
-  src: url(Nunito/Nunito-Regular.ttf);
+  src: url(Exo_2/Exo2-SemiBoldItalic.ttf);
 }
 
 $color-background: #001;
@@ -38,7 +38,7 @@ canvas {
   height: 2000px;
   background: $color-background;
   color: $color-font-base;
-  font-family: UbuntuItalic;
+  font-family: Exo2-normal;
   font-size: $font-size_medium;
   padding-top: 20px;
 }
@@ -53,6 +53,7 @@ canvas {
 @import "menu";
 @import "game-btn-container";
 @import "logout";
+@import "dontLogged";
 
 @import "input-field";
 @import "input-line";

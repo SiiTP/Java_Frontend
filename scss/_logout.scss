@@ -1,4 +1,9 @@
 .logout {
+  position: relative;
+  @-moz-document url-prefix() {
+    top: -20px;
+  }
+
   display: inline-block;
   width: 48%;
   margin-left: 20px;
@@ -16,15 +21,4 @@
   }
 }
 
-.dontLogged {
-  position: relative;
-  top: -8px;
-  display: inline-block;
-  width: 48%;
-  box-sizing: border-box;
-  text-align: right;
-  margin-left: 20px;
-  font-family: UbuntuItalic;
-  font-size: $font-size_large;
-  text-shadow: $color-font-base 0 0 1em;
-}
+

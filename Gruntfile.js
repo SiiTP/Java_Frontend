@@ -61,7 +61,7 @@ module.exports = function (grunt) {
             }
         },
         sass: {
-            dist: {
+            build: {
                 options: {
                     style: "compressed"
                 },
@@ -70,6 +70,18 @@ module.exports = function (grunt) {
                     cwd: 'scss',
                     src: ['*.scss'],
                     dest: 'public_html_production/css',
+                    ext: '.css'
+                }]
+            },
+            dist: {
+                options: {
+                    style: "compressed"
+                },
+                files: [{
+                    expand: true,
+                    cwd: 'scss',
+                    src: ['*.scss'],
+                    dest: 'public_html/css',
                     ext: '.css'
                 }]
             }
@@ -122,7 +134,7 @@ module.exports = function (grunt) {
         'build',
         [
             'fest', 'requirejs:build',
-            'concat:build', 'uglify:build', 'sass'
+            'concat:build', 'uglify:build', 'sass:build'
         ]
     );
 
