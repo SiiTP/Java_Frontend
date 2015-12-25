@@ -55,7 +55,8 @@ public class Main {
             }else {
                 db.initBD();
             }
-            String isProduction = "public_html_production";
+            //String isProduction = "public_html_production";
+            String isProduction = "public_html";
             if(args.length>4){
                 isProduction = args[4];
             }else if(args.length == 2){
@@ -70,17 +71,13 @@ public class Main {
             MessageSystem system = new MessageSystem();
             MessageFrontend messageFrontend = new MessageFrontend(system);
             MessageMechanics messageMechanics = new MessageMechanics(system,gameServer);
-            MessageMechanics messageMechanics2 = new MessageMechanics(system,gameServer);
             system.addService(messageFrontend);
             system.addService(messageMechanics);
-            system.addService(messageMechanics2);
             system.getAddressService().registerMessageSwitch(messageMechanics);
-            system.getAddressService().registerMessageSwitch(messageMechanics2);
 
             ArrayList<Runnable> services = new ArrayList<>();
             services.add(messageFrontend);
             services.add(messageMechanics);
-            services.add(messageMechanics2);
             ExecutorService service = Executors.newFixedThreadPool(services.size(), r -> {
                 Thread t = Executors.defaultThreadFactory().newThread(r);
                 t.setDaemon(true);
