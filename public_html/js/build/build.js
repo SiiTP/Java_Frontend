@@ -629,6 +629,7 @@ define('views/main',[
         render: function () {
             //console.log("main render");
             this.$el.html(this.template(this.model.toJSON()));
+            this.qrcode();
         },
 
         show: function () {
@@ -1278,16 +1279,17 @@ define('views/joystick',[
 
         initialize: function () {
             this.rightDevice = modernizr.devicemotion && modernizr.deviceorientation && modernizr.touchevents;
-
+            console.log("mobile devices : " + modernizr.devicemotion + " " + modernizr.deviceorientation + " " + modernizr.touchevents);
             if (this.rightDevice) {
-                window.addEventListener('deviceorientation', this.onHyroscopeEvent.bind(this));
-
-                window.screen.orientation.addEventListener("change", this.onOrientationChange.bind(this));
-                if (window.screen.orientation.angle % 180 === 0) {
-                    this.orientation = "portrait";
-                } else {
-                    this.orientation = "landscape";
+                if (window.screen.orientation) {
+                    window.screen.orientation.addEventListener("change", this.onOrientationChange.bind(this));
+                    if (window.screen.orientation.angle % 180 === 0) {
+                        this.orientation = "portrait";
+                    } else {
+                        this.orientation = "landscape";
+                    }
                 }
+                window.addEventListener('deviceorientation', this.onHyroscopeEvent.bind(this));
 
                 this.on("setAngle", this.onSetAngle);
 
