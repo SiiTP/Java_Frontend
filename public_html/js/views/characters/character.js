@@ -10,6 +10,7 @@ define([
         borderColor: '#002',
         context: null,
         canvas: null,
+
         initCanvas: function(args) {
             document.getElementById('page').appendChild(this.el);
             this.canvas = this.el;
@@ -17,6 +18,7 @@ define([
             this.canvas.height = args.height;
             this.context = this.canvas.getContext('2d');
         },
+
         draw: function() {
             if (this.context != null) {
                 this.clear();

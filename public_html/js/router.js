@@ -45,6 +45,7 @@ define([
     var scoreboardView =   new ScoreboardView   ({model: scores});
     var roomsView =        new RoomsView        ({model: rooms});
     var fieldView =        new FieldView        ({width: constants.get('FIELD_WIDTH'), height: constants.get('FIELD_HEIGHT')});
+
     manager.add(mainView);
     manager.add(scoreboardView);
     manager.add(loginView);
@@ -52,6 +53,7 @@ define([
     manager.add(roomsView);
     manager.add(fieldView);
     manager.add(joystickView);
+
     var gameMediator = new GameMediator({
         user           : user,
         MyCharacter    : MyCharacter,
@@ -59,8 +61,8 @@ define([
         constants      : constants,
         field          : fieldView
     });
-    gameMediator.initialize();
 
+    gameMediator.initialize();
 
     var Router = Backbone.Router.extend({
         routes: {
