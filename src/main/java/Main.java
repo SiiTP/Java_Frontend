@@ -71,13 +71,17 @@ public class Main {
             MessageSystem system = new MessageSystem();
             MessageFrontend messageFrontend = new MessageFrontend(system);
             MessageMechanics messageMechanics = new MessageMechanics(system,gameServer);
+            MessageMechanics messageMechanics2 = new MessageMechanics(system,gameServer);
             system.addService(messageFrontend);
             system.addService(messageMechanics);
+            system.addService(messageMechanics2);
             system.getAddressService().registerMessageSwitch(messageMechanics);
+            system.getAddressService().registerMessageSwitch(messageMechanics2);
 
             ArrayList<Runnable> services = new ArrayList<>();
             services.add(messageFrontend);
             services.add(messageMechanics);
+            services.add(messageMechanics2);
             /*Thread thread = new Thread(messageFrontend);
             thread.setDaemon(true);
             thread.start();
