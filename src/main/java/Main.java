@@ -55,7 +55,7 @@ public class Main {
             }else {
                 db.initBD();
             }
-            String isProduction = "public_html_production";
+            String isProduction = "public_html";
             if(args.length>4){
                 isProduction = args[4];
             }else if(args.length == 2){

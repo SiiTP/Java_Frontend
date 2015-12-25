@@ -31,6 +31,7 @@ define([
         render: function () {
             //console.log("main render");
             this.$el.html(this.template(this.model.toJSON()));
+            this.qrcode();
         },
 
         show: function () {
