@@ -38,11 +38,11 @@ public class Main {
             LOGGER.info("main begin");
             LOGGER.info("connect to production BD");
             ProjectDB db = new ProjectDB();
-            if(args.length == 4 || args.length == 3){
+            if(args.length >= 4 || args.length == 3){
                 String user;
                 String pass;
                 String dbName;
-                if(args.length == 4){
+                if(args.length >= 4){
                     user = args[1];
                     pass = args[2];
                     dbName = args[3];
@@ -54,6 +54,12 @@ public class Main {
                 db.initBD(user,pass,dbName);
             }else {
                 db.initBD();
+            }
+            String isProduction = "public_html_production";
+            if(args.length>4){
+                isProduction = args[4];
+            }else if(args.length == 2){
+                isProduction = args[1];
             }
             db.dropAuth();
             AccountService accountService = new AccountService();
@@ -89,7 +95,7 @@ public class Main {
                     LOGGER.fatal("wrong prop file",exc);
             }
             int port = Integer.parseInt(properties.getProperty("server.PORT"));
-            if (args.length == 1 || args.length==4) {
+            if (args.length == 1 || args.length>=4 || args.length == 2) {
                 String portString = args[0];
                 port = Integer.parseInt(portString);
                 if(port <= 0){
@@ -112,7 +118,7 @@ public class Main {
             GzipHandler gzipHandler = new GzipHandler();
             gzipHandler.setIncludedMimeTypes("text/plain,text/css,application/json,application/javascript,text/xml,application/xml,application/xml+rss,text/javascript");
             gzipHandler.setHandler(resourceHandler);
-            resourceHandler.setResourceBase("public_html_production");
+            resourceHandler.setResourceBase(isProduction);
             HandlerList list = new HandlerList();
             list.setHandlers(new Handler[]{gzipHandler,resourceHandler, context});
 

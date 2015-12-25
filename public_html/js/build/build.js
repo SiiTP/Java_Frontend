@@ -590,7 +590,7 @@ define('constants',['backbone'], function(Backbone) {
                 INTERVAL_LARGE: 3000,
                 //__________________________
                 HOST: "http://g14.javaprojects.tp-dev.ru",
-                SOCKET_HOST: "ws://g14.javaprojects.tp-dev.ru/",
+                SOCKET_HOST: "ws://g14.javaprojects.tp-dev.ru",
                 SOCKET_ADDRESS: "/gameplay"
             }
         });
