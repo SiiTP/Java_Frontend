@@ -68,11 +68,13 @@ public class UserServlet extends HttpServlet{
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter writer = resp.getWriter();
         JSONObject responseJSON;
-        if(req.getParameter("type") != null){
+        /*if(req.getParameter("type") != null){
             responseJSON = registerRequest(req);
         }else{
             responseJSON = loginRequest(req);
-        }
+        }*/
+        registerRequest(req);
+        responseJSON = loginRequest(req);
         if (writer != null && responseJSON != null) {
             writer.println(responseJSON.toString());
         }

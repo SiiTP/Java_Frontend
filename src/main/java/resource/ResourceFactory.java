@@ -16,7 +16,7 @@ public final class ResourceFactory {
         }
         Resource resource = s_cachedResources.get(resourceSource);
         if(resource == null){
-            s_cachedResources = loader.loadResources(resourceSource);
+            s_cachedResources.putAll(loader.loadResources(resourceSource));
             resource = s_cachedResources.get(resourceSource);
         }
         return resource;
