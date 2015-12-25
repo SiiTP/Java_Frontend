@@ -55,8 +55,8 @@ public class Main {
             }else {
                 db.initBD();
             }
-            //String isProduction = "public_html_production";
-            String isProduction = "public_html";
+            String isProduction = "public_html_production";
+            //String isProduction = "public_html";
             if(args.length>4){
                 isProduction = args[4];
             }else if(args.length == 2){
@@ -78,6 +78,12 @@ public class Main {
             ArrayList<Runnable> services = new ArrayList<>();
             services.add(messageFrontend);
             services.add(messageMechanics);
+            /*Thread thread = new Thread(messageFrontend);
+            thread.setDaemon(true);
+            thread.start();
+            Thread thread1 = new Thread(messageMechanics);
+            thread1.setDaemon(true);
+            thread1.start();*/
             ExecutorService service = Executors.newFixedThreadPool(services.size(), r -> {
                 Thread t = Executors.defaultThreadFactory().newThread(r);
                 t.setDaemon(true);
