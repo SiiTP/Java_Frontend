@@ -79,10 +79,18 @@ define([
             scoreboardView.show();
         },
         gameAction: function () {
-            fieldView.show();
+            if (user.get('logged')) {
+                fieldView.show();
+            } else {
+                location.href = "#";
+            }
         },
         roomsAction: function () {
-            roomsView.show();
+            if (user.get('logged')) {
+                roomsView.show();
+            } else {
+                location.href = "#";
+            }
         },
         loginAction: function () {
             loginView.show();

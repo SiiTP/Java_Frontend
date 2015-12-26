@@ -91,8 +91,8 @@
         <div class="container-main__qrcode">
             <fest:if test="data.logged">
                 <div class="container-main__qrcode__title">Подключение джойстика</div>
+                <div class="container-main__qrcode__code"> </div>
             </fest:if>
-            <div class="container-main__qrcode__code"> </div>
         </div>
     </div>
 </fest:template>
