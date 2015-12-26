@@ -44,7 +44,7 @@ public class GameServer {
                         }
                     } else {
                         room.addUser(profile);
-                        profile.setCurrentroom(room);
+                        profile.setCurrentroom(room);//todo if join full room?
                     }
                     logger.info("player " + profile.getUsername() + " joined the room " + roomname);
                 }
@@ -148,16 +148,18 @@ public class GameServer {
         if(profile != null) {
             Room room = profile.getCurrentroom();
             if(room != null) {
-                roomService.kickPlayerFromRoom(room.getRoomName(), profile);
+                synchronized (this) {
+                    roomService.kickPlayerFromRoom(room.getRoomName(), profile);
+                    if (room.getPlayersCount() == 0) {
+                        roomService.finishRoom(room.getRoomName());
+                        logger.warn("room " + room.getRoomName() + " deleted from room list");
+                    }
+                }
                 accountService.updatePlayerInfo(profile);
                 GameProfile gameProfile = profile.getGameProfile();
                 gameProfile.resetSetting();
                 gameProfile.resetScore();
                 logger.info("player " + profile.getUsername() + " kicked from the room " + room.getRoomName());
-                if(room.getPlayersCount()==0){
-                    roomService.finishRoom(room.getRoomName());
-                    logger.warn("room " +room.getRoomName() + " deleted from room list");
-                }
             }
         }
     }

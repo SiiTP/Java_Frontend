@@ -58,6 +58,8 @@ public class MainWebSocket extends WebSocketAdapter{
             messageFrontend.sendBrowserMoveMessageForward(data, httpSession);
         }
     }
+
+
     public void sendMessageBack(JSONObject response){
         try {
             if(response != null && isConnected() ) {
@@ -66,9 +68,11 @@ public class MainWebSocket extends WebSocketAdapter{
                 LOGGER.error("wrong message from " + httpSession);
             }
         } catch (IOException e) {
+            onWebSocketClose(1001," IO exception");
             LOGGER.error("cant send message back, user session " + httpSession);
             e.printStackTrace();
         }catch (WebSocketException exc){
+            onWebSocketClose(1000," web socket exception");
             exc.printStackTrace();
             System.out.println("session isOpen: " + getSession().isOpen() + ' ' + " isConnected: " + isConnected());
 
